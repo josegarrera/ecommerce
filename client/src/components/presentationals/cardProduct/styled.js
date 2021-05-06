@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const DivCrdProd = styled.div`
-  margin-left: 100px;
+  margin: 30px;
   display: flex;
   flex-direction: column;
   border: 1px solid #efefef;
@@ -18,15 +18,17 @@ const DivCrdProd = styled.div`
   .cnt_info {
     background-color: #fcfcfc;
     border-radius: 0 0 20px 20px;
+    width:186px;
     height: 79px;
     border-top: 3px solid whitesmoke;
   }
-  h3 {
+  h5 {
     font-weight: bold;
     color: #525252;
     margin: 12px 21px 0px;
+    width:60%;
   }
-  h4 {
+  h6 {
     padding: 0;
     margin: 5px 0 20px 0;
     color: #a9a9a9;
@@ -64,7 +66,7 @@ const DivCrdProd = styled.div`
     color: #ffffff;
     background-color: #ee362e;
     border: none;
-    top: 96%;
+    top: 92%;
     right: 20px;
     width: 29px;
     height: 29px;
