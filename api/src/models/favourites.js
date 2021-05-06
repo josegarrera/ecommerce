@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 const Schema = require('Schema');
 
 const FavouritesSchema = new Schema({
-	userId: {
+	user: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'userId',
+		ref: 'users',
 	},
 	products: [
 		{
