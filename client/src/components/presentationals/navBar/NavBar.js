@@ -1,48 +1,64 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { IoCart, IoHeart, IoPersonSharp, IoSearch } from "react-icons/io5";
-import CardProduct from "../cardProduct/CardProduct"
+import SearchBar from "../../containers/searchBar/SearchBar"
+import DivNavBar from "./styled"
 
 const NavBar = () => {
-  const [value, setValue] = useState("");
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    setValue("");
-  }
 
   return(
-  <div>
-    <div>
+  <DivNavBar>
+    <div className="topNav">
       <div>
-        <h3>Henry Store</h3>
+        <Link to="/">
+          <h3 className="logo">Henry Store</h3>
+        </Link>
       </div>
       <div>
-        <form onSubmit={(e) => handleSubmit(e)}>
-            <input
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            placeholder="Search the entire store"
-            type="text"
-            ></input>
-            <Link to={`/products/${value}`}>
-                <IoSearch type="submit" />
-            </Link>
-        </form>
+        <SearchBar />
       </div>
-      <div>
-        <IoPersonSharp />
-        <IoHeart />
-        <IoCart />
+      <div className="topRight">
+        <div className="iconDiv">
+          <IoPersonSharp className="icon" />
+        </div>
+        <div className="iconDiv">
+          <IoHeart  className="icon" />
+        </div>
+        <div className="iconDiv">
+          <IoCart  className="icon" />
+        </div>
       </div>
     </div>
-    <div>
+    <div className="bottomNav">
       <Link to="/catalogue">
-        <h3>Catalogue</h3>
+        <h3 className="catalogue">Catalogue</h3>
       </Link>
-      <CardProduct/>
+      <select className="select">
+        <option selected value="0"> Desktop </option>
+      </select>
+      <select className="select">
+        <option selected value="0"> Perifericos </option>
+      </select>
+      <select className="select">
+        <option selected value="0"> Monitores </option>
+      </select>
+      <select className="select">
+        <option selected value="0"> Sillas </option>
+      </select>
+      <select className="select">
+        <option selected value="0"> Auriculares </option>
+      </select>
+      <select className="select"> 
+        <option selected value="0"> Memorias </option>
+      </select>
+      <select className="select">
+        <option selected value="0"> Placas </option>
+      </select>
+      <select className="select">
+        <option selected value="0"> Motherboard </option>
+      </select>
     </div>
-  </div>
+  </DivNavBar>
 )};
 
 export default NavBar;
