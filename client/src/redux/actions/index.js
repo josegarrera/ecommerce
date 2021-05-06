@@ -99,7 +99,7 @@ export const getAllOrders = () => {
   };
 };
 
-export const getProductDetail = (id) => {
+/* export const getProductDetail = (id) => {
   //trae los detalles de 1 solo producto
   return async (dispatch) => {
     const { data } = await axios.get(`${URLS.URL_ORDERS}/${id}`);
@@ -108,9 +108,9 @@ export const getProductDetail = (id) => {
       payload: data, // TIENE QUE SER UN {}
     });
   };
-};
+}; */
 
-export const addNewProduct = (body) => {
+/* export const addNewProduct = (body) => {
   //agrega un producto
   return async () => {
     try {
@@ -124,3 +124,4 @@ export const addNewProduct = (body) => {
     }
   };
 };
+ */
