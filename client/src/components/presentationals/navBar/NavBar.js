@@ -31,11 +31,11 @@ const NavBar = () => {
     </div>
     <div className="bottomNav">
       <Link to="/catalogue">
-        <h3 className="catalogue">Catalogue</h3>
+        <a>Catalogue</a>
       </Link>
-      <select className="select">
-        <option selected value="0"> Desktop </option>
-      </select>
+      <Link to="/create">
+        <a>Create</a>
+      </Link>
       <select className="select">
         <option selected value="0"> Perifericos </option>
       </select>
