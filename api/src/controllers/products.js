@@ -1,4 +1,4 @@
-const {Products} = require('../models/index.js');
+const {Products, Categories} = require('../models/index.js');
 
 async function createProduct(req, res) {
 	if (!req.body || !req.body.name || !req.body.description)
@@ -16,26 +16,34 @@ async function createProduct(req, res) {
 }
 
 function getProducts(req, res) {
-	const filterValue = req.query.filterValue
-		? new RegExp(req.query.filterValue.toLowerCase(), 'i')
-		: new RegExp('[A-Za-z]', 'i');
+	const filterValue = req.query.filterValue ? req.query.filterValue : '';
 	const filter =
 		req.query.filter && req.query.filter === 'price'
-			? {price: {value: filterValue}}
-			: {name: filterValue};
+			? {'price.value': {$lt: Number(filterValue)}}
+			: req.query.filter === 'variants'
+			? Object.defineProperty({}, `variants.${filterValue.split('-')[0]}`, {
+					value: filterValue.split('-')[1],
+					writable: true,
+					enumerable: true,
+					configurable: false,
+			  })
+			: req.query.filter === 'name'
+			? {name: new RegExp(filterValue.toLowerCase(), 'i')}
+			: {name: new RegExp('[A-Za-z]', 'i')};
 	const direction =
 		req.query.direction && req.query.direction.toLowerCase() === 'desc'
 			? -1
 			: 1;
 	const order =
 		req.query.order === 'price'
-			? {price: {value: direction}}
+			? {'price.value': direction}
 			: {name: direction};
 	const offset = req.query.offset ? Number(req.query.offset) : 0;
 	const limit = req.query.limit ? Number(req.query.limit) : 12;
 
 	Products.find(filter)
-		.populate({path: 'categories'})
+		.populate('categories', {name: 1, variants: 1})
+		.populate('brands')
 		.sort(order)
 		.skip(offset)
 		.limit(limit)
@@ -56,4 +64,3 @@ module.exports = {
 	createProduct,
 	getProducts,
 };
-
