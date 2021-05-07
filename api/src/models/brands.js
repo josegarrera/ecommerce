@@ -3,7 +3,11 @@ const Schema = mongoose.Schema;
 var findOrCreate = require('mongoose-findorcreate');
 
 const BrandsSchema = new Schema({
-	name: String,
+	name: {
+		type: String,
+		required: true,
+		unique: true,
+	},
 	products: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
