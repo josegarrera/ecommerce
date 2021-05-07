@@ -26,6 +26,12 @@ const UsersSchema = new Schema({
 			message: '{VALUE} is not supported',
 		},
 	},
+	orders: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'orders',
+		},
+	],
 });
 
 module.exports = mongoose.model('users', UsersSchema);
