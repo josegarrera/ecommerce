@@ -13,7 +13,7 @@ export const ActionTypes = {
 };
 
 export const URLS = {
-  URL_PRODUCTS: "https://6092863e85ff51001721301d.mockapi.io/api/products" /* "http://localhost:3001/products" */,
+  URL_PRODUCTS: "http://localhost:3001/products",
   URL_ORDERS: "http://localhost:3001/orders",
   URL_CATEGORIES: "http://localhost:3001/categories",
 };
