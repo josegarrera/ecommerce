@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+var findOrCreate = require('mongoose-findorcreate');
 
 const BrandsSchema = new Schema({
 	name: String,
@@ -10,5 +11,6 @@ const BrandsSchema = new Schema({
 		},
 	],
 });
+BrandsSchema.plugin(findOrCreate);
 
 module.exports = mongoose.model('brands', BrandsSchema);
