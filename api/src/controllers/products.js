@@ -1,16 +1,71 @@
-const {Products, Categories} = require('../models/index.js');
+const {Products, Categories, Brands} = require('../models/index.js');
 
 async function createProduct(req, res) {
-	if (!req.body || !req.body.name || !req.body.description)
+	const {
+		name,
+		description,
+		price,
+		imageUrl,
+		variants,
+		categories,
+		brands,
+	} = req.body;
+	const checkExists = await Products.exists({name});
+
+	if (!req.body || !name || !description)
 		return res
 			.status(400)
 			.send({type: 'Bad request.', error: 'The fields are empty.'});
-	const product = new Products(req.body);
-	await product.save((err, data) => {
-		if (err)   
-			return res.status(500).send({type: 'Internal server error.', error: err});
-		res.send(product);
+	if (checkExists)
+		return res
+			.status(500)
+			.send({
+				type: 'Internal server error.',
+				error: 'A product with this name already exists',
+			});
+
+	const product = new Products({
+		name,
+		description,
+		price,
+		imageUrl,
+		categories: [],
+		brands: [],
+		variants,
 	});
+	const categoriesCreated = categories.map((el) =>
+		Categories.findOrCreate({name: el})
+	);
+	return Promise.all(categoriesCreated)
+		.then((data) => {
+			data.map(
+				(el) =>
+					el.doc.products.push(product._id) &&
+					product.categories.push(el.doc._id) &&
+					el.doc.save()
+			);
+		})
+		.then((data) => {
+			const brandsCreated = brands.map((el) => Brands.findOrCreate({name: el}));
+			return Promise.all(brandsCreated);
+		})
+		.then((data) => {
+			data.map(
+				(el) =>
+					el.doc.products.push(product._id) &&
+					product.brands.push(el.doc._id) &&
+					el.doc.save()
+			);
+		})
+		.then((data) =>
+			product.save((err) => {
+				if (err)
+					return res
+						.status(500)
+						.send({type: 'Internal server error.', error: err});
+				res.send(product);
+			})
+		);
 }
 
 function getProducts(req, res) {
