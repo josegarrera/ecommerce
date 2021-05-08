@@ -85,7 +85,7 @@ function getProducts(req, res) {
 					(path, index) =>
 						`http://localhost:3001/products/?filter=${
 							req.query.filter
-						}&filtervalue=${req.query.filterValue}&order=${
+						}&filterValue=${req.query.filterValue}&order=${
 							req.query.order
 						}&direction=${req.query.direction}&offset=${
 							limit * index
