@@ -10,7 +10,7 @@ const Catalogue = () => {
   const dispatch = useDispatch();
 
   const allProducts = useSelector((state) => state.products);
-console.log(allProducts);
+  console.log(allProducts);
   useEffect(() => {
     dispatch(getAllProducts());
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
