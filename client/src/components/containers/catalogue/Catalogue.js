@@ -10,8 +10,7 @@ const Catalogue = () => {
   const dispatch = useDispatch();
 
   const allProducts = useSelector((state) => state.products);
-  console.log(allProducts);
-
+console.log(allProducts);
   useEffect(() => {
     dispatch(getAllProducts());
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -28,7 +27,7 @@ const Catalogue = () => {
             <div className="filter__section__row">
               <div className="filter__section__title">BRANDS</div>
               <div className="filter__section__icon">
-                <MdKeyboardArrowDown></MdKeyboardArrowDown>
+                <MdKeyboardArrowDown />
               </div>
             </div>
 
@@ -59,9 +58,10 @@ const Catalogue = () => {
         </div>
 
         <div className="cards__container">
-          {allProducts.map((product) => (
-            <CardProduct product={product} />
-          ))}
+          {allProducts &&
+            allProducts.map(({ name, price, imageUrl }) => (
+              <CardProduct name={name} price={price} imageUrl={imageUrl} />
+            ))}
         </div>
       </div>
     </Catalogue_Style>

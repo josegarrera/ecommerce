@@ -4,7 +4,7 @@ import DivCrdProd from "./styled";
 import {FaShoppingCart} from "react-icons/fa";
 import { AiOutlineHeart } from "react-icons/ai";
 
-const CardProduct = ({ _id, product:{name, images, price} }) => {
+const CardProduct = ({ name, imageUrl, price }) => {
   const handleAddCart = () => {
     //add to cart
   };
@@ -13,14 +13,11 @@ const CardProduct = ({ _id, product:{name, images, price} }) => {
   };
 
   return (
-    <DivCrdProd>
-      <img
-        src="https://i.pinimg.com/564x/5e/76/f3/5e76f30fd83bb5d0392d94e0d6384ccb.jpg"
-        alt="imagen de producto"
-      />
+    <DivCrdProd><div className="cnt__image">
+      <img className="img__card" src={imageUrl[0]} alt="imagen de producto" /></div>
       <div className="cnt_info">
         <h5>{name}</h5>
-        <h6>${price}</h6>
+        <h6>{price.currency + price.value}</h6>
         <button className="btn__fav" onClick={handleAddFav}>
           <AiOutlineHeart />
         </button>

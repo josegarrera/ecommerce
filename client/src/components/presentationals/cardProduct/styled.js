@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const DivCrdProd = styled.div`
-  margin: 30px;
+  margin: 0px 30px 30px;
   display: flex;
   flex-direction: column;
   border: 1px solid #efefef;
@@ -10,15 +10,23 @@ const DivCrdProd = styled.div`
   height: 370px;
   position: relative;
 
-  img {
+  .cnt__image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 186px;
     height: 277px;
     border-radius: 20px 20px 0 0;
+    background-color: #fff;
+  }
+  .img__card {
+    width: 60%;
+    height: 60%;
   }
   .cnt_info {
     background-color: #fcfcfc;
     border-radius: 0 0 20px 20px;
-    width:186px;
+    width: 186px;
     height: 79px;
     border-top: 3px solid whitesmoke;
   }
@@ -26,7 +34,7 @@ const DivCrdProd = styled.div`
     font-weight: bold;
     color: #525252;
     margin: 12px 21px 0px;
-    width:60%;
+    width: 60%;
   }
   h6 {
     padding: 0;

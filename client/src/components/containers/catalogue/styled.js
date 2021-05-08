@@ -3,19 +3,19 @@ import styled from "styled-components";
 const Catalogue_Style = styled.div`
   .catalogue {
     display: flex;
-    padding: 5rem;
+    padding: 4rem;
     background-color: #f4f4f4;
   }
 
   .cards__container {
     display: flex;
-    padding: 2rem;
+    padding: 0 2rem;
     flex-wrap: wrap;
     width: 100%;
   }
 
   .filter__options {
-    height: 200rem;
+    height: 900px;
     width: 25rem;
     border-radius: 1rem;
     background-color: #ffffff;
@@ -23,7 +23,7 @@ const Catalogue_Style = styled.div`
 
   .filter__title {
     padding: 1.5rem;
-    font-weight: 600;
+    font-weight: bold;
     color: #a1a3a6;
   }
 
