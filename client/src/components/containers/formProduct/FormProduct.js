@@ -33,23 +33,18 @@ const FormProduct = () => {
 
   const storage = [
     {
-      id: 1,
       value: "8 GB",
     },
     {
-      id: 2,
       value: "16 GB",
     },
     {
-      id: 3,
       value: "32 GB",
     },
     {
-      id: 4,
       value: "64 GB",
     },
     {
-      id: 5,
       value: "128 GB",
     },
   ];
@@ -87,23 +82,18 @@ const FormProduct = () => {
 
   const categories = [
     {
-      id: 1,
       value: "Motherboards",
     },
     {
-      id: 2,
       value: "Graphic Cards",
     },
     {
-      id: 3,
       value: "Storage",
     },
     {
-      id: 4,
       value: "Periferics",
     },
     {
-      id: 5,
       value: "Monitors",
     },
   ];

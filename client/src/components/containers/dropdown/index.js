@@ -22,7 +22,7 @@ function Dropdown({
   //   Dropdown.handleClickOutside = () => setOpen(false);
 
   const handleOnClick = (item) => {
-    if (!variants.some((current) => current.id === item.id)) {
+    if (!variants.some((current) => current.value === item.value)) {
       if (!multiselect) {
         // setSelection([item]);
         setVariants([item]);
@@ -33,7 +33,7 @@ function Dropdown({
     } else {
       let selectionAfterRemoval = variants;
       selectionAfterRemoval = selectionAfterRemoval.filter(
-        (current) => current.id !== item.id
+        (current) => current.value !== item.value
       );
       // setSelection([...selectionAfterRemoval]);
       setVariants([...selectionAfterRemoval]);
@@ -41,7 +41,7 @@ function Dropdown({
   };
 
   const isItemSelected = (item) => {
-    if (variants.find((current) => current.id === item.id)) {
+    if (variants.find((current) => current.value === item.value)) {
       return true;
     }
     return false;
