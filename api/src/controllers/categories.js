@@ -1,8 +1,7 @@
 const {Categories, Products} = require('../models/index.js');
 
-
 function getAllCategories(req, res) {
-	Categories.find({}, 'name')
+	Categories.find({}, 'name variants')
 		.exec()
 		.then((data) => res.send(data))
 		.catch((error) =>
@@ -17,23 +16,45 @@ function createCategories(req, res) {
 			.send({type: 'Bad request.', error: 'The fields are empty.'});
 	const idProducts = req.body.products;
 	const categories = req.body.categories;
-	const specProducts = idProducts.map((item) => Products.exists({_id: item}));
-	const validProducts = [];
+	const specProducts = idProducts.map((item) => Products.findById(item));
+	let idValidProducts;
+	let validProducts;
 
 	Promise.all(specProducts)
 		.then((data) => {
-			const filterProducts = idProducts.filter(
-				(item, i) => data[i] === true && validProducts.push(item)
-			);
+			idValidProducts = data.map((id) => id._id);
+			validProducts = data;
 			const categoriesCreated = categories.map((item) =>
 				Categories.findOrCreate({name: item})
 			);
-			console.log('antes promise all', categoriesCreated);
 			return Promise.all(categoriesCreated);
 		})
 		.then((data) => {
-			data.map((item) => (item.doc.products = validProducts));
-			return Promise.all(data.map((item) => item.doc.save()));
+			let idCategories = data.map((item) => item.doc._id);
+			data.map(
+				(categorie) =>
+					(categorie.doc.products = categorie.doc.products
+						.concat(idValidProducts)
+						.filter(
+							(item, index) =>
+								categorie.doc.products.concat(idValidProducts).indexOf(item) ===
+								index
+						))
+			);
+			validProducts.map(
+				(product) =>
+					(product.categories = product.categories
+						.concat(idCategories)
+						.filter(
+							(item, index) =>
+								product.categories.concat(idCategories).indexOf(item) === index
+						))
+			);
+			return Promise.all(
+				data
+					.map((item) => item.doc.save())
+					.concat(validProducts.map((item) => item.save()))
+			);
 		})
 		.then((data) => {
 			res.send(data);

@@ -1,5 +1,4 @@
 const {Products, Categories} = require('../models/index.js');
-const products = require('../models/products.js');
 
 async function createProduct(req, res) {
 	if (!req.body || !req.body.name || !req.body.description)
@@ -9,9 +8,7 @@ async function createProduct(req, res) {
 	const product = new Products(req.body);
 	await product.save((err, data) => {
 		if (err)
-			return res
-				.status(500)
-				.send({type: 'Internal server error.', error: err.message});
+			return res.status(500).send({type: 'Internal server error.', error: err});
 		res.send(product);
 	});
 }
