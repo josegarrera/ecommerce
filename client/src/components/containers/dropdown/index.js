@@ -22,7 +22,7 @@ function Dropdown({
   //   Dropdown.handleClickOutside = () => setOpen(false);
 
   const handleOnClick = (item) => {
-    if (!variants.some((current) => current.value === item.value)) {
+    if (!variants.some((current) => current === item)) {
       if (!multiselect) {
         // setSelection([item]);
         setVariants([item]);
@@ -33,7 +33,7 @@ function Dropdown({
     } else {
       let selectionAfterRemoval = variants;
       selectionAfterRemoval = selectionAfterRemoval.filter(
-        (current) => current.value !== item.value
+        (current) => current !== item
       );
       // setSelection([...selectionAfterRemoval]);
       setVariants([...selectionAfterRemoval]);
@@ -41,7 +41,7 @@ function Dropdown({
   };
 
   const isItemSelected = (item) => {
-    if (variants.find((current) => current.value === item.value)) {
+    if (variants.find((current) => current === item)) {
       return true;
     }
     return false;
@@ -69,10 +69,10 @@ function Dropdown({
 
         {open && (
           <ul className="dropdown__list">
-            {items.map((item) => (
-              <li key={item.id} className="dropdown__list__item">
+            {items.map((item, index) => (
+              <li key={index} className="dropdown__list__item">
                 <button type="button" onClick={() => handleOnClick(item)}>
-                  <span className="button__value">{item.value}</span>
+                  <span className="button__value">{item}</span>
                   <span
                     className={
                       "button__icon" && isItemSelected(item) ? "selected" : ""

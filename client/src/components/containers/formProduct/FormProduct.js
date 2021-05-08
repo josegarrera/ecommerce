@@ -31,23 +31,7 @@ const FormProduct = () => {
     variants: [],
   });
 
-  const storage = [
-    {
-      value: "8 GB",
-    },
-    {
-      value: "16 GB",
-    },
-    {
-      value: "32 GB",
-    },
-    {
-      value: "64 GB",
-    },
-    {
-      value: "128 GB",
-    },
-  ];
+  const storage = ["8 GB", "16 GB", "32 GB", "64 GB", "128 GB"];
 
   const colors = [
     {
@@ -80,23 +64,7 @@ const FormProduct = () => {
     },
   ];
 
-  const categories = [
-    {
-      value: "Motherboards",
-    },
-    {
-      value: "Graphic Cards",
-    },
-    {
-      value: "Storage",
-    },
-    {
-      value: "Periferics",
-    },
-    {
-      value: "Monitors",
-    },
-  ];
+  const categories = ["Graphic Cards", "Storage", "Periferics", "Monitors"];
 
   useEffect(() => {
     // dispatch(getCategories());
@@ -115,6 +83,9 @@ const FormProduct = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // console.log(categorySelected);
+    // console.log(variantSelected);
 
     const obj = {
       ...product,
@@ -198,7 +169,6 @@ const FormProduct = () => {
                 <Dropdown
                   title="select variants"
                   items={storage}
-                  multiselect
                   setVariants={(el) => setVariants(el)}
                   variants={variantSelected}
                 ></Dropdown>
