@@ -15,10 +15,10 @@ const ProductsSchema = new Schema({
 			ref: 'categories',
 		},
 	],
-	marca: [
+	brands: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
-			ref: 'brand',
+			ref: 'brands',
 		},
 	],
 	variants: {}, // the different variants of the products. A flexible object that let you assign whatever variant the product has
