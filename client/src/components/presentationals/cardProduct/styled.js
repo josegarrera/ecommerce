@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const DivCrdProd = styled.div`
-  margin-left: 100px;
+  margin: 50px;
   display: flex;
   flex-direction: column;
   border: 1px solid #efefef;

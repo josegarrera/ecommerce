@@ -74,6 +74,12 @@ const Catalogue_Style = styled.div`
     margin-right: 1rem;
     background-color: #ffffff;
     border-radius: 0.2rem;
+    cursor: pointer;
+  }
+
+  input[type="checkbox"]:after {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
   }
 `;
 
