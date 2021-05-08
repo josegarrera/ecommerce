@@ -10,8 +10,9 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 
 function Dropdown({
   title,
+  name,
   items = [],
-  multiselect = false,
+  multiselect,
   setVariants,
   variants,
 }) {
@@ -22,28 +23,44 @@ function Dropdown({
   //   Dropdown.handleClickOutside = () => setOpen(false);
 
   const handleOnClick = (item) => {
-    if (!variants.some((current) => current === item)) {
+    if (
+      !variants.some((current) =>
+        current[name] ? current[name] === item : current === item
+      )
+    ) {
+      let obj = {};
+      obj[name] = item;
+
       if (!multiselect) {
         // setSelection([item]);
-        setVariants([item]);
+
+        setVariants([obj]);
       } else if (multiselect) {
         // setSelection([...crock, item]);
-        setVariants([...variants, item]);
+
+        setVariants([...variants, obj[name]]);
       }
     } else {
       let selectionAfterRemoval = variants;
-      selectionAfterRemoval = selectionAfterRemoval.filter(
-        (current) => current !== item
+      selectionAfterRemoval = selectionAfterRemoval.filter((current) =>
+        current[name] ? current[name] !== item : current !== item
       );
-      // setSelection([...selectionAfterRemoval]);
+
       setVariants([...selectionAfterRemoval]);
+
+      // setSelection([...selectionAfterRemoval]);
     }
   };
 
   const isItemSelected = (item) => {
-    if (variants.find((current) => current === item)) {
+    if (
+      variants.find((current) =>
+        current[name] ? current[name] === item : current === item
+      )
+    ) {
       return true;
     }
+
     return false;
   };
 

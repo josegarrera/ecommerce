@@ -116,6 +116,30 @@ const FormProduct = () => {
     // dispatch(getCategories());
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  function handleInputFile(e) {
+    if (e.target.files[0]) {
+      setProduct({
+        ...product,
+        imageUrl: e.target.files[0],
+      });
+      setErrors(
+        validate(
+          {
+            ...product,
+            imageUrl: e.target.files[0],
+          }
+          // props.dogsCreated
+        )
+      );
+    } else {
+      setProduct({
+        ...product,
+        image: "",
+        file: "",
+      });
+    }
+  }
+
   const ChangeInput = (e) => {
     setProduct({
       ...product,
@@ -144,7 +168,7 @@ const FormProduct = () => {
 
     const obj = {
       ...product,
-      variants: { storage: variantSelected[0] },
+      variants: { ...variantSelected[0] },
       categories: categorySelected,
     };
 
@@ -219,6 +243,7 @@ const FormProduct = () => {
                 <label className="form__label">categories</label>
                 <Dropdown
                   title="select category"
+                  name="categories"
                   items={categories}
                   multiselect
                   setVariants={(el) => setCategories(el)}
@@ -228,7 +253,8 @@ const FormProduct = () => {
               <div className="form__element">
                 <label className="form__label">variants</label>
                 <Dropdown
-                  title="select variants"
+                  title="select storage"
+                  name="storage"
                   items={storage}
                   setVariants={(el) => setVariants(el)}
                   variants={variantSelected}
@@ -256,15 +282,24 @@ const FormProduct = () => {
                 </div>
               </div>
               <div className="form__element">
-                <label className="form__label">Image Url</label>
-                <input
+                <label className="form__label">Imagen:</label>
+
+                <div id="form__input">
+                  <input
+                    id="imageUrl"
+                    type="file"
+                    name="image"
+                    onChange={(e) => handleInputFile(e)}
+                  />
+                </div>
+
+                {/* <input
                   className="form__input"
                   type="text"
                   id="imageUrl"
                   name="imageUrl"
-                  value={product.imageUrl}
                   onChange={(e) => ChangeInput(e)}
-                ></input>
+                ></input> */}
               </div>
             </div>
           </div>
