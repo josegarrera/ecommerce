@@ -53,6 +53,7 @@ function getProducts(req, res) {
 
 	Products.find(filter)
 		.populate('categories', {name: 1})
+		.populate('brands', {name: 1})
 		.sort(order)
 		.exec()
 		.then((data) => {
