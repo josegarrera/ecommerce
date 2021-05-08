@@ -89,7 +89,7 @@ const FormProduct = () => {
 
     const obj = {
       ...product,
-      variants: variantSelected,
+      variants: { storage: variantSelected[0] },
       categories: categorySelected,
     };
 
