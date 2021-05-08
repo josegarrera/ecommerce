@@ -6,10 +6,12 @@ import { ActionTypes, URLS } from "../../utils/constants";
 export const getAllProducts = () => {
   // trae todos los productos del servidor.
   return async (dispatch) => {
-    const { data } = await axios.get(`${URLS.URL_PRODUCTS}`);
+    const {
+      data: { products },
+    } = await axios.get(`${URLS.URL_PRODUCTS}`);
     return dispatch({
       type: ActionTypes.GET_PRODUCTS,
-      payload: data, // TIENE QUE SER UN []
+      payload: products, // TIENE QUE SER UN []
     });
   };
 };
@@ -85,7 +87,6 @@ export const updateProduct = (id, body) => {
 
 --------------------------------------------------------------------------------------------------------------------------------------*/
 
-
 ////////////////////////////////////////  ORDERS ACTIONS  ////////////////////////////////////////
 
 export const getAllOrders = () => {
@@ -124,8 +125,6 @@ export const addNewOrder = (body) => {
     }
   };
 };
-
-
 
 ////////////////////////////////////////  USERS ACTIONS  ////////////////////////////////////////
 
