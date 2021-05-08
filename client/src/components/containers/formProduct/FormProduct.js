@@ -13,13 +13,13 @@ export function validate(product, allProducts) {
     errors.name = "Campo requerido.";
   }
   if (!product.brand) {
-    errors.weight = "Campo requerido.";
+    errors.brand = "Campo requerido.";
   }
   if (!product.description) {
-    errors.weight = "Campo requerido.";
+    errors.description = "Campo requerido.";
   }
   if (!product.price) {
-    errors.weight = "Campo requerido.";
+    errors.price = "Campo requerido.";
   }
 
   if (product.price && !/[0-9-]+$/.test(product.price)) {
@@ -123,6 +123,15 @@ const FormProduct = () => {
       categories: [...categorySelected],
       variants: [...variantSelected],
     });
+
+    setErrors(
+      validate({
+        ...product,
+        [e.target.name]: e.target.value,
+      })
+    );
+
+    console.log(errors);
   };
 
   const onClickSubmit = (color) => {};
@@ -165,6 +174,7 @@ const FormProduct = () => {
                   value={product.name}
                   onChange={(e) => ChangeInput(e)}
                 ></input>
+                {errors.name && <p className="danger">{errors.name}</p>}
               </div>
               <div className="form__element">
                 <label className="form__label">brand</label>
@@ -176,6 +186,7 @@ const FormProduct = () => {
                   value={product.brand}
                   onChange={(e) => ChangeInput(e)}
                 ></input>
+                {errors.brand && <p className="danger">{errors.brand}</p>}
               </div>
               <div className="form__element">
                 <label className="form__label">description</label>
@@ -186,6 +197,9 @@ const FormProduct = () => {
                   value={product.description}
                   onChange={(e) => ChangeInput(e)}
                 ></textarea>
+                {errors.description && (
+                  <p className="danger">{errors.description}</p>
+                )}
               </div>
               <div className="form__element">
                 <label className="form__label">price</label>
@@ -196,6 +210,7 @@ const FormProduct = () => {
                   value={product.price}
                   onChange={(e) => ChangeInput(e)}
                 ></input>
+                {errors.price && <p className="danger">{errors.price}</p>}
               </div>
             </div>
 
