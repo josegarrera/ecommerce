@@ -8,7 +8,13 @@ import { ImCheckboxChecked } from "react-icons/im";
 import { MdKeyboardArrowUp } from "react-icons/md";
 import { MdKeyboardArrowDown } from "react-icons/md";
 
-function Dropdown({ title, items = [], multiselect = false }) {
+function Dropdown({
+  title,
+  items = [],
+  multiselect = false,
+  setVariants,
+  variants,
+}) {
   const [open, setOpen] = useState(false);
   const [selection, setSelection] = useState([]);
   const toggle = () => setOpen(!open);
@@ -16,23 +22,26 @@ function Dropdown({ title, items = [], multiselect = false }) {
   //   Dropdown.handleClickOutside = () => setOpen(false);
 
   const handleOnClick = (item) => {
-    if (!selection.some((current) => current.id === item.id)) {
+    if (!variants.some((current) => current.id === item.id)) {
       if (!multiselect) {
-        setSelection([item]);
+        // setSelection([item]);
+        setVariants([item]);
       } else if (multiselect) {
-        setSelection([...selection, item]);
+        // setSelection([...crock, item]);
+        setVariants([...variants, item]);
       }
     } else {
-      let selectionAfterRemoval = selection;
+      let selectionAfterRemoval = variants;
       selectionAfterRemoval = selectionAfterRemoval.filter(
         (current) => current.id !== item.id
       );
-      setSelection([...selectionAfterRemoval]);
+      // setSelection([...selectionAfterRemoval]);
+      setVariants([...selectionAfterRemoval]);
     }
   };
 
   const isItemSelected = (item) => {
-    if (selection.find((current) => current.id === item.id)) {
+    if (variants.find((current) => current.id === item.id)) {
       return true;
     }
     return false;

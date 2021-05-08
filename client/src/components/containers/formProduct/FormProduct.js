@@ -7,7 +7,16 @@ import Dropdown from "../dropdown";
 // import { getCategories } from "../../../redux/actions/index.js";
 
 const FormProduct = () => {
-  const [colorsSelected, setColors] = useState([]);
+  const [variantSelected, setVariants] = useState([]);
+  const [categorySelected, setCategories] = useState([]);
+
+  //   {
+  //     "price" : {"currency": "$", "value": 249999},
+  //     "imageUrl": [],
+  //     "variants": {"stock": 500, "formato": "mecánico"},
+  //     "categories": ["strings"],
+  // }
+
   const dispatch = useDispatch();
   // const categories = useSelector((store) => store.categories);
 
@@ -104,14 +113,26 @@ const FormProduct = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const ChangeInput = (e) => {
-    setProduct({ ...product, [e.target.name]: e.target.value });
+    setProduct({
+      ...product,
+      [e.target.name]: e.target.value,
+      categories: [...categorySelected],
+      variants: [...variantSelected],
+    });
   };
 
   const onClickSubmit = (color) => {};
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(product);
+
+    const obj = {
+      ...product,
+      variants: variantSelected,
+      categories: categorySelected,
+    };
+
+    console.log(obj);
   };
 
   return (
@@ -178,6 +199,8 @@ const FormProduct = () => {
                   title="select category"
                   items={categories}
                   multiselect
+                  setVariants={(el) => setCategories(el)}
+                  variants={categorySelected}
                 ></Dropdown>
               </div>
               <div className="form__element">
@@ -186,6 +209,8 @@ const FormProduct = () => {
                   title="select variants"
                   items={storage}
                   multiselect
+                  setVariants={(el) => setVariants(el)}
+                  variants={variantSelected}
                 ></Dropdown>
               </div>
               <div className="form__element">
