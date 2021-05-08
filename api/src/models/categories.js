@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-var findOrCreate = require('mongoose-findorcreate');
+const findOrCreate = require('mongoose-findorcreate');
 
 const CategoriesSchema = new Schema({
 	name: {

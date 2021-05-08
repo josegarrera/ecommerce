@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const findOrCreate = require('mongoose-findorcreate');
+
 const ProductsSchema = new Schema({
 	name: {
 		type: String,
@@ -23,5 +25,8 @@ const ProductsSchema = new Schema({
 	],
 	variants: {}, // the different variants of the products. A flexible object that let you assign whatever variant the product has
 });
+
+ProductsSchema.plugin(findOrCreate);
+
 
 module.exports = mongoose.model('products', ProductsSchema);

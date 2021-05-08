@@ -7,7 +7,7 @@ async function createProduct(req, res) {
 			.send({type: 'Bad request.', error: 'The fields are empty.'});
 	const product = new Products(req.body);
 	await product.save((err, data) => {
-		if (err)
+		if (err)   
 			return res.status(500).send({type: 'Internal server error.', error: err});
 		res.send(product);
 	});
