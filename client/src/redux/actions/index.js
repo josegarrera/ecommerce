@@ -3,6 +3,7 @@ import {ActionTypes, URLS} from '../../utils/constants';
 
 ////////////////////////////////////////  PRODUCTS ACTIONS  ////////////////////////////////////////
 
+
 export const getProducts = ({filter, filterValue, order, direction, limit}) => {
 	return async (dispatch) => {
 		const {data} = await axios.get(
@@ -13,6 +14,7 @@ export const getProducts = ({filter, filterValue, order, direction, limit}) => {
 			payload: data,
 		});
 	};
+
 };
 
 export const getProductsQuery = (page) => {

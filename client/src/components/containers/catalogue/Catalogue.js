@@ -1,28 +1,48 @@
 /* eslint-disable react/jsx-pascal-case */
-import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import CardProduct from '../../presentationals/cardProduct/CardProduct';
-import {getProducts} from '../../../redux/actions/index.js';
-import Catalogue_Style from './styled';
-import {MdKeyboardArrowDown} from 'react-icons/md';
-import Pagination from '../pagination/Pagination';
-import axios from 'axios';
-import {URLS} from '../../../utils/constants';
+
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import CardProduct from "../../presentationals/cardProduct/CardProduct";
+import {
+  getCategories,
+  getProducts,
+} from "../../../redux/actions/index.js";
+import Catalogue_Style from "./styled";
+import { MdKeyboardArrowDown } from "react-icons/md";
+import Pagination from "../pagination/Pagination";
+import axios from "axios";
+import { URLS } from "../../../utils/constants";
+import Dropdown from "../dropdown";
 
 const Catalogue = () => {
-	const dispatch = useDispatch();
+  const products = useSelector((state) => state.products);
+  const allCategories = useSelector((state) => state.categories);
+  const categoryNames = allCategories.map((c) => c.name);
+  const [categoriesSelected, selectCategories] = useState([]);
+  const [input, setInput] = useState({
+    filter: "",
+    filterValue: "",
+    order: "",
+    direction: "",
+    limit: "",
+  });
+  const dispatch = useDispatch();
 
-	const [filterValues, setFilterValues] = useState({
-		filter: 'undefined',
-		filtervalue: 'undefined',
-		order: 'undefined',
-		direction: 'undefined',
-		limit: 12,
-	});
+  useEffect(() => {
+    dispatch(getCategories());
+    dispatch(getProducts(input));
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-	useEffect(() => {
-		dispatch(getProducts(filterValues));
-	}, []); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    // filter, filterValue, order, direction, limit
+    console.log(categoriesSelected);
+  }, [categoriesSelected]);
+
+  console.log(allCategories);
+
+  // console.log(categoryNames);
+  // console.log("acaaaaaaaaa", allProducts);
+
 
 	const {products, pages} = useSelector((state) => state.products);
 	// Este allProducts me trae {products: Array(12), pages: Array(2)}
@@ -49,26 +69,17 @@ const Catalogue = () => {
 								<label for=''>Kingston</label>
 							</li>
 
-							<li className='filter__option__item'>
-								<input className='filter__option__checkbox' type='checkbox' />
-								Samsung
-							</li>
-							<li className='filter__option__item'>
-								<input className='filter__option__checkbox' type='checkbox' />
-								NZXT
-							</li>
-							<li className='filter__option__item'>
-								<input className='filter__option__checkbox' type='checkbox' />
-								Asus
-							</li>
-							<li className='filter__option__item'>
-								<input className='filter__option__checkbox' type='checkbox' />
-								Corsair
-							</li>
-						</ul>
-					</div>
-				</div>
-				<div className='cards__container'>
+            <Dropdown
+              title="currency"
+              name="currency"
+              items={categoryNames}
+              multiselect
+              setVariants={(el) => selectCategories(el)}
+              variants={categoriesSelected}
+            ></Dropdown>
+          </div>
+        </div>
+       		<div className='cards__container'>
 					{products &&
 						products.map(({name, price, imageUrl}) => (
 							<CardProduct
@@ -79,10 +90,12 @@ const Catalogue = () => {
 							/>
 						))}
 				</div>
-			</div>
-			<Pagination pages={pages} /*  actualizar={actualizar} */ />
-		</Catalogue_Style>
-	);
+      </div>
+	    <Pagination pages={pages} /*  actualizar={actualizar} */ />
+    </Catalogue_Style>
+  );
+
+
 };
 
 export default Catalogue;
