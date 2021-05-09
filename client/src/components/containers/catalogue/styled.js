@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
 const Catalogue_Style = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   .catalogue {
     display: flex;
     padding: 4rem;
