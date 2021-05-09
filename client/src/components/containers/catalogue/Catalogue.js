@@ -28,7 +28,7 @@ const Catalogue = () => {
 
   useEffect(() => {
     dispatch(getCategories());
-    dispatch(getProducts(input));
+    dispatch(getProducts());
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -40,7 +40,6 @@ const Catalogue = () => {
 
   // console.log(categoryNames);
   // console.log("acaaaaaaaaa", allProducts);
-
 
   return (
     <Catalogue_Style>
