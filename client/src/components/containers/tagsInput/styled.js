@@ -53,7 +53,7 @@ const TagsInputStyle = styled.div`
     font-weight: 500;
     border-radius: 0 0.5rem 0.5rem 0;
     color: #ffffff;
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
 
   .input__container {

@@ -18,6 +18,13 @@ const FormProductStyle = styled.div`
     font: inherit;
     cursor: pointer;
   }
+  .mr {
+    margin-right: 0.5rem;
+  }
+
+  .ml {
+    margin-right: 0.5rem;
+  }
 
   .form__container {
     display: flex;
@@ -122,6 +129,11 @@ const FormProductStyle = styled.div`
   .checkbox__container {
     display: flex;
     padding: 1rem;
+  }
+
+  .row .form__element {
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
   }
 `;
 

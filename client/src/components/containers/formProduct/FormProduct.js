@@ -57,6 +57,7 @@ const FormProduct = () => {
   const [variantSelected, setVariants] = useState([]);
   const [tags, setTags] = useState([]);
   const [categorySelected, setCategories] = useState([]);
+  const [currency, setCurrency] = useState([]);
   const [errors, setErrors] = useState({});
 
   //   {
@@ -111,12 +112,13 @@ const FormProduct = () => {
     },
   ];
 
+  const currencies = ["U$S", "ARS$"];
+
   const categories = ["Graphic Cards", "Storage", "Periferics", "Monitors"];
 
   useEffect(() => {
     // dispatch(getCategories());
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
 
   const ChangeInput = (e) => {
     setProduct({
@@ -139,16 +141,21 @@ const FormProduct = () => {
   const onClickSubmit = (color) => {};
 
   const handleSubmit = (e) => {
-
     e.preventDefault();
     // console.log(categorySelected);
     // console.log(variantSelected);
+
+    const price = {};
+
+    price.currency = [...currency][0].currency;
+    price.value = product.price;
 
     const obj = {
       ...product,
       variants: { ...variantSelected[0] },
       categories: categorySelected,
       imageUrl: [...tags],
+      price,
     };
 
     console.log(obj);
@@ -204,16 +211,29 @@ const FormProduct = () => {
                   <p className="danger">{errors.description}</p>
                 )}
               </div>
-              <div className="form__element">
-                <label className="form__label">price</label>
-                <input
-                  className="form__input"
-                  type="number"
-                  name="price"
-                  value={product.price}
-                  onChange={(e) => ChangeInput(e)}
-                ></input>
-                {errors.price && <p className="danger">{errors.price}</p>}
+
+              <div className="row">
+                <div className="form__element">
+                  <label className="form__label">currency</label>
+                  <Dropdown
+                    title=""
+                    name="currency"
+                    items={currencies}
+                    setVariants={(el) => setCurrency(el)}
+                    variants={currency}
+                  ></Dropdown>
+                </div>
+                <div className="form__element ml mr">
+                  <label className="form__label">price</label>
+                  <input
+                    className="form__input"
+                    type="number"
+                    name="price"
+                    value={product.price}
+                    onChange={(e) => ChangeInput(e)}
+                  ></input>
+                  {errors.price && <p className="danger">{errors.price}</p>}
+                </div>
               </div>
             </div>
 
