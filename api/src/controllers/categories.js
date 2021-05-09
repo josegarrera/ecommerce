@@ -10,13 +10,12 @@ function getAllCategories(req, res) {
 }
 
 function createCategories(req, res) {
-	if (!req.body || !req.body.categories)
+	if (!req.body || !req.body.categories.length || !req.body.variants.length)
 		return res
 			.status(400)
 			.send({type: 'Bad request.', error: 'The fields are empty.'});
-	const idProducts = req.body.products;
-	const categories = req.body.categories;
-	const specProducts = idProducts.map((item) => Products.findById(item));
+	const {products, categories, variants} = req.body;
+	const specProducts = products.map((item) => Products.findById(item));
 	let idValidProducts;
 	let validProducts;
 
@@ -31,25 +30,24 @@ function createCategories(req, res) {
 		})
 		.then((data) => {
 			let idCategories = data.map((item) => item.doc._id);
-			data.map(
-				(categorie) =>
-					(categorie.doc.products = categorie.doc.products
-						.concat(idValidProducts)
-						.filter(
-							(item, index) =>
-								categorie.doc.products.concat(idValidProducts).indexOf(item) ===
-								index
-						))
-			);
-			validProducts.map(
-				(product) =>
-					(product.categories = product.categories
-						.concat(idCategories)
-						.filter(
-							(item, index) =>
-								product.categories.concat(idCategories).indexOf(item) === index
-						))
-			);
+			data.forEach((categorie) => {
+				categorie.doc.variants = variants;
+				categorie.doc.products = categorie.doc.products
+					.concat(idValidProducts)
+					.filter(
+						(item, index) =>
+							categorie.doc.products.concat(idValidProducts).indexOf(item) ===
+							index
+					);
+			});
+			validProducts.forEach((product) => {
+				product.categories = product.categories
+					.concat(idCategories)
+					.filter(
+						(item, index) =>
+							product.categories.concat(idCategories).indexOf(item) === index
+					);
+			});
 			return Promise.all(
 				data
 					.map((item) => item.doc.save())
