@@ -58,7 +58,7 @@ const Catalogue = () => {
             <ul className="filter__option__items">
               <li className="filter__option__item">
                 <input className="filter__option__checkbox" type="checkbox" />
-                Kingston
+                <label for="">Kingston</label>
               </li>
 
               <li className="filter__option__item">
