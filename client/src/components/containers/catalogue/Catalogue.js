@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-pascal-case */
+
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CardProduct from "../../presentationals/cardProduct/CardProduct";
 import {
-  getAllProducts,
   getCategories,
   getProducts,
 } from "../../../redux/actions/index.js";
@@ -15,7 +15,7 @@ import { URLS } from "../../../utils/constants";
 import Dropdown from "../dropdown";
 
 const Catalogue = () => {
-  const allProducts = useSelector((state) => state.fakeProducts);
+  const products = useSelector((state) => state.products);
   const allCategories = useSelector((state) => state.categories);
   const categoryNames = allCategories.map((c) => c.name);
   const [categoriesSelected, selectCategories] = useState([]);
@@ -30,7 +30,7 @@ const Catalogue = () => {
 
   useEffect(() => {
     dispatch(getCategories());
-    dispatch(getAllProducts());
+    dispatch(getProducts(input));
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -43,41 +43,31 @@ const Catalogue = () => {
   // console.log(categoryNames);
   // console.log("acaaaaaaaaa", allProducts);
 
-  const handleNextPage = async () => {
-    const {
-      data: { pages },
-    } = await axios.get(`${URLS.URL_PRODUCTS}`);
-    const {
-      data: { products },
-    } = await axios.get(pages[1]);
-    dispatch(getAllProducts(products));
-  };
 
-  const handlePrevPage = async () => {
-    const {
-      data: { pages },
-    } = await axios.get(`${URLS.URL_PRODUCTS}`);
-    const {
-      data: { products },
-    } = await axios.get(pages[0]);
-    dispatch(getAllProducts(products));
-  };
+	const {products, pages} = useSelector((state) => state.products);
+	// Este allProducts me trae {products: Array(12), pages: Array(2)}
 
-  return (
-    <Catalogue_Style>
-      <div className="catalogue">
-        <div className="filter__options">
-          <div className="filter__title">SEARCH FILTER</div>
+	return (
+		<Catalogue_Style>
+			<div className='catalogue'>
+				<div className='filter__options'>
+					<div className='filter__title'>SEARCH FILTER</div>
 
-          <div className="separator"></div>
+					<div className='separator'></div>
 
-          <div className="filter__section">
-            <div className="filter__section__row">
-              <div className="filter__section__title">BRANDS</div>
-              <div className="filter__section__icon">
-                <MdKeyboardArrowDown />
-              </div>
-            </div>
+					<div className='filter__section'>
+						<div className='filter__section__row'>
+							<div className='filter__section__title'>BRANDS</div>
+							<div className='filter__section__icon'>
+								<MdKeyboardArrowDown />
+							</div>
+						</div>
+
+						<ul className='filter__option__items'>
+							<li className='filter__option__item'>
+								<input className='filter__option__checkbox' type='checkbox' />
+								<label for=''>Kingston</label>
+							</li>
 
             <Dropdown
               title="currency"
@@ -89,24 +79,23 @@ const Catalogue = () => {
             ></Dropdown>
           </div>
         </div>
-        <div className="cards__container">
-          {allProducts.length &&
-            allProducts.map(({ name, price, imageUrl }) => (
-              <CardProduct
-                key={name}
-                name={name}
-                price={price}
-                imageUrl={imageUrl}
-              />
-            ))}
-        </div>
+       		<div className='cards__container'>
+					{products &&
+						products.map(({name, price, imageUrl}) => (
+							<CardProduct
+								key={name}
+								name={name}
+								price={price}
+								imageUrl={imageUrl}
+							/>
+						))}
+				</div>
       </div>
-      <Pagination
-        handleNextPage={handleNextPage}
-        handlePrevPage={handlePrevPage}
-      />
+	    <Pagination pages={pages} /*  actualizar={actualizar} */ />
     </Catalogue_Style>
   );
+
+
 };
 
 export default Catalogue;
