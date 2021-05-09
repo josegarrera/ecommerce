@@ -3,7 +3,13 @@ import { ActionTypes, URLS } from "../../utils/constants";
 
 ////////////////////////////////////////  PRODUCTS ACTIONS  ////////////////////////////////////////
 
-export const getProducts = (filter, filterValue, order, direction, limit) => {
+export const getProducts = (
+  filter,
+  filterValue,
+  order,
+  direction,
+  limit = 12
+) => {
   return async (dispatch) => {
     const { data } = await axios.get(
       `${URLS.URL_PRODUCTS}?filter=${filter}&filterValue=${filterValue}&order=${order}&direction=${direction}&limit=${limit}`
@@ -18,6 +24,7 @@ export const getProducts = (filter, filterValue, order, direction, limit) => {
 export const getProductsQuery = (page) => {
   return async (dispatch) => {
     const { data } = await axios.get(page);
+    console.log(data, "dataaaaaaaa");
     dispatch({
       type: ActionTypes.GET_PRODUCTS_QUERY,
       payload: data,

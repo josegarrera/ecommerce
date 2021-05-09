@@ -68,7 +68,7 @@ const Catalogue = () => {
           </div>
         </div>
         <div className="cards__container">
-          {products.length &&
+          {products &&
             products.map(({ name, price, imageUrl }) => (
               <CardProduct
                 key={name}
