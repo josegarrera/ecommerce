@@ -27,13 +27,15 @@ export const getProductDetail = (id) => {
 
 export const addNewProduct = (body) => {
   //agrega un producto
+
   return async () => {
     try {
-      await axios({
+      const { data } = await axios({
         method: "post",
         url: URLS.URL_PRODUCTS,
         data: body,
       });
+      console.log(data, "ok");
     } catch (err) {
       console.log(err);
     }

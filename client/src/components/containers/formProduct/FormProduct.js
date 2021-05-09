@@ -5,6 +5,7 @@ import { IoCloseSharp } from "react-icons/io5";
 import Checkbox from "../checkbox";
 import Dropdown from "../dropdown";
 import TagsInput from "../tagsInput";
+import { addNewProduct } from "../../../redux/actions";
 
 // import { getCategories } from "../../../redux/actions/index.js";
 
@@ -158,7 +159,7 @@ const FormProduct = () => {
       price,
     };
 
-    console.log(obj);
+    dispatch(addNewProduct(obj));
   };
 
   return (
