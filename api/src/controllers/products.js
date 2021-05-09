@@ -117,13 +117,21 @@ function getProducts(req, res) {
 					.status(404)
 					.send({type: 'Not found.', error: 'Query parameters do not match.'});
 			let result =
-				otherFilter === 'categories' || otherFilter === 'brands'
+				otherFilter === 'categories'
 					? data.filter(
 							(product) =>
 								product[otherFilter].length &&
 								product[otherFilter].find((categorie) =>
 									categorie.name.toLowerCase().includes(otherFilterValue)
 								)
+					  )
+					: otherFilter === 'brands'
+					? data.filter(
+							(product) =>
+								product[otherFilter] &&
+								product[otherFilter].name
+									.toLowerCase()
+									.includes(otherFilterValue)
 					  )
 					: otherFilter === 'variants'
 					? data.filter((product) =>
@@ -153,7 +161,12 @@ function getProducts(req, res) {
 				result.length - offset > limit
 					? result.slice(offset, limit)
 					: result.slice(offset);
-			res.send({products, pages});
+			if (!products.length)
+				return res.status(404).send({
+					type: 'Not found.',
+					error: 'Query parameters do not match.',
+				});
+			return res.send({products, pages});
 		})
 		.catch((error) =>
 			res.status(500).send({type: 'Internal Server Error', error: error})
