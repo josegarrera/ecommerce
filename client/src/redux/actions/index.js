@@ -27,6 +27,19 @@ export const getAllProducts = (products) => {
     });
   };
 };
+
+export const getProducts = (filter, filterValue, order, direction, limit) => {
+  return async (dispatch) => {
+    const { data } = await axios.get(
+      `${URLS.URL_PRODUCTS}?filter=${filter}&filterValue=${filterValue}&order=${order}&direction=${direction}&limit=${limit}`
+    );
+    dispatch({
+      type: ActionTypes.GET_PRODUCT_BY_QUERY,
+      payload: data,
+    });
+  };
+};
+
 export const getProductDetail = (id) => {
   //trae los detalles de 1 solo producto
   return async (dispatch) => {
@@ -152,4 +165,3 @@ export const getCategories = () => {
     });
   };
 };
-

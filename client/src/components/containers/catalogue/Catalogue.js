@@ -1,23 +1,47 @@
 /* eslint-disable react/jsx-pascal-case */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CardProduct from "../../presentationals/cardProduct/CardProduct";
-import { getAllProducts } from "../../../redux/actions/index.js";
+import {
+  getAllProducts,
+  getCategories,
+  getProducts,
+} from "../../../redux/actions/index.js";
 import Catalogue_Style from "./styled";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import Pagination from "../pagination/Pagination";
 import axios from "axios";
 import { URLS } from "../../../utils/constants";
+import Dropdown from "../dropdown";
 
 const Catalogue = () => {
+  const allProducts = useSelector((state) => state.fakeProducts);
+  const allCategories = useSelector((state) => state.categories);
+  const categoryNames = allCategories.map((c) => c.name);
+  const [categoriesSelected, selectCategories] = useState([]);
+  const [input, setInput] = useState({
+    filter: "",
+    filterValue: "",
+    order: "",
+    direction: "",
+    limit: "",
+  });
+  const dispatch = useDispatch();
+
   useEffect(() => {
+    dispatch(getCategories());
     dispatch(getAllProducts());
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const dispatch = useDispatch();
+  useEffect(() => {
+    // filter, filterValue, order, direction, limit
+    console.log(categoriesSelected);
+  }, [categoriesSelected]);
 
-  const allProducts = useSelector((state) => state.fakeProducts);
-  console.log("acaaaaaaaaa", allProducts);
+  console.log(allCategories);
+
+  // console.log(categoryNames);
+  // console.log("acaaaaaaaaa", allProducts);
 
   const handleNextPage = async () => {
     const {
@@ -55,33 +79,18 @@ const Catalogue = () => {
               </div>
             </div>
 
-            <ul className="filter__option__items">
-              <li className="filter__option__item">
-                <input className="filter__option__checkbox" type="checkbox" />
-                <label for="">Kingston</label>
-              </li>
-
-              <li className="filter__option__item">
-                <input className="filter__option__checkbox" type="checkbox" />
-                Samsung
-              </li>
-              <li className="filter__option__item">
-                <input className="filter__option__checkbox" type="checkbox" />
-                NZXT
-              </li>
-              <li className="filter__option__item">
-                <input className="filter__option__checkbox" type="checkbox" />
-                Asus
-              </li>
-              <li className="filter__option__item">
-                <input className="filter__option__checkbox" type="checkbox" />
-                Corsair
-              </li>
-            </ul>
+            <Dropdown
+              title="currency"
+              name="currency"
+              items={categoryNames}
+              multiselect
+              setVariants={(el) => selectCategories(el)}
+              variants={categoriesSelected}
+            ></Dropdown>
           </div>
         </div>
         <div className="cards__container">
-          {allProducts &&
+          {allProducts.length &&
             allProducts.map(({ name, price, imageUrl }) => (
               <CardProduct
                 key={name}
