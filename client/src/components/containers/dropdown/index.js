@@ -17,7 +17,6 @@ function Dropdown({
   variants,
 }) {
   const [open, setOpen] = useState(false);
-  const [selection, setSelection] = useState([]);
   const toggle = () => setOpen(!open);
 
   //   Dropdown.handleClickOutside = () => setOpen(false);

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import FormProductStyle from "./styled";
 import { IoCloseSharp } from "react-icons/io5";
 import Checkbox from "../checkbox";
 import Dropdown from "../dropdown";
+import TagsInput from "../tagsInput";
+
 // import { getCategories } from "../../../redux/actions/index.js";
 
 export function validate(product, allProducts) {
@@ -53,14 +55,13 @@ export function validate(product, allProducts) {
 
 const FormProduct = () => {
   const [variantSelected, setVariants] = useState([]);
+  const [tags, setTags] = useState([]);
   const [categorySelected, setCategories] = useState([]);
   const [errors, setErrors] = useState({});
 
   //   {
   //     "price" : {"currency": "$", "value": 249999},
   //     "imageUrl": [],
-  //     "variants": {"stock": 500, "formato": "mecánico"},
-  //     "categories": ["strings"],
   // }
 
   const dispatch = useDispatch();
@@ -116,29 +117,6 @@ const FormProduct = () => {
     // dispatch(getCategories());
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  function handleInputFile(e) {
-    if (e.target.files[0]) {
-      setProduct({
-        ...product,
-        imageUrl: e.target.files[0],
-      });
-      setErrors(
-        validate(
-          {
-            ...product,
-            imageUrl: e.target.files[0],
-          }
-          // props.dogsCreated
-        )
-      );
-    } else {
-      setProduct({
-        ...product,
-        image: "",
-        file: "",
-      });
-    }
-  }
 
   const ChangeInput = (e) => {
     setProduct({
@@ -161,8 +139,8 @@ const FormProduct = () => {
   const onClickSubmit = (color) => {};
 
   const handleSubmit = (e) => {
-    e.preventDefault();
 
+    e.preventDefault();
     // console.log(categorySelected);
     // console.log(variantSelected);
 
@@ -170,6 +148,7 @@ const FormProduct = () => {
       ...product,
       variants: { ...variantSelected[0] },
       categories: categorySelected,
+      imageUrl: [...tags],
     };
 
     console.log(obj);
@@ -261,7 +240,7 @@ const FormProduct = () => {
                 ></Dropdown>
               </div>
               <div className="form__element">
-                <label className="form__label">colors</label>
+                {/* <label className="form__label">colors</label>
                 <div className="checkbox__container">
                   {colors.map((color, index) => (
                     <Checkbox
@@ -270,36 +249,11 @@ const FormProduct = () => {
                       onClick={() => onClickSubmit()}
                     ></Checkbox>
                   ))}
-                  {/* 
-                  <Checkbox color="red" on></Checkbox>
-                  <Checkbox color="blue"></Checkbox>
-                  <Checkbox color="green"></Checkbox>
-                  <Checkbox color="yellow"></Checkbox>
-                  <Checkbox color="purple"></Checkbox>
-                  <Checkbox color="black"></Checkbox>
-                  <Checkbox color="light-blue"></Checkbox>
-                  <Checkbox color="white"></Checkbox> */}
-                </div>
+                </div> */}
               </div>
               <div className="form__element">
-                <label className="form__label">Imagen:</label>
-
-                <div id="form__input">
-                  <input
-                    id="imageUrl"
-                    type="file"
-                    name="image"
-                    onChange={(e) => handleInputFile(e)}
-                  />
-                </div>
-
-                {/* <input
-                  className="form__input"
-                  type="text"
-                  id="imageUrl"
-                  name="imageUrl"
-                  onChange={(e) => ChangeInput(e)}
-                ></input> */}
+                <label className="form__label">Image URL:</label>
+                <TagsInput tags={tags} setTags={setTags}></TagsInput>
               </div>
             </div>
           </div>
