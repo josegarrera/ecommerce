@@ -17,16 +17,13 @@ const ProductsSchema = new Schema({
 			ref: 'categories',
 		},
 	],
-	brands: [
-		{
-			type: mongoose.Schema.Types.ObjectId,
-			ref: 'brands',
-		},
-	],
+	brands: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'brands',
+	},
 	variants: {}, // the different variants of the products. A flexible object that let you assign whatever variant the product has
 });
 
 ProductsSchema.plugin(findOrCreate);
-
 
 module.exports = mongoose.model('products', ProductsSchema);

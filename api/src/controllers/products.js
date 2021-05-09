@@ -12,17 +12,15 @@ async function createProduct(req, res) {
 	} = req.body;
 	const checkExists = await Products.exists({name});
 
-	if (!req.body || !name || !description)
+	if (!req.body || !name || !description || !price || !brands)
 		return res
 			.status(400)
 			.send({type: 'Bad request.', error: 'The fields are empty.'});
 	if (checkExists)
-		return res
-			.status(500)
-			.send({
-				type: 'Internal server error.',
-				error: 'A product with this name already exists',
-			});
+		return res.status(500).send({
+			type: 'Internal server error.',
+			error: 'A product with this name already exists',
+		});
 
 	const product = new Products({
 		name,
@@ -30,41 +28,46 @@ async function createProduct(req, res) {
 		price,
 		imageUrl,
 		categories: [],
-		brands: [],
+		brands,
 		variants,
 	});
 	const categoriesCreated = categories.map((el) =>
 		Categories.findOrCreate({name: el})
 	);
-	return Promise.all(categoriesCreated)
+	Promise.all(categoriesCreated)
 		.then((data) => {
 			data.map(
 				(el) =>
 					el.doc.products.push(product._id) &&
 					product.categories.push(el.doc._id) &&
-					el.doc.save()
+					el.doc.save((err) => {
+						if (err)
+							return res
+								.status(500)
+								.send({type: 'Internal server error.', error: err});
+					})
 			);
+			return Brands.findOrCreate({name: brands});
 		})
 		.then((data) => {
-			const brandsCreated = brands.map((el) => Brands.findOrCreate({name: el}));
-			return Promise.all(brandsCreated);
-		})
-		.then((data) => {
-			data.map(
-				(el) =>
-					el.doc.products.push(product._id) &&
-					product.brands.push(el.doc._id) &&
-					el.doc.save()
-			);
-		})
-		.then((data) =>
+			data.doc.products.push(product._id);
+			product.brands = data.doc._id;
+			data.doc.save((err) => {
+				if (err)
+					return res
+						.status(500)
+						.send({type: 'Internal server error.', error: err});
+			});
 			product.save((err) => {
 				if (err)
 					return res
 						.status(500)
 						.send({type: 'Internal server error.', error: err});
 				res.send(product);
-			})
+			});
+		})
+		.catch((error) =>
+			res.status(500).send({type: 'Internal server error.', error: error})
 		);
 }
 
