@@ -8,7 +8,7 @@ import TagsInput from '../tagsInput';
 import {
 	addNewProduct,
 	getCategories,
-	getAllProducts,
+  getProducts,
 } from '../../../redux/actions';
 
 // import { getCategories } from "../../../redux/actions/index.js";
@@ -89,7 +89,7 @@ const FormProduct = () => {
 	const currencies = ['U$S', 'ARS$'];
 
 	useEffect(() => {
-		dispatch(getAllProducts());
+		dispatch(getProducts());
 		dispatch(getCategories());
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
