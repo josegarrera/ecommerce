@@ -36,24 +36,23 @@ const TagsInputStyle = styled.div`
   .tag__input {
     display: flex;
     align-items: center;
-    padding: 0.75rem 1rem 0.75rem 1rem;
+    padding: 1rem;
     width: 100%;
+    height: 100%;
     color: #757575;
     border-radius: 0.5rem 0 0 0.5rem;
-    font-size: 1rem;
     font-weight: 600;
     background-color: #ffffff;
     border: 1.5px solid #e0e0e0;
   }
 
   .submit__tag {
-    padding: 0.75rem 3rem 0.75rem 3rem;
+    padding: 1rem 3rem 1rem 3rem;
     font-family: "Poppins" sans-serif;
     background-color: #0395b8;
     font-weight: 500;
     border-radius: 0 0.5rem 0.5rem 0;
     color: #ffffff;
-    font-size: 1rem;
   }
 
   .input__container {

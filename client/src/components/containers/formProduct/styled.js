@@ -18,13 +18,6 @@ const FormProductStyle = styled.div`
     font: inherit;
     cursor: pointer;
   }
-  .mr {
-    margin-right: 0.5rem;
-  }
-
-  .ml {
-    margin-right: 0.5rem;
-  }
 
   .form__container {
     display: flex;
@@ -76,7 +69,6 @@ const FormProductStyle = styled.div`
 
   .form__input {
     padding: 1rem;
-    width: 25rem;
     color: #757575;
     border-radius: 0.6rem;
     font-size: 1rem;

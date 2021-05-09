@@ -147,7 +147,7 @@ const FormProduct = () => {
 
     const price = {};
 
-    price.currency = [...currency][0].currency;
+    price.currency = currency[0].currency;
     price.value = product.price;
 
     const obj = {
@@ -216,7 +216,7 @@ const FormProduct = () => {
                 <div className="form__element">
                   <label className="form__label">currency</label>
                   <Dropdown
-                    title=""
+                    title="currency"
                     name="currency"
                     items={currencies}
                     setVariants={(el) => setCurrency(el)}
