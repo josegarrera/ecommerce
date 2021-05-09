@@ -1,19 +1,32 @@
 import axios from "axios";
 import { ActionTypes, URLS } from "../../utils/constants";
 
-//------------------------ ACTIONS PRODUCTS---------------
+////////////////////////////////////////  PRODUCTS ACTIONS  ////////////////////////////////////////
 
-export const getAllProducts = () => {
+export const getAllProducts = (products) => {
   // trae todos los productos del servidor.
+  if (products) {
+    console.log("entre al if");
+    console.log(products);
+    return async (dispatch) => {
+      console.log("entre al dispath");
+      return dispatch({
+        type: ActionTypes.GET_PRODUCTS,
+        payload: products, // TIENE QUE SER UN []
+      });
+    };
+    console.log("no entre al if");
+  }
   return async (dispatch) => {
-    const { data } = await axios.get(`${URLS.URL_PRODUCTS}`);
+    const {
+      data: { products },
+    } = await axios.get(`${URLS.URL_PRODUCTS}`);
     return dispatch({
       type: ActionTypes.GET_PRODUCTS,
-      payload: data, // TIENE QUE SER UN []
+      payload: products, // TIENE QUE SER UN []
     });
   };
 };
-
 export const getProductDetail = (id) => {
   //trae los detalles de 1 solo producto
   return async (dispatch) => {
@@ -52,10 +65,11 @@ export const getProductByQuery = (name) => {
   };
 };
 
-//DUDAS , PREGUNTAR AUTENTIFICACION, DISPATCHA DE PUT/DELETE
+/*----------------------------------------------------------------PENDING---------------------------------------------------------------
 
-//-----------------------------------------PENDING---------------------------------------------------
-/* export const removeProduct = (id) => {
+DUDAS , PREGUNTAR AUTENTIFICACION, DISPATCHA DE PUT/DELETE
+
+export const removeProduct = (id) => {
   //agrega un producto
   return async () => {
     try {
@@ -84,14 +98,12 @@ export const updateProduct = (id, body) => {
   };
 };
 
+--------------------------------------------------------------------------------------------------------------------------------------*/
 
-//---------------------------------------------------------------------------------------------------
- */
-
-//------------------------ ACTIONS ORDERS---------------
+////////////////////////////////////////  ORDERS ACTIONS  ////////////////////////////////////////
 
 export const getAllOrders = () => {
-  // trae todos los productos del servidor.
+  // trae todos las ordenes que tiene el vendedor.
   return async (dispatch) => {
     const { data } = await axios.get(`${URLS.URL_ORDERS}`);
     return dispatch({
@@ -101,8 +113,8 @@ export const getAllOrders = () => {
   };
 };
 
-/* export const getProductDetail = (id) => {
-  //trae los detalles de 1 solo producto
+export const getOrderDetail = (id) => {
+  //trae el detalle de 1 orden (id de la orden)
   return async (dispatch) => {
     const { data } = await axios.get(`${URLS.URL_ORDERS}/${id}`);
     return dispatch({
@@ -110,15 +122,15 @@ export const getAllOrders = () => {
       payload: data, // TIENE QUE SER UN {}
     });
   };
-}; */
+};
 
-/* export const addNewProduct = (body) => {
+export const addNewOrder = (body) => {
   //agrega un producto
   return async () => {
     try {
       await axios({
         method: "post",
-        url: URLS.URL_ORDERS,
+        url: URLS.URL_PRODUCTS,
         data: body,
       });
     } catch (err) {
@@ -126,4 +138,18 @@ export const getAllOrders = () => {
     }
   };
 };
- */
+////////////////////////////////////////  USERS ACTIONS  ////////////////////////////////////////
+
+////////////////////////////////////////  CATEGORIES ACTIONS  ////////////////////////////////////////
+
+export const getCategories = () => {
+  // trae todas las categorias del servidor.
+  return async (dispatch) => {
+    const { data } = await axios.get(`${URLS.URL_CATEGORIES}`);
+    return dispatch({
+      type: ActionTypes.GET_CATEGORIES,
+      payload: data, // TIENE QUE SER UN [ "", "", ""]
+    });
+  };
+};
+

@@ -6,12 +6,14 @@ export const ActionTypes = {
 
   GET_ORDERS: "GET_ORDERS",
   ORDER_DETAIL: "ORDER_DETAIL",
-  SORT_WEIGHT: "SORT_WEIGHT",
-  SORT_ALPHA: "SORT_ALPHA",
-  NEXT_PAGE: "NEXT_PAGE",
+
+  GET_CATEGORIES: "GET_CATEGORIES",
+
+  
 };
 
 export const URLS = {
   URL_PRODUCTS: "http://localhost:3001/products",
   URL_ORDERS: "http://localhost:3001/orders",
+  URL_CATEGORIES: "http://localhost:3001/categories",
 };

@@ -1,10 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import DivCrdProd from "./styled";
-import {FaShoppingCart} from "react-icons/fa";
+import { FaShoppingCart } from "react-icons/fa";
 import { AiOutlineHeart } from "react-icons/ai";
 
-const CardProduct = ({ _id, name, images, price }) => {
+const CardProduct = ({ name, imageUrl, price }) => {
   const handleAddCart = () => {
     //add to cart
   };
@@ -14,18 +13,17 @@ const CardProduct = ({ _id, name, images, price }) => {
 
   return (
     <DivCrdProd>
-      <img
-        src={images}
-        alt="imagen de producto"
-      />
+      <div className="cnt__image">
+        <img className="img__card" src={imageUrl[0]} alt="imagen de producto" />
+      </div>
       <div className="cnt_info">
-        <h3>{name}</h3>
-        <h4>{price}</h4>
+        <h5>{name}</h5>
+        <h6>{price.currency + price.value}</h6>
         <button className="btn__fav" onClick={handleAddFav}>
-          <AiOutlineHeart/>
+          <AiOutlineHeart />
         </button>
         <button className="btn__cart" onClick={handleAddCart}>
-          <FaShoppingCart/>
+          <FaShoppingCart />
         </button>
       </div>
     </DivCrdProd>
