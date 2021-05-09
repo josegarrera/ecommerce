@@ -16,6 +16,13 @@ const r = (state = initialState, { type, payload }) => {
       return {
         ...state,
         products: payload,
+        fakeProducts: payload,
+      };
+    case "UPDATE_PRODUCT":
+      console.log("LLEGUE ACA");
+      return {
+        ...state,
+        fakeProducts: payload,
       };
     case ActionTypes.PRODUCT_DETAIL:
       return {
@@ -27,21 +34,21 @@ const r = (state = initialState, { type, payload }) => {
         ...state,
         fakeProducts: payload,
       };
-      
-      ///////////////  ORDERS  ///////////////
-      case ActionTypes.GET_ORDERS:
+
+    ///////////////  ORDERS  ///////////////
+    case ActionTypes.GET_ORDERS:
       return {
         ...state,
         orders: payload,
       };
-      case ActionTypes.ORDER_DETAIL:
+    case ActionTypes.ORDER_DETAIL:
       return {
         ...state,
         orderDetail: payload,
       };
 
-      ///////////////  CATEGORIES  ///////////////
-      case ActionTypes.GET_CATEGORIES:
+    ///////////////  CATEGORIES  ///////////////
+    case ActionTypes.GET_CATEGORIES:
       return {
         ...state,
         categories: payload,

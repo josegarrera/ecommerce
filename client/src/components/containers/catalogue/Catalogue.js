@@ -5,15 +5,39 @@ import CardProduct from "../../presentationals/cardProduct/CardProduct";
 import { getAllProducts } from "../../../redux/actions/index.js";
 import Catalogue_Style from "./styled";
 import { MdKeyboardArrowDown } from "react-icons/md";
+import Pagination from "../pagination/Pagination";
+import axios from "axios";
+import { URLS } from "../../../utils/constants";
 
 const Catalogue = () => {
-  const dispatch = useDispatch();
-
-  const allProducts = useSelector((state) => state.products);
-  console.log(allProducts);
   useEffect(() => {
     dispatch(getAllProducts());
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const dispatch = useDispatch();
+
+  const allProducts = useSelector((state) => state.fakeProducts);
+  console.log("acaaaaaaaaa", allProducts);
+
+  const handleNextPage = async () => {
+    const {
+      data: { pages },
+    } = await axios.get(`${URLS.URL_PRODUCTS}`);
+    const {
+      data: { products },
+    } = await axios.get(pages[1]);
+    dispatch(getAllProducts(products));
+  };
+
+  const handlePrevPage = async () => {
+    const {
+      data: { pages },
+    } = await axios.get(`${URLS.URL_PRODUCTS}`);
+    const {
+      data: { products },
+    } = await axios.get(pages[0]);
+    dispatch(getAllProducts(products));
+  };
 
   return (
     <Catalogue_Style>
@@ -56,14 +80,22 @@ const Catalogue = () => {
             </ul>
           </div>
         </div>
-
         <div className="cards__container">
           {allProducts &&
             allProducts.map(({ name, price, imageUrl }) => (
-              <CardProduct name={name} price={price} imageUrl={imageUrl} />
+              <CardProduct
+                key={name}
+                name={name}
+                price={price}
+                imageUrl={imageUrl}
+              />
             ))}
         </div>
       </div>
+      <Pagination
+        handleNextPage={handleNextPage}
+        handlePrevPage={handlePrevPage}
+      />
     </Catalogue_Style>
   );
 };
