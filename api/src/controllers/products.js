@@ -1,4 +1,39 @@
 const {Products, Categories, Brands} = require('../models/index.js');
+const mongoose = require('mongoose');
+
+async function getProductsDetail(req, res) {
+	const {id} = req.params;
+	if (!id)
+		return res.status(400).send({
+			type: 'Bad Request',
+			error: 'No ID in params',
+		});
+	if (!mongoose.Types.ObjectId.isValid(id))
+		return res.status(400).send({
+			type: 'Bad Request',
+			error: 'ID is invalid',
+		});
+	else {
+		Products.findById(id)
+			.populate('categories', {name: true})
+			.populate('brands', {name: true})
+			.exec()
+			.then((data) =>
+				data
+					? res.send(data)
+					: res.status(404).send({
+							type: 'Internal server error.',
+							error: 'Product not found',
+					  })
+			)
+			.cath((err) =>
+				res.status(500).send({
+					type: 'Internal server error.',
+					error: err,
+				})
+			);
+	}
+}
 
 async function createProduct(req, res) {
 	console.log(req.body);
@@ -180,4 +215,5 @@ function getProducts(req, res) {
 module.exports = {
 	createProduct,
 	getProducts,
+	getProductsDetail,
 };
