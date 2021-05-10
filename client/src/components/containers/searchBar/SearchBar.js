@@ -12,18 +12,20 @@ const SearchBar = () => {
 	}
 
 	return (
-		<FormSearchBar className='searchBar' onSubmit={(e) => handleSubmit(e)}>
-			<input
-				className='input'
-				value={value}
-				onChange={(e) => setValue(e.target.value)}
-				placeholder='Search the entire store...'
-				type='text'
-			></input>
-			<div className='divLupa'>
-				<Link to={`/products/${value}`}>
-					<IoSearch className='lupa' type='submit' />
-				</Link>
+		<FormSearchBar>
+			<div className='searchBar' onSubmit={(e) => handleSubmit(e)}>
+				<input
+					className='input'
+					value={value}
+					onChange={(e) => setValue(e.target.value)}
+					placeholder='Search the entire store...'
+					type='text'
+				></input>
+				<div className='divLupa'>
+					<Link to={`/products/name/${value}`}>
+						<IoSearch className='lupa' type='submit' />
+					</Link>
+				</div>
 			</div>
 		</FormSearchBar>
 	);

@@ -3,7 +3,6 @@ import CardProduct from '../../presentationals/cardProduct/CardProduct';
 import Products_List_Style from './styled';
 
 const ProductList = ({products}) => {
-	console.log('aver donde esta el id', products);
 	return (
 		<Products_List_Style>
 			<div className='cards__container'>

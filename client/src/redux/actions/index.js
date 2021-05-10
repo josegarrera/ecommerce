@@ -32,7 +32,7 @@ export const getProductsQuery = (page) => {
 	};
 };
 
-export const getProductDetail = (id) => {
+export const getProductDetail = ({id}) => {
 	//trae los detalles de 1 solo producto
 	return async (dispatch) => {
 		const {data} = await axios.get(`${URLS.URL_PRODUCTS}/${id}`);
