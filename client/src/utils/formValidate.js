@@ -18,7 +18,7 @@ export default function validate(product, allProducts) {
 		errors.price = 'Sólo números.';
 	}
 
-	if (product.name && !/^[A-Za-z\s]+$/g.test(product.name)) {
+	if (product.name && !/^[A-Za-z0-9\s]+$/g.test(product.name)) {
 		errors.name = 'Sólo palabras sin tilde.';
 	}
 

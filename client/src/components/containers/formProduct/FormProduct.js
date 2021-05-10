@@ -9,19 +9,26 @@ import {
 	addNewProduct,
 	getCategories,
 	getProducts,
+	emptyProductCreated,
 } from '../../../redux/actions';
 import validate from '../../../utils/formValidate.js';
 import setter from '../../../utils/setterInput.js';
+import Swal from 'sweetalert2';
 
 const FormProduct = () => {
 	const allCategories = useSelector((state) => state.categories);
 	const categories = allCategories.map((c) => c.name);
 	const allProducts = useSelector((state) => state.products.products);
+	const productCreated = useSelector((state) => state.productCreated);
 	const [variantSelected, setVariants] = useState([]);
 	const [tags, setTags] = useState([]);
 	const [categorySelected, setCategories] = useState([]);
 	const [currency, setCurrency] = useState([]);
 	const [errors, setErrors] = useState({});
+	const [status, setStatus] = useState({
+		init: false,
+		completed: false,
+	});
 	const dispatch = useDispatch();
 	const [product, setProduct] = useState({
 		_id: 0,
@@ -40,14 +47,45 @@ const FormProduct = () => {
 	useEffect(() => {
 		dispatch(getProducts(undefined, undefined, undefined, undefined, 100));
 		dispatch(getCategories());
+		return () => {
+			dispatch(emptyProductCreated());
+		};
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+	useEffect(() => {
+		if (productCreated.hasOwnProperty('name') && status.completed) {
+			Swal.fire({
+				title: 'Success!',
+				text: 'Product succesfully created',
+				icon: 'success',
+				confirmButtonText: 'Ok',
+			});
+		} else if (!productCreated.hasOwnProperty('name') && status.completed) {
+			Swal.fire({
+				title: 'Error',
+				text: productCreated.error,
+				icon: 'error',
+				confirmButtonText: 'Ok',
+			});
+		}
+		if (!status.init && status.completed) {
+			dispatch(emptyProductCreated());
+		}
+		setStatus({
+			...status,
+			completed: false,
+		});
+	}, [productCreated]);
 
 	const ChangeInput = (e) => {
 		setProduct({
 			...product,
 			[e.target.name]: e.target.value,
 		});
-
+		setStatus({
+			init: true,
+			completed: false,
+		});
 		setErrors(
 			validate(
 				{
@@ -63,6 +101,10 @@ const FormProduct = () => {
 		setProduct({
 			...product,
 			variants: {...product.variants, [e.target.name]: e.target.value},
+		});
+		setStatus({
+			init: true,
+			completed: false,
 		});
 	};
 
@@ -86,6 +128,10 @@ const FormProduct = () => {
 		setTags(setter(tags));
 		setCurrency(setter(currency));
 		setErrors({});
+		setStatus({
+			init: false,
+			completed: true,
+		});
 	};
 
 	return (

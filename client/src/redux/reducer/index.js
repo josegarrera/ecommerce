@@ -37,6 +37,11 @@ const r = (state = initialState, {type, payload}) => {
 				...state,
 				productCreated: payload,
 			};
+		case ActionTypes.EMPTY_PRODUCT_CREATED:
+			return {
+				...state,
+				productCreated: {},
+			};
 
 		///////////////  ORDERS  ///////////////
 		case ActionTypes.GET_ORDERS:
