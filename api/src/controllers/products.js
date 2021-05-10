@@ -26,7 +26,7 @@ async function getProductsDetail(req, res) {
 							error: 'Product not found',
 					  })
 			)
-			.cath((err) =>
+			.catch((err) =>
 				res.status(500).send({
 					type: 'Internal server error.',
 					error: err,
