@@ -3,6 +3,7 @@ import {ActionTypes} from '../../utils/constants';
 const initialState = {
 	products: {},
 	productDetail: {},
+	productCreated: {},
 	orders: [],
 	orderDetail: {},
 	categories: [],
@@ -30,6 +31,11 @@ const r = (state = initialState, {type, payload}) => {
 			return {
 				...state,
 				productDetail: payload,
+			};
+		case ActionTypes.PRODUCT_CREATED:
+			return {
+				...state,
+				productCreated: payload,
 			};
 
 		///////////////  ORDERS  ///////////////

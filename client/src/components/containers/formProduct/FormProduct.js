@@ -10,66 +10,13 @@ import {
 	getCategories,
 	getProducts,
 } from '../../../redux/actions';
-
-// import { getCategories } from "../../../redux/actions/index.js";
-
-export function validate(product, allProducts) {
-	let errors = {};
-
-	if (!product.name) {
-		errors.name = 'Campo requerido.';
-	}
-	if (!product.brands) {
-		errors.brands = 'Campo requerido.';
-	}
-	if (!product.description) {
-		errors.description = 'Campo requerido.';
-	}
-	if (!product.price) {
-		errors.price = 'Campo requerido.';
-	}
-
-	if (product.price && !/[0-9]+$/.test(product.price)) {
-		errors.price = 'Sólo números.';
-	}
-
-	if (product.name && !/^[A-Za-z\s]+$/g.test(product.name)) {
-		errors.name = 'Sólo palabras sin tilde.';
-	}
-
-	if (
-		product.name &&
-		allProducts.length &&
-		allProducts.find(
-			(element) =>
-				element.name.toLowerCase().trim() === product.name.toLowerCase().trim()
-		)
-	) {
-		errors.name = 'El producto ya existe.';
-	}
-	if (
-		product.imageUrl &&
-		!/[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/.test(
-			product.imageUrl
-		)
-	) {
-		errors.url = 'Coloca una URL válida';
-	}
-
-	/*  if (
-   product.imageUrl &&
-   (!/image\/jpeg|png/.test(product.imageUrl[0]) || product.imageUrl > 5242880)
- ) {
-   errors.file = "Sólo imágenes .png y .jpeg, menores a 5.24 MB.";
- }
- */
-	return errors;
-}
+import validate from '../../../utils/formValidate.js';
+import setter from '../../../utils/setterInput.js';
 
 const FormProduct = () => {
 	const allCategories = useSelector((state) => state.categories);
 	const categories = allCategories.map((c) => c.name);
-	const allProducts = useSelector((state) => state.products);
+	const allProducts = useSelector((state) => state.products.products);
 	const [variantSelected, setVariants] = useState([]);
 	const [tags, setTags] = useState([]);
 	const [categorySelected, setCategories] = useState([]);
@@ -80,11 +27,9 @@ const FormProduct = () => {
 		_id: 0,
 		name: '',
 		description: '',
-		price: 0,
-		imageUrl: [],
-		categories: [],
+		price: '',
 		brands: '',
-		variants: [],
+		variants: {},
 	});
 	const variants = categorySelected.length
 		? allCategories.filter(
@@ -92,9 +37,8 @@ const FormProduct = () => {
 		  )[0].variants
 		: [];
 	const currencies = ['U$S', 'ARS$'];
-
 	useEffect(() => {
-		dispatch(getProducts());
+		dispatch(getProducts(undefined, undefined, undefined, undefined, 100));
 		dispatch(getCategories());
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -102,8 +46,6 @@ const FormProduct = () => {
 		setProduct({
 			...product,
 			[e.target.name]: e.target.value,
-			categories: [...categorySelected],
-			variants: [...variantSelected],
 		});
 
 		setErrors(
@@ -115,8 +57,13 @@ const FormProduct = () => {
 				allProducts
 			)
 		);
+	};
 
-		console.log(errors);
+	const changeInputVariant = (e) => {
+		setProduct({
+			...product,
+			variants: {...product.variants, [e.target.name]: e.target.value},
+		});
 	};
 
 	const handleSubmit = (e) => {
@@ -127,15 +74,18 @@ const FormProduct = () => {
 
 		const obj = {
 			...product,
-			variants: {...variantSelected[0]},
-			categories: [categorySelected[0].categories],
+			variants: product.variants,
+			categories: categorySelected[0] ? [categorySelected[0].categories] : [],
 			imageUrl: [...tags],
 			price,
 		};
-
-		console.log(obj);
-
 		dispatch(addNewProduct(obj));
+		setProduct(setter(product));
+		setCategories(setter(categorySelected));
+		setVariants(setter(variantSelected));
+		setTags(setter(tags));
+		setCurrency(setter(currency));
+		setErrors({});
 	};
 
 	return (
@@ -205,7 +155,6 @@ const FormProduct = () => {
 									<input
 										className='form__input'
 										type='number'
-										min={1}
 										name='price'
 										value={product.price}
 										onChange={(e) => ChangeInput(e)}
@@ -226,24 +175,65 @@ const FormProduct = () => {
 									variants={categorySelected}
 								></Dropdown>
 							</div>
+
+							<label className='form__label'>variants</label>
+							<Dropdown
+								title='select variants'
+								name='variants'
+								items={variants}
+								multiselect
+								setVariants={(el) => setVariants(el)}
+								variants={variantSelected}
+								variantsProduct={product.variants}
+								setProduct={(el) => setProduct(el)}
+								products={product}
+							></Dropdown>
 							<div className='form__element'>
-								<label className='form__label'>variants</label>
-								<Dropdown
-									title='select variants'
-									name='variants'
-									items={variants}
-									setVariants={(el) => setVariants(el)}
-									variants={variantSelected}
-								></Dropdown>
+								{variantSelected.length ? (
+									variantSelected.map((variant, index) => (
+										<div key={variant + index + 'container'}>
+											<label className='form__label'>{variant}</label>
+											<input
+												key={variant + index}
+												className='form__input form__input__variant'
+												type='text'
+												name={variant}
+												value={product.variants[variant]}
+												onChange={(e) => changeInputVariant(e)}
+											></input>
+										</div>
+									))
+								) : (
+									<div> </div>
+								)}
 							</div>
 							<div className='form__element'>
 								<label className='form__label'>Image URL:</label>
-								<TagsInput tags={tags} setTags={setTags}></TagsInput>
+								<TagsInput
+									tags={tags}
+									setTags={setTags}
+									setErrors={setErrors}
+								></TagsInput>
+								{errors.url && <p className='danger'>{errors.url}</p>}
 							</div>
 						</div>
 					</div>
 
-					<button className='form__button' onClick={(e) => handleSubmit(e)}>
+					<button
+						className='form__button'
+						onClick={(e) => handleSubmit(e)}
+						disabled={
+							errors.name ||
+							errors.brands ||
+							errors.description ||
+							errors.brands ||
+							errors.price ||
+							errors.url ||
+							!product.name
+								? 'disabled'
+								: ''
+						}
+					>
 						Save
 					</button>
 				</form>
