@@ -61,8 +61,21 @@ export const addNewProduct = (body) => {
 				payload: data, // TIENE QUE SER UN {}
 			});
 		} catch (err) {
-			console.log(err);
+			return dispatch({
+				type: ActionTypes.EMPTY_PRODUCT_CREATED,
+				payload: {
+					error: err,
+					message: 'Internal server error',
+				},
+			});
 		}
+	};
+};
+
+export const emptyProductCreated = () => {
+	// vacía el producto creado
+	return {
+		type: ActionTypes.EMPTY_PRODUCT_CREATED,
 	};
 };
 
