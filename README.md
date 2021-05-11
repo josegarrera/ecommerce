@@ -1,8 +1,8 @@
 # <Store! />
 
 <p align="center">
-  <img height="250" src="https://res.cloudinary.com/dlexbrcrv/image/upload/v1620753770/Proyects/Store_n4i4xq.png" />
-   <img height="250" src="https://res.cloudinary.com/dlexbrcrv/image/upload/v1620753769/Proyects/Store_2_qxzk9t.png" />
+  <img height="230" src="https://res.cloudinary.com/dlexbrcrv/image/upload/v1620753770/Proyects/Store_n4i4xq.png" />
+   <img height="230" src="https://res.cloudinary.com/dlexbrcrv/image/upload/v1620753769/Proyects/Store_2_qxzk9t.png" />
 </p>
 
 ## Enunciado
