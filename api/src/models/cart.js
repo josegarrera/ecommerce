@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const findOrCreate = require('mongoose-findorcreate');
 
-const Cartchema = new Schema({
+const CartSchema = new Schema({
 	user: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'users',
@@ -11,6 +11,7 @@ const Cartchema = new Schema({
 		{
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'products',
+			lot: Number,
 		},
 	],
 });
