@@ -14,25 +14,27 @@ const CardProduct = ({name, imageUrl, price, _id}) => {
 
 	return (
 		<DivCrdProd>
-			<Link to={`/products/id/${_id}`}>
-				<div className='cnt__image'>
+			<div className='cnt__image'>
+				<Link to={`/products/id/${_id}`}>
 					<img
 						className='img__card'
 						src={imageUrl[0]}
 						alt='imagen de producto'
 					/>
-				</div>
-				<div className='cnt_info'>
+				</Link>
+			</div>
+			<div className='cnt_info'>
+				<Link to={`/products/id/${_id}`}>
 					<h5>{name}</h5>
-					<h6>{price.currency + price.value}</h6>
-					<button className='btn__fav' onClick={handleAddFav}>
-						<AiOutlineHeart />
-					</button>
-					<button className='btn__cart' onClick={handleAddCart}>
-						<FaShoppingCart />
-					</button>
-				</div>
-			</Link>
+				</Link>
+				<h6>{price.currency + price.value}</h6>
+				<button className='btn__fav' onClick={handleAddFav}>
+					<AiOutlineHeart />
+				</button>
+				<button className='btn__cart' onClick={handleAddCart}>
+					<FaShoppingCart />
+				</button>
+			</div>
 		</DivCrdProd>
 	);
 };

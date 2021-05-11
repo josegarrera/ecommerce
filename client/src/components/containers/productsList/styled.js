@@ -1,11 +1,15 @@
 import styled from 'styled-components';
 
 const Products_List_Style = styled.div`
+	display: flex;
+	justify-content: center;
+	height: 100%;
+
 	.cards__container {
 		display: flex;
-		padding: 0 2rem;
+		justify-content: center;
+		padding: 3rem;
 		flex-wrap: wrap;
-		width: 100%;
 	}
 `;
 
