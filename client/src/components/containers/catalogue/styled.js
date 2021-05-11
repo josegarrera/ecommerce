@@ -6,7 +6,7 @@ const Catalogue_Style = styled.div`
   justify-content: center;
   .catalogue {
     display: flex;
-    padding: 4rem;
+    padding: 100px 10%;
     background-color: #f4f4f4;
   }
 

@@ -1,28 +1,29 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const FormSearchBar = styled.div`
     display: flex;
 
     .searchBar{
-        border: 2px solid #E7E7E7;
+        border: 1px solid #e0e0e0;
         border-radius: 30px;
         height: 57px;
         width: 340px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0px 10px;
+        padding: 0px 6px;
         &:focus-within{
-            border: 1px solid #58585A;
+            border: 1px solid #9e9e9e;
         }
 
         .input{
             border: none;
+            padding:1.5rem;
             background: none;
             border-radius: 30px;
             height: 54px;
-            width: 250px;
-            font-size: 20px;
+            width: 100%;
+            font-size: 16px;
             &:focus-within{
                 outline: none;
             }
@@ -35,13 +36,14 @@ const FormSearchBar = styled.div`
         }
 
         .divLupa{
-            height: 45px;
-            width: 45px;
+            width:1rem;
+            height:1rem;
+            padding:1.5rem;
             background-color: #EE362E;
             border-radius: 100%;
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
 
             .lupa{
                 color: white;
