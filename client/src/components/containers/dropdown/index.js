@@ -52,7 +52,7 @@ function Dropdown({
 
 			// setSelection([...selectionAfterRemoval]);
 
-			if (variants.length && variantsProduct[variants[0]]) {
+			if (variants.length && variantsProduct && variantsProduct[variants[0]]) {
 				setProduct({
 					...products,
 					variants: setterVariants(variantsProduct, selectionAfterRemoval),
