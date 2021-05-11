@@ -37,15 +37,8 @@ async function getProductsDetail(req, res) {
 
 async function createProduct(req, res) {
 	console.log(req.body);
-	const {
-		name,
-		description,
-		price,
-		imageUrl,
-		variants,
-		categories,
-		brands,
-	} = req.body;
+	const {name, description, price, imageUrl, variants, categories, brands} =
+		req.body;
 	const checkExists = await Products.exists({name});
 
 	if (!req.body || !name || !description || !price || !brands)
