@@ -13,7 +13,13 @@ const Cartchema = new Schema({
 			ref: 'products',
 		},
 	],
+	state: {
+		type: Number,
+		default: 1,
+	},
 });
+// state == 1 => active
+// state == 0 => inactive
 
 Cartchema.plugin(findOrCreate);
 
