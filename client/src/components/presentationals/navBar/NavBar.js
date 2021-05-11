@@ -71,9 +71,34 @@ const NavBar = () => {
                 </div>
               </div>
 
-              <div className="cartItemRow"></div>
-              <div className="cartItemRow"></div>
-              <div className="cartItemRow"></div>
+              <div className="cartBottom row">
+                <div>
+                  <span>subtotal (1 item)</span>
+                </div>
+                <div>
+                  <span>$25.50</span>
+                </div>
+              </div>
+
+              <div className="cartBottom row">
+                <div>
+                  <span>delivery charge</span>
+                </div>
+                <div>
+                  <span>$1</span>
+                </div>
+              </div>
+
+              <div className="separator"></div>
+
+              <div className="cartBottom total row">
+                <div>
+                  <span className="totalSpan">total</span>
+                </div>
+                <div className="totalPrice">
+                  <span>$26.50</span>
+                </div>
+              </div>
 
               <div className="cartItemBtn">Continue to checkout</div>
             </div>

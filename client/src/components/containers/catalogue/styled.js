@@ -19,7 +19,7 @@ const Catalogue_Style = styled.div`
 
   .filter__options {
     height: 900px;
-    width: 25rem;
+    width: inherit;
     border-radius: 1rem;
     background-color: #ffffff;
   }

@@ -170,6 +170,26 @@ const DivNavBar = styled.div`
           cursor: pointer;
         }
 
+        .separator {
+          border: 1px solid #e0e0e0;
+        }
+
+        .cartBottom {
+          margin: 1rem 0;
+          font-size: 0.8rem;
+        }
+
+        .totalSpan {
+          font-size: 1rem;
+          font-weight: 600;
+        }
+
+        .totalPrice {
+          font-size: 1.3rem;
+          font-weight: 700;
+          color: #212121;
+        }
+
         .cartItemBtn {
           display: flex;
           margin-top: 1rem;
