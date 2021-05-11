@@ -1,4 +1,4 @@
-# <Store! />
+# <Store! /> E-Commerce
 
 <p align="center">
   <img height="230" src="https://res.cloudinary.com/dlexbrcrv/image/upload/v1620753770/Proyects/Store_n4i4xq.png" />
