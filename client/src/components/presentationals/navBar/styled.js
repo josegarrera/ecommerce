@@ -23,6 +23,7 @@ const DivNavBar = styled.div`
       color: #ee362e;
       font-size: 25px;
       font-weight: 800;
+      width: max-content;
     }
 
     .topRight {

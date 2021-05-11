@@ -47,6 +47,7 @@ const TagsInputStyle = styled.div`
   }
 
   .submit__tag {
+    width: max-content;
     padding: 1rem 3rem 1rem 3rem;
     font-family: "Poppins" sans-serif;
     background-color: #0395b8;
