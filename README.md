@@ -1,16 +1,15 @@
 # <Store! /> E-Commerce
 
 <p align="center">
-  <img height="230" src="https://res.cloudinary.com/dlexbrcrv/image/upload/v1620753770/Proyects/Store_n4i4xq.png" />
-   <img height="230" src="https://res.cloudinary.com/dlexbrcrv/image/upload/v1620753769/Proyects/Store_2_qxzk9t.png" />
+  <img height="200" src="https://res.cloudinary.com/dlexbrcrv/image/upload/v1620753770/Proyects/Store_n4i4xq.png" />
+   <img height="200" src="https://res.cloudinary.com/dlexbrcrv/image/upload/v1620753769/Proyects/Store_2_qxzk9t.png" />
 </p>
 
 ## Enunciado
 
--
--
--
--
+Desarrollada de manera colaborativa con reuniones diarias y realizando sprints semanales a un product owner.
+Catalogo de productos, login de usuarios, carrito de compras, checkout de la orden, dashboard de admin para carga y edición de productos, pasarela de pago, entre otras.
+Se implementaron metodologías ágiles SCRUM y control de versiones con Github.
 
 ## Tecnologías Utilizadas:
 
@@ -19,8 +18,6 @@
 - Express
 - Mongo - Mongoosee
 - Styled-Components
-
-## Requisitos:
 
 ## Members:
 
