@@ -13,6 +13,9 @@ const CategoriesSchema = new Schema({
 			ref: 'products',
 		},
 	],
+	periferic: {
+		type: Boolean,
+	}, // if we need to filter periferics, we use this to chekc it
 	variants: [],
 });
 CategoriesSchema.plugin(findOrCreate);

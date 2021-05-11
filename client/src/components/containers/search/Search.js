@@ -9,17 +9,17 @@ export default function Search({name}) {
 	let filterValue = name;
 
 	const {products} = useSelector((store) => store.products);
-
+	console.log(products);
 	useEffect(() => {
 		dispatch(getProducts(filter, filterValue));
 	}, [name]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
 		<div>
-			{products ? (
+			{products && products.length > 0 ? (
 				<ProductList products={products} />
 			) : (
-				<h1>No encontradoooo!</h1>
+				<h1>Not Found</h1>
 			)}
 		</div>
 	);

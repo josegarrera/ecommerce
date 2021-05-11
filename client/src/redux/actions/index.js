@@ -11,13 +11,22 @@ export const getProducts = (
 	limit = 12
 ) => {
 	return async (dispatch) => {
-		const {data} = await axios.get(
-			`${URLS.URL_PRODUCTS}?filter=${filter}&filterValue=${filterValue}&order=${order}&direction=${direction}&limit=${limit}`
-		);
-		dispatch({
-			type: ActionTypes.GET_PRODUCTS,
-			payload: data,
-		});
+		try {
+			const {data} = await axios.get(
+				`${URLS.URL_PRODUCTS}?filter=${filter}&filterValue=${filterValue}&order=${order}&direction=${direction}&limit=${limit}`
+			);
+			dispatch({
+				type: ActionTypes.GET_PRODUCTS,
+				payload: data,
+			});
+		} catch (error) {
+			dispatch({
+				type: ActionTypes.GET_PRODUCTS,
+				payload: {
+					error: 'Not found',
+				},
+			});
+		}
 	};
 };
 
