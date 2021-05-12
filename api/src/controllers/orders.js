@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 const {Orders, Products, Users} = require('../models/index');
 
 async function getUserOrder(req, res, next) {
-	const {userId} = req.body;
+	const {userId, cart} = req.body;
+	if (!cart) next();
 	if (!userId) next();
 	try {
 		let userExists = await Users.exists({_id: userId});
@@ -27,8 +28,9 @@ async function getUserOrder(req, res, next) {
 	}
 }
 
-async function getAllUserOrders(req, res) {
+async function getAllUserOrders(req, res, next) {
 	const {userId} = req.body;
+	if (!userId) next();
 	try {
 		let userExists = await Users.exists({_id: userId});
 		if (userExists) {
