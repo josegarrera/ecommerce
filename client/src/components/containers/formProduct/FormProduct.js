@@ -38,6 +38,7 @@ const FormProduct = () => {
 		brands: '',
 		variants: {},
 	});
+	const [inputsVariants, setInputsVariants] = useState([]);
 	const variants = categorySelected.length
 		? allCategories.filter(
 				(item) => item.name === categorySelected[0].categories
@@ -132,6 +133,10 @@ const FormProduct = () => {
 			init: false,
 			completed: true,
 		});
+	};
+
+	const handleClick = () => {
+		setInputsVariants([...inputsVariants].concat(1));
 	};
 
 	return (
@@ -234,25 +239,38 @@ const FormProduct = () => {
 								setProduct={(el) => setProduct(el)}
 								products={product}
 							></Dropdown>
-							<div className='form__element'>
-								{variantSelected.length ? (
-									variantSelected.map((variant, index) => (
-										<div key={variant + index + 'container'}>
-											<label className='form__label'>{variant}</label>
-											<input
-												key={variant + index}
-												className='form__input form__input__variant'
-												type='text'
-												name={variant}
-												value={product.variants[variant]}
-												onChange={(e) => changeInputVariant(e)}
-											></input>
+							<button type='button' onClick={handleClick}>
+								Add Variant
+							</button>
+							<br></br>
+							<div>
+								{inputsVariants.length ? (
+									inputsVariants.map((v) => (
+										<div className='form__element'>
+											{variantSelected.length ? (
+												variantSelected.map((variant, index) => (
+													<div key={variant + index + 'container'}>
+														<label className='form__label'>{variant}</label>
+														<input
+															key={variant + index}
+															className='form__input form__input__variant'
+															type='text'
+															name={variant}
+															value={product.variants[variant]}
+															onChange={(e) => changeInputVariant(e)}
+														></input>
+													</div>
+												))
+											) : (
+												<div> </div>
+											)}
 										</div>
 									))
 								) : (
 									<div> </div>
 								)}
 							</div>
+
 							<div className='form__element'>
 								<label className='form__label'>Image URL:</label>
 								<TagsInput
