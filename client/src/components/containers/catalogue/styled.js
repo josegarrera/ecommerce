@@ -4,6 +4,8 @@ const Catalogue_Style = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
   .catalogue {
     display: flex;
     padding: 4rem;
@@ -19,7 +21,7 @@ const Catalogue_Style = styled.div`
 
   .filter__options {
     height: 900px;
-    width: 25rem;
+    width: 360px;
     border-radius: 1rem;
     background-color: #ffffff;
   }
@@ -28,6 +30,7 @@ const Catalogue_Style = styled.div`
     padding: 1.5rem;
     font-weight: bold;
     color: #a1a3a6;
+    width: 360px;
   }
 
   .separator {
