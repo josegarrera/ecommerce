@@ -195,6 +195,7 @@ function getProducts(req, res) {
 
 async function updateProduct(req, res) {
 	const {body} = req;
+	console.log(body);
 	if (!body)
 		return res
 			.status(400)
@@ -208,7 +209,7 @@ async function updateProduct(req, res) {
 			{_id: req.params.id},
 			product
 		);
-		res.send(updatedProduct);
+		res.send(product);
 	} catch (error) {
 		res.status(500).send({type: 'Internal Server Error', error: error});
 	}
