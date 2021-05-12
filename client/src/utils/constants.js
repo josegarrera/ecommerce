@@ -10,10 +10,13 @@ export const ActionTypes = {
 	ORDER_DETAIL: 'ORDER_DETAIL',
 
 	GET_CATEGORIES: 'GET_CATEGORIES',
+
+	GET_BRANDS: 'GET_BRANDS',
 };
 
 export const URLS = {
 	URL_PRODUCTS: 'http://localhost:3001/products',
 	URL_ORDERS: 'http://localhost:3001/orders',
 	URL_CATEGORIES: 'http://localhost:3001/categories',
+	URL_BRANDS: 'http://localhost:3001/brands',
 };

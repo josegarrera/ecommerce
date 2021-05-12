@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import FormProductStyle from './styled';
+import FormBrands from '../formBrands/FormBrands';
 import {IoCloseSharp} from 'react-icons/io5';
 import Checkbox from '../checkbox';
 import Dropdown from '../dropdown';
@@ -302,6 +303,7 @@ const FormProduct = () => {
 					</button>
 				</form>
 			</div>
+			<FormBrands />
 		</FormProductStyle>
 	);
 };

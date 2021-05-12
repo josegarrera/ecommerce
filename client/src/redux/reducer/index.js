@@ -7,6 +7,7 @@ const initialState = {
 	orders: [],
 	orderDetail: {},
 	categories: [],
+	brands: [],
 };
 
 const r = (state = initialState, {type, payload}) => {
@@ -60,6 +61,13 @@ const r = (state = initialState, {type, payload}) => {
 			return {
 				...state,
 				categories: payload,
+			};
+
+		///////////////  BRANDS  ///////////////
+		case ActionTypes.GET_BRANDS:
+			return {
+				...state,
+				brands: payload,
 			};
 
 		default:
