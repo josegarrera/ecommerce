@@ -4,6 +4,8 @@ const Catalogue_Style = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
   .catalogue {
     display: flex;
     padding: 100px 10%;
@@ -28,6 +30,7 @@ const Catalogue_Style = styled.div`
     padding: 1.5rem;
     font-weight: bold;
     color: #a1a3a6;
+    width: 360px;
   }
 
   .separator {

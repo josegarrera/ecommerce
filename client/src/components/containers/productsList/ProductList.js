@@ -1,24 +1,24 @@
-import React from 'react';
-import CardProduct from '../../presentationals/cardProduct/CardProduct';
-import Products_List_Style from './styled';
+import React from "react";
+import CardProduct from "../../presentationals/cardProduct/CardProduct";
+import PRODUCTS_LIST_STYLE from "./styled";
 
-const ProductList = ({products}) => {
-	return (
-		<Products_List_Style>
-			<div className='cards__container'>
-				{products &&
-					products.map(({name, price, imageUrl, _id}) => (
-						<CardProduct
-							key={name}
-							name={name}
-							price={price}
-							imageUrl={imageUrl}
-							_id={_id}
-						/>
-					))}
-			</div>
-		</Products_List_Style>
-	);
+const ProductList = ({ products }) => {
+  return (
+    <PRODUCTS_LIST_STYLE>
+      <div className="cards__container">
+        {products &&
+          products.map(({ name, price, imageUrl, _id }) => (
+            <CardProduct
+              key={name}
+              name={name}
+              price={price}
+              imageUrl={imageUrl}
+              _id={_id}
+            />
+          ))}
+      </div>
+    </PRODUCTS_LIST_STYLE>
+  );
 };
 
 export default ProductList;

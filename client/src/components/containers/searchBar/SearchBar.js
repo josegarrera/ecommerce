@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { IoSearch } from "react-icons/io5";
 import FormSearchBar from "./styled";
 import { FiSearch } from "react-icons/fi";
+
 
 const SearchBar = () => {
   const [value, setValue] = useState("");
@@ -19,7 +19,11 @@ const SearchBar = () => {
           className="input"
           value={value}
           onChange={(e) => setValue(e.target.value)}
-          placeholder="search the entire store..."
+
+       
+
+          placeholder="Search the entire store..."
+
           type="text"
         ></input>
         <div className="divLupa">

@@ -1,14 +1,13 @@
+
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React from "react";
 import { Link } from "react-router-dom";
 import { IoCart, IoHeart, IoPersonSharp } from "react-icons/io5";
 import SearchBar from "../../containers/searchBar/SearchBar";
 import DivNavBar from "./styled";
-
 import { IoCloseSharp } from "react-icons/io5";
 import { FaPlus } from "react-icons/fa";
 import { FaMinus } from "react-icons/fa";
-
 
 const NavBar = () => {
   return (
@@ -16,7 +15,7 @@ const NavBar = () => {
       <div className="topNav">
         <div>
           <Link to="/">
-            <h3 className="logo">Henry Store</h3>
+            <h3 className="logo">{"< Store! />"}</h3>
           </Link>
         </div>
         <div>
@@ -30,7 +29,9 @@ const NavBar = () => {
             <IoHeart className="icon" />
           </div>
           <div className="iconDiv cart">
-            <IoCart className="icon" />
+            <Link to="/cart">
+              <IoCart className="icon" />
+            </Link>
 
             <div className="cartHoverView">
               <div className="row">
@@ -104,6 +105,8 @@ const NavBar = () => {
               <div className="cartItemBtn">Continue to checkout</div>
             </div>
           </div>
+
+
         </div>
       </div>
       <div className="bottomNav">
@@ -126,10 +129,10 @@ const NavBar = () => {
         <Link className="bottomLinks" to="/about">
           about
         </Link>
-        <Link className="bottomLinks" to="/about">
+        <Link className="bottomLinks" to="/contact">
           contact
         </Link>
-        <Link className="bottomLinks" to="/about">
+        <Link className="bottomLinks" to="/search">
           search
         </Link>
       </div>
@@ -138,3 +141,4 @@ const NavBar = () => {
 };
 
 export default NavBar;
+

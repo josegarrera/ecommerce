@@ -5,6 +5,8 @@ const morgan = require('morgan');
 const boom = require('@hapi/boom');
 const routes = require('./routes/index.js');
 
+require('./middlewares/auth');
+
 server.use(express.json());
 server.use(express.urlencoded({extended: true}));
 server.use(morgan('dev'));

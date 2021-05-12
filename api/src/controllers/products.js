@@ -1,5 +1,11 @@
-const {Products, Categories, Brands} = require('../models/index.js');
+const {
+	Products,
+	Categories,
+	Brands,
+	Currencies,
+} = require('../models/index.js');
 const mongoose = require('mongoose');
+const {filterProducts} = require('../utils/utils.js');
 
 async function getProductsDetail(req, res) {
 	const {id} = req.params;
@@ -18,14 +24,7 @@ async function getProductsDetail(req, res) {
 			.populate('categories', {name: true})
 			.populate('brands', {name: true})
 			.exec()
-			.then((data) =>
-				data
-					? res.send(data)
-					: res.status(404).send({
-							type: 'Internal server error.',
-							error: 'Product not found',
-					  })
-			)
+			.then((data) => res.send(data))
 			.catch((err) =>
 				res.status(500).send({
 					type: 'Internal server error.',
@@ -36,7 +35,6 @@ async function getProductsDetail(req, res) {
 }
 
 async function createProduct(req, res) {
-	console.log(req.body);
 	const {name, description, price, imageUrl, variants, categories, brands} =
 		req.body;
 	const checkExists = await Products.exists({name});
@@ -101,103 +99,93 @@ async function createProduct(req, res) {
 }
 
 function getProducts(req, res) {
-	const filterValue = req.query.filterValue
-		? req.query.filterValue.toLowerCase()
-		: '';
-	const filter =
-		req.query.filter && req.query.filter === 'price'
-			? {'price.value': {$lt: Number(filterValue)}}
-			: req.query.filter === 'name'
-			? {name: new RegExp(filterValue, 'i')}
+	const name =
+		req.query.name && req.query.name !== 'undefined'
+			? {name: new RegExp(req.query.name, 'i')}
 			: {name: new RegExp('[A-Za-z]', 'i')};
-	const otherFilter =
-		req.query.filter === 'brands'
-			? 'brands'
-			: req.query.filter === 'variants'
-			? 'variants'
-			: req.query.filter === 'categories'
-			? 'categories'
+
+	const category =
+		req.query.category &&
+		req.query.category !== 'undefined' &&
+		(!req.query.name || req.query.name === 'undefined')
+			? req.query.category.toLowerCase()
 			: '';
-	const otherFilterValue =
-		req.query.filter === 'categories' ||
-		req.query.filter === 'brands' ||
-		req.query.filter === 'variants'
-			? filterValue
+
+	const brand =
+		req.query.brand && req.query.brand !== 'undefined'
+			? req.query.brand.toLowerCase()
 			: '';
+
+	const variantSelected =
+		req.query.variants && req.query.variants !== 'undefined'
+			? req.query.variants.split('-')
+			: '';
+
+	const price =
+		req.query.price && req.query.price !== 'undefined'
+			? req.query.price.split('-')
+			: '';
+
 	const direction =
 		req.query.direction && req.query.direction.toLowerCase() === 'desc'
 			? -1
 			: 1;
+
 	const order =
 		req.query.order === 'price'
 			? {'price.value': direction}
 			: {name: direction};
-	const offset = req.query.offset ? Number(req.query.offset) : 0;
-	const limit = req.query.limit ? Number(req.query.limit) : 12;
 
-	Products.find(filter)
-		.populate('categories', {name: 1})
-		.populate('brands', {name: 1})
-		.sort(order)
-		.exec()
+	const offset =
+		req.query.offset && req.query.offset !== 'undefined'
+			? Number(req.query.offset)
+			: 0;
+	const limit =
+		req.query.limit && req.query.limit !== 'undefined'
+			? Number(req.query.limit)
+			: 12;
+
+	Promise.all([
+		Products.find(name)
+			.populate('categories', {name: 1})
+			.populate('brands', {name: 1})
+			.sort(order)
+			.exec(),
+		Currencies.find().sort({month: -1}).limit(1).exec(),
+	])
 		.then((data) => {
-			console.log(data.length);
-			if (!data.length)
-				return res.status(404).send({
-					type: 'Not found.',
-					error: 'Query parameters do not match.',
+			if (!data[0].length)
+				return res.send({
+					products: [],
+					pages: [],
+					message: 'Query parameters do not match.',
 				});
-			let result =
-				otherFilter === 'categories'
-					? data.filter(
-							(product) =>
-								product[otherFilter].length &&
-								product[otherFilter].find((categorie) =>
-									categorie.name.toLowerCase().includes(otherFilterValue)
-								)
-					  )
-					: otherFilter === 'brands'
-					? data.filter(
-							(product) =>
-								product[otherFilter] &&
-								product[otherFilter].name
-									.toLowerCase()
-									.includes(otherFilterValue)
-					  )
-					: otherFilter === 'variants'
-					? data.filter((product) =>
-							product.variants[filterValue.split('-')[0]] &&
-							filterValue.split('-')[0] === 'stock'
-								? Number(product.variants.stock) >=
-								  Number(filterValue.split('-')[1])
-								: String(product.variants[filterValue.split('-')[0]])
-										.toLowerCase()
-										.includes(filterValue.split('-')[1])
-					  )
-					: data;
+			const quotes = data[1] && data[1][0].quotes;
+			let result = filterProducts(
+				data[0],
+				category,
+				brand,
+				variantSelected,
+				price,
+				quotes
+			);
 			const totalPages = Math.ceil(result.length / limit);
 			const pages = new Array(totalPages)
 				.fill('')
 				.map(
 					(path, index) =>
-						`http://localhost:3001/products/?filter=${
-							req.query.filter
-						}&filterValue=${req.query.filterValue}&order=${
-							req.query.order
-						}&direction=${req.query.direction}&offset=${
-							limit * index
-						}&limit=${limit}`
+						`http://localhost:3001/products/?name=${req.query.name}&category=${
+							req.query.category
+						}&brand=${req.query.brand}&variants=${req.query.variants}&price=${
+							req.query.price
+						}&order=${req.query.order}&direction=${
+							req.query.direction
+						}&offset=${limit * index}&limit=${limit}`
 				);
 			const products =
 				result.length - offset > limit
 					? result.splice(offset, limit)
 					: result.splice(offset);
-			if (!products.length)
-				return res.status(404).send({
-					type: 'Not found.',
-					error: 'Query parameters do not match.',
-				});
-			console.log(products.length);
 			return res.send({products, pages});
 		})
 		.catch((error) =>
