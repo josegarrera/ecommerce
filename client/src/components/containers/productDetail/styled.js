@@ -44,19 +44,24 @@ const ProductDetailStyle = styled.div`
 		.imagesBox {
 			display: flex;
 			flex-direction: column;
-			width: 70px;
-			height: 70px;
+
 			padding: 5px;
 
-			.imageMin {
-				max-width: 100%;
-				max-height: 100%;
-				object-fit: contain;
+			.imageBox {
+				display: flex;
+				justify-content: center;
 				border: 1px solid #e7e7e7;
 				border-radius: 5px;
+				width: 70px;
+				height: 70px;
 				padding: 5px;
 				margin: 5px;
 
+				.imageMin {
+					max-width: 100%;
+					max-height: 100%;
+					object-fit: contain;
+				}
 				&:hover {
 					cursor: pointer;
 					border: 1px solid #ee362e;

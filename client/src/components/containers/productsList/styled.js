@@ -1,6 +1,7 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Products_List_Style = styled.div`
+
 	display: flex;
 	justify-content: center;
 	height: 100%;
@@ -11,6 +12,7 @@ const Products_List_Style = styled.div`
 		padding: 3rem;
 		flex-wrap: wrap;
 	}
+
 `;
 
 export default Products_List_Style;

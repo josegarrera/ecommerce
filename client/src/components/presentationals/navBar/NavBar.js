@@ -23,9 +23,11 @@ const NavBar = () => {
 					<div className='iconDiv'>
 						<IoHeart className='icon' />
 					</div>
-					<div className='iconDiv'>
-						<IoCart className='icon' />
-					</div>
+          <div className="iconDiv">
+            <Link to="/cart">
+              <IoCart className="icon" />
+            </Link>
+          </div>
 				</div>
 			</div>
 			<div className='bottomNav'>
