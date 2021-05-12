@@ -140,6 +140,8 @@ const FormProduct = () => {
 		setInputsVariants([...inputsVariants].concat(1));
 	};
 
+	const [visibilidad, setVisibilidad] = useState(false);
+
 	return (
 		<FormProductStyle>
 			<div className='form__container'>
@@ -302,8 +304,14 @@ const FormProduct = () => {
 						Save
 					</button>
 				</form>
+				<button
+					className='form__button'
+					onClick={() => setVisibilidad(!visibilidad)}
+				>
+					Agregar marca
+				</button>
 			</div>
-			<FormBrands />
+			{visibilidad ? <FormBrands /> : null}
 		</FormProductStyle>
 	);
 };
