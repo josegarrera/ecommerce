@@ -73,11 +73,12 @@ const DivNavBar = styled.div`
         padding: 1.5rem;
         top: 2.7rem;
         right: 0;
-        background-color: #f7f8fa;
+        background-color: #ffffff;
         width: 25rem;
         height: auto;
         border-radius: 1rem;
         z-index: 10;
+        box-shadow: 1px 1px 30px silver;
 
         .cartHeader {
         }
@@ -118,7 +119,7 @@ const DivNavBar = styled.div`
           align-items: center;
           border-radius: 1rem;
           padding: 1rem;
-          background-color: #ffffff;
+          background-color: #fafafa;
         }
 
         .cartItemInfo {

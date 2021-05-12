@@ -9,6 +9,7 @@ import { IoCloseSharp } from "react-icons/io5";
 import { FaPlus } from "react-icons/fa";
 import { FaMinus } from "react-icons/fa";
 
+
 const NavBar = () => {
   return (
     <DivNavBar>

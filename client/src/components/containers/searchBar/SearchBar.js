@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { IoSearch } from "react-icons/io5";
 import FormSearchBar from "./styled";
-import { FaSearch } from "react-icons/fa";
+import { FiSearch } from "react-icons/fi";
 
 const SearchBar = () => {
   const [value, setValue] = useState("");
@@ -24,7 +24,7 @@ const SearchBar = () => {
         ></input>
         <div className="divLupa">
           <Link to={`/products/name/${value}`}>
-            <FaSearch className="lupa" type="submit" />
+            <FiSearch className="lupa" type="submit" />
           </Link>
         </div>
       </div>
