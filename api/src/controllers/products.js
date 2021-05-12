@@ -193,8 +193,30 @@ function getProducts(req, res) {
 		);
 }
 
+async function updateProduct(req, res) {
+	const {body} = req;
+	if (!body)
+		return res
+			.status(400)
+			.send({type: 'Bad request.', error: 'The fields are empty.'});
+	const product = {};
+	for (const key in body) {
+		if (body[key]) product[key] = body[key];
+	}
+	try {
+		const updatedProduct = await Products.findByIdAndUpdate(
+			{_id: req.params.id},
+			product
+		);
+		res.send(updatedProduct);
+	} catch (error) {
+		res.status(500).send({type: 'Internal Server Error', error: error});
+	}
+}
+
 module.exports = {
 	createProduct,
 	getProducts,
 	getProductsDetail,
+	updateProduct,
 };

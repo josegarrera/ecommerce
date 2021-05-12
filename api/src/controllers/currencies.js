@@ -5,7 +5,7 @@ const today = new Date();
 
 function getCurrencyToday(req, res) {
 	Currencies.find()
-		.sort({month: -1})
+		.sort({month: -1, date: -1})
 		.limit(1)
 		.exec()
 		.then((data) => {
