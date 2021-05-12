@@ -1,15 +1,18 @@
 const {Router} = require('express');
 const router = Router();
-const Orders = require('../models/orders');
 const {
 	getUserOrder,
 	addProduct,
-	getAllUserOrders,
+	getAllOrders,
+	getOrderById,
+  	getAllUserOrders,
 } = require('../controllers/orders');
 
 router.post('/', addProduct);
 
 router.get('/', getUserOrder);
-router.get('/userOrders', getAllUserOrders);
+router.get('/', getAllUserOrders);
+router.get('/', getAllOrders);
+router.get('/:id', getOrderById);
 
 module.exports = router;

@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
-const Orders = require('../models/orders');
-const Users = require('../models/users');
+const {Orders, Products, Users} = require('../models/index');
 
-async function getUserOrder(req, res) {
+async function getUserOrder(req, res, next) {
 	const {userId} = req.body;
+	if (!userId) next();
 	try {
 		let userExists = await Users.exists({_id: userId});
 		if (userExists) {
@@ -71,8 +71,46 @@ async function addProduct(req, res) {
 	}
 }
 
+function getAllOrders(req, res) {
+	Orders.find({})
+		.exec()
+		.then((data) => res.send(data))
+		.catch((error) =>
+			res.status(500).send({type: 'Internal Server Error', error: error})
+		);
+}
+
+async function getOrderById(req, res) {
+	const {id} = req.params;
+	if (!id)
+		return res.status(400).send({
+			type: 'Bad Request',
+			error: 'No ID in params',
+		});
+	if (!mongoose.Types.ObjectId.isValid(id))
+		return res.status(400).send({
+			type: 'Bad Request',
+			error: 'ID is invalid',
+		});
+	else {
+		Orders.findById(id)
+			.populate('products', {name: 1})
+			.populate('users', {email: 1})
+			.exec()
+			.then((data) => res.send(data))
+			.catch((err) =>
+				res.status(500).send({
+					type: 'Internal server error.',
+					error: err,
+				})
+			);
+	}
+}
+
 module.exports = {
 	getUserOrder,
 	addProduct,
 	getAllUserOrders,
+	getAllOrders,
+	getOrderById,
 };
