@@ -208,7 +208,23 @@ async function updateProduct(req, res) {
 			{_id: req.params.id},
 			product
 		);
-		res.send(updatedProduct);
+		if (updatedProduct) return res.send(product);
+		return res.send({message: 'No results.'});
+	} catch (error) {
+		res.status(500).send({type: 'Internal Server Error', error: error});
+	}
+}
+
+async function deleteProduct(req, res) {
+	const idProduct = req.params.id;
+	if (!idProduct)
+		return res
+			.status(400)
+			.send({type: 'Bad request.', error: 'The fields are empty.'});
+	try {
+		const deletedProduct = await Products.findByIdAndDelete(idProduct);
+		if (deletedProduct) return res.send(deletedProduct);
+		return res.send({message: 'No results.'});
 	} catch (error) {
 		res.status(500).send({type: 'Internal Server Error', error: error});
 	}
@@ -219,4 +235,5 @@ module.exports = {
 	getProducts,
 	getProductsDetail,
 	updateProduct,
+	deleteProduct,
 };
