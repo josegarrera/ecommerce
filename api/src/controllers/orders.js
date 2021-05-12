@@ -27,6 +27,25 @@ async function getUserOrder(req, res) {
 	}
 }
 
+async function getAllUserOrders(req, res) {
+	const {userId} = req.body;
+	try {
+		let userExists = await Users.exists({_id: userId});
+		if (userExists) {
+			let orders = await Orders.find({users: userId, state: 0});
+			if (orders.length) {
+				return res.send(orders);
+			} else {
+				res.send({message: 'user do not have complte orders yet'});
+			}
+		} else {
+			res.status(400).send({type: 'Bad request', error: 'user does not exist'});
+		}
+	} catch (error) {
+		res.status(500).send({type: 'Internal server error.', error: error});
+	}
+}
+
 async function addProduct(req, res) {
 	const {userId, products} = req.body;
 	try {
@@ -38,12 +57,12 @@ async function addProduct(req, res) {
 				console.log(order);
 				console.log(products);
 
-				order.products = order.products.concat(products);
-				console.log(order.products);
+				order.items = order.items.concat(products);
+				console.log(order.items);
 				await order.save();
 				return res.send(order);
 			}
-			let order = await new Orders({users: userId, products});
+			let order = await new Orders({users: userId, items: products});
 			order.save();
 			res.send(order);
 		}
@@ -55,4 +74,5 @@ async function addProduct(req, res) {
 module.exports = {
 	getUserOrder,
 	addProduct,
+	getAllUserOrders,
 };
