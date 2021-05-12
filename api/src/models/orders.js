@@ -24,6 +24,17 @@ const OrdersSchema = new Schema({
 		type: Number,
 		default: 1,
 	},
+	subTotal: Number,
+	shipping: Number,
+	total: Number,
+	currency: {
+		type: String,
+		enum: {
+			values: ['USD', 'ARG'],
+			message: '{VALUE} is not supported',
+		},
+		default: 'USD',
+	},
 });
 // state == 1 => active
 // state == 0 => inactive
