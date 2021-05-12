@@ -5,13 +5,12 @@ const {
 	addProduct,
 	getAllOrders,
 	getOrderById,
-  	getAllUserOrders,
+	getAllUserOrders,
 } = require('../controllers/orders');
 
 router.post('/', addProduct);
 
-router.get('/', getUserOrder);
-router.get('/', getAllUserOrders);
+router.get('/', getUserOrder, getAllUserOrders);
 router.get('/', getAllOrders);
 router.get('/:id', getOrderById);
 

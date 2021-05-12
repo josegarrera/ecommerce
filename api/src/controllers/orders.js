@@ -3,51 +3,62 @@ const {Orders, Products, Users} = require('../models/index');
 
 async function getUserOrder(req, res, next) {
 	const {userId, cart} = req.body;
-	if (!cart) next();
-	if (!userId) next();
 	try {
-		let userExists = await Users.exists({_id: userId});
-		if (userExists) {
-			let orderExist = await Orders.exists({users: userId, state: 1});
-			if (orderExist) {
-				let order = await Orders.findOne({users: userId, state: 1})
-					.populate('users', {email: 1, _id: 1})
-					.populate('items.product', {name: 1, price: 1, _id: 1})
-					.exec();
-				console.log(order);
-				return res.send(order);
+		if (cart) {
+			let userExists = await Users.exists({_id: userId});
+			if (userExists) {
+				let orderExist = await Orders.exists({users: userId, state: 1});
+				if (orderExist) {
+					let order = await Orders.findOne({users: userId, state: 1})
+						.populate('users', {email: 1, _id: 1})
+						.populate('items.product', {name: 1, price: 1, _id: 1})
+						.exec();
+					return res.send(order);
+				} else {
+					let order = await new Orders({users: userId});
+					order.save();
+					res.send(order);
+				}
+			} else {
+				res
+					.status(400)
+					.send({type: 'Bad request', error: 'user does not exist'});
 			}
-			let order = await new Orders({users: userId});
-			order.save();
-			res.send(order);
 		} else {
-			res.status(400).send({type: 'Bad request', error: 'user does not exist'});
+			next();
 		}
 	} catch (error) {
-		res.status(500).send({type: 'Internal server error.', error: error});
+		console.log(error);
 	}
 }
 
 async function getAllUserOrders(req, res, next) {
 	const {userId} = req.body;
-	if (!userId) next();
 	try {
-		let userExists = await Users.exists({_id: userId});
-		if (userExists) {
-			let orders = await Orders.find({users: userId, state: 0});
-			if (orders.length) {
-				return res.send(orders);
+		if (userId) {
+			let userExists = await Users.exists({_id: userId});
+			if (userExists) {
+				let orders = await Orders.find({users: userId, state: 0});
+				if (orders.length) {
+					return res.send(orders);
+				} else {
+					res.send({message: 'user do not have complte orders yet'});
+				}
 			} else {
-				res.send({message: 'user do not have complte orders yet'});
+				res
+					.status(400)
+					.send({type: 'Bad request', error: 'user does not exist'});
 			}
 		} else {
-			res.status(400).send({type: 'Bad request', error: 'user does not exist'});
+			next();
 		}
 	} catch (error) {
 		res.status(500).send({type: 'Internal server error.', error: error});
 	}
 }
 
+// funcion de prueba para agregar productos al carrito
+// sientase libre de editar
 async function addProduct(req, res) {
 	const {userId, products} = req.body;
 	try {
