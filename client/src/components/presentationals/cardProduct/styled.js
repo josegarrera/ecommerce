@@ -11,7 +11,6 @@ const DivCrdProd = styled.div`
 	position: relative;
 	&:hover {
 		cursor: pointer;
-		transform: scale(1.05);
 		transition: 0.3s;
 		box-shadow: 1px 1px 30px silver;
 	}
@@ -63,12 +62,14 @@ const DivCrdProd = styled.div`
 		color: #ee362e;
 
 		&:hover {
-			transform: scale(1.5);
-			transition: 0.5s;
+			cursor: pointer;
+			transition: 0.3s;
+			box-shadow: 1px 1px 30px silver;
 		}
 
 		&:active {
-			transform: scale(0.9);
+			transform: scale(0.8);
+			transition: 0.5s;
 		}
 	}
 	.btn__cart {
@@ -86,8 +87,9 @@ const DivCrdProd = styled.div`
 		height: 29px;
 		border-radius: 14.5px;
 		&:hover {
-			transform: scale(1.3);
-			transition: 0.5s;
+			cursor: pointer;
+			transition: 0.3s;
+			box-shadow: 1px 1px 30px silver;
 		}
 		&:active {
 			transform: scale(0.9);

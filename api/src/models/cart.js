@@ -14,7 +14,13 @@ const CartSchema = new Schema({
 			lot: Number,
 		},
 	],
+	state: {
+		type: Number,
+		default: 1,
+	},
 });
+// state == 1 => active
+// state == 0 => inactive
 
 Cartchema.plugin(findOrCreate);
 
