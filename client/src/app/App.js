@@ -1,3 +1,4 @@
+
 import React from 'react';
 import {Route} from 'react-router-dom';
 import GridLayout from '../utils/GridLayout';
@@ -7,6 +8,7 @@ import Catalogue from '../components/containers/catalogue/Catalogue';
 import FormProduct from '../components/containers/formProduct/FormProduct';
 import Search from '../components/containers/search/Search';
 import ProductDetail from '../components/containers/productDetail/ProductDetail';
+import Cart from "../components/containers/cart/Cart.js";
 
 function App() {
 	return (
@@ -17,6 +19,7 @@ function App() {
 					<Route path='/' component={NavBar} />
 					<Route exact path='/catalogue' component={Catalogue} />
 					<Route exact path='/create' component={FormProduct} />
+          <Route exact path="/cart" component={Cart} />
 
 					<Route
 						exact

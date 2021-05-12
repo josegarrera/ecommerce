@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const Catalogue_Style = styled.div`
+
 	border: 1px solid red;
 	display: flex;
 	align-items: center;
