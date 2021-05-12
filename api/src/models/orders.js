@@ -1,27 +1,27 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const findOrCreate = require('mongoose-findorcreate');
 
 const OrdersSchema = new Schema({
-	user: {
+	users: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'users',
 	},
-	cart: {
-		type: Object,
-		required: true,
-	},
-	name: {
-		type: String,
-		required: true,
-	},
-	address: {
-		type: String,
-		required: true,
-	},
-	paymentId: {
-		type: String,
-		required: true,
+	products: [
+		{
+			_id: false,
+			id: String,
+			lot: Number,
+		},
+	],
+	state: {
+		type: Number,
+		default: 1,
 	},
 });
+// state == 1 => active
+// state == 0 => inactive
+
+OrdersSchema.plugin(findOrCreate);
 
 module.exports = mongoose.model('orders', OrdersSchema);
