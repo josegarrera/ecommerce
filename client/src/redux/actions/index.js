@@ -177,3 +177,32 @@ export const getCategories = () => {
 		});
 	};
 };
+
+////////////////////////////////////////  BRANDS ACTIONS  ////////////////////////////////////////
+
+export const getBrands = () => {
+	// trae todas las marcas del servidor.
+	return async (dispatch) => {
+		const {data} = await axios.get(`${URLS.URL_BRANDS}`);
+		return dispatch({
+			type: ActionTypes.GET_BRANDS,
+			payload: data, // TIENE QUE SER UN [ "", "", ""]
+		});
+	};
+};
+
+export const addBrand = (body) => {
+	//agrega ua marca
+	return async (dispatch) => {
+		try {
+			const {data} = await axios({
+				method: 'post',
+				url: URLS.URL_BRANDS,
+				data: body,
+			});
+			console.log('Se creo la marca', data.name);
+		} catch (err) {
+			console.log('No se creo la marca');
+		}
+	};
+};
