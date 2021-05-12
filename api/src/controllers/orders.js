@@ -2,8 +2,9 @@ const mongoose = require('mongoose');
 const Orders = require('../models/orders');
 const Users = require('../models/users');
 
-async function getUserOrder(req, res) {
+async function getUserOrder(req, res, next) {
 	const {userId} = req.body;
+	if (!userId) next();
 	try {
 		let userExists = await Users.exists({_id: userId});
 		if (userExists) {
@@ -52,7 +53,17 @@ async function addProduct(req, res) {
 	}
 }
 
+function getAllOrders(req, res) {
+	Orders.find({})
+		.exec()
+		.then((data) => res.send(data))
+		.catch((error) =>
+			res.status(500).send({type: 'Internal Server Error', error: error})
+		);
+}
+
 module.exports = {
 	getUserOrder,
 	addProduct,
+	getAllOrders,
 };
