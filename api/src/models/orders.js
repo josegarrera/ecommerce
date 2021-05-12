@@ -7,11 +7,17 @@ const OrdersSchema = new Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'users',
 	},
-	products: [
+	items: [
 		{
-			_id: false,
-			id: String,
+			product: {
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'products',
+			},
 			lot: Number,
+			variant: {
+				type: Map,
+				of: String,
+			},
 		},
 	],
 	state: {
