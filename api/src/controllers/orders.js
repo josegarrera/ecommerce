@@ -1,0 +1,129 @@
+const mongoose = require('mongoose');
+const {Orders, Products, Users} = require('../models/index');
+
+async function getUserOrder(req, res, next) {
+	const {userId, cart} = req.body;
+	try {
+		if (cart) {
+			let userExists = await Users.exists({_id: userId});
+			if (userExists) {
+				let orderExist = await Orders.exists({users: userId, state: 1});
+				if (orderExist) {
+					let order = await Orders.findOne({users: userId, state: 1})
+						.populate('users', {email: 1, _id: 1})
+						.populate('items.product', {name: 1, price: 1, _id: 1})
+						.exec();
+					return res.send(order);
+				} else {
+					let order = await new Orders({users: userId});
+					order.save();
+					res.send(order);
+				}
+			} else {
+				res
+					.status(400)
+					.send({type: 'Bad request', error: 'user does not exist'});
+			}
+		} else {
+			next();
+		}
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+async function getAllUserOrders(req, res, next) {
+	const {userId} = req.body;
+	try {
+		if (userId) {
+			let userExists = await Users.exists({_id: userId});
+			if (userExists) {
+				let orders = await Orders.find({users: userId, state: 0});
+				if (orders.length) {
+					return res.send(orders);
+				} else {
+					res.send({message: 'user do not have complte orders yet'});
+				}
+			} else {
+				res
+					.status(400)
+					.send({type: 'Bad request', error: 'user does not exist'});
+			}
+		} else {
+			next();
+		}
+	} catch (error) {
+		res.status(500).send({type: 'Internal server error.', error: error});
+	}
+}
+
+// funcion de prueba para agregar productos al carrito
+// sientase libre de editar
+async function addProduct(req, res) {
+	const {userId, products} = req.body;
+	try {
+		let userExists = await Users.exists({_id: userId});
+		if (userExists) {
+			let existe = await Orders.exists({users: userId, state: 1});
+			if (existe) {
+				let order = await Orders.findOne({users: userId, state: 1});
+				console.log(order);
+				console.log(products);
+
+				order.items = order.items.concat(products);
+				console.log(order.items);
+				await order.save();
+				return res.send(order);
+			}
+			let order = await new Orders({users: userId, items: products});
+			order.save();
+			res.send(order);
+		}
+	} catch (err) {
+		console.log(err);
+	}
+}
+
+function getAllOrders(req, res) {
+	Orders.find({})
+		.exec()
+		.then((data) => res.send(data))
+		.catch((error) =>
+			res.status(500).send({type: 'Internal Server Error', error: error})
+		);
+}
+
+async function getOrderById(req, res) {
+	const {id} = req.params;
+	if (!id)
+		return res.status(400).send({
+			type: 'Bad Request',
+			error: 'No ID in params',
+		});
+	if (!mongoose.Types.ObjectId.isValid(id))
+		return res.status(400).send({
+			type: 'Bad Request',
+			error: 'ID is invalid',
+		});
+	else {
+		Orders.findById(id)
+			.populate('products', {name: 1})
+			.populate('users', {email: 1})
+			.exec()
+			.then((data) => res.send(data))
+			.catch((err) =>
+				res.status(500).send({
+					type: 'Internal server error.',
+					error: err,
+				})
+			);
+	}
+}
+
+module.exports = {
+	getUserOrder,
+	addProduct,
+	getAllUserOrders,
+	getAllOrders,
+	getOrderById,
+};

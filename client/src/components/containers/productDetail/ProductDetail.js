@@ -13,7 +13,6 @@ const ProductDetail = (id) => {
 	const [imageBig, setImageBig] = useState();
 
 	const product = useSelector((store) => store.productDetail);
-	console.log('este es el product perro', product);
 
 	useEffect(() => {
 		dispatch(getProductDetail(id));
@@ -47,7 +46,10 @@ const ProductDetail = (id) => {
 					<div className='imagesBox'>
 						{product.imageUrl &&
 							product.imageUrl.map((image) => (
-								<div className='imageBox' onClick={() => setImageBig(image)}>
+								<div
+									className='imageBox'
+									onMouseOver={() => setImageBig(image)}
+								>
 									<img
 										className='imageMin'
 										src={image}

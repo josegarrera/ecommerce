@@ -3,17 +3,6 @@ const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
 
 const UsersSchema = new Schema({
-	username: {
-		type: String,
-		required: [true, 'Username is required'],
-		unique: true,
-	},
-	password: {
-		type: String,
-		required: true,
-	},
-	firstName: String,
-	lastName: String,
 	email: {
 		type: String,
 		required: [true, 'User email required'],
@@ -25,9 +14,15 @@ const UsersSchema = new Schema({
 		},
 		unique: true,
 	},
-	type: {
+	password: {
 		type: String,
 		required: true,
+	},
+	firstName: String,
+	lastName: String,
+	type: {
+		type: String,
+		// required: true,
 		enum: {
 			values: ['Admin', 'Seller', 'Buyer'],
 			message: '{VALUE} is not supported',

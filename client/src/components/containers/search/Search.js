@@ -5,13 +5,11 @@ import ProductList from '../productsList/ProductList';
 
 export default function Search({name}) {
 	const dispatch = useDispatch();
-	let filter = 'name';
-	let filterValue = name;
 
 	const {products} = useSelector((store) => store.products);
 	console.log(products);
 	useEffect(() => {
-		dispatch(getProducts(filter, filterValue));
+		dispatch(getProducts(name));
 	}, [name]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (

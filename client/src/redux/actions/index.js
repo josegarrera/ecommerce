@@ -4,8 +4,11 @@ import {ActionTypes, URLS} from '../../utils/constants';
 ////////////////////////////////////////  PRODUCTS ACTIONS  ////////////////////////////////////////
 
 export const getProducts = (
-	filter,
-	filterValue,
+	name,
+	category,
+	brand,
+	variants,
+	price,
 	order,
 	direction,
 	limit = 12
@@ -13,7 +16,7 @@ export const getProducts = (
 	return async (dispatch) => {
 		try {
 			const {data} = await axios.get(
-				`${URLS.URL_PRODUCTS}?filter=${filter}&filterValue=${filterValue}&order=${order}&direction=${direction}&limit=${limit}`
+				`${URLS.URL_PRODUCTS}?name=${name}&category=${category}&brand=${brand}&variants=${variants}&price=${price}&order=${order}&direction=${direction}&limit=${limit}`
 			);
 			dispatch({
 				type: ActionTypes.GET_PRODUCTS,
@@ -33,7 +36,6 @@ export const getProducts = (
 export const getProductsQuery = (page) => {
 	return async (dispatch) => {
 		const {data} = await axios.get(page);
-		console.log(data, 'dataaaaaaaa');
 		dispatch({
 			type: ActionTypes.GET_PRODUCTS_QUERY,
 			payload: data,
@@ -173,5 +175,34 @@ export const getCategories = () => {
 			type: ActionTypes.GET_CATEGORIES,
 			payload: data, // TIENE QUE SER UN [ "", "", ""]
 		});
+	};
+};
+
+////////////////////////////////////////  BRANDS ACTIONS  ////////////////////////////////////////
+
+export const getBrands = () => {
+	// trae todas las marcas del servidor.
+	return async (dispatch) => {
+		const {data} = await axios.get(`${URLS.URL_BRANDS}`);
+		return dispatch({
+			type: ActionTypes.GET_BRANDS,
+			payload: data, // TIENE QUE SER UN [ "", "", ""]
+		});
+	};
+};
+
+export const addBrand = (body) => {
+	//agrega ua marca
+	return async (dispatch) => {
+		try {
+			const {data} = await axios({
+				method: 'post',
+				url: URLS.URL_BRANDS,
+				data: body,
+			});
+			console.log('Se creo la marca', data.name);
+		} catch (err) {
+			console.log('No se creo la marca');
+		}
 	};
 };
