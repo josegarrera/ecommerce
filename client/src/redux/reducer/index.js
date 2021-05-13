@@ -54,6 +54,7 @@ const r = (state = initialState, { type, payload }) => {
     ///////////////  PRODUCTS  ///////////////
 
     case ActionTypes.GET_PRODUCTS:
+      console.log(getCartLocalStorage());
       return {
         ...state,
         products: payload,
@@ -85,7 +86,7 @@ const r = (state = initialState, { type, payload }) => {
       };
 
     ///////////////  ORDERS  ///////////////
-    case ActionTypes.GET_ORDERS:
+    case ActionTypes.GET_USER_ORDERS:
       return {
         ...state,
         orders: payload,

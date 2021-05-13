@@ -6,7 +6,7 @@ export const ActionTypes = {
   UPDATE_PRODUCT: "UPDATE_PRODUCT",
   EMPTY_PRODUCT_CREATED: "EMPTY_PRODUCT_CREATED",
 
-  GET_ORDERS: "GET_ORDERS",
+  GET_USER_ORDERS: "GET_USER_ORDERS",
   ORDER_DETAIL: "ORDER_DETAIL",
 
   GET_CATEGORIES: "GET_CATEGORIES",
@@ -20,7 +20,7 @@ export const ActionTypes = {
 
 export const URLS = {
   URL_PRODUCTS: "http://localhost:3001/products",
-  URL_ORDERS: "http://localhost:3001/orders",
+  URL_USER_ORDERS: "http://localhost:3001/orders",
   URL_CATEGORIES: "http://localhost:3001/categories",
   URL_BRANDS: "http://localhost:3001/brands",
   URL_CART: "http://localhost:3001/categories",
