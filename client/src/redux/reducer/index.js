@@ -55,6 +55,7 @@ const r = (state = initialState, {type, payload}) => {
 
 		///////////////  PRODUCTS  ///////////////
 
+
 		case ActionTypes.GET_PRODUCTS:
 			return {
 				...state,
@@ -97,6 +98,7 @@ const r = (state = initialState, {type, payload}) => {
 				...state,
 				orderDetail: payload,
 			};
+
 
 		///////////////  CATEGORIES  ///////////////
 		case ActionTypes.GET_CATEGORIES:

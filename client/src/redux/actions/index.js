@@ -123,15 +123,19 @@ export const updateProduct = (id, body) => {
 
 ////////////////////////////////////////  ORDERS ACTIONS  ////////////////////////////////////////
 
-export const getAllOrders = () => {
-	// trae todos las ordenes que tiene el vendedor.
-	return async (dispatch) => {
-		const {data} = await axios.get(`${URLS.URL_ORDERS}`);
-		return dispatch({
-			type: ActionTypes.GET_ORDERS,
-			payload: data, // TIENE QUE SER UN []
-		});
-	};
+
+export const getOpenUserOrders = (userId, cart) => {
+  // trae todos las ordenes que tiene el vendedor.
+  return async (dispatch) => {
+    const { data } = await axios.get(
+      `${URLS.URL_USER_ORDERS}?userId=${userId}&cart=${cart}`
+    );
+    return dispatch({
+      type: ActionTypes.ADD_DB_PRODUCT_CART,
+      payload: data, // TIENE QUE SER UN []
+    });
+  };
+
 };
 
 export const getOrderDetail = (id) => {
