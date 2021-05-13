@@ -5,6 +5,7 @@ import Catalogue from '../components/containers/catalogue/Catalogue';
 import FormProduct from '../components/containers/formProduct/FormProduct';
 import Search from '../components/containers/search/Search';
 import ProductDetail from '../components/containers/productDetail/ProductDetail';
+import FormCategories from '../components/containers/formCategories/FormCategories';
 
 function App() {
 	return (
@@ -12,8 +13,10 @@ function App() {
 			<React.Fragment>
 				<Route path='/' component={NavBar} />
 				<Route exact path='/catalogue' component={Catalogue} />
+				{/*        PANEL ADMINISTRATIVO                            */}
 				<Route exact path='/create' component={FormProduct} />
-
+				<Route exact path='/categories' component={FormCategories} />
+				{/* ---------------------------------------------- */}
 				<Route
 					exact
 					path='/products/name/:name'
