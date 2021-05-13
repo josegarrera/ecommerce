@@ -1,7 +1,8 @@
 const {Categories, Products} = require('../models/index.js');
 
 function getAllCategories(req, res) {
-	Categories.find({}, 'name variants')
+	Categories.find({})
+		.populate('products', {name: true})
 		.exec()
 		.then((data) => res.send(data))
 		.catch((error) =>
@@ -18,7 +19,6 @@ function createCategories(req, res) {
 	const specProducts = products.map((item) => Products.findById(item));
 	let idValidProducts;
 	let validProducts;
-
 	Promise.all(specProducts)
 		.then((data) => {
 			idValidProducts = data.map((id) => id._id);
