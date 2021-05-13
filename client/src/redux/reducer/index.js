@@ -25,11 +25,11 @@ const r = (state = initialState, { type, payload }) => {
         if (existProduct) return false;
         return true;
       });
-      const cart_product = state.cartProducts.concat(results);
-      setCartLocalStorage(cart_product);
+      const cart_db_product = state.cartProducts.concat(results);
+      setCartLocalStorage(cart_db_product);
       return {
         ...state,
-        cartProducts: cart_product,
+        cartProducts: cart_db_product,
       };
 
     case ActionTypes.ADD_PRODUCT_CART:
