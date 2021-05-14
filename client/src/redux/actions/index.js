@@ -18,9 +18,16 @@ export const getProducts = (
       const { data } = await axios.get(
         `${URLS.URL_PRODUCTS}?name=${name}&category=${category}&brand=${brand}&variants=${variants}&price=${price}&order=${order}&direction=${direction}&limit=${limit}`
       );
+
+      let newData = data.products.map((e) => {
+        return { lot: 0, product: { ...e } };
+      });
+
+      let newArrData = { pages: data.pages, products: newData };
+
       dispatch({
         type: ActionTypes.GET_PRODUCTS,
-        payload: data,
+        payload: newArrData,
       });
     } catch (error) {
       dispatch({
@@ -36,9 +43,16 @@ export const getProducts = (
 export const getProductsQuery = (page) => {
   return async (dispatch) => {
     const { data } = await axios.get(page);
+
+    let newData = data.products.map((e) => {
+      return { lot: 0, product: { ...e } };
+    });
+
+    let newArrData = { pages: data.pages, products: newData };
+
     dispatch({
       type: ActionTypes.GET_PRODUCTS_QUERY,
-      payload: data,
+      payload: newArrData,
     });
   };
 };
@@ -123,13 +137,15 @@ export const updateProduct = (id, body) => {
 
 ////////////////////////////////////////  ORDERS ACTIONS  ////////////////////////////////////////
 
-export const getAllOrders = () => {
+export const getOpenUserOrders = (userId, cart) => {
   // trae todos las ordenes que tiene el vendedor.
   return async (dispatch) => {
-    const { data } = await axios.get(`${URLS.URL_ORDERS}`);
+    const { data } = await axios.get(
+      `${URLS.URL_USER_ORDERS}?userId=${userId}&cart=${cart}`
+    );
     return dispatch({
-      type: ActionTypes.GET_ORDERS,
-      payload: data, // TIENE QUE SER UN []
+      type: ActionTypes.ADD_DB_PRODUCT_CART,
+      payload: data.items, // TIENE QUE SER UN []
     });
   };
 };
@@ -159,7 +175,6 @@ export const addNewOrder = (body) => {
     }
   };
 };
-////////////////////////////////////////  USERS ACTIONS  ////////////////////////////////////////
 
 ////////////////////////////////////////  CATEGORIES ACTIONS  ////////////////////////////////////////
 
@@ -223,6 +238,62 @@ export const addBrand = (body) => {
       console.log("Se creo la marca", data.name);
     } catch (err) {
       console.log("No se creo la marca");
+    }
+  };
+};
+
+export const updateBrand = (update) => {
+  // actualiza una marca buscandole por su id
+  let { _id, name } = update;
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.put(`${URLS.URL_BRANDS}/${_id}`, { name });
+      console.log("Se actualizo la marca", data);
+      return dispatch({
+        type: ActionTypes.UPDATE_BRAND,
+        payload: data, // TIENE QUE SER UN {}
+      });
+    } catch (err) {
+      console.log("No se actualizo la brand");
+    }
+  };
+};
+
+////////////////////////////////////////  USERS ACTIONS  ////////////////////////////////////////
+
+export const createUser = (body) => {
+  //crea un usuario
+  return async (dispatch) => {
+    try {
+      const { data } = await axios({
+        method: "post",
+        url: URLS.URL_SIGNUP,
+        data: body,
+      });
+      return dispatch({
+        type: ActionTypes.CREATE_USER,
+        payload: data,
+      });
+    } catch (err) {
+      console.log("No se creo el usuario");
+    }
+  };
+};
+
+export const loginUser = (body) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios({
+        method: "post",
+        url: URLS.URL_LOGIN,
+        data: body,
+      });
+      return dispatch({
+        type: ActionTypes.LOGIN_USER,
+        payload: data,
+      });
+    } catch (err) {
+      console.log("No se logueó el usuario");
     }
   };
 };

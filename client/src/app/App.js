@@ -1,31 +1,30 @@
-
-import React from "react";
-import { Route } from "react-router-dom";
-import GridLayout from "../utils/GridLayout";
+import React from 'react';
+import {Route} from 'react-router-dom';
+import GridLayout from '../utils/GridLayout';
 //import {GlobalStyles} from './GlobalStyles';
-import NavBar from "../components/presentationals/navBar/NavBar.js";
-import Catalogue from "../components/containers/catalogue/Catalogue";
-import FormProduct from "../components/containers/formProduct/FormProduct";
-import Search from "../components/containers/search/Search";
-import ProductDetail from "../components/containers/productDetail/ProductDetail";
-import Cart from "../components/containers/cart/Cart.js";
-import FormLogging from "../components/containers/formLogging/FormLogging";
-import FormCategorie from '../components/containers/formCategories/FormCategories'
+import NavBar from '../components/presentationals/navBar/NavBar.js';
+import Catalogue from '../components/containers/catalogue/Catalogue';
+import FormProduct from '../components/containers/formProduct/FormProduct';
+import Search from '../components/containers/search/Search';
+import ProductDetail from '../components/containers/productDetail/ProductDetail';
+import Cart from '../components/containers/cart/Cart.js';
+import FormLogging from '../components/containers/formLogging/FormLogging';
+import FormSignup from '../components/containers/formSignup/FormSignup';
 
 function App() {
-  return (
+	return (
 		<div className='App'>
 			<React.Fragment>
 				<GridLayout>
 					{/* <GlobalStyles /> */}
 					<Route path='/' component={NavBar} />
 					<Route exact path='/login' component={FormLogging} />
+					<Route exact path='/signup' component={FormSignup} />
 					<Route exact path='/catalogue' component={Catalogue} />
 					<Route exact path='/create' component={FormProduct} />
 					<Route exact path='/cart' component={Cart} />
 
-					<Route exact path='/categorie' component={FormCategorie} />
-
+			
 					<Route
 						exact
 						path='/products/name/:name'

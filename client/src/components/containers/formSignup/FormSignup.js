@@ -1,14 +1,14 @@
 /* eslint-disable react/jsx-pascal-case */
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
-import Login_Style from './styled';
+import Signup_Style from './styled';
 import {Link} from 'react-router-dom';
 
 import {AiFillLock} from 'react-icons/ai';
 import {FaEnvelope} from 'react-icons/fa';
-import {loginUser} from '../../../redux/actions';
+import {createUser} from '../../../redux/actions';
 
-const FormLogging = () => {
+const FormSignup = () => {
 	const dispatch = useDispatch();
 
 	const [input, setInput] = useState({
@@ -18,7 +18,7 @@ const FormLogging = () => {
 
 	const onSubmitHandler = (e) => {
 		e.preventDefault();
-		dispatch(loginUser(input));
+		dispatch(createUser(input));
 		setInput({
 			email: '',
 			password: '',
@@ -33,7 +33,7 @@ const FormLogging = () => {
 	};
 
 	return (
-		<Login_Style>
+		<Signup_Style>
 			<div className='loginContainer'>
 				<div className='loginWrapper'>
 					<div className='loginContent'>
@@ -79,25 +79,23 @@ const FormLogging = () => {
 									onChange={(e) => onChangeHandler(e)}
 								></input>
 							</div>
-
-							<span className='forgotSpan'> forgot password?</span>
-							<button type='submit' className='signInBtnBottom'>
-								<div>SIGN IN</div>
+							<button type='submit' className='signUpBtnBottom'>
+								<div>SIGN UP</div>
 							</button>
 						</form>
 
 						<div className='rowBottom'>
-							<p className='signUpBottom'> don't have an account? </p>
-							<Link to='/signup'>
-								<span className='signUpSpan'> Sign up </span>
+							<p className='signUpBottom'> Already registered? </p>
+							<Link to='/login'>
+								<span className='signUpSpan'> Sign in </span>
 							</Link>
 						</div>
 					</div>
 					<div className='loginPicture'></div>
 				</div>
 			</div>
-		</Login_Style>
+		</Signup_Style>
 	);
 };
 
-export default FormLogging;
+export default FormSignup;

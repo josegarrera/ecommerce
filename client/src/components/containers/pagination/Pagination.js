@@ -7,7 +7,6 @@ const Pagination = ({ pages, actualizar }) => {
   const dispatch = useDispatch();
 
   function actualizar(page) {
-    console.log("estoy aca", page);
     dispatch(getProductsQuery(page));
   }
 

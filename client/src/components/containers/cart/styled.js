@@ -84,6 +84,12 @@ const DIV_CART = styled.div`
     grid-template-columns: 60% 20% 20%;
     max-height: 300px;
     min-height: 150px;
+    position: relative;
+    .botooon {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
   }
   .p_back_home {
     position: absolute;
