@@ -109,7 +109,6 @@ dist
 package-lock.json
 
 #Public and uploads
-public/
 uploads/
 
 # production
