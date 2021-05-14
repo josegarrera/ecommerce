@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {getBrands, addBrand, updateBrand} from '../../../redux/actions';
 import Swal from 'sweetalert2';
+import {IoCloseSharp} from 'react-icons/io5';
 import FormBrandStyle from './styled';
 
 const FormBrands = () => {
@@ -49,6 +50,7 @@ const FormBrands = () => {
 		e.preventDefault();
 		dispatch(addBrand(brand));
 		setBrand({name: ''});
+		dispatch(getBrands());
 	};
 
 	const ChangeInput2 = (e) => {
@@ -66,6 +68,7 @@ const FormBrands = () => {
 	const handleBrand = (e) => {
 		e.preventDefault();
 		dispatch(updateBrand(updBrand));
+		dispatch(getBrands());
 	};
 
 	return (

@@ -12,7 +12,11 @@ const initialState = {
 	orderDetail: {},
 	categories: [],
 	brands: [],
+	updateBrand: {},
 	cartProducts: getCartLocalStorage(),
+	signup: {},
+	login: {},
+
 };
 
 const r = (state = initialState, {type, payload}) => {
@@ -36,14 +40,14 @@ const r = (state = initialState, {type, payload}) => {
 			};
 
 		case ActionTypes.REMOVE_PRODUCT_CART:
-			const remove_product = state.cartProducts.filter(
+			/* const remove_product = state.cartProducts.filter(
 				({_id}) => _id !== payload
-			);
+			); */
 
-			setCartLocalStorage(remove_product);
+			setCartLocalStorage(payload);
 			return {
 				...state,
-				cartProducts: remove_product,
+				cartProducts: payload,
 			};
 
 		///////////////  PRODUCTS  ///////////////
@@ -107,6 +111,18 @@ const r = (state = initialState, {type, payload}) => {
 			return {
 				...state,
 				updateBrand: payload,
+			};
+
+		///////////////  USERS  ///////////////
+		case ActionTypes.CREATE_USER:
+			return {
+				...state,
+				signup: payload,
+			};
+		case ActionTypes.LOGIN_USER:
+			return {
+				...state,
+				login: payload,
 			};
 
 		default:
