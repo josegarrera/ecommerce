@@ -19,6 +19,7 @@ export const ActionTypes = {
 
 	CREATE_USER: 'CREATE_USER',
 	LOGIN_USER: 'LOGIN_USER',
+	CLEAN_SIGNUP: 'CLEAN_SIGNUP',
 };
 
 export const URLS = {
