@@ -8,7 +8,6 @@ const brands = require('./brands.js');
 const orders = require('./orders.js');
 const currencies = require('./currencies.js');
 
-
 // authentication
 router.post(
 	'/signup',
@@ -39,6 +38,7 @@ router.post('/login', async (req, res, next) => {
 				return res.json({
 					message: info.message,
 					token,
+					user,
 				});
 			});
 		} catch (e) {
@@ -59,13 +59,10 @@ router.get(
 	}
 );
 
-
 router.use('/products', products);
 router.use('/categories', categories);
 router.use('/brands', brands);
 router.use('/orders', orders);
 router.use('/currencies', currencies);
-
-
 
 module.exports = router;
