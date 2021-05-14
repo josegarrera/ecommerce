@@ -259,41 +259,4 @@ export const updateBrand = (update) => {
   };
 };
 
-////////////////////////////////////////  USERS ACTIONS  ////////////////////////////////////////
 
-export const createUser = (body) => {
-  //crea un usuario
-  return async (dispatch) => {
-    try {
-      const { data } = await axios({
-        method: "post",
-        url: URLS.URL_SIGNUP,
-        data: body,
-      });
-      return dispatch({
-        type: ActionTypes.CREATE_USER,
-        payload: data,
-      });
-    } catch (err) {
-      console.log("No se creo el usuario");
-    }
-  };
-};
-
-export const loginUser = (body) => {
-  return async (dispatch) => {
-    try {
-      const { data } = await axios({
-        method: "post",
-        url: URLS.URL_LOGIN,
-        data: body,
-      });
-      return dispatch({
-        type: ActionTypes.LOGIN_USER,
-        payload: data,
-      });
-    } catch (err) {
-      console.log("No se logueó el usuario");
-    }
-  };
-};

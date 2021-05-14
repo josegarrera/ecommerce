@@ -1,28 +1,64 @@
 /* eslint-disable react/jsx-pascal-case */
-import React, {useState} from 'react';
-import {useDispatch} from 'react-redux';
+import React, {useState, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import Login_Style from './styled';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
+import axios from 'axios';
+import {URLS} from '../../../utils/constants';
 
 import {AiFillLock} from 'react-icons/ai';
 import {FaEnvelope} from 'react-icons/fa';
-import {loginUser} from '../../../redux/actions';
+import {IoCloseSharp} from 'react-icons/io5';
+import Swal from 'sweetalert2';
 
 const FormLogging = () => {
-	const dispatch = useDispatch();
-
+	let history = useHistory();
 	const [input, setInput] = useState({
 		email: '',
 		password: '',
 	});
 
-	const onSubmitHandler = (e) => {
+	useEffect(() => {
+		setErrors({});
+	}, [input]);
+
+	const [errors, setErrors] = useState({});
+
+	const onSubmitHandler = async (e) => {
 		e.preventDefault();
-		dispatch(loginUser(input));
-		setInput({
-			email: '',
-			password: '',
-		});
+		axios
+			.post(URLS.URL_LOGIN, input)
+			.then(function (response) {
+				let data = response.data;
+				if (data.notLogin) {
+					const message = data.notLogin;
+					if (message && message.includes('User')) {
+						setErrors({
+							email: message,
+						});
+					} else {
+						setErrors({
+							password: message,
+						});
+					}
+				} else {
+					setInput({
+						email: '',
+						password: '',
+					});
+					Swal.fire({
+						title: 'Success!',
+						text: 'Succesfully login',
+						icon: 'success',
+						confirmButtonText: 'Ok',
+					}).then(() => {
+						history.push('/');
+					});
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
 	};
 
 	const onChangeHandler = (e) => {
@@ -37,6 +73,11 @@ const FormLogging = () => {
 			<div className='loginContainer'>
 				<div className='loginWrapper'>
 					<div className='loginContent'>
+						<Link to='/'>
+							<div className='close__icon'>
+								<IoCloseSharp />
+							</div>
+						</Link>
 						<div className='rowTop'>
 							<Link to='/login'>
 								<button className='signInBtnTop'>
@@ -64,6 +105,7 @@ const FormLogging = () => {
 									onChange={(e) => onChangeHandler(e)}
 								></input>
 							</div>
+							<div>{errors.email ? errors.email : null}</div>
 
 							<div className='inputElement'>
 								<span className='passwordSpan'>Password</span>
@@ -79,7 +121,7 @@ const FormLogging = () => {
 									onChange={(e) => onChangeHandler(e)}
 								></input>
 							</div>
-
+							<div>{errors.password ? errors.password : null}</div>
 							<span className='forgotSpan'> forgot password?</span>
 							<button type='submit' className='signInBtnBottom'>
 								<div>SIGN IN</div>

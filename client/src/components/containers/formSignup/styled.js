@@ -28,6 +28,17 @@ const Signup_Style = styled.div`
 		align-items: center;
 	}
 
+	.close__icon {
+		font-size: 2rem;
+		color: #bdbdbd;
+		cursor: pointer;
+		text-align: right;
+	}
+
+	.close__icon:hover {
+		color: #757575;
+	}
+
 	.loginWrapper {
 		display: flex;
 		flex-direction: column;

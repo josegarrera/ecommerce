@@ -14,9 +14,15 @@ passport.use(
 		},
 		async (email, password, done) => {
 			try {
-				const user = await Users.create({email, password});
-				const message = 'Signup successfull!';
-				return done(null, user, message);
+				const user = await Users.exists({email});
+				if (!user) {
+					const newUser = await Users.create({email, password});
+					const message = 'Signup successfull!';
+					return done(null, newUser, message);
+				} else {
+					const message = 'Email already registered';
+					return done(null, user, message);
+				}
 			} catch (e) {
 				done(e);
 			}

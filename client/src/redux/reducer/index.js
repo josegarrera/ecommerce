@@ -5,19 +5,14 @@ import {
 } from '../../utils/localStorage';
 
 const initialState = {
-
-  products: {},
-  productDetail: {},
-  productCreated: {},
-  orders: [],
-  orderDetail: {},
-  categories: [],
-  brands: [],
-  updateBrand: {},
-  cartProducts: getCartLocalStorage(),
-  signup: {},
-  login: {},
-
+	products: {},
+	productDetail: {},
+	productCreated: {},
+	orders: [],
+	orderDetail: {},
+	categories: [],
+	brands: [],
+	cartProducts: getCartLocalStorage(),
 };
 
 const r = (state = initialState, {type, payload}) => {
@@ -99,6 +94,23 @@ const r = (state = initialState, {type, payload}) => {
 			};
 
 
+		///////////////  CATEGORIES  ///////////////
+		case ActionTypes.GET_CATEGORIES:
+			return {
+				...state,
+				categories: payload,
+			};
+		///////////////  BRANDS  ///////////////
+		case ActionTypes.GET_BRANDS:
+			return {
+				...state,
+				brands: payload,
+			};
+		default:
+			return state;
+	}
+=======
+
     ///////////////  CATEGORIES  ///////////////
     case ActionTypes.GET_CATEGORIES:
       return {
@@ -116,17 +128,7 @@ const r = (state = initialState, {type, payload}) => {
 				...state,
 				updateBrand: payload,
 			};
-    ///////////////  USERS  ///////////////
-    case ActionTypes.CREATE_USER:
-      return {
-        ...state,
-        signup: payload,
-      };
-    case ActionTypes.LOGIN_USER:
-      return {
-        ...state,
-        login: payload,
-      };
+   
     default:
       return state;
   }
