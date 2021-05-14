@@ -35,6 +35,10 @@ const ProductDetailStyle = styled.div`
 
 		.topDivLeft {
 			display: flex;
+
+			.categories {
+				display: flex;
+			}
 		}
 	}
 
