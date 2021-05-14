@@ -33,13 +33,5 @@ export default function validate(product, allProducts) {
 		errors.name = 'El producto ya existe.';
 	}
 
-	/* 
-	 if (
-   product.imageUrl &&
-   (!/image\/jpeg|png/.test(product.imageUrl[0]) || product.imageUrl > 5242880)
- ) {
-   errors.file = "Sólo imágenes .png y .jpeg, menores a 5.24 MB.";
- }
- */
 	return errors;
 }

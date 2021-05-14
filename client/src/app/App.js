@@ -10,6 +10,7 @@ import ProductDetail from '../components/containers/productDetail/ProductDetail'
 import Cart from '../components/containers/cart/Cart.js';
 import FormLogging from '../components/containers/formLogging/FormLogging';
 import FormSignup from '../components/containers/formSignup/FormSignup';
+import FomrCategories from '../components/containers/formCategories/FormCategories'
 
 function App() {
 	return (
@@ -22,6 +23,7 @@ function App() {
 					<Route exact path='/signup' component={FormSignup} />
 					<Route exact path='/catalogue' component={Catalogue} />
 					<Route exact path='/create' component={FormProduct} />
+					<Route exact path='/categorie' component={FomrCategories} />
 					<Route exact path='/cart' component={Cart} />
 
 					<Route

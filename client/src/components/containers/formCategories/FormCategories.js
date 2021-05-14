@@ -5,6 +5,8 @@ import {getCategories, getProducts} from '../../../redux/actions';
 import DataListInput from 'react-datalist-input';
 import axios from 'axios';
 import {URLS} from '../../../utils/constants';
+import Swal from 'sweetalert2';
+import validate from '../../../utils/categorieValidate';
 
 const FormCategorie = () => {
 	const dispatch = useDispatch();
@@ -14,7 +16,7 @@ const FormCategorie = () => {
 	const [Inputs, setInputs] = useState({
 		edit: false,
 		id: '',
-		name: '',
+		categories: [],
 		variants: [],
 		products: [],
 		periferic: false,
@@ -22,10 +24,12 @@ const FormCategorie = () => {
 	const [Datalist, setDatalist] = useState([{}]);
 	const [Variants, setVariants] = useState([]);
 	const [ProductsAdd, setProductsAdd] = useState();
+	const [Errors, setErrors] = useState({});
+	//const [ClearInput, setClearInput] = useState(false);
 
 	useEffect(() => {
 		dispatch(getCategories());
-		dispatch(getProducts(undefined, undefined, undefined, undefined, 100));
+		dispatch(getProducts('', '', '', '', '', '', '', Infinity));
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const newMatch = (currentInput, item) =>
@@ -57,14 +61,14 @@ const FormCategorie = () => {
 
 	const handleSearch = (e) => {
 		let productsFilter = allProducts.filter((el) =>
-			el.name.toLowerCase().includes(e.toLowerCase())
+			el.product.name.toLowerCase().includes(e.toLowerCase())
 		);
 		if (Inputs.edit === true) {
 			let total =
-				productsFilter &&
+				productsFilter.length &&
 				productsFilter.filter((ele) => {
-					let existProductInCategory = ele.categories.find(
-						(el) => el.name === Inputs.name
+					let existProductInCategory = ele.product.categories.find(
+						(el) => el.name === Inputs.categories[0]
 					);
 					if (existProductInCategory) return false;
 					return true;
@@ -78,7 +82,7 @@ const FormCategorie = () => {
 		setDatalist(
 			array &&
 				array.map((el) => {
-					return {key: el._id, label: el.name};
+					return {key: el.product._id, label: el.product.name};
 				})
 		);
 	};
@@ -87,9 +91,24 @@ const FormCategorie = () => {
 		e.target.name === 'categories'
 			? setInputs({...Inputs, [e.target.name]: [e.target.value]})
 			: setInputs({...Inputs, [e.target.name]: e.target.value});
+		setErrors(
+			validate({
+				...Inputs,
+				[e.target.name]: e.target.value,
+			})
+		);
 	};
 
+
+
 	const handleVariantsInput = (e) => {
+		console.log(Inputs);
+		setErrors(
+			validate({
+				...Inputs,
+				[e.target.name]: e.target.value,
+			})
+		);
 		setVariants(e.target.value);
 	};
 
@@ -105,19 +124,75 @@ const FormCategorie = () => {
 	const addProducts = (e) => {
 		e.preventDefault();
 		setInputs({...Inputs, products: Inputs.products.concat(ProductsAdd)});
-		setProductsAdd('');
 	};
 
+	const handleDelete = async (e) => {
+		e.preventDefault();
+		try {
+			if (Inputs.edit === true) {
+				let response = await axios.delete(URLS.URL_CATEGORIES, {data: Inputs});
+				dispatch(getCategories());
+				setInputs({
+					edit: false,
+					id: '',
+					categories: [],
+					variants: [],
+					products: [],
+					periferic: false,
+				});
+				if (response.data === 'Success') {
+					Swal.fire({
+						title: 'Success!',
+						text: 'Categorie succesfully Delete',
+						icon: 'warning',
+						confirmButtonText: 'Ok',
+					});
+				}
+			}
+		} catch (err) {
+			Swal.fire({
+				title: 'Error',
+				text: err.response.data.error,
+				icon: 'error',
+				confirmButtonText: 'Ok',
+			});
+		}
+	};
 	const handleOnSumbit = async (e) => {
 		e.preventDefault();
 		try {
-			console.log(Inputs);
-			await axios.post(URLS.URL_CATEGORIES, Inputs);
+			if (Inputs.edit === true) {
+				let response = await axios.put(URLS.URL_CATEGORIES, Inputs);
+				if (response.data === 'Success') {
+					Swal.fire({
+						title: 'Success!',
+						text: 'Categorie succesfully Modified',
+						icon: 'success',
+						confirmButtonText: 'Ok',
+					});
+				}
+			} else {
+				let response = await axios.post(URLS.URL_CATEGORIES, Inputs);
+				if (response.data === 'Success') {
+					Swal.fire({
+						title: 'Success!',
+						text: 'Categorie succesfully Created',
+						icon: 'success',
+						confirmButtonText: 'Ok',
+					});
+				}
+			}
 			dispatch(getCategories());
 		} catch (err) {
-			console.log(err);
+			Swal.fire({
+				title: 'Error',
+				text: err.response.data.error,
+				icon: 'error',
+				confirmButtonText: 'Ok',
+			});
 		}
 	};
+
 
 	return (
 		<StyleContainer>
@@ -162,6 +237,9 @@ const FormCategorie = () => {
 								className='form__input'
 								value={Inputs.categories}
 							></input>
+							{Errors.categories && (
+								<p className='danger'>{Errors.categories}</p>
+							)}
 						</div>
 						<div className='form__radio'>
 							<label className='form__label '>
@@ -173,7 +251,7 @@ const FormCategorie = () => {
 									type='radio'
 									id='yes'
 									name='periferic'
-									value='yes'
+									value='true'
 								/>
 								<label className='form__label' for='periferic'>
 									Yes
@@ -184,7 +262,7 @@ const FormCategorie = () => {
 									type='radio'
 									id='no'
 									name='periferic'
-									value='no'
+									value='false'
 								/>
 								<label className='form__label' for='periferic'>
 									No
@@ -194,19 +272,11 @@ const FormCategorie = () => {
 						</div>
 					</div>
 					<div className='form__element '>
-						<label className='form__label'>
-							Add variants to the category:
-							{Inputs.variants.length > 0 ? (
-								<label>
-									<br></br>Current variants in this category:&nbsp;
-									{Inputs.variants && Inputs.variants.join(', ')}
-								</label>
-							) : null}
-						</label>
+						<label className='form__label'>Add variants to the category:</label>
 						<div className='row'>
 							<input
 								onChange={handleVariantsInput}
-								className='tag__input '
+								className='tag__input'
 								name='variants'
 								value={Variants}
 							></input>
@@ -214,18 +284,20 @@ const FormCategorie = () => {
 								Add
 							</button>
 						</div>
-					</div>
-					<div className='form__element'>
+						{Errors.variants && <p className='danger'>{Errors.variants}</p>}
 						<label className='form__label'>
-							Add products to category:
-							{Inputs.products.length > 0 ? (
+							{Inputs.variants.length > 0 ? (
 								<label>
-									<br></br>This category has&nbsp;
-									{Inputs.products && Inputs.products.length}
-									&nbsp;products assigned
+									Current variants in this category:&nbsp;
+									{Inputs.variants && Inputs.variants.join(', ')}
 								</label>
 							) : null}
+							<br></br>
+							<br></br>
 						</label>
+					</div>
+					<div className='form__element'>
+						<label className='form__label'>Add products to category:</label>
 						<div className='row'>
 							<DataListInput
 								inputClassName='tag__input'
@@ -240,11 +312,29 @@ const FormCategorie = () => {
 								Add
 							</button>
 						</div>
+						<label className='form__label'>
+							{Inputs.products.length > 0 ? (
+								<label>
+									This category has&nbsp;
+									{Inputs.products && Inputs.products.length}
+									&nbsp;products assigned
+								</label>
+							) : null}
+							<br></br>
+							<br></br>
+						</label>
 					</div>
-
-					<button onClick={(e) => handleOnSumbit(e)} className='form__button'>
-						Save
-					</button>
+					<div className='row'>
+						<button onClick={(e) => handleDelete(e)} className='form__button'>
+							Delete
+						</button>
+						<button
+							onClick={(e) => handleOnSumbit(e)}
+							className='form__button_green'
+						>
+							Save
+						</button>
+					</div>
 				</form>
 			</div>
 		</StyleContainer>
