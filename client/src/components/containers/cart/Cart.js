@@ -24,9 +24,15 @@ const Cart = () => {
   postOrders(cartProducts);
   
   */
+
   const cartProduct = useSelector((state) => state.cartProducts);
   const dispatch = useDispatch();
-  console.log("este es el estado", cartProduct);
+  console.log("este es el estadoooooooooooopo", cartProduct);
+
+  /*  useEffect(() => {
+    dispatch(getOpenUserOrders());
+  }, []); */
+
   return (
     <DIV_CART>
       <div className="title_cnt">
@@ -43,37 +49,31 @@ const Cart = () => {
               <div>Price</div>
             </div>
 
-            {/*             {cartProduct.length ? (
-              cartProduct.map((e) => (
-                <CardCartProducts
-                  name={e.name ? e.name : e.product.name}
-                  price={e.price ? e.price : e.product.price}
-                  price={e.price ? e.price : e.product.price}
-                  lot={e.lot ? e.lot : undefined}
-                />
-              ))
-            ) : (
-              <h1>No tienes Producto agregados al carrito</h1>
-            )} */}
             {cartProduct.length ? (
               cartProduct.map((e) => (
-                <div className="product_detail">
-                  <h3>{e.name ? e.name : e.product.name}</h3>
-                  <div>
-                    <button>+</button>
-                    state.value
-                    <button>-</button>
-                  </div>
-                  <p>
-                    {e.price
-                      ? e.price.currency + e.price.value
-                      : e.product.price.currency + e.product.price.value}
-                  </p>
-                </div>
+                <CardCartProducts key={e._id} product={e} />
               ))
             ) : (
               <h1>No tienes Producto agregados al carrito</h1>
             )}
+            {/* cartProduct.length ? (
+              cartProduct.map(
+                ({ product: { name, price, imageUrl, _id }, lot }) => (
+                  <div className="product_detail">
+                    <h3>{name}</h3>
+                    <div>
+                      <button>+</button>
+                      {lot}
+                      <button>-</button>
+                    </div>
+                    <p>{price.currency + price.value}</p>
+                    <button className="botooon">X</button>
+                  </div>
+                )
+              )
+            ) : (
+              <h1>No tienes Producto agregados al carrito</h1>
+            ) */}
           </div>
           <div>
             <p className="p_back_home">{"<<"} Continue Shopping</p>
