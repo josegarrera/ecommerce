@@ -46,13 +46,15 @@ const FormLogging = () => {
 						email: '',
 						password: '',
 					});
+					window.localStorage.setItem('token', data.token);
+					window.localStorage.setItem('userId', data.user._id);
 					Swal.fire({
 						title: 'Success!',
 						text: 'Succesfully login',
 						icon: 'success',
 						confirmButtonText: 'Ok',
 					}).then(() => {
-						history.push('/');
+						history.push('/catalogue');
 					});
 				}
 			})
