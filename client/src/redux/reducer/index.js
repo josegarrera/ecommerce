@@ -19,15 +19,13 @@ const r = (state = initialState, {type, payload}) => {
 	switch (type) {
 		///////////////  CART PRODUCTS  ///////////////
 
-
-    case ActionTypes.ADD_DB_PRODUCT_CART:
-      const cart_db_product = state.cartProducts.concat(payload);
-      setCartLocalStorage(cart_db_product);
-      return {
-        ...state,
-        cartProducts: cart_db_product,
-      };
-
+		case ActionTypes.ADD_DB_PRODUCT_CART:
+			const cart_db_product = state.cartProducts.concat(payload);
+			setCartLocalStorage(cart_db_product);
+			return {
+				...state,
+				cartProducts: cart_db_product,
+			};
 
 		case ActionTypes.ADD_PRODUCT_CART:
 			const cart_product = state.cartProducts.concat(payload);
@@ -93,7 +91,6 @@ const r = (state = initialState, {type, payload}) => {
 				orderDetail: payload,
 			};
 
-
 		///////////////  CATEGORIES  ///////////////
 		case ActionTypes.GET_CATEGORIES:
 			return {
@@ -106,32 +103,15 @@ const r = (state = initialState, {type, payload}) => {
 				...state,
 				brands: payload,
 			};
-		default:
-			return state;
-	}
-
-    ///////////////  CATEGORIES  ///////////////
-    case ActionTypes.GET_CATEGORIES:
-      return {
-        ...state,
-        categories: payload,
-      };
-    ///////////////  BRANDS  ///////////////
-    case ActionTypes.GET_BRANDS:
-      return {
-        ...state,
-        brands: payload,
-      };
-  case ActionTypes.UPDATE_BRAND:
+		case ActionTypes.UPDATE_BRAND:
 			return {
 				...state,
 				updateBrand: payload,
 			};
-   
-    default:
-      return state;
-  }
 
+		default:
+			return state;
+	}
 };
 
 export default r;
