@@ -24,6 +24,7 @@ function App() {
 					<Route exact path='/create' component={FormProduct} />
 					<Route exact path='/cart' component={Cart} />
 
+			
 					<Route
 						exact
 						path='/products/name/:name'

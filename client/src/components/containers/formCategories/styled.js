@@ -84,6 +84,19 @@ export const StyleContainer = styled.div`
 		font-weight: 600;
 	}
 
+	.form__button_green {
+		display: flex;
+		margin-top: 0.5rem;
+		align-self: flex-end;
+		padding: 1rem;
+		color: #ffffff;
+		background-color: #2ec4b6;
+		border: none;
+		border-radius: 0.5rem;
+		font-size: 1.2rem;
+		font-weight: 600;
+	}
+
 	.form__button:hover {
 		background-color: #e53935;
 	}
