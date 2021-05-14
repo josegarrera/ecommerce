@@ -14,7 +14,7 @@ const FormCategorie = () => {
 	const [Inputs, setInputs] = useState({
 		edit: false,
 		id: '',
-		name: '',
+		categories: [],
 		variants: [],
 		products: [],
 		periferic: false,
@@ -22,10 +22,11 @@ const FormCategorie = () => {
 	const [Datalist, setDatalist] = useState([{}]);
 	const [Variants, setVariants] = useState([]);
 	const [ProductsAdd, setProductsAdd] = useState();
+	const [ClearInput, setClearInput] = useState(false);
 
 	useEffect(() => {
 		dispatch(getCategories());
-		dispatch(getProducts(undefined, undefined, undefined, undefined, 100));
+		dispatch(getProducts('', '', '', '', '', '', '', Infinity));
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const newMatch = (currentInput, item) =>
@@ -64,7 +65,7 @@ const FormCategorie = () => {
 				productsFilter &&
 				productsFilter.filter((ele) => {
 					let existProductInCategory = ele.categories.find(
-						(el) => el.name === Inputs.name
+						(el) => el.name === Inputs.categories[0]
 					);
 					if (existProductInCategory) return false;
 					return true;
@@ -105,14 +106,40 @@ const FormCategorie = () => {
 	const addProducts = (e) => {
 		e.preventDefault();
 		setInputs({...Inputs, products: Inputs.products.concat(ProductsAdd)});
-		setProductsAdd('');
+		setClearInput(true);
+	};
+
+	const handleDelete = async (e) => {
+		e.preventDefault();
+		try {
+			if (Inputs.edit === true) {
+				console.log(Inputs);
+				await axios.delete(URLS.URL_CATEGORIES, {data: Inputs});
+				dispatch(getCategories());
+				setInputs({
+					edit: false,
+					id: '',
+					categories: [],
+					variants: [],
+					products: [],
+					periferic: false,
+				});
+			}
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	const handleOnSumbit = async (e) => {
 		e.preventDefault();
 		try {
-			console.log(Inputs);
-			await axios.post(URLS.URL_CATEGORIES, Inputs);
+			if (Inputs.edit === true) {
+				console.log(Inputs);
+				await axios.put(URLS.URL_CATEGORIES, Inputs);
+			} else {
+				console.log(Inputs);
+				await axios.post(URLS.URL_CATEGORIES, Inputs);
+			}
 			dispatch(getCategories());
 		} catch (err) {
 			console.log(err);
@@ -194,38 +221,32 @@ const FormCategorie = () => {
 						</div>
 					</div>
 					<div className='form__element '>
-						<label className='form__label'>
-							Add variants to the category:
-							{Inputs.variants.length > 0 ? (
-								<label>
-									<br></br>Current variants in this category:&nbsp;
-									{Inputs.variants && Inputs.variants.join(', ')}
-								</label>
-							) : null}
-						</label>
+						<label className='form__label'>Add variants to the category:</label>
 						<div className='row'>
 							<input
 								onChange={handleVariantsInput}
-								className='tag__input '
+								className='tag__input'
 								name='variants'
 								value={Variants}
 							></input>
+
 							<button onClick={(e) => addVariants(e)} className='submit__tag'>
 								Add
 							</button>
 						</div>
-					</div>
-					<div className='form__element'>
 						<label className='form__label'>
-							Add products to category:
-							{Inputs.products.length > 0 ? (
+							{Inputs.variants.length > 0 ? (
 								<label>
-									<br></br>This category has&nbsp;
-									{Inputs.products && Inputs.products.length}
-									&nbsp;products assigned
+									Current variants in this category:&nbsp;
+									{Inputs.variants && Inputs.variants.join(', ')}
 								</label>
 							) : null}
+							<br></br>
+							<br></br>
 						</label>
+					</div>
+					<div className='form__element'>
+						<label className='form__label'>Add products to category:</label>
 						<div className='row'>
 							<DataListInput
 								inputClassName='tag__input'
@@ -240,11 +261,29 @@ const FormCategorie = () => {
 								Add
 							</button>
 						</div>
+						<label className='form__label'>
+							{Inputs.products.length > 0 ? (
+								<label>
+									This category has&nbsp;
+									{Inputs.products && Inputs.products.length}
+									&nbsp;products assigned
+								</label>
+							) : null}
+							<br></br>
+							<br></br>
+						</label>
 					</div>
-
-					<button onClick={(e) => handleOnSumbit(e)} className='form__button'>
-						Save
-					</button>
+					<div className='row'>
+						<button onClick={(e) => handleDelete(e)} className='form__button'>
+							Delete
+						</button>
+						<button
+							onClick={(e) => handleOnSumbit(e)}
+							className='form__button_green'
+						>
+							Save
+						</button>
+					</div>
 				</form>
 			</div>
 		</StyleContainer>

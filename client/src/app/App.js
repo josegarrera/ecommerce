@@ -10,34 +10,37 @@ import Search from "../components/containers/search/Search";
 import ProductDetail from "../components/containers/productDetail/ProductDetail";
 import Cart from "../components/containers/cart/Cart.js";
 import FormLogging from "../components/containers/formLogging/FormLogging";
+import FormCategorie from '../components/containers/formCategories/FormCategories'
 
 function App() {
   return (
-    <div className="App">
-      <React.Fragment>
-        <GridLayout>
-          {/* <GlobalStyles /> */}
-          <Route path="/" component={NavBar} />
-          <Route exact path="/login" component={FormLogging} />
-          <Route exact path="/catalogue" component={Catalogue} />
-          <Route exact path="/create" component={FormProduct} />
-          <Route exact path="/cart" component={Cart} />
+		<div className='App'>
+			<React.Fragment>
+				<GridLayout>
+					{/* <GlobalStyles /> */}
+					<Route path='/' component={NavBar} />
+					<Route exact path='/login' component={FormLogging} />
+					<Route exact path='/catalogue' component={Catalogue} />
+					<Route exact path='/create' component={FormProduct} />
+					<Route exact path='/cart' component={Cart} />
 
-          <Route
-            exact
-            path="/products/name/:name"
-            render={({ match }) => <Search name={match.params.name} />}
-          />
+					<Route exact path='/categorie' component={FormCategorie} />
 
-          <Route
-            exact
-            path="/products/id/:id"
-            render={({ match }) => <ProductDetail id={match.params.id} />}
-          />
-        </GridLayout>
-      </React.Fragment>
-    </div>
-  );
+					<Route
+						exact
+						path='/products/name/:name'
+						render={({match}) => <Search name={match.params.name} />}
+					/>
+
+					<Route
+						exact
+						path='/products/id/:id'
+						render={({match}) => <ProductDetail id={match.params.id} />}
+					/>
+				</GridLayout>
+			</React.Fragment>
+		</div>
+	);
 }
 
 export default App;
