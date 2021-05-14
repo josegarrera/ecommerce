@@ -86,7 +86,7 @@ async function addProduct(req, res) {
 						: true;
 					if (toAdd) {
 						orderActive.items = orderActive.items.concat([
-							{product: products.product._id},
+							{lot: products.lot, product: products.product._id},
 						]);
 						orderActive.save();
 					}
@@ -101,6 +101,7 @@ async function addProduct(req, res) {
 					order.save();
 					res.send(order);
 				} else {
+					console.log(products.lot);
 					let order = await new Orders({
 						users: userId,
 						items: [{lot: products.lot, product: products.product._id}],
@@ -115,6 +116,45 @@ async function addProduct(req, res) {
 		}
 	} catch (err) {
 		console.log(err);
+	}
+}
+
+async function deleteProduct(req, res) {
+	const {userId, productId} = req.body.data;
+	try {
+		if (await Users.exists({_id: userId})) {
+			let update = await Orders.findOneAndUpdate(
+				{users: userId, state: 1},
+				{
+					$pull: {
+						items: {product: {_id: productId._id}},
+					},
+				}
+			).exec();
+			update = await Orders.find({users: userId, state: 1})
+				.populate('users', {email: 1, _id: 1})
+				.populate('items.product', {name: 1, price: 1, _id: 1, imageUrl: 1})
+				.exec();
+			res.send(update);
+		}
+	} catch (err) {
+		console.log(err);
+	}
+}
+
+async function changeLot(req, res) {
+	const {userId, product, num} = req.body.data;
+	try {
+		if (await Users.exists({_id: userId})) {
+			let update = await Orders.findOne({users: userId, state: 1});
+			let modificarLot = update.items.find((e) => e.product == product._id);
+			modificarLot.lot =
+				modificarLot.lot + num >= 1 ? modificarLot.lot + num : modificarLot.lot;
+			update.save();
+			res.send(update.items);
+		}
+	} catch (error) {
+		console.log(error);
 	}
 }
 
@@ -160,4 +200,6 @@ module.exports = {
 	getAllUserOrders,
 	getAllOrders,
 	getOrderById,
+	deleteProduct,
+	changeLot,
 };

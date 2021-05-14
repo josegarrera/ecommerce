@@ -26,7 +26,7 @@ router.post('/login', async (req, res, next) => {
 			if (err || !user) {
 				const error = new Error('new Error');
 				return res.json({
-					message: info.message,
+					notLogin: info.message,
 				});
 			}
 
@@ -36,7 +36,7 @@ router.post('/login', async (req, res, next) => {
 
 				const token = jwt.sign({user: body}, 'top_secret');
 				return res.json({
-					message: info.message,
+					login: info.message,
 					token,
 					user,
 				});

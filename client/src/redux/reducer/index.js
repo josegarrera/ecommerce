@@ -16,6 +16,7 @@ const initialState = {
 	cartProducts: getCartLocalStorage(),
 	signup: {},
 	login: {},
+
 };
 
 const r = (state = initialState, {type, payload}) => {
@@ -111,6 +112,7 @@ const r = (state = initialState, {type, payload}) => {
 				...state,
 				updateBrand: payload,
 			};
+
 		///////////////  USERS  ///////////////
 		case ActionTypes.CREATE_USER:
 			return {
@@ -122,6 +124,7 @@ const r = (state = initialState, {type, payload}) => {
 				...state,
 				login: payload,
 			};
+
 		default:
 			return state;
 	}

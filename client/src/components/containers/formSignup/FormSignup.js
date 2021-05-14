@@ -1,28 +1,57 @@
 /* eslint-disable react/jsx-pascal-case */
-import React, {useState} from 'react';
-import {useDispatch} from 'react-redux';
+import React, {useState, useEffect} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 import Signup_Style from './styled';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
+import axios from 'axios';
+import {URLS} from '../../../utils/constants';
 
 import {AiFillLock} from 'react-icons/ai';
 import {FaEnvelope} from 'react-icons/fa';
-import {createUser} from '../../../redux/actions';
+import {IoCloseSharp} from 'react-icons/io5';
+import Swal from 'sweetalert2';
 
 const FormSignup = () => {
-	const dispatch = useDispatch();
-
+	let history = useHistory();
 	const [input, setInput] = useState({
 		email: '',
 		password: '',
 	});
 
-	const onSubmitHandler = (e) => {
+	const [errors, setErrors] = useState({});
+
+	useEffect(() => {
+		setErrors({});
+	}, [input]);
+
+	const onSubmitHandler = async (e) => {
 		e.preventDefault();
-		dispatch(createUser(input));
-		setInput({
-			email: '',
-			password: '',
-		});
+		axios
+			.post(URLS.URL_SIGNUP, input)
+			.then(function (response) {
+				let data = response.data;
+				if (data.user === true) {
+					setErrors({
+						message: data.message,
+					});
+				} else {
+					setInput({
+						email: '',
+						password: '',
+					});
+					Swal.fire({
+						title: 'Success!',
+						text: 'Succesfully registered',
+						icon: 'success',
+						confirmButtonText: 'Ok',
+					}).then(() => {
+						history.push('/');
+					});
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
 	};
 
 	const onChangeHandler = (e) => {
@@ -37,6 +66,11 @@ const FormSignup = () => {
 			<div className='loginContainer'>
 				<div className='loginWrapper'>
 					<div className='loginContent'>
+						<Link to='/'>
+							<div className='close__icon'>
+								<IoCloseSharp />
+							</div>
+						</Link>
 						<div className='rowTop'>
 							<Link to='/login'>
 								<button className='signInBtnTop'>
@@ -64,7 +98,7 @@ const FormSignup = () => {
 									onChange={(e) => onChangeHandler(e)}
 								></input>
 							</div>
-
+							<div>{errors ? errors.message : null}</div>
 							<div className='inputElement'>
 								<span className='passwordSpan'>Password</span>
 								<i className='lockIcon'>
