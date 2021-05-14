@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {getBrands, addBrand, updateBrand} from '../../../redux/actions';
 import Swal from 'sweetalert2';
+import {IoCloseSharp} from 'react-icons/io5';
 import FormBrandStyle from './styled';
 
 const FormBrands = () => {
