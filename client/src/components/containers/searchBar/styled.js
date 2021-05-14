@@ -4,6 +4,7 @@ const FormSearchBar = styled.div`
     display: flex;
 
     .searchBar{
+        
         border: 2px solid #E7E7E7;
         border-radius: 30px;
         height: 57px;

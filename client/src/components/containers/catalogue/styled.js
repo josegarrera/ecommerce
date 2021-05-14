@@ -6,6 +6,7 @@ const Catalogue_Style = styled.div`
 	display: flex;
 	align-items: center;
 	padding: 4rem;
+	align-items: stretch;
 
 	.productsPagination {
 		display: flex;
