@@ -23,13 +23,13 @@ const ProductDetail = (id) => {
 			<div className='all'>
 				<div className='topDiv'>
 					<div className='topDivLeft'>
-						<Link to={`/catalogue`}>{'Back'} </Link>
-						<div>
+						<Link to={`/catalogue`}>{'Back |'} </Link>
+						<div className='categories'>
 							{product.categories &&
 								product.categories.map((categ) => (
 									<div>
-										{' | > '}
-										{categ.name}
+										{' > '}
+										{categ.name}{' '}
 									</div>
 								))}
 						</div>
