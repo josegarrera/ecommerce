@@ -50,6 +50,7 @@ const FormBrands = () => {
 		e.preventDefault();
 		dispatch(addBrand(brand));
 		setBrand({name: ''});
+		dispatch(getBrands());
 	};
 
 	const ChangeInput2 = (e) => {
@@ -67,6 +68,7 @@ const FormBrands = () => {
 	const handleBrand = (e) => {
 		e.preventDefault();
 		dispatch(updateBrand(updBrand));
+		dispatch(getBrands());
 	};
 
 	return (

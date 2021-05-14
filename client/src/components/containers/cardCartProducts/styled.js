@@ -6,6 +6,10 @@ const DivCard = styled.div`
 	flex-direction: column;
 	align-items: center;
 	color: #535353;
+	a {
+		text-decoration: none;
+		color: #535353;
+	}
 
 	.productCont {
 		display: flex;

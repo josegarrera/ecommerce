@@ -213,6 +213,17 @@ export const addCartProduct = (id) => {
 	};
 };
 
+export const removeCartProduct = (data) => {
+	// remueve un producto del carrito de un usuario y me devuelve el carrito actualizado
+	return async (dispatch) => {
+		const res = await axios.delete(`${URLS.URL_USER_ORDERS}`, {data});
+		return dispatch({
+			type: ActionTypes.REMOVE_PRODUCT_CART,
+			payload: data, // TIENE QUE SER UN {}
+		});
+	};
+};
+
 ////////////////////////////////////////  BRANDS ACTIONS  ////////////////////////////////////////
 
 export const getBrands = () => {
