@@ -109,7 +109,6 @@ const r = (state = initialState, {type, payload}) => {
 		default:
 			return state;
 	}
-=======
 
     ///////////////  CATEGORIES  ///////////////
     case ActionTypes.GET_CATEGORIES:
