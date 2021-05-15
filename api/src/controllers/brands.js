@@ -1,3 +1,4 @@
+const {compareSync} = require('bcrypt');
 const {Brands} = require('../models/index.js');
 
 function getAllBrands(req, res) {
@@ -25,7 +26,24 @@ async function createBrands(req, res) {
 	});
 }
 
+async function updateBrand(req, res) {
+	const {body} = req;
+	if (!body.name)
+		return res
+			.status(400)
+			.send({type: 'Bad request.', error: 'The brand is empty.'});
+	try {
+		const updatedBrand = await Brands.findByIdAndUpdate(req.params.id, {
+			name: req.body.name,
+		});
+		return res.send({message: 'Brand updated', updatedBrand});
+	} catch (error) {
+		res.status(500).send({type: 'Internal Server Error', error: error});
+	}
+}
+
 module.exports = {
 	createBrands,
 	getAllBrands,
+	updateBrand,
 };

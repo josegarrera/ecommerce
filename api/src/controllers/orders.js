@@ -122,7 +122,8 @@ async function addProduct(req, res) {
 async function deleteProduct(req, res) {
 	const {userId, productId} = req.body;
 	try {
-		if (await Users.exists({_id: userId})) {
+		const user = await Users.exists({_id: userId});
+		if (user) {
 			let update = await Orders.findOneAndUpdate(
 				{users: userId, state: 1},
 				{

@@ -137,17 +137,18 @@ export const updateProduct = (id, body) => {
 
 ////////////////////////////////////////  ORDERS ACTIONS  ////////////////////////////////////////
 
-export const getOpenUserOrders = (userId, cart) => {
-  // trae todos las ordenes que tiene el vendedor.
+export const getOpenUserOrders = (userId, cart) => 
+	// trae todos las ordenes que tiene el vendedor.
   return async (dispatch) => {
     const { data } = await axios.get(
-      `${URLS.URL_USER_ORDERS}?userId=609ac28e1fa9d70ea0056665&cart=true`
+      `${URLS.URL_USER_ORDERS}?userId=${userId}&cart=${cart}`
     );
     return dispatch({
       type: ActionTypes.ADD_DB_PRODUCT_CART,
       payload: data.items, // TIENE QUE SER UN []
     });
   };
+
 };
 
 export const getOrderDetail = (id) => {
@@ -227,14 +228,17 @@ export const postLocalStorage = (body) => {
 };
 
 export const removeCartProduct = (data) => {
-  // remueve un producto del carrito de un usuario y me devuelve el carrito actualizado
-  return async (dispatch) => {
-    const res = await axios.delete(`${URLS.URL_USER_ORDERS}`, { data });
-    return dispatch({
-      type: ActionTypes.REMOVE_PRODUCT_CART,
-      payload: data, // TIENE QUE SER UN {}
-    });
-  };
+
+	console.log('llego la dataaaa', data);
+	// remueve un producto del carrito de un usuario y me devuelve el carrito actualizado
+	return async (dispatch) => {
+		const res = await axios.delete(`${URLS.URL_USER_ORDERS}`, {data});
+		console.log(res);
+		return dispatch({
+			type: ActionTypes.REMOVE_PRODUCT_CART,
+			payload: data, // TIENE QUE SER UN {}
+		});
+	};  
 };
 
 ////////////////////////////////////////  BRANDS ACTIONS  ////////////////////////////////////////

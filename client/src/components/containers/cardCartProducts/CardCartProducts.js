@@ -1,13 +1,15 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import {useDispatch} from 'react-redux';
 import {IoCloseSharp} from 'react-icons/io5';
 import {removeCartProduct} from '../../../redux/actions/index.js';
 import DivCard from './styled';
 
 const CardCartProducts = (props) => {
+	const dispatch = useDispatch();
 	let {imageUrl, name, price, _id} = props.product.product;
 	let {lot} = props.product;
-	let userId = 123456789; // Lo obtengo de algun lado
+	let userId = window.localStorage.getItem(userId);
 
 	let data = {
 		userId: userId,
@@ -16,8 +18,7 @@ const CardCartProducts = (props) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		removeCartProduct(data);
-		console.log('esto se va a elimiar', data);
+		dispatch(removeCartProduct(data));
 	};
 
 	return (

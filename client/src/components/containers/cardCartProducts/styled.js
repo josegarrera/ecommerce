@@ -76,7 +76,7 @@ const DivCard = styled.div`
 			justify-content: center;
 			background: none;
 			width: 10%;
-			color: #535353;
+			color: #ee362c;
 			&:hover {
 				cursor: pointer;
 			}
