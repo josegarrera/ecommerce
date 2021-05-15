@@ -76,7 +76,7 @@ async function addProduct(req, res) {
 						return {lot: e.lot, product: e.product._id};
 					});
 					orderActive.items = orderActive.items.concat(toAdd);
-					orderActive.save();
+					await orderActive.save();
 					orderActive = await Orders.findOne({users: userId, state: 1})
 						.populate('users', {email: 1, _id: 1})
 						.populate('items.product')
