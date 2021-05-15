@@ -1,7 +1,7 @@
 const {Categories, Products} = require('../models/index.js');
 
 function getAllCategories(req, res) {
-	Categories.find({}, 'name variants')
+	Categories.find({}, 'name variants specs')
 		.exec()
 		.then((data) => res.send(data))
 		.catch((error) =>
