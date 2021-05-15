@@ -3,6 +3,7 @@ import {
   getCartLocalStorage,
   setCartLocalStorage,
 } from "../../utils/localStorage";
+import Swal from "sweetalert2";
 
 const initialState = {
   products: {},
@@ -29,19 +30,26 @@ const r = (state = initialState, { type, payload }) => {
 				cartProducts: payload,
 			};
 
-		case ActionTypes.ADD_PRODUCT_CART:
-			const findOne = state.cartProducts.find(
-				(e) => e.product._id === payload.product._id
-			);
-			if (findOne) {
-				alert('The item is already in the cart');
-				return {...state};
-			}
-			setCartLocalStorage(state.cartProducts.concat(payload));
-			return {
-				...state,
-				cartProducts: state.cartProducts.concat(payload),
-			};
+
+    case ActionTypes.ADD_PRODUCT_CART:
+      const findOne = state.cartProducts.find(
+        (e) => e.product._id === payload.product._id
+      );
+      if (findOne) {
+        Swal.fire({
+          title: "Already exist",
+          text: "The item is already in the cart",
+          icon: "warning",
+          confirmButtonText: "Ok",
+        });
+        return { ...state };
+      }
+      setCartLocalStorage(state.cartProducts.concat(payload));
+      return {
+        ...state,
+        cartProducts: state.cartProducts.concat(payload),
+      };
+
 
 		case ActionTypes.REMOVE_PRODUCT_CART:
 			/* const remove_product = state.cartProducts.filter(
