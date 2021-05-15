@@ -40,6 +40,43 @@ export const getProducts = (
 	};
 };
 
+export const getProductsSearch = (
+	name,
+	category,
+	brand,
+	variants,
+	price,
+	order,
+	direction,
+	limit = 12
+) => {
+	return async (dispatch) => {
+		try {
+			const {data} = await axios.get(
+				`${URLS.URL_PRODUCTS}?name=${name}&category=${category}&brand=${brand}&variants=${variants}&price=${price}&order=${order}&direction=${direction}&limit=${limit}`
+			);
+
+			let newData = data.products.map((e) => {
+				return {lot: 0, product: {...e}};
+			});
+
+			let newArrData = {pages: data.pages, products: newData};
+
+			dispatch({
+				type: ActionTypes.GET_PRODUCTS_SEARCH,
+				payload: newArrData,
+			});
+		} catch (error) {
+			dispatch({
+				type: ActionTypes.GET_PRODUCTS_SEARCH,
+				payload: {
+					error: 'Not found',
+				},
+			});
+		}
+	};
+};
+
 export const getProductsQuery = (page) => {
 	return async (dispatch) => {
 		const {data} = await axios.get(page);
