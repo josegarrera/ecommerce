@@ -1,27 +1,26 @@
-import { ActionTypes } from "../../utils/constants";
+import {ActionTypes} from '../../utils/constants';
 import {
-  getCartLocalStorage,
-  setCartLocalStorage,
-} from "../../utils/localStorage";
-import Swal from "sweetalert2";
+	getCartLocalStorage,
+	setCartLocalStorage,
+} from '../../utils/localStorage';
+import Swal from 'sweetalert2';
 
 const initialState = {
-  products: {},
-  productSearch:{},
-  productDetail: {},
-  productCreated: {},
-  orders: [],
-  orderDetail: {},
-  categories: [],
-  brands: [],
-  updateBrand: {},
-  cartProducts: getCartLocalStorage(),
-  signup: {},
-  login: {},
+	products: {},
+	productSearch: {},
+	productDetail: {},
+	productCreated: {},
+	orders: [],
+	orderDetail: {},
+	categories: [],
+	brands: [],
+	updateBrand: {},
+	cartProducts: getCartLocalStorage(),
+	user: {},
 };
 
-const r = (state = initialState, { type, payload }) => {
-  switch (type) {
+const r = (state = initialState, {type, payload}) => {
+	switch (type) {
 		///////////////  CART PRODUCTS  ///////////////
 
 		case ActionTypes.ADD_DB_PRODUCT_CART:
@@ -30,26 +29,24 @@ const r = (state = initialState, { type, payload }) => {
 				cartProducts: payload,
 			};
 
-
-    case ActionTypes.ADD_PRODUCT_CART:
-      const findOne = state.cartProducts.find(
-        (e) => e.product._id === payload.product._id
-      );
-      if (findOne) {
-        Swal.fire({
-          title: "Already exist",
-          text: "The item is already in the cart",
-          icon: "warning",
-          confirmButtonText: "Ok",
-        });
-        return { ...state };
-      }
-      setCartLocalStorage(state.cartProducts.concat(payload));
-      return {
-        ...state,
-        cartProducts: state.cartProducts.concat(payload),
-      };
-
+		case ActionTypes.ADD_PRODUCT_CART:
+			const findOne = state.cartProducts.find(
+				(e) => e.product._id === payload.product._id
+			);
+			if (findOne) {
+				Swal.fire({
+					title: 'Already exist',
+					text: 'The item is already in the cart',
+					icon: 'warning',
+					confirmButtonText: 'Ok',
+				});
+				return {...state};
+			}
+			setCartLocalStorage(state.cartProducts.concat(payload));
+			return {
+				...state,
+				cartProducts: state.cartProducts.concat(payload),
+			};
 
 		case ActionTypes.REMOVE_PRODUCT_CART:
 			/* const remove_product = state.cartProducts.filter(
@@ -131,15 +128,10 @@ const r = (state = initialState, { type, payload }) => {
 			};
 
 		///////////////  USERS  ///////////////
-		case ActionTypes.CREATE_USER:
-			return {
-				...state,
-				signup: payload,
-			};
 		case ActionTypes.LOGIN_USER:
 			return {
 				...state,
-				login: payload,
+				user: payload,
 			};
 
 		default:
