@@ -20,13 +20,13 @@ const UsersSchema = new Schema({
 	},
 	firstName: String,
 	lastName: String,
-	type: {
+	role: {
 		type: String,
-		// required: true,
 		enum: {
-			values: ['Admin', 'Seller', 'Buyer'],
+			values: ['admin', 'client'],
 			message: '{VALUE} is not supported',
 		},
+		default: 'client',
 	},
 	orders: [
 		{
