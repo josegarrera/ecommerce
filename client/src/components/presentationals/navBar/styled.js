@@ -19,17 +19,28 @@ const DivNavBar = styled.div`
 		height: 75%;
 		padding: 0px 10%;
 
-		.logo {
-			color: #ee362e;
-			font-size: 25px;
-			font-weight: 800;
-			width: max-content;
+		.topLeft {
+			width: 20%;
+
+			.logo {
+				color: #ee362e;
+				font-size: 25px;
+				font-weight: 800;
+				width: max-content;
+			}
+		}
+
+		.topCenter {
+			width: 20%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
 		}
 
 		.topRight {
 			border-radius: 30px;
 			height: 57px;
-			width: 340px;
+			width: 20%;
 			display: flex;
 			align-items: center;
 			justify-content: space-evenly;

@@ -16,12 +16,12 @@ const NavBar = () => {
 	return (
 		<DivNavBar>
 			<div className='topNav'>
-				<div>
+				<div className='topLeft'>
 					<Link to='/'>
 						<h3 className='logo'>{'< Store! />'}</h3>
 					</Link>
 				</div>
-				<div>
+				<div className='topCenter'>
 					<SearchBar />
 				</div>
 				<div className='topRight'>
