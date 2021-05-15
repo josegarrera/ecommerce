@@ -2,30 +2,32 @@ import styled from "styled-components";
 
 const Filter_Style = styled.div`
   .filter__options {
-    width: 25rem;
+    width: 18rem;
     min-height: 40rem;
     border-radius: 1rem;
     background-color: #ffffff;
+    border: 1px solid #e0e0e0;
     box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05),
       0 15px 40px rgba(166, 173, 201, 0.2);
   }
 
   .filter__title {
-    padding: 1.5rem;
+    padding: 1.3rem;
     font-weight: bold;
     color: #616161;
+    font-size: 0.9rem;
   }
 
   .separator {
-    border: 1px solid #fafafa;
+    border: 0.5px solid #eeeeee;
     width: 100%;
   }
 
   .filter__section {
     display: flex;
     flex-direction: column;
-    padding: 1.5rem;
-    border: 1px solid #eaeaea;
+    padding: 1rem;
+    margin: 0.5rem;
     height: 100%;
   }
 

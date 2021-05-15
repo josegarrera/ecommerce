@@ -6,7 +6,7 @@ const DivCrdProd = styled.div`
   flex-direction: column;
   width: 14rem;
   height: fit-content;
-  border: 1px solid #efefef;
+  border: 1px solid #e0e0e0;
   border-radius: 20px;
   position: relative;
   box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05),

@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import CardProduct from "../../presentationals/cardProduct/CardProduct";
 import PRODUCTS_LIST_STYLE from "./styled";
 
 const ProductList = ({ products }) => {
+
   console.log("estoy aca", products);
   return (
     <PRODUCTS_LIST_STYLE>

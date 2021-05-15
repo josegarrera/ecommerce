@@ -55,7 +55,6 @@ const Filter = () => {
     );
   }, [input]);
 
-
   return (
     <Filter_Style>
       <div className="filter__options">
@@ -64,7 +63,8 @@ const Filter = () => {
 
         <div className="filter__section">
           <Dropdown
-            title="Categories"
+            filter
+            title="CATEGORIES"
             name="category"
             items={categoryNames}
             setVariants={(el) => setFilter(el)}
@@ -72,7 +72,8 @@ const Filter = () => {
           ></Dropdown>
 
           <Dropdown
-            title="Brands"
+            filter
+            title="BRANDS"
             name="brands"
             items={brandNames}
             setVariants={(el) => setFilter(el)}
@@ -80,7 +81,8 @@ const Filter = () => {
           ></Dropdown>
 
           <Dropdown
-            title="Variants"
+            filter
+            title="VARIANTS"
             name="variants"
             items={categoryNames}
             setVariants={(el) => setFilter(el)}
@@ -91,7 +93,6 @@ const Filter = () => {
             <div className="filter__section__title">PRICE</div>
           </div>
           <input type="range"></input>
-
         </div>
       </div>
     </Filter_Style>

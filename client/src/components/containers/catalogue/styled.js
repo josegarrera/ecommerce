@@ -1,17 +1,23 @@
 import styled from "styled-components";
 
 const Catalogue_Style = styled.div`
-  border: 1px solid red;
   display: flex;
   align-items: center;
-  padding: 4rem;
   align-items: stretch;
-  background-color: #f9f9f9;
+  background-color: #f8f8f8;
+  padding: 7rem 10%;
 
   .productsPagination {
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+
+  .sort__elements {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    padding-right: 5rem;
   }
 
   /* 	input[type='checkbox'] {
