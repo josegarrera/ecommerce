@@ -98,44 +98,57 @@ async function createProduct(req, res) {
 		);
 }
 
+function getAllProducts(req, res) {
+	Products.find()
+		.populate('categories', {name: 1})
+		.populate('brands', {name: 1})
+		.sort(order)
+		.exec()
+		.then((data) => {
+			if (!data.length)
+				return res.send({
+					products: [],
+					pages: [],
+					message: 'Query parameters do not match.',
+				});
+			return res.send(data);
+		})
+		.catch((error) =>
+			res.status(500).send({type: 'Internal Server Error', error: error})
+		);
+}
+
 function getProducts(req, res) {
 	const name =
 		req.query.name && req.query.name !== 'undefined'
 			? {name: new RegExp(req.query.name, 'i')}
 			: {name: new RegExp('[A-Za-z]', 'i')};
-
 	const category =
 		req.query.category &&
 		req.query.category !== 'undefined' &&
 		(!req.query.name || req.query.name === 'undefined')
 			? req.query.category.toLowerCase()
 			: '';
-
 	const brand =
 		req.query.brand && req.query.brand !== 'undefined'
 			? req.query.brand.toLowerCase()
 			: '';
-
 	const variantSelected =
 		req.query.variants && req.query.variants !== 'undefined'
 			? req.query.variants.split('-')
 			: '';
-
 	const price =
 		req.query.price && req.query.price !== 'undefined'
 			? req.query.price.split('-')
 			: '';
-
 	const direction =
 		req.query.direction && req.query.direction.toLowerCase() === 'desc'
 			? -1
 			: 1;
-
 	const order =
 		req.query.order === 'price'
 			? {'price.value': direction}
 			: {name: direction};
-
 	const offset =
 		req.query.offset && req.query.offset !== 'undefined'
 			? Number(req.query.offset)
@@ -236,4 +249,5 @@ module.exports = {
 	getProductsDetail,
 	updateProduct,
 	deleteProduct,
+	getAllProducts,
 };

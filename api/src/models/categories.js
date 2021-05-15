@@ -17,6 +17,7 @@ const CategoriesSchema = new Schema({
 		type: Boolean,
 	}, // if we need to filter periferics, we use this to chekc it
 	variants: [],
+	specs: [],
 });
 CategoriesSchema.plugin(findOrCreate);
 
