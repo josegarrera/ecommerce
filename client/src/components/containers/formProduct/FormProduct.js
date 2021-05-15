@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import FormProductStyle from './styled';
+import Checkbox from '../checkbox';
 import FormBrands from '../formBrands/FormBrands';
 import {IoCloseSharp} from 'react-icons/io5';
-import Checkbox from '../checkbox';
-import Dropdown from '../dropdown';
+import Dropdown from '../dropdown/specific.js';
 import TagsInput from '../tagsInput';
 import {
 	addNewProduct,
@@ -18,9 +18,9 @@ import Swal from 'sweetalert2';
 
 const FormProduct = () => {
 	const allCategories = useSelector((state) => state.categories);
-	const categories = allCategories.map((c) => c.name);
 	const allProducts = useSelector((state) => state.products.products);
 	const productCreated = useSelector((state) => state.productCreated);
+	const dispatch = useDispatch();
 	const [variantSelected, setVariants] = useState([]);
 	const [tags, setTags] = useState([]);
 	const [categorySelected, setCategories] = useState([]);
@@ -30,24 +30,26 @@ const FormProduct = () => {
 		init: false,
 		completed: false,
 	});
-	const dispatch = useDispatch();
 	const [product, setProduct] = useState({
-		_id: 0,
 		name: '',
 		description: '',
 		price: '',
 		brands: '',
-		variants: {},
+		variant: {},
+		specs: {},
+		allVariants: [],
 	});
-	const [inputsVariants, setInputsVariants] = useState([]);
+	const categories = allCategories.map((c) => c.name);
+	const [variantIdGenerator, setVariantIdGenerator] = useState(1);
 	const variants = categorySelected.length
 		? allCategories.filter(
 				(item) => item.name === categorySelected[0].categories
 		  )[0].variants
 		: [];
-	const currencies = ['U$S', 'ARS$'];
+	const currencies = ['USD', 'ARS'];
+
 	useEffect(() => {
-		dispatch(getProducts(undefined, undefined, undefined, undefined, 100));
+		dispatch(getProducts('', '', '', '', '', '', '', Infinity));
 		dispatch(getCategories());
 		return () => {
 			dispatch(emptyProductCreated());
@@ -99,14 +101,39 @@ const FormProduct = () => {
 		);
 	};
 
-	const changeInputVariant = (e) => {
+	const handleClickVariants = () => {
+		setVariantIdGenerator(variantIdGenerator + 1);
 		setProduct({
 			...product,
-			variants: {...product.variants, [e.target.name]: e.target.value},
+			allVariants: [
+				...product.allVariants,
+				{...product.variant, id: variantIdGenerator},
+			],
+			variant: setter({...product.variant}),
 		});
 		setStatus({
 			init: true,
 			completed: false,
+		});
+	};
+
+	const changeInputVariant = (e) => {
+		setProduct({
+			...product,
+			variant: {...product.variant, [e.target.name]: e.target.value},
+		});
+		setStatus({
+			init: true,
+			completed: false,
+		});
+	};
+
+	const handleVariantDelete = (e) => {
+		setProduct({
+			...product,
+			allVariants: product.allVariants.filter(
+				(item) => item.id !== Number(e.target.id)
+			),
 		});
 	};
 
@@ -118,7 +145,7 @@ const FormProduct = () => {
 
 		const obj = {
 			...product,
-			variants: product.variants,
+			variants: product.allVariants,
 			categories: categorySelected[0] ? [categorySelected[0].categories] : [],
 			imageUrl: [...tags],
 			price,
@@ -134,10 +161,6 @@ const FormProduct = () => {
 			init: false,
 			completed: true,
 		});
-	};
-
-	const handleClick = () => {
-		setInputsVariants([...inputsVariants].concat(1));
 	};
 
 	const [visibilidad, setVisibilidad] = useState(false);
@@ -200,8 +223,8 @@ const FormProduct = () => {
 										title='currency'
 										name='currency'
 										items={currencies}
-										setVariants={(el) => setCurrency(el)}
-										variants={currency}
+										setOptions={(el) => setCurrency(el)}
+										options={currency}
 									></Dropdown>
 								</div>
 								<div className='form__element ml mr'>
@@ -216,6 +239,15 @@ const FormProduct = () => {
 									{errors.price && <p className='danger'>{errors.price}</p>}
 								</div>
 							</div>
+							<div className='form__element'>
+								<label className='form__label'>Image URL:</label>
+								<TagsInput
+									tags={tags}
+									setTags={setTags}
+									setErrors={setErrors}
+								></TagsInput>
+								{errors.url && <p className='danger'>{errors.url}</p>}
+							</div>
 						</div>
 
 						<div className='form__column'>
@@ -225,8 +257,12 @@ const FormProduct = () => {
 									title='select category'
 									name='categories'
 									items={categories}
-									setVariants={(el) => setCategories(el)}
-									variants={categorySelected}
+									setOptions={(el) => setCategories(el)}
+									options={categorySelected}
+									setVariants={(el) => setVariants(el)}
+									variantsProduct={product.variant}
+									setProduct={(el) => setProduct(el)}
+									products={product}
 								></Dropdown>
 							</div>
 
@@ -236,52 +272,84 @@ const FormProduct = () => {
 								name='variants'
 								items={variants}
 								multiselect
-								setVariants={(el) => setVariants(el)}
-								variants={variantSelected}
-								variantsProduct={product.variants}
+								setOptions={(el) => setVariants(el)}
+								options={variantSelected}
+								variantsProduct={product.variant}
 								setProduct={(el) => setProduct(el)}
 								products={product}
 							></Dropdown>
-							<button type='button' onClick={handleClick}>
-								Add Variant
-							</button>
-							<br></br>
 							<div>
-								{inputsVariants.length ? (
-									inputsVariants.map((v) => (
-										<div className='form__element'>
-											{variantSelected.length ? (
-												variantSelected.map((variant, index) => (
-													<div key={variant + index + 'container'}>
-														<label className='form__label'>{variant}</label>
-														<input
-															key={variant + index}
-															className='form__input form__input__variant'
-															type='text'
-															name={variant}
-															value={product.variants[variant]}
-															onChange={(e) => changeInputVariant(e)}
-														></input>
-													</div>
-												))
-											) : (
-												<div> </div>
-											)}
-										</div>
-									))
-								) : (
-									<div> </div>
-								)}
-							</div>
-
-							<div className='form__element'>
-								<label className='form__label'>Image URL:</label>
-								<TagsInput
-									tags={tags}
-									setTags={setTags}
-									setErrors={setErrors}
-								></TagsInput>
-								{errors.url && <p className='danger'>{errors.url}</p>}
+								<div className='form__element'>
+									{variantSelected.length ? (
+										variantSelected.map((variant, index) => (
+											<div key={variant + index + 'container'}>
+												<label className='form__label'>{variant}</label>
+												<input
+													key={variant + index}
+													className='form__input form__input__variant'
+													type='text'
+													name={variant}
+													value={product.variant[variant]}
+													onChange={(e) => changeInputVariant(e)}
+												></input>
+											</div>
+										))
+									) : (
+										<div> </div>
+									)}
+									{variantSelected.length ? (
+										<button
+											type='button'
+											id='add_variant_btn'
+											className='form__button'
+											onClick={handleClickVariants}
+											disabled={
+												Object.keys(product.variant).length ? '' : 'disabled'
+											}
+										>
+											Add Variant
+										</button>
+									) : (
+										<div> </div>
+									)}
+									<div className='form__element'>
+										{product.allVariants.length ? (
+											product.allVariants.map((item, i) => (
+												<div id='form__variant__card' className='form__element'>
+													<button
+														id={item.id}
+														key={item.id + 'btn'}
+														className='form__button form__button__delete'
+														type='button'
+														onClick={(e) => handleVariantDelete(e)}
+													>
+														{' '}
+														X{' '}
+													</button>
+													{Object.keys(item).map((key) => (
+														<div>
+															<label
+																key={item.id + '-label'}
+																className='form__label'
+															>
+																{key}:{' '}
+															</label>
+															<span
+																key={item.id + '-span'}
+																name={key}
+																className='form__span'
+															>
+																{product.allVariants[i][key]}
+															</span>
+														</div>
+													))}
+												</div>
+											))
+										) : (
+											<div> </div>
+										)}
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>

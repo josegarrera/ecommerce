@@ -32,7 +32,7 @@ const TagsInput = ({tags, setTags, setErrors}) => {
 					{tags &&
 						tags.map((tag, index) => (
 							<li key={index} className='tag__element'>
-								<span>{tag}</span>
+								<span className='span__element'>{tag}</span>
 								<i onClick={() => removeTags(index)}>
 									<MdClose />
 								</i>
@@ -50,7 +50,7 @@ const TagsInput = ({tags, setTags, setErrors}) => {
 							></input>
 						</div>
 						<button onClick={(e) => clickHandler(e)}>
-							<div class='submit__tag'>SUBMIT</div>
+							<div class='submit__tag'>Add URL</div>
 						</button>
 					</div>
 				</ul>

@@ -78,6 +78,7 @@ const FormProductStyle = styled.div`
 	}
 	.form__input__variant {
 		padding: 0.5rem;
+		color: #757575;
 	}
 
 	.form__input:focus {
@@ -109,10 +110,13 @@ const FormProductStyle = styled.div`
 		border-radius: 0.5rem;
 		font-size: 1.2rem;
 		font-weight: 600;
+		width: max-content;
+		height: 2.5rem;
+		align-items: center;
 	}
 
 	.form__button:hover {
-		background-color: #e53935;
+		background-color: #e54835;
 	}
 
 	.checkmark {
@@ -132,6 +136,27 @@ const FormProductStyle = styled.div`
 	.row .form__element {
 		margin-right: 0.5rem;
 		margin-left: 0.5rem;
+	}
+	.form__button__delete {
+		display: inline;
+		margin: 0px;
+		height: 2rem;
+		width: 2rem;
+		padding: 0.2rem;
+	}
+	#form__variant__card {
+		margin-top: 1rem;
+		margin-bottom: 1rem;
+		border: 1px solid #ee362e;
+		border-radius: 0.5rem;
+		padding: 0.5rem;
+	}
+	#add_variant_btn {
+		align-self: center;
+	}
+	.form__span {
+		color: #757575;
+		font-weight: 600;
 	}
 `;
 

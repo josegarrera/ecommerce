@@ -144,11 +144,11 @@ async function deleteProduct(req, res) {
 }
 
 async function changeLot(req, res) {
-	const {userId, product, num} = req.body.data;
+	const {userId, productId, num} = req.body;
 	try {
 		if (await Users.exists({_id: userId})) {
 			let update = await Orders.findOne({users: userId, state: 1});
-			let modificarLot = update.items.find((e) => e.product == product._id);
+			let modificarLot = update.items.find((e) => e.product == productId);
 			modificarLot.lot =
 				modificarLot.lot + num >= 1 ? modificarLot.lot + num : modificarLot.lot;
 			update.save();

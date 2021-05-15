@@ -1,6 +1,7 @@
 const {Categories, Products} = require('../models/index.js');
 
 function getAllCategories(req, res) {
+
 	Categories.find({})
 		.populate('products', {name: true})
 		.exec()

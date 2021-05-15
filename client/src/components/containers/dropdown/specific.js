@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-pascal-case */
 import React, { useState } from "react";
-import { Dropdown_Style, orderStyled } from "./styled";
+import { Dropdown_Style } from "./styled";
 // import onClickOutside from "react-onclickoutside";
 
 import { ImCheckboxUnchecked } from "react-icons/im";
@@ -8,16 +8,16 @@ import { ImCheckboxChecked } from "react-icons/im";
 import { MdKeyboardArrowUp } from "react-icons/md";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import setterVariants from "../../../utils/setterVariants.js";
+import setterInput from "../../../utils/setterInput.js";
 
 function Dropdown({
-  order,
-  filter,
   title,
   name,
   items = [],
   multiselect,
+  options,
+  setOptions,
   setVariants,
-  variants,
   setProduct,
   products,
   variantsProduct,
@@ -25,39 +25,38 @@ function Dropdown({
   const [open, setOpen] = useState(false);
   const toggle = () => setOpen(!open);
 
-  //   Dropdown.handleClickOutside = () => setOpen(false);
-
   const handleOnClick = (item) => {
     if (
-      !variants.some((current) =>
+      !options.some((current) =>
         current[name] ? current[name] === item : current === item
       )
     ) {
       let obj = {};
       obj[name] = item;
-
       if (!multiselect) {
-        // setSelection([item]);
-
-        setVariants([obj]);
+        setOptions([obj]);
+        if (setProduct && setVariants) {
+          setProduct({
+            ...products,
+            variant: {},
+            allVariants: [],
+          });
+          setVariants([]);
+        }
       } else if (multiselect) {
-        // setSelection([...crock, item]);
-        setVariants([...variants, obj[name]]);
+        setOptions([...options, obj[name]]);
       }
     } else {
-      let selectionAfterRemoval = variants;
+      let selectionAfterRemoval = options;
       selectionAfterRemoval = selectionAfterRemoval.filter((current) =>
         current[name] ? current[name] !== item : current !== item
       );
+      setOptions([...selectionAfterRemoval]);
 
-      setVariants([...selectionAfterRemoval]);
-
-      // setSelection([...selectionAfterRemoval]);
-
-      if (variants.length && variantsProduct && variantsProduct[variants[0]]) {
+      if (options.length && variantsProduct && variantsProduct[options[0]]) {
         setProduct({
           ...products,
-          variants: setterVariants(variantsProduct, selectionAfterRemoval),
+          variant: setterVariants(variantsProduct, selectionAfterRemoval),
         });
       }
     }
@@ -65,7 +64,7 @@ function Dropdown({
 
   const isItemSelected = (item) => {
     if (
-      variants.find((current) =>
+      options.find((current) =>
         current[name] ? current[name] === item : current === item
       )
     ) {
@@ -76,7 +75,7 @@ function Dropdown({
   };
 
   return (
-    <Dropdown_Style order={order} filter={filter}>
+    <Dropdown_Style>
       <div className="dropdown__wrapper">
         <div
           tabIndex={0}
@@ -107,13 +106,9 @@ function Dropdown({
                     }
                   >
                     {isItemSelected(item) ? (
-                      <i className="checked__icon">
-                        <ImCheckboxChecked />
-                      </i>
+                      <ImCheckboxChecked />
                     ) : (
-                      <i className="unchecked__icon">
-                        <ImCheckboxUnchecked />
-                      </i>
+                      <ImCheckboxUnchecked />
                     )}
                   </span>
                 </button>
