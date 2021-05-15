@@ -376,7 +376,7 @@ const FormProduct = () => {
 					className='form__button'
 					onClick={() => setVisibilidad(!visibilidad)}
 				>
-					Agregar marca
+					Add Brand
 				</button>
 			</div>
 			{visibilidad ? <FormBrands /> : null}
