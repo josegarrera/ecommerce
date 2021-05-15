@@ -45,7 +45,7 @@ const FormSignup = () => {
 						icon: 'success',
 						confirmButtonText: 'Ok',
 					}).then(() => {
-						history.push('/');
+						history.push('/login');
 					});
 				}
 			})
