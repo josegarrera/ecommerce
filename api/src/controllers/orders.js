@@ -38,7 +38,7 @@ async function getAllUserOrders(req, res, next) {
 		if (userId) {
 			let userExists = await Users.exists({_id: userId});
 			if (userExists) {
-				let orders = await Orders.find({users: userId, state: 0});
+				let orders = await Orders.findOne({users: userId, state: 0});
 				if (orders.length) {
 					return res.send(orders);
 				} else {
@@ -77,7 +77,7 @@ async function addProduct(req, res) {
 					});
 					orderActive.items = orderActive.items.concat(toAdd);
 					orderActive.save();
-					orderActive = await Orders.find({users: userId, state: 1})
+					orderActive = await Orders.findOne({users: userId, state: 1})
 						.populate('users', {email: 1, _id: 1})
 						.populate('items.product')
 						.exec();
@@ -94,7 +94,7 @@ async function addProduct(req, res) {
 						]);
 						orderActive.save();
 					}
-					orderActive = await Orders.find({users: userId, state: 1})
+					orderActive = await Orders.findOne({users: userId, state: 1})
 						.populate('users', {email: 1, _id: 1})
 						.populate('items.product')
 						.exec();
@@ -118,7 +118,7 @@ async function addProduct(req, res) {
 						items: [{lot: products.lot, product: products.product._id}],
 					});
 					await order.save();
-					order = await await Orders.find({users: userId, state: 1})
+					order = await await Orders.findOne({users: userId, state: 1})
 						.populate('users', {email: 1, _id: 1})
 						.populate('items.product')
 						.exec();
@@ -147,7 +147,7 @@ async function deleteProduct(req, res) {
 					},
 				}
 			).exec();
-			update = await Orders.find({users: userId, state: 1})
+			update = await Orders.findOne({users: userId, state: 1})
 				.populate('users', {email: 1, _id: 1})
 				.populate('items.product')
 				.exec();
@@ -170,13 +170,13 @@ async function changeLot(req, res) {
 						? modificarLot.lot + num
 						: modificarLot.lot;
 				await update.save();
-				update = await Orders.find({users: userId, state: 1})
+				update = await Orders.findOne({users: userId, state: 1})
 					.populate('users', {email: 1, _id: 1})
 					.populate('items.product')
 					.exec();
 				res.send(update);
 			} else {
-				update = await Orders.find({users: userId, state: 1})
+				update = await Orders.findOne({users: userId, state: 1})
 					.populate('users', {email: 1, _id: 1})
 					.populate('items.product')
 					.exec();
