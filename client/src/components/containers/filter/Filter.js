@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 
 import {
+  getBrands,
   getCategories,
   getProducts,
   getProductsQuery,
@@ -15,12 +16,15 @@ import axios from "axios";
 const Filter = () => {
   const dispatch = useDispatch();
   const allCategories = useSelector((state) => state.categories);
+  const allBrands = useSelector((state) => state.brands);
   const allProducts = useSelector((state) => state.products);
   const categoryNames = allCategories.map((c) => c.name);
+  const brandNames = allBrands.map((b) => b.name);
 
   const [filter, setFilter] = useState([{}]);
   const [input, setInput] = useState({
     category: "",
+    brands: "",
     variants: "",
     price: Number,
     direction: "",
@@ -29,6 +33,7 @@ const Filter = () => {
 
   useEffect(() => {
     dispatch(getCategories());
+    dispatch(getBrands());
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -41,7 +46,10 @@ const Filter = () => {
   }, [filter]);
 
   useEffect(() => {
-    const { name, category, variants, price, order, direction, limit } = input;
+    const { name, brands, category, variants, price, order, direction, limit } =
+      input;
+
+    console.log(input);
     dispatch(
       getProducts(name, category, variants, price, order, direction, limit)
     );
@@ -55,7 +63,8 @@ const Filter = () => {
 
         <div className="filter__section">
           <Dropdown
-            title="Categories"
+            filter
+            title="CATEGORIES"
             name="category"
             items={categoryNames}
             setVariants={(el) => setFilter(el)}
@@ -63,15 +72,17 @@ const Filter = () => {
           ></Dropdown>
 
           <Dropdown
-            title="Brands"
+            filter
+            title="BRANDS"
             name="brands"
-            items={categoryNames}
+            items={brandNames}
             setVariants={(el) => setFilter(el)}
             variants={filter}
           ></Dropdown>
 
           <Dropdown
-            title="Variants"
+            filter
+            title="VARIANTS"
             name="variants"
             items={categoryNames}
             setVariants={(el) => setFilter(el)}
@@ -79,36 +90,9 @@ const Filter = () => {
           ></Dropdown>
 
           <div className="filter__section__row">
-            <div className="filter__section__title">BRANDS</div>
-            <div className="filter__section__icon">
-              <MdKeyboardArrowDown />
-            </div>
-          </div>
-
-          <div className="filter__section__row">
-            <div className="filter__section__title">VARIANTS</div>
-            <div className="filter__section__icon">
-              <MdKeyboardArrowDown />
-            </div>
-          </div>
-
-          <div className="filter__section__row">
             <div className="filter__section__title">PRICE</div>
           </div>
           <input type="range"></input>
-
-          <div className="filter__section__row">
-            <div className="filter__section__title">DIRECTION</div>
-            <div className="filter__section__icon">
-              <MdKeyboardArrowDown />
-            </div>
-          </div>
-          <div className="filter__section__row">
-            <div className="filter__section__title">LIMIT</div>
-            <div className="filter__section__icon">
-              <MdKeyboardArrowDown />
-            </div>
-          </div>
         </div>
       </div>
     </Filter_Style>

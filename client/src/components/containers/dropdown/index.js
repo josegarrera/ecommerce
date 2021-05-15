@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-pascal-case */
 import React, { useState } from "react";
-import Dropdown_Style from "./styled";
+import { Dropdown_Style, orderStyled } from "./styled";
 // import onClickOutside from "react-onclickoutside";
 
 import { ImCheckboxUnchecked } from "react-icons/im";
@@ -10,6 +10,8 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import setterVariants from "../../../utils/setterVariants.js";
 
 function Dropdown({
+  order,
+  filter,
   title,
   name,
   items = [],
@@ -74,7 +76,7 @@ function Dropdown({
   };
 
   return (
-    <Dropdown_Style>
+    <Dropdown_Style order={order} filter={filter}>
       <div className="dropdown__wrapper">
         <div
           tabIndex={0}
@@ -105,9 +107,13 @@ function Dropdown({
                     }
                   >
                     {isItemSelected(item) ? (
-                      <ImCheckboxChecked />
+                      <i className="checked__icon">
+                        <ImCheckboxChecked />
+                      </i>
                     ) : (
-                      <ImCheckboxUnchecked />
+                      <i className="unchecked__icon">
+                        <ImCheckboxUnchecked />
+                      </i>
                     )}
                   </span>
                 </button>
