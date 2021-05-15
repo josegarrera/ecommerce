@@ -8,20 +8,13 @@ import DataListInput from 'react-datalist-input';
 
 const SearchBar = () => {
 	const dispatch = useDispatch();
-	const [value, setValue] = useState('');
-	const [Datalist, setDatalist] = useState([{}]);
+	const [Value, setValue] = useState('');
 	const allProductss = useSelector((state) => state.productSearch.products);
+	const [Datalist, setDatalist] = useState([{key: 0, label: 'PC'}]);
 	let history = useHistory();
 
 	const newMatch = (currentInput, item) =>
 		item.label && item.label.toLowerCase().includes(currentInput.toLowerCase());
-
-	function handleSubmit(e) {
-		e.preventDefault();
-		setValue('');
-	}
-
-	console.log('searcj', allProductss);
 
 	const handleDataList = (e) => {
 		setValue(e.label);
@@ -29,6 +22,7 @@ const SearchBar = () => {
 	};
 
 	const handleSearch = (e) => {
+		setValue(e);
 		let productsFilter = allProductss.filter((el) =>
 			el.product.name.toLowerCase().includes(e.toLowerCase())
 		);
@@ -53,7 +47,7 @@ const SearchBar = () => {
 
 	return (
 		<FormSearchBar>
-			<div className='searchBar' onSubmit={(e) => handleSubmit(e)}>
+			<div className='searchBar'>
 				<DataListInput
 					inputClassName='input'
 					placeholder='Search a product'
@@ -65,10 +59,11 @@ const SearchBar = () => {
 					activeItemClassName='data_active'
 					dropDownLength={5}
 					itemClassName='data_item'
+					clearInputOnClick={true}
 					onSelect={(e) => handleDataList(e)}
 				/>
 				<div className='divLupa'>
-					<Link to={`/products/name/${value}`}>
+					<Link to={`/products/name/${Value}`}>
 						<IoSearch className='lupa' type='submit' />
 					</Link>
 				</div>
