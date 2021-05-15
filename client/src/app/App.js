@@ -10,7 +10,7 @@ import ProductDetail from '../components/containers/productDetail/ProductDetail'
 import Cart from '../components/containers/cart/Cart.js';
 import FormLogging from '../components/containers/formLogging/FormLogging';
 import FormSignup from '../components/containers/formSignup/FormSignup';
-import FomrCategories from '../components/containers/formCategories/FormCategories'
+import FomrCategories from '../components/containers/formCategories/FormCategories';
 
 function App() {
 	return (
