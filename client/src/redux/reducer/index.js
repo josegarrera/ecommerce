@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 
 const initialState = {
   products: {},
+  productSearch:{},
   productDetail: {},
   productCreated: {},
   orders: [],
@@ -21,13 +22,14 @@ const initialState = {
 
 const r = (state = initialState, { type, payload }) => {
   switch (type) {
-    ///////////////  CART PRODUCTS  ///////////////
+		///////////////  CART PRODUCTS  ///////////////
 
-    case ActionTypes.ADD_DB_PRODUCT_CART:
-      return {
-        ...state,
-        cartProducts: payload,
-      };
+		case ActionTypes.ADD_DB_PRODUCT_CART:
+			return {
+				...state,
+				cartProducts: payload,
+			};
+
 
     case ActionTypes.ADD_PRODUCT_CART:
       const findOne = state.cartProducts.find(
@@ -48,95 +50,101 @@ const r = (state = initialState, { type, payload }) => {
         cartProducts: state.cartProducts.concat(payload),
       };
 
-    case ActionTypes.REMOVE_PRODUCT_CART:
-      /* const remove_product = state.cartProducts.filter(
+
+		case ActionTypes.REMOVE_PRODUCT_CART:
+			/* const remove_product = state.cartProducts.filter(
 				({_id}) => _id !== payload
 			); */
 
-      setCartLocalStorage(payload);
-      return {
-        ...state,
-        cartProducts: payload,
-      };
+			setCartLocalStorage(payload);
+			return {
+				...state,
+				cartProducts: payload,
+			};
 
-    ///////////////  PRODUCTS  ///////////////
+		///////////////  PRODUCTS  ///////////////
 
-    case ActionTypes.GET_PRODUCTS:
-      return {
-        ...state,
-        products: payload,
-      };
-    case ActionTypes.GET_PRODUCTS_QUERY:
-      return {
-        ...state,
-        products: payload,
-      };
-    case ActionTypes.UPDATE_PRODUCT:
-      return {
-        ...state,
-        products: payload,
-      };
-    case ActionTypes.PRODUCT_DETAIL:
-      return {
-        ...state,
-        productDetail: payload,
-      };
-    case ActionTypes.PRODUCT_CREATED:
-      return {
-        ...state,
-        productCreated: payload,
-      };
-    case ActionTypes.EMPTY_PRODUCT_CREATED:
-      return {
-        ...state,
-        productCreated: {},
-      };
+		case ActionTypes.GET_PRODUCTS:
+			return {
+				...state,
+				products: payload,
+			};
+		case ActionTypes.GET_PRODUCTS_SEARCH:
+			return {
+				...state,
+				productSearch: payload,
+			};
+		case ActionTypes.GET_PRODUCTS_QUERY:
+			return {
+				...state,
+				products: payload,
+			};
+		case ActionTypes.UPDATE_PRODUCT:
+			return {
+				...state,
+				products: payload,
+			};
+		case ActionTypes.PRODUCT_DETAIL:
+			return {
+				...state,
+				productDetail: payload,
+			};
+		case ActionTypes.PRODUCT_CREATED:
+			return {
+				...state,
+				productCreated: payload,
+			};
+		case ActionTypes.EMPTY_PRODUCT_CREATED:
+			return {
+				...state,
+				productCreated: {},
+			};
 
-    ///////////////  ORDERS  ///////////////
-    case ActionTypes.GET_ORDERS:
-      return {
-        ...state,
-        orders: payload,
-      };
-    case ActionTypes.ORDER_DETAIL:
-      return {
-        ...state,
-        orderDetail: payload,
-      };
+		///////////////  ORDERS  ///////////////
+		case ActionTypes.GET_ORDERS:
+			return {
+				...state,
+				orders: payload,
+			};
+		case ActionTypes.ORDER_DETAIL:
+			return {
+				...state,
+				orderDetail: payload,
+			};
 
-    ///////////////  CATEGORIES  ///////////////
-    case ActionTypes.GET_CATEGORIES:
-      return {
-        ...state,
-        categories: payload,
-      };
-    ///////////////  BRANDS  ///////////////
-    case ActionTypes.GET_BRANDS:
-      return {
-        ...state,
-        brands: payload,
-      };
-    case ActionTypes.UPDATE_BRAND:
-      return {
-        ...state,
-        updateBrand: payload,
-      };
+		///////////////  CATEGORIES  ///////////////
+		case ActionTypes.GET_CATEGORIES:
+			return {
+				...state,
+				categories: payload,
+			};
+		///////////////  BRANDS  ///////////////
+		case ActionTypes.GET_BRANDS:
+			return {
+				...state,
+				brands: payload,
+			};
+		case ActionTypes.UPDATE_BRAND:
+			return {
+				...state,
+				updateBrand: payload,
+			};
 
-    ///////////////  USERS  ///////////////
-    case ActionTypes.CREATE_USER:
-      return {
-        ...state,
-        signup: payload,
-      };
-    case ActionTypes.LOGIN_USER:
-      return {
-        ...state,
-        login: payload,
-      };
+		///////////////  USERS  ///////////////
+		case ActionTypes.CREATE_USER:
+			return {
+				...state,
+				signup: payload,
+			};
+		case ActionTypes.LOGIN_USER:
+			return {
+				...state,
+				login: payload,
+			};
 
-    default:
-      return state;
-  }
+		default:
+			return state;
+	}
 };
 
 export default r;

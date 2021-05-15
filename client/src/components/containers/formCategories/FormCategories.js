@@ -25,7 +25,6 @@ const FormCategorie = () => {
 	const [Variants, setVariants] = useState([]);
 	const [ProductsAdd, setProductsAdd] = useState();
 	const [Errors, setErrors] = useState({});
-	//const [ClearInput, setClearInput] = useState(false);
 
 	useEffect(() => {
 		dispatch(getCategories());
