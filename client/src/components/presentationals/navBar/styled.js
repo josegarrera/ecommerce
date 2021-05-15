@@ -45,7 +45,7 @@ const DivNavBar = styled.div`
 
 				.icon {
 					color: #58585a;
-					font-size: 16px;
+					font-size: 20px;
 				}
 
 				/* &:hover {

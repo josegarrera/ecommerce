@@ -1,8 +1,9 @@
 import React from 'react';
-import {Route} from 'react-router-dom';
+import {Route, Redirect} from 'react-router-dom';
 import GridLayout from '../utils/GridLayout';
 //import {GlobalStyles} from './GlobalStyles';
 import NavBar from '../components/presentationals/navBar/NavBar.js';
+import Home from '../components/containers/home/Home.js';
 import Catalogue from '../components/containers/catalogue/Catalogue';
 import FormProduct from '../components/containers/formProduct/FormProduct';
 import Search from '../components/containers/search/Search';
@@ -10,15 +11,21 @@ import ProductDetail from '../components/containers/productDetail/ProductDetail'
 import Cart from '../components/containers/cart/Cart.js';
 import FormLogging from '../components/containers/formLogging/FormLogging';
 import FormSignup from '../components/containers/formSignup/FormSignup';
-import FomrCategories from '../components/containers/formCategories/FormCategories'
+import FomrCategories from '../components/containers/formCategories/FormCategories';
 
 function App() {
+	let userId = window.localStorage.getItem('userId');
+
 	return (
 		<div className='App'>
 			<React.Fragment>
 				<GridLayout>
 					{/* <GlobalStyles /> */}
+					<Route exact path='/'>
+						{userId ? <Redirect to='/catalogue' /> : <Redirect to='/login' />}
+					</Route>
 					<Route path='/' component={NavBar} />
+					<Route exact path='/' component={Home} />
 					<Route exact path='/login' component={FormLogging} />
 					<Route exact path='/signup' component={FormSignup} />
 					<Route exact path='/catalogue' component={Catalogue} />

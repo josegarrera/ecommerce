@@ -227,11 +227,10 @@ export const postLocalStorage = (body) => {
 };
 
 export const removeCartProduct = (data) => {
-	console.log('llego la dataaaa', data);
 	// remueve un producto del carrito de un usuario y me devuelve el carrito actualizado
 	return async (dispatch) => {
 		const res = await axios.delete(`${URLS.URL_USER_ORDERS}`, {data});
-		console.log(res);
+		console.log('esta es la respuesra', res);
 		return dispatch({
 			type: ActionTypes.REMOVE_PRODUCT_CART,
 			payload: data, // TIENE QUE SER UN {}

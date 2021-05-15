@@ -5,10 +5,14 @@ import {IoCart, IoHeart, IoPersonSharp} from 'react-icons/io5';
 import SearchBar from '../../containers/searchBar/SearchBar';
 import DivNavBar from './styled';
 import {IoCloseSharp} from 'react-icons/io5';
+import {BsPersonCheckFill, BsPersonPlusFill} from 'react-icons/bs';
 import {FaPlus} from 'react-icons/fa';
 import {FaMinus} from 'react-icons/fa';
 
 const NavBar = () => {
+	let userId = window.localStorage.getItem('userId');
+	console.log('useruddd', userId);
+
 	return (
 		<DivNavBar>
 			<div className='topNav'>
@@ -22,20 +26,25 @@ const NavBar = () => {
 				</div>
 				<div className='topRight'>
 					<div className='iconDiv login'>
-						<IoPersonSharp className='icon' />
-
-						<div className='loginHoverCart'>
-							<Link to='/login'>
-								<div className='login'> Sign in </div>
-							</Link>
-							<div className='signUp'>
-								Don't have an account?{' '}
-								<Link className='signText' to='/signup'>
-									{' '}
-									Sign up
-								</Link>
+						{userId ? (
+							<BsPersonCheckFill className='icon' />
+						) : (
+							<div>
+								<BsPersonPlusFill className='icon' />
+								<div className='loginHoverCart'>
+									<Link to='/login'>
+										<div className='login'> Sign in </div>
+									</Link>
+									<div className='signUp'>
+										Don't have an account?{' '}
+										<Link className='signText' to='/signup'>
+											{' '}
+											Sign up
+										</Link>
+									</div>
+								</div>
 							</div>
-						</div>
+						)}
 					</div>
 					<div className='iconDiv'>
 						<IoHeart className='icon' />
