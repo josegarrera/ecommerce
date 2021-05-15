@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Login_Style = styled.div`
+const Signup_Style = styled.div`
 	.loginContainer {
 		display: flex;
 		justify-content: center;
@@ -47,18 +47,6 @@ const Login_Style = styled.div`
 		border-radius: 1rem;
 
 		.signInBtnTop {
-			margin: 1rem;
-			padding: 0.8rem;
-			width: 11rem;
-			background-color: #ee362e;
-			border: none;
-			color: #ffffff;
-			border-radius: 2rem;
-			font-size: 1rem;
-			cursor: pointer;
-		}
-
-		.signUpBtn {
 			padding: 1rem;
 			width: 100%;
 			width: 11rem;
@@ -67,6 +55,18 @@ const Login_Style = styled.div`
 			border-radius: 2rem;
 			font-size: 1rem;
 			color: #ee362e;
+			cursor: pointer;
+		}
+
+		.signUpBtn {
+			margin: 1rem;
+			padding: 0.8rem;
+			width: 11rem;
+			background-color: #ee362e;
+			border: none;
+			color: #ffffff;
+			border-radius: 2rem;
+			font-size: 1rem;
 			cursor: pointer;
 		}
 
@@ -118,7 +118,7 @@ const Login_Style = styled.div`
 			margin-bottom: 1rem;
 		}
 
-		.signInBtnBottom {
+		.signUpBtnBottom {
 			margin-top: 3rem;
 			cursor: pointer;
 			padding: 0.8rem;
@@ -133,4 +133,4 @@ const Login_Style = styled.div`
 	}
 `;
 
-export default Login_Style;
+export default Signup_Style;

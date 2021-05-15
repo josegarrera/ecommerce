@@ -78,7 +78,8 @@ const DivNavBar = styled.div`
         height: auto;
         border-radius: 1rem;
         z-index: 10;
-        box-shadow: 1px 1px 30px silver;
+        box-shadow: 0 5px 10px rgb(154 160 185 / 5%), 0 15px 40px rgb(166 173 201 / 20%);
+}
 
         .cartHeader {
         }
@@ -240,7 +241,7 @@ const DivNavBar = styled.div`
       font-weight: 600;
       color: #bdbdbd;
     }
-  }
+  
 `;
 
 export default DivNavBar;

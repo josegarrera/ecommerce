@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-pascal-case */
 import React, {useState, useEffect} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import Login_Style from './styled';
+import {useSelector, useDispatch} from 'react-redux';
+import Signup_Style from './styled';
 import {Link, useHistory} from 'react-router-dom';
 import axios from 'axios';
 import {URLS} from '../../../utils/constants';
@@ -11,50 +11,41 @@ import {FaEnvelope} from 'react-icons/fa';
 import {IoCloseSharp} from 'react-icons/io5';
 import Swal from 'sweetalert2';
 
-const FormLogging = () => {
+const FormSignup = () => {
 	let history = useHistory();
 	const [input, setInput] = useState({
 		email: '',
 		password: '',
 	});
 
+	const [errors, setErrors] = useState({});
+
 	useEffect(() => {
 		setErrors({});
 	}, [input]);
 
-	const [errors, setErrors] = useState({});
-
 	const onSubmitHandler = async (e) => {
 		e.preventDefault();
 		axios
-			.post(URLS.URL_LOGIN, input)
+			.post(URLS.URL_SIGNUP, input)
 			.then(function (response) {
 				let data = response.data;
-				if (data.notLogin) {
-					const message = data.notLogin;
-					if (message && message.includes('User')) {
-						setErrors({
-							email: message,
-						});
-					} else {
-						setErrors({
-							password: message,
-						});
-					}
+				if (data.user === true) {
+					setErrors({
+						message: data.message,
+					});
 				} else {
 					setInput({
 						email: '',
 						password: '',
 					});
-					window.localStorage.setItem('token', data.token);
-					window.localStorage.setItem('userId', data.user._id);
 					Swal.fire({
 						title: 'Success!',
-						text: 'Succesfully login',
+						text: 'Succesfully registered',
 						icon: 'success',
 						confirmButtonText: 'Ok',
 					}).then(() => {
-						history.push('/catalogue');
+						history.push('/login');
 					});
 				}
 			})
@@ -71,7 +62,7 @@ const FormLogging = () => {
 	};
 
 	return (
-		<Login_Style>
+		<Signup_Style>
 			<div className='loginContainer'>
 				<div className='loginWrapper'>
 					<div className='loginContent'>
@@ -107,8 +98,7 @@ const FormLogging = () => {
 									onChange={(e) => onChangeHandler(e)}
 								></input>
 							</div>
-							<div>{errors.email ? errors.email : null}</div>
-
+							<div>{errors ? errors.message : null}</div>
 							<div className='inputElement'>
 								<span className='passwordSpan'>Password</span>
 								<i className='lockIcon'>
@@ -123,25 +113,23 @@ const FormLogging = () => {
 									onChange={(e) => onChangeHandler(e)}
 								></input>
 							</div>
-							<div>{errors.password ? errors.password : null}</div>
-							<span className='forgotSpan'> forgot password?</span>
-							<button type='submit' className='signInBtnBottom'>
-								<div>SIGN IN</div>
+							<button type='submit' className='signUpBtnBottom'>
+								<div>SIGN UP</div>
 							</button>
 						</form>
 
 						<div className='rowBottom'>
-							<p className='signUpBottom'> don't have an account? </p>
-							<Link to='/signup'>
-								<span className='signUpSpan'> Sign up </span>
+							<p className='signUpBottom'> Already registered? </p>
+							<Link to='/login'>
+								<span className='signUpSpan'> Sign in </span>
 							</Link>
 						</div>
 					</div>
 					<div className='loginPicture'></div>
 				</div>
 			</div>
-		</Login_Style>
+		</Signup_Style>
 	);
 };
 
-export default FormLogging;
+export default FormSignup;

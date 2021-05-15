@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const {Orders, Products, Users} = require('../models/index');
 
 async function getUserOrder(req, res, next) {
-	const {userId, cart} = req.body;
+	const {userId, cart} = req.query;
 	try {
 		if (cart) {
 			let userExists = await Users.exists({_id: userId});
@@ -11,7 +11,7 @@ async function getUserOrder(req, res, next) {
 				if (orderExist) {
 					let order = await Orders.findOne({users: userId, state: 1})
 						.populate('users', {email: 1, _id: 1})
-						.populate('items.product', {name: 1, price: 1, _id: 1})
+						.populate('items.product', {name: 1, price: 1, _id: 1, imageUrl: 1})
 						.exec();
 					return res.send(order);
 				} else {
@@ -33,7 +33,7 @@ async function getUserOrder(req, res, next) {
 }
 
 async function getAllUserOrders(req, res, next) {
-	const {userId} = req.body;
+	const {userId} = req.query;
 	try {
 		if (userId) {
 			let userExists = await Users.exists({_id: userId});
@@ -60,27 +60,101 @@ async function getAllUserOrders(req, res, next) {
 // funcion de prueba para agregar productos al carrito
 // sientase libre de editar
 async function addProduct(req, res) {
-	const {userId, products} = req.body;
+	const {userId, products} = req.body.data;
 	try {
 		let userExists = await Users.exists({_id: userId});
 		if (userExists) {
-			let existe = await Orders.exists({users: userId, state: 1});
-			if (existe) {
-				let order = await Orders.findOne({users: userId, state: 1});
-				console.log(order);
-				console.log(products);
+			let orderActive = await Orders.findOne({users: userId, state: 1});
+			if (orderActive) {
+				if (Array.isArray(products)) {
+					let toAdd = products.filter((e) =>
+						orderActive.items.find((prod) => prod.product == e.product._id)
+							? false
+							: true
+					);
+					toAdd = toAdd.map((e) => {
+						return {lot: e.lot, product: e.product._id};
+					});
+					orderActive.items = orderActive.items.concat(toAdd);
+					orderActive.save();
+					return res.send(orderActive);
+				} else {
+					let toAdd = orderActive.items.find(
+						(p) => p.product == products.product._id
+					)
+						? false
+						: true;
+					if (toAdd) {
+						orderActive.items = orderActive.items.concat([
+							{lot: products.lot, product: products.product._id},
+						]);
+						orderActive.save();
+					}
+					return res.send(orderActive);
+				}
+			} else {
+				if (Array.isArray(products)) {
+					let toAdd = products.map((e) => {
+						return {lot: e.lot, product: e.product._id};
+					});
+					let order = await new Orders({users: userId, items: toAdd});
+					order.save();
+					res.send(order);
+				} else {
+					console.log(products.lot);
+					let order = await new Orders({
+						users: userId,
+						items: [{lot: products.lot, product: products.product._id}],
+					});
+					order.save();
+					res.send(order);
+				}
 
-				order.items = order.items.concat(products);
-				console.log(order.items);
-				await order.save();
-				return res.send(order);
+				order.save();
+				res.send(order);
 			}
-			let order = await new Orders({users: userId, items: products});
-			order.save();
-			res.send(order);
 		}
 	} catch (err) {
 		console.log(err);
+	}
+}
+
+async function deleteProduct(req, res) {
+	const {userId, productId} = req.body;
+	try {
+		if (await Users.exists({_id: userId})) {
+			let update = await Orders.findOneAndUpdate(
+				{users: userId, state: 1},
+				{
+					$pull: {
+						items: {product: {_id: productId}},
+					},
+				}
+			).exec();
+			update = await Orders.find({users: userId, state: 1})
+				.populate('users', {email: 1, _id: 1})
+				.populate('items.product', {name: 1, price: 1, _id: 1, imageUrl: 1})
+				.exec();
+			res.send(update);
+		}
+	} catch (err) {
+		console.log(err);
+	}
+}
+
+async function changeLot(req, res) {
+	const {userId, productId, num} = req.body;
+	try {
+		if (await Users.exists({_id: userId})) {
+			let update = await Orders.findOne({users: userId, state: 1});
+			let modificarLot = update.items.find((e) => e.product == productId);
+			modificarLot.lot =
+				modificarLot.lot + num >= 1 ? modificarLot.lot + num : modificarLot.lot;
+			update.save();
+			res.send(update.items);
+		}
+	} catch (error) {
+		console.log(error);
 	}
 }
 
@@ -126,4 +200,6 @@ module.exports = {
 	getAllUserOrders,
 	getAllOrders,
 	getOrderById,
+	deleteProduct,
+	changeLot,
 };

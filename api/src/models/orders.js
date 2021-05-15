@@ -9,11 +9,15 @@ const OrdersSchema = new Schema({
 	},
 	items: [
 		{
+			_id: false,
 			product: {
 				type: mongoose.Schema.Types.ObjectId,
 				ref: 'products',
 			},
-			lot: Number,
+			lot: {
+				type: Number,
+				default: 1,
+			},
 			variant: {
 				type: Map,
 				of: String,

@@ -72,18 +72,13 @@ const DIV_CART = styled.div`
   }
 
   .product_cnt {
-    margin-bottom: 60px;
+    margin-bottom: 80px;
   }
   .prd__values {
     display: grid;
-    grid-template-columns: 60% 20% 20%;
+    text-align: center;
+    grid-template-columns: 50% 20% 20% 10%;
     margin-bottom: 5px;
-  }
-  .product_detail {
-    display: grid;
-    grid-template-columns: 60% 20% 20%;
-    max-height: 300px;
-    min-height: 150px;
   }
   .p_back_home {
     position: absolute;
