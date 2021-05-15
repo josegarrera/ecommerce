@@ -11,7 +11,7 @@ async function getUserOrder(req, res, next) {
 				if (orderExist) {
 					let order = await Orders.findOne({users: userId, state: 1})
 						.populate('users', {email: 1, _id: 1})
-						.populate('items.product', {name: 1, price: 1, _id: 1, imageUrl: 1})
+						.populate('items.product')
 						.exec();
 					return res.send(order);
 				} else {
@@ -77,6 +77,10 @@ async function addProduct(req, res) {
 					});
 					orderActive.items = orderActive.items.concat(toAdd);
 					orderActive.save();
+					orderActive = await Orders.find({users: userId, state: 1})
+						.populate('users', {email: 1, _id: 1})
+						.populate('items.product')
+						.exec();
 					return res.send(orderActive);
 				} else {
 					let toAdd = orderActive.items.find(
@@ -90,6 +94,10 @@ async function addProduct(req, res) {
 						]);
 						orderActive.save();
 					}
+					orderActive = await Orders.find({users: userId, state: 1})
+						.populate('users', {email: 1, _id: 1})
+						.populate('items.product')
+						.exec();
 					return res.send(orderActive);
 				}
 			} else {
@@ -97,7 +105,10 @@ async function addProduct(req, res) {
 					let toAdd = products.map((e) => {
 						return {lot: e.lot, product: e.product._id};
 					});
-					let order = await new Orders({users: userId, items: toAdd});
+					let order = await new Orders({users: userId, items: toAdd})
+						.populate('users', {email: 1, _id: 1})
+						.populate('items.product')
+						.exec();
 					order.save();
 					res.send(order);
 				} else {
@@ -106,7 +117,11 @@ async function addProduct(req, res) {
 						users: userId,
 						items: [{lot: products.lot, product: products.product._id}],
 					});
-					order.save();
+					await order.save();
+					order = await await Orders.find({users: userId, state: 1})
+						.populate('users', {email: 1, _id: 1})
+						.populate('items.product')
+						.exec();
 					res.send(order);
 				}
 
@@ -133,7 +148,7 @@ async function deleteProduct(req, res) {
 			).exec();
 			update = await Orders.find({users: userId, state: 1})
 				.populate('users', {email: 1, _id: 1})
-				.populate('items.product', {name: 1, price: 1, _id: 1, imageUrl: 1})
+				.populate('items.product')
 				.exec();
 			res.send(update);
 		}
@@ -148,10 +163,24 @@ async function changeLot(req, res) {
 		if (await Users.exists({_id: userId})) {
 			let update = await Orders.findOne({users: userId, state: 1});
 			let modificarLot = update.items.find((e) => e.product == productId);
-			modificarLot.lot =
-				modificarLot.lot + num >= 1 ? modificarLot.lot + num : modificarLot.lot;
-			update.save();
-			res.send(update.items);
+			if (modificarLot) {
+				modificarLot.lot =
+					modificarLot.lot + num >= 1
+						? modificarLot.lot + num
+						: modificarLot.lot;
+				await update.save();
+				update = await Orders.find({users: userId, state: 1})
+					.populate('users', {email: 1, _id: 1})
+					.populate('items.product')
+					.exec();
+				res.send(update);
+			} else {
+				update = await Orders.find({users: userId, state: 1})
+					.populate('users', {email: 1, _id: 1})
+					.populate('items.product')
+					.exec();
+				res.send(update);
+			}
 		}
 	} catch (error) {
 		console.log(error);
