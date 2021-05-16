@@ -77,6 +77,13 @@ export const getProductsSearch = (
 	};
 };
 
+export const cleanCatalogue = () => (dispatch) => {
+	dispatch({
+		type: ActionTypes.GET_PRODUCTS,
+		payload: {},
+	});
+};
+
 export const getProductsQuery = (page) => {
 	return async (dispatch) => {
 		const {data} = await axios.get(page);
