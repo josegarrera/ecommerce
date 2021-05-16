@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
-import {getProductDetail} from '../../../redux/actions/index';
+import {getProductDetail, addCartProduct} from '../../../redux/actions/index';
 import {IoLogoWhatsapp, IoReturnDownBack} from 'react-icons/io5';
 import {BsLightning} from 'react-icons/bs';
 import {FaShoppingCart} from 'react-icons/fa';
@@ -17,6 +17,11 @@ const ProductDetail = (id) => {
 	useEffect(() => {
 		dispatch(getProductDetail(id));
 	}, [id]); // eslint-disable-line react-hooks/exhaustive-deps
+
+	const handleAddCart = () => {
+		//add to cart
+		dispatch(addCartProduct(product._id));
+	};
 
 	return (
 		<ProductDetailStyle>
@@ -77,9 +82,11 @@ const ProductDetail = (id) => {
 						<div className='infoDivTop'>
 							<div className='title'>
 								<div className='name'>{product.name && product.name}</div>
-								<div>
+								<div className='btns'>
 									<AiOutlineHeart className='fav' />
-									{/* 	<FaShoppingCart className='cart' /> */}
+									<button className='btn__cart' onClick={handleAddCart}>
+										<FaShoppingCart />
+									</button>
 								</div>
 							</div>
 
