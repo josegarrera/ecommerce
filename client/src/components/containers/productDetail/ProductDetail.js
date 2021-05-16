@@ -11,6 +11,7 @@ import ProductDetailStyle from './styled';
 const ProductDetail = (id) => {
 	const dispatch = useDispatch();
 	const [imageBig, setImageBig] = useState();
+	let history = useHistory();
 
 	const product = useSelector((store) => store.productDetail);
 
@@ -28,7 +29,13 @@ const ProductDetail = (id) => {
 			<div className='all'>
 				<div className='topDiv'>
 					<div className='topDivLeft'>
-						<Link to={`/catalogue`}>{'Back |'} </Link>
+						<button
+							className='back'
+							type='button'
+							onClick={() => history.goBack()}
+						>
+							{'Back |'}
+						</button>
 						<div className='categories'>
 							{product.categories &&
 								product.categories.map((categ) => (
