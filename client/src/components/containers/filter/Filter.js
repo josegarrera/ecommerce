@@ -33,9 +33,8 @@ const Filter = ({ order }) => {
     category: "",
     brands: "",
     variants: "",
-    price: Number,
+    price: 0,
     direction: "",
-    limit: Number,
     order: "",
   });
 
@@ -49,27 +48,47 @@ const Filter = ({ order }) => {
 
     var keyName = Object.keys(filter[0]);
     var actualValue = filter[0][keyName];
-    var orderValue = order[0];
+    var orderValue = "asc";
 
     if (order.length) {
-      const response = {
-        ...input,
-        [keyName]: actualValue,
-        direction: orderValue.order,
-      };
-
-      input && setInput(() => response);
+      orderValue = order[0].order;
     }
+
+    console.log(orderValue);
+
+    const response = {
+      ...input,
+      [keyName]: actualValue,
+      direction: orderValue,
+    };
+
+    input && setInput(() => response);
+
+    console.log(input);
   }, [filter, order]);
 
   useEffect(() => {
-    const { name, brands, category, variants, price, direction, limit } = input;
+    const { name, brands, order, category, variants, price, direction, limit } =
+      input;
+
+    console.log(input);
 
     dispatch(
-      getProducts(name, category, variants, price, order, direction, limit)
+      getProducts(
+        name,
+        category,
+        variants,
+        price,
+        order,
+        direction,
+        limit
+      )
     );
-    console.log(input);
   }, [input]);
+
+  var onChangeHandler = (char) => {
+    console.log(char);
+  };
 
   return (
     <Filter_Style>
@@ -114,18 +133,22 @@ const Filter = ({ order }) => {
               <input
                 className="price__input"
                 type="number"
-                id="brands"
-                name="brands"
+                id="price"
+                name="price"
+                value={input.length && input.price}
+                onChange={(e) => onChangeHandler(e.target.value)}
               ></input>
-              <i>
+              {/* <i>
                 <CgBorderStyleSolid />
               </i>
               <input
                 className="price__input"
                 type="number"
-                id="brands"
-                name="brands"
-              ></input>
+                id="price__max"
+                name="price"
+                value="holi"
+                onChange={(e) => onChangeHandler(e)}
+              ></input> */}
               <i>
                 <BiDollar />
               </i>
