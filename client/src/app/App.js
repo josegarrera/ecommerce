@@ -21,9 +21,6 @@ function App() {
 			<React.Fragment>
 				<GridLayout>
 					{/* <GlobalStyles /> */}
-					<Route exact path='/'>
-						{userId ? <Redirect to='/catalogue' /> : <Redirect to='/login' />}
-					</Route>
 					<Route path='/' component={NavBar} />
 					<Route exact path='/' component={Home} />
 					<Route exact path='/login' component={FormLogging} />
