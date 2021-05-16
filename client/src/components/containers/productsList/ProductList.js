@@ -1,8 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import CardProduct from '../../presentationals/cardProduct/CardProduct';
 import PRODUCTS_LIST_STYLE from './styled';
-
-
 
 const ProductList = ({products, loadSearch}) => {
 	const loader = Array.from({length: 12}, (v, i) => i);

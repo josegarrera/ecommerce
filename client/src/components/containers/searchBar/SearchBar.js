@@ -23,7 +23,7 @@ const SearchBar = () => {
 
 	const handleSearch = (e) => {
 		setValue(e);
-		let productsFilter = allProductss.filter((el) =>
+		let productsFilter = allProductss && allProductss.filter((el) =>
 			el.product.name.toLowerCase().includes(e.toLowerCase())
 		);
 		return productsToOptions(productsFilter);

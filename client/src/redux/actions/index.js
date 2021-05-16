@@ -77,12 +77,15 @@ export const getProductsSearch = (
 	};
 };
 
-export const cleanCatalogue = () => (dispatch) => {
+export const cleanCatalogue = () => {
+	return async (dispatch) => {
 	dispatch({
 		type: ActionTypes.GET_PRODUCTS,
-		payload: {},
+		payload: [],
 	});
+}
 };
+
 
 export const getProductsQuery = (page) => {
 	return async (dispatch) => {
