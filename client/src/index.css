@@ -8,6 +8,16 @@
   outline: none;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
 a {
   color: #ffffff;
   text-decoration: none;
@@ -26,6 +36,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
 p.danger {
   color: #ee362e;
   font-size: 12px;

@@ -68,8 +68,8 @@ export const Dropdown_Style = styled.div`
   .button__value {
     height: 100%;
     color: #616161;
-    font-size: 0.9rem;
-    font-weight: 500;
+    font-size: 0.8rem;
+    font-weight: 600;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -80,6 +80,12 @@ export const Dropdown_Style = styled.div`
     css`
       .dropdown__wrapper {
         position: relative;
+      }
+
+      .dropdown__list {
+        i {
+          display: none;
+        }
       }
 
       .dropdown__header {
@@ -104,13 +110,20 @@ export const Dropdown_Style = styled.div`
         color: red;
         width: 10rem;
       }
+
+      .dropdown__list__item {
+        button {
+          padding: 1rem;
+        }
+      }
     `}
 
   ${({ filter }) =>
     filter &&
     css`
       .dropdown__wrapper {
-        margin: 1rem 0;
+        display: flex;
+        align-self: flex-end;
       }
 
       .dropdown__header__title {
@@ -130,7 +143,7 @@ export const Dropdown_Style = styled.div`
 
       .dropdown__list__item {
         button {
-          padding: 0.2rem 0.5rem;
+          padding: 0.25rem 0.5rem;
         }
       }
     `}
