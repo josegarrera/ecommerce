@@ -40,6 +40,53 @@ export const getProducts = (
 	};
 };
 
+export const getProductsSearch = (
+	name,
+	category,
+	brand,
+	variants,
+	price,
+	order,
+	direction,
+	limit = 12
+) => {
+	return async (dispatch) => {
+		try {
+			const {data} = await axios.get(
+				`${URLS.URL_PRODUCTS}?name=${name}&category=${category}&brand=${brand}&variants=${variants}&price=${price}&order=${order}&direction=${direction}&limit=${limit}`
+			);
+
+			let newData = data.products.map((e) => {
+				return {lot: 0, product: {...e}};
+			});
+
+			let newArrData = {pages: data.pages, products: newData};
+
+			dispatch({
+				type: ActionTypes.GET_PRODUCTS_SEARCH,
+				payload: newArrData,
+			});
+		} catch (error) {
+			dispatch({
+				type: ActionTypes.GET_PRODUCTS_SEARCH,
+				payload: {
+					error: 'Not found',
+				},
+			});
+		}
+	};
+};
+
+export const cleanCatalogue = () => {
+	return async (dispatch) => {
+	dispatch({
+		type: ActionTypes.GET_PRODUCTS,
+		payload: [],
+	});
+}
+};
+
+
 export const getProductsQuery = (page) => {
 	return async (dispatch) => {
 		const {data} = await axios.get(page);
@@ -285,39 +332,9 @@ export const updateBrand = (update) => {
 	};
 };
 
-export const createUser = (body) => {
-	//crea un usuario
-	return async (dispatch) => {
-		try {
-			const {data} = await axios({
-				method: 'post',
-				url: URLS.URL_SIGNUP,
-				data: body,
-			});
-			return dispatch({
-				type: ActionTypes.CREATE_USER,
-				payload: data,
-			});
-		} catch (err) {
-			console.log('No se creo el usuario');
-		}
-	};
-};
-
-export const loginUser = (body) => {
-	return async (dispatch) => {
-		try {
-			const {data} = await axios({
-				method: 'post',
-				url: URLS.URL_LOGIN,
-				data: body,
-			});
-			return dispatch({
-				type: ActionTypes.LOGIN_USER,
-				payload: data,
-			});
-		} catch (err) {
-			console.log('No se logueó el usuario');
-		}
+export const loginUser = (user) => {
+	return {
+		type: ActionTypes.LOGIN_USER,
+		payload: user,
 	};
 };

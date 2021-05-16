@@ -10,8 +10,10 @@ import {AiFillLock} from 'react-icons/ai';
 import {FaEnvelope} from 'react-icons/fa';
 import {IoCloseSharp} from 'react-icons/io5';
 import Swal from 'sweetalert2';
+import {loginUser} from '../../../redux/actions';
 
 const FormLogging = () => {
+	const dispatch = useDispatch();
 	let history = useHistory();
 	const [input, setInput] = useState({
 		email: '',
@@ -48,6 +50,7 @@ const FormLogging = () => {
 					});
 					window.localStorage.setItem('token', data.token);
 					window.localStorage.setItem('userId', data.user._id);
+					dispatch(loginUser({role: data.user.role}));
 					Swal.fire({
 						title: 'Success!',
 						text: 'Succesfully login',

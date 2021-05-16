@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React from 'react';
 import {Link} from 'react-router-dom';
+import {useSelector} from 'react-redux';
 import {IoCart, IoHeart, IoPersonSharp} from 'react-icons/io5';
 import SearchBar from '../../containers/searchBar/SearchBar';
 import DivNavBar from './styled';
@@ -11,7 +12,7 @@ import {FaMinus} from 'react-icons/fa';
 
 const NavBar = () => {
 	let userId = window.localStorage.getItem('userId');
-	console.log('useruddd', userId);
+	const user = useSelector((state) => state.user);
 
 	return (
 		<DivNavBar>
@@ -132,9 +133,11 @@ const NavBar = () => {
 				<Link className='bottomLinks' to='/catalogue'>
 					catalogue
 				</Link>
-				<Link className='bottomLinks' to='/create'>
-					create
-				</Link>
+				{user.role === 'admin' ? (
+					<Link className='bottomLinks' to='/create'>
+						create
+					</Link>
+				) : null}
 				<Link className='bottomLinks' to='/home'>
 					home
 				</Link>

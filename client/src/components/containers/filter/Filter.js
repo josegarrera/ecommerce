@@ -9,11 +9,18 @@ import {
 } from "../../../redux/actions/index.js";
 import { useDispatch, useSelector } from "react-redux";
 import { MdKeyboardArrowDown } from "react-icons/md";
+import { BiDollar } from "react-icons/bi";
+import { CgBorderStyleSolid } from "react-icons/cg";
+import { RiCheckboxBlankCircleFill } from "react-icons/ri";
+
+import { IoIosCheckmarkCircle } from "react-icons/io";
+
 import Dropdown from "../dropdown";
 import Filter_Style from "./styled";
+
 import axios from "axios";
 
-const Filter = () => {
+const Filter = ({ order }) => {
   const dispatch = useDispatch();
   const allCategories = useSelector((state) => state.categories);
   const allBrands = useSelector((state) => state.brands);
@@ -26,9 +33,9 @@ const Filter = () => {
     category: "",
     brands: "",
     variants: "",
-    price: Number,
+    price: 0,
     direction: "",
-    limit: Number,
+    order: "",
   });
 
   useEffect(() => {
@@ -41,19 +48,47 @@ const Filter = () => {
 
     var keyName = Object.keys(filter[0]);
     var actualValue = filter[0][keyName];
-    const response = { ...input, [keyName]: actualValue };
+    var orderValue = "asc";
+
+    if (order.length) {
+      orderValue = order[0].order;
+    }
+
+    console.log(orderValue);
+
+    const response = {
+      ...input,
+      [keyName]: actualValue,
+      direction: orderValue,
+    };
+
     input && setInput(() => response);
-  }, [filter]);
+
+    console.log(input);
+  }, [filter, order]);
 
   useEffect(() => {
-    const { name, brands, category, variants, price, order, direction, limit } =
+    const { name, brands, order, category, variants, price, direction, limit } =
       input;
 
     console.log(input);
+
     dispatch(
-      getProducts(name, category, variants, price, order, direction, limit)
+      getProducts(
+        name,
+        category,
+        variants,
+        price,
+        order,
+        direction,
+        limit
+      )
     );
   }, [input]);
+
+  var onChangeHandler = (char) => {
+    console.log(char);
+  };
 
   return (
     <Filter_Style>
@@ -92,7 +127,64 @@ const Filter = () => {
           <div className="filter__section__row">
             <div className="filter__section__title">PRICE</div>
           </div>
-          <input type="range"></input>
+          <div className="input__wrapper">
+            <input className="range__price" type="range"></input>
+            <div className="row">
+              <input
+                className="price__input"
+                type="number"
+                id="price"
+                name="price"
+                value={input.length && input.price}
+                onChange={(e) => onChangeHandler(e.target.value)}
+              ></input>
+              {/* <i>
+                <CgBorderStyleSolid />
+              </i>
+              <input
+                className="price__input"
+                type="number"
+                id="price__max"
+                name="price"
+                value="holi"
+                onChange={(e) => onChangeHandler(e)}
+              ></input> */}
+              <i>
+                <BiDollar />
+              </i>
+            </div>
+          </div>
+
+          <div className="filter__section__row">
+            <div className="filter__section__title">COLOR</div>
+          </div>
+          <div className="color__selector">
+            <ul>
+              <li id="white" className="color__item">
+                <i>
+                  <RiCheckboxBlankCircleFill />
+                </i>
+              </li>
+              <li id="black" className="color__item">
+                <IoIosCheckmarkCircle />
+              </li>
+              <li id="purple" className="color__item">
+                <RiCheckboxBlankCircleFill />
+              </li>
+              <li id="blue" className="color__item">
+                <RiCheckboxBlankCircleFill />
+              </li>
+              <li id="red" className="color__item">
+                <RiCheckboxBlankCircleFill />
+              </li>
+              <li id="yellow" className="color__item">
+                <RiCheckboxBlankCircleFill />
+              </li>
+              <li id="skyblue" className="color__item">
+                <RiCheckboxBlankCircleFill />
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </Filter_Style>
