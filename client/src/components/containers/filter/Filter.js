@@ -5,20 +5,15 @@ import {
 	getBrands,
 	getCategories,
 	getProducts,
-	getProductsQuery,
 } from '../../../redux/actions/index.js';
 import {useDispatch, useSelector} from 'react-redux';
-import {MdKeyboardArrowDown} from 'react-icons/md';
 import {BiDollar} from 'react-icons/bi';
-import {CgBorderStyleSolid} from 'react-icons/cg';
 import {RiCheckboxBlankCircleFill} from 'react-icons/ri';
 
 import {IoIosCheckmarkCircle} from 'react-icons/io';
 
 import Dropdown from '../dropdown';
 import Filter_Style from './styled';
-
-import axios from 'axios';
 
 const Filter = ({order}) => {
 	const dispatch = useDispatch();

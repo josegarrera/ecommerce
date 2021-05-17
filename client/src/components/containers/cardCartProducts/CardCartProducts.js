@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {Link, useHistory} from 'react-router-dom';
+import React from 'react';
+import {Link} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import {IoCloseSharp} from 'react-icons/io5';
 import {removeCartProduct} from '../../../redux/actions/index.js';

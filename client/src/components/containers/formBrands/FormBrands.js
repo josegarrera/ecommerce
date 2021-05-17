@@ -1,14 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {getBrands, addBrand, updateBrand} from '../../../redux/actions';
-import Swal from 'sweetalert2';
-import {IoCloseSharp} from 'react-icons/io5';
 import FormBrandStyle from './styled';
 
 const FormBrands = () => {
 	const dispatch = useDispatch();
 	const brands = useSelector((state) => state.brands);
-	const updatedBrand = useSelector((state) => state.updateBrand);
 
 	const [brand, setBrand] = useState({
 		name: '',

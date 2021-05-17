@@ -167,70 +167,75 @@ const DivNavBar = styled.div`
 						color: #bdbdbd;
 					}
 
-					.cartItem {
-						display: flex;
-						justify-content: space-around;
-						margin-top: 0.5rem;
-						margin-bottom: 0.5rem;
-						align-items: center;
-						border-radius: 1rem;
-						padding: 1rem;
-						background-color: #fafafa;
+					.productsContainer {
+						width: 95%;
 
-						.closeBtn {
-							font-size: 1rem;
-							cursor: pointer;
-						}
-
-						.cartItemImg {
+						.cartItem {
 							display: flex;
-							height: 4rem;
-							width: 4rem;
-
-							.itemImg {
-								max-width: 100%;
-								max-height: 100%;
-								object-fit: contain;
-							}
-						}
-
-						.cartItemInfo {
-							width: 50%;
-							display: flex;
-							flex-direction: column;
-							align-items: flex-start;
-
-							.cardItemTitle {
-								margin: 3px;
-								font-weight: bold;
-								font-size: 0.8rem;
-								color: #616161;
-							}
-
-							.cardItemPrice {
-								margin: 3px;
-								font-size: 0.8rem;
-								color: #212121;
-							}
-						}
-
-						.cartItemQty {
-							width: 10%;
-							display: flex;
-							justify-content: center;
+							justify-content: space-around;
+							margin-top: 0.5rem;
+							margin-bottom: 0.5rem;
 							align-items: center;
-							font-size: 0.6rem;
-							color: #bdbdbd;
-							flex-direction: column;
+							border-radius: 1rem;
+							padding: 1rem;
+							background-color: #fafafa;
 
-							.incrementQty,
-							.decrementQty {
-								margin: 0.2rem;
+							.closeBtn {
+								font-size: 1rem;
 								cursor: pointer;
 							}
-							.actualQty {
-								color: #424242;
-								font-size: 1rem;
+
+							.cartItemImg {
+								display: flex;
+								height: 4rem;
+								width: 4rem;
+								margin-right: 15px;
+
+								.itemImg {
+									max-width: 100%;
+									max-height: 100%;
+									object-fit: contain;
+								}
+							}
+
+							.cartItemInfo {
+								width: 75%;
+								display: flex;
+								flex-direction: column;
+								align-items: flex-start;
+
+								.cardItemTitle {
+									margin: 3px;
+									font-weight: bold;
+									font-size: 0.8rem;
+									color: #616161;
+								}
+
+								.cardItemPrice {
+									margin: 3px;
+									font-size: 0.8rem;
+									color: #212121;
+								}
+							}
+
+							.cartItemQty {
+								width: 10%;
+								display: flex;
+								justify-content: center;
+								align-items: center;
+								font-size: 0.6rem;
+								color: #bdbdbd;
+								flex-direction: column;
+
+								.incrementQty,
+								.decrementQty {
+									margin: 0.2rem;
+									cursor: pointer;
+								}
+								.actualQty {
+									color: #424242;
+									font-size: 1rem;
+								}
 							}
 						}
 					}

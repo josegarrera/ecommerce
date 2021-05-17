@@ -10,6 +10,7 @@ const CartHoverView = () => {
 	const dispatch = useDispatch();
 	const cartProduct = useSelector((state) => state.cartProducts);
 	const user = useSelector((state) => state.userId);
+	let delivery = 100;
 
 	useEffect(() => {
 		if (user) {
@@ -18,6 +19,18 @@ const CartHoverView = () => {
 		}
 	}, []);
 
+	let count$ =
+		cartProduct &&
+		cartProduct
+			.reduce((accumulator, currentValue) => {
+				if (currentValue.product.price.currency === 'USD') {
+					return accumulator + currentValue.product.price.value * 93;
+				}
+				return accumulator + currentValue.product.price.value;
+			}, 0)
+			.toFixed(2);
+
+	let total = parseFloat(count$) + delivery;
 	return (
 		<div className='cartHoverView'>
 			<div className='row'>
@@ -33,7 +46,7 @@ const CartHoverView = () => {
 						<IoCloseSharp></IoCloseSharp>
 					</div>
 				</div>
-				<div>
+				<div className='productsContainer'>
 					{cartProduct.length ? (
 						cartProduct.map((e) => (
 							<CardHoverProducts key={e._id} product={e} />
@@ -46,10 +59,10 @@ const CartHoverView = () => {
 
 			<div className='subtotal'>
 				<div>
-					<span>subtotal (1 item)</span>
+					<span>subtotal ({cartProduct.length} items)</span>
 				</div>
 				<div>
-					<span>$25.50</span>
+					<span>{count$}</span>
 				</div>
 			</div>
 
@@ -58,7 +71,7 @@ const CartHoverView = () => {
 					<span>delivery charge</span>
 				</div>
 				<div>
-					<span>$1</span>
+					<span>${delivery}</span>
 				</div>
 			</div>
 
@@ -69,7 +82,7 @@ const CartHoverView = () => {
 					<span>total</span>
 				</div>
 				<div className='totalPrice'>
-					<span>$26.50</span>
+					<span>{total}</span>
 				</div>
 			</div>
 
