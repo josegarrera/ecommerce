@@ -14,7 +14,7 @@ const Pagination = ({ pages, actualizar }) => {
     <DivPag>
       {pages &&
         pages.map((page, i) => (
-          <button className={page} onClick={() => actualizar(page)}>
+          <button key={i} className={page} onClick={() => actualizar(page)}>
             {i + 1}
           </button>
         ))}
