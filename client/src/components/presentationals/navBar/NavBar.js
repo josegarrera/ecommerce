@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import {IoCart, IoHeart} from 'react-icons/io5';
 import SearchBar from '../../containers/searchBar/SearchBar';
@@ -11,13 +11,13 @@ import {Badge} from '@material-ui/core';
 import CartHoverView from '../../containers/cartHoverView/CartHoverView';
 
 const NavBar = () => {
+	let history = useHistory();
 	const cartProduct = useSelector((state) => state.cartProducts);
 	let userId = window.localStorage.getItem('userId');
 	const user = useSelector((state) => state.user);
 	const eraseToken = () => {
-		const cart = window.localStorage.getItem('cart');
 		window.localStorage.clear();
-		if (cart) window.localStorage.setItem('cart', cart);
+		window.location.reload();
 	};
 
 	return (
@@ -39,7 +39,7 @@ const NavBar = () => {
 								<div className='loginHoverCart'>
 									<Link to='/catalogue'>
 										<div className='login' onClick={eraseToken}>
-											Signout
+											Sign Out
 										</div>
 									</Link>
 								</div>
