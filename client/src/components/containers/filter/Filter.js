@@ -8,17 +8,8 @@ import {
 	getProductsQuery,
 } from '../../../redux/actions/index.js';
 import {useDispatch, useSelector} from 'react-redux';
-import {MdKeyboardArrowDown} from 'react-icons/md';
-import {BiDollar} from 'react-icons/bi';
-import {CgBorderStyleSolid} from 'react-icons/cg';
-import {RiCheckboxBlankCircleFill} from 'react-icons/ri';
-
-import {IoIosCheckmarkCircle} from 'react-icons/io';
-
 import Dropdown from '../dropdown';
 import Filter_Style from './styled';
-
-import axios from 'axios';
 
 const Filter = ({order}) => {
 	const dispatch = useDispatch();
@@ -26,15 +17,19 @@ const Filter = ({order}) => {
 	const allBrands = useSelector((state) => state.brands);
 	const categoryNames = allCategories.map((c) => c.name);
 	const brandNames = allBrands.map((b) => b.name);
-	const variantsItemsNames = ['color', 'stock'];
+	const maxPriceValue = 5000;
 
 	const [filter, setFilter] = useState([{}]);
 	const [input, setInput] = useState({
 		name: '',
 		category: '',
 		brand: '',
-		variants: '',
-		price: '',
+		variants: {
+			color: '',
+			stock: false,
+		},
+		priceMin: '',
+		priceMax: '',
 		order: '',
 		direction: '',
 	});
@@ -48,30 +43,79 @@ const Filter = ({order}) => {
 
 	useEffect(() => {
 		// filter, filterValue, order, direction, limit
-
+		console.log(order);
 		var keyName = filter.length && Object.keys(filter[0]);
 		var actualValue = filter.length && filter[0][keyName];
-		var orderValue = 'asc';
-
+		var orderValue = '';
+		var direction = '';
 		if (order.length) {
-			orderValue = order[0].order;
+			orderValue = order[0].order.includes('price') ? 'price' : 'name';
+			direction =
+				order[0].order === 'Low to High' || order[0].order === 'A-Z'
+					? 'asc'
+					: order[0].order === 'High to Low' || order[0].order === 'Z-A'
+					? 'desc'
+					: '';
 		}
 
 		const response = {
 			...input,
 			[keyName]: actualValue,
-			direction: orderValue,
+			order: orderValue,
+			direction: direction,
 		};
 		input && setInput(() => response);
 	}, [filter, order]);
 
 	useEffect(() => {
-		const {name, category, brand, variants, price, order, direction} = input;
-
+		const {name, category, brand, order, direction} = input;
+		const variants =
+			input.variants.color && input.variants.stock
+				? `color-${input.variants.color}-stock`
+				: input.variants.color
+				? `color-${input.variants.color}`
+				: !input.variants.color && input.variants.stock
+				? '--stock'
+				: '';
+		const price =
+			input.priceMin && input.priceMax
+				? `${input.priceMin}-${input.priceMax}-USD`
+				: input.priceMin
+				? `${input.priceMin}-${maxPriceValue}-USD`
+				: input.priceMax
+				? `0-${input.priceMax}-USD`
+				: '';
 		dispatch(
 			getProducts(name, category, brand, variants, price, order, direction)
 		);
 	}, [input]);
+
+	const onChangePrice = (e) => {
+		setInput({
+			...input,
+			[e.target.name]: e.target.value,
+		});
+	};
+
+	const handleClickColor = (e) => {
+		setInput({
+			...input,
+			variants: {
+				...input.variants,
+				color: e.target.id,
+			},
+		});
+	};
+
+	const handleChangeStock = (e) => {
+		setInput({
+			...input,
+			variants: {
+				...input.variants,
+				stock: e.target.checked,
+			},
+		});
+	};
 
 	return (
 		<Filter_Style>
@@ -98,42 +142,29 @@ const Filter = ({order}) => {
 						variants={filter}
 					></Dropdown>
 
-					<Dropdown
-						filter
-						title='VARIANTS'
-						name='variants'
-						items={variantsItemsNames}
-						setVariants={(el) => setFilter(el)}
-						variants={filter}
-					></Dropdown>
-
 					<div className='filter__section__row'>
 						<div className='filter__section__title'>PRICE</div>
 					</div>
 					<div className='input__wrapper'>
-						<input className='range__price' type='range'></input>
-						<div className='row'>
-							<input
-								className='price__input'
-								type='number'
-								id='price'
-								name='price'
-							></input>
-							{/* <i>
-                <CgBorderStyleSolid />
-              </i>
-              <input
-                className="price__input"
-                type="number"
-                id="price__max"
-                name="price"
-                value="holi"
-                onChange={(e) => onChangeHandler(e)}
-              ></input> */}
-							<i>
-								<BiDollar />
-							</i>
-						</div>
+						<input
+							className='range__price'
+							type='range'
+							name='priceMin'
+							min='1'
+							max={maxPriceValue}
+							onChange={(e) => onChangePrice(e)}
+						></input>
+						<label>Since {input.priceMin} USD</label>
+						<input
+							className='range__price'
+							type='range'
+							name='priceMax'
+							min='1'
+							max={maxPriceValue}
+							onChange={(e) => onChangePrice(e)}
+						></input>
+						<label>Until {input.priceMax} USD</label>
+						<div className='row'></div>
 					</div>
 
 					<div className='filter__section__row'>
@@ -142,29 +173,113 @@ const Filter = ({order}) => {
 					<div className='color__selector'>
 						<ul>
 							<li id='white' className='color__item'>
-								<i>
-									<RiCheckboxBlankCircleFill />
-								</i>
+								<button
+									id='white'
+									className='color__btn'
+									onClick={(e) => handleClickColor(e)}
+								></button>
 							</li>
 							<li id='black' className='color__item'>
-								<IoIosCheckmarkCircle />
+								<button
+									id='black'
+									className='color__btn'
+									onClick={(e) => handleClickColor(e)}
+								></button>
 							</li>
 							<li id='purple' className='color__item'>
-								<RiCheckboxBlankCircleFill />
+								<button
+									id='purple'
+									className='color__btn'
+									onClick={(e) => handleClickColor(e)}
+								></button>
 							</li>
 							<li id='blue' className='color__item'>
-								<RiCheckboxBlankCircleFill />
+								<button
+									id='blue'
+									className='color__btn'
+									onClick={(e) => handleClickColor(e)}
+								></button>
 							</li>
 							<li id='red' className='color__item'>
-								<RiCheckboxBlankCircleFill />
+								<button
+									id='red'
+									className='color__btn'
+									onClick={(e) => handleClickColor(e)}
+								></button>
 							</li>
 							<li id='yellow' className='color__item'>
-								<RiCheckboxBlankCircleFill />
+								<button
+									id='yellow'
+									className='color__btn'
+									onClick={(e) => handleClickColor(e)}
+								></button>
 							</li>
 							<li id='skyblue' className='color__item'>
-								<RiCheckboxBlankCircleFill />
+								<button
+									id='skyblue'
+									className='color__btn'
+									onClick={(e) => handleClickColor(e)}
+								></button>
+							</li>
+							<li id='orange' className='color__item'>
+								<button
+									id='orange'
+									className='color__btn'
+									onClick={(e) => handleClickColor(e)}
+								></button>
+							</li>
+							<li id='pink' className='color__item'>
+								<button
+									id='pink'
+									className='color__btn'
+									onClick={(e) => handleClickColor(e)}
+								></button>
+							</li>
+							<li id='green' className='color__item'>
+								<button
+									id='green'
+									className='color__btn'
+									onClick={(e) => handleClickColor(e)}
+								></button>
+							</li>
+							<li
+								id='silver'
+								className='color__item'
+								onClick={(e) => handleClickColor(e)}
+							>
+								<button
+									id='silver'
+									className='color__btn'
+									onClick={(e) => handleClickColor(e)}
+								></button>
+							</li>
+							<li id='gold' className='color__item'>
+								<button
+									id='gold'
+									className='color__btn'
+									onClick={(e) => handleClickColor(e)}
+								></button>
+							</li>
+							<li id='any' className='color__item'>
+								<button
+									id=''
+									className='color__btn any'
+									onClick={(e) => handleClickColor(e)}
+								></button>
 							</li>
 						</ul>
+					</div>
+					<div className='filter__section__row'>
+						<div className='input__wrapper'>
+							<div className='filter__section__title'>STOCK</div>
+							<div>
+								<input
+									type='checkbox'
+									onChange={(e) => handleChangeStock(e)}
+								></input>
+								<label> Only products in stock.</label>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
