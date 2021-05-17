@@ -116,17 +116,46 @@ const ProductDetailStyle = styled.div`
 						font-size: 25px;
 					}
 
-					.fav {
-						font-size: 25px;
-						color: #ee362e;
+					.btns {
+						display: flex;
+						flex-direction: column;
+						justify-content: space-around;
 
-						&:hover {
-							transform: scale(1.3);
-							transition: 0.5s;
+						.fav {
+							font-size: 25px;
+							color: #ee362e;
+
+							&:hover {
+								cursor: pointer;
+								transform: scale(1.2);
+								transition: 0.5s;
+							}
+
+							&:active {
+								transform: scale(0.9);
+							}
 						}
-
-						&:active {
-							transform: scale(0.9);
+						.btn__cart {
+							display: flex;
+							justify-content: center;
+							align-items: center;
+							cursor: pointer;
+							color: #ffffff;
+							background-color: #ee362e;
+							border: none;
+							border-radius: 14.5px;
+							height: 25px;
+							width: 25px;
+							&:hover {
+								cursor: pointer;
+								transition: 0.5s;
+								box-shadow: 1px 1px 30px silver;
+							}
+							&:active {
+								transform: scale(0.9);
+								transition: 0.5s;
+								border: 1px solid gray;
+							}
 						}
 					}
 				}

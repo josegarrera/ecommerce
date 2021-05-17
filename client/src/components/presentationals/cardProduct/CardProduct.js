@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import DivCrdProd, {StyledLoder} from './styled';
+
 import {Link} from 'react-router-dom';
 import {FaShoppingCart} from 'react-icons/fa';
 import {AiOutlineHeart} from 'react-icons/ai';
@@ -19,6 +20,7 @@ const CardProduct = ({name, imageUrl, price, _id, loading}) => {
 	const handleAddFav = () => {
 		//add to fav
 	};
+
 
 
 	const handleImageLoaded = () => {
@@ -58,6 +60,7 @@ const CardProduct = ({name, imageUrl, price, _id, loading}) => {
 			</DivCrdProd>
 		);
 	}
+
 };
 
 export default CardProduct;
