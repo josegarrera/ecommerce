@@ -42,7 +42,6 @@ const Filter = ({order}) => {
 
 	useEffect(() => {
 		// filter, filterValue, order, direction, limit
-		console.log(order);
 		var keyName = filter.length && Object.keys(filter[0]);
 		var actualValue = filter.length && filter[0][keyName];
 		var orderValue = '';
@@ -50,9 +49,9 @@ const Filter = ({order}) => {
 		if (order.length) {
 			orderValue = order[0].order.includes('price') ? 'price' : 'name';
 			direction =
-				order[0].order === 'Low to High' || order[0].order === 'A-Z'
+				order[0].order === 'price: Low to High' || order[0].order === 'A-Z'
 					? 'asc'
-					: order[0].order === 'High to Low' || order[0].order === 'Z-A'
+					: order[0].order === 'price: High to Low' || order[0].order === 'Z-A'
 					? 'desc'
 					: '';
 		}
