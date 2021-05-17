@@ -35,11 +35,19 @@ async function getProductsDetail(req, res) {
 }
 
 async function createProduct(req, res) {
-  const { name, description, price, imageUrl, variants, categories, brands } =
-    req.body;
+  const {
+    name,
+    description,
+    price,
+    imageUrl,
+    variants,
+    categories,
+    brands,
+    specs,
+  } = req.body;
   const checkExists = await Products.exists({ name });
 
-  if (!req.body || !name || !description || !price || !brands)
+  if (!req.body || !name || !description || !price || !brands || !imageUrl)
     return res
       .status(400)
       .send({ type: "Bad request.", error: "The fields are empty." });
@@ -55,8 +63,9 @@ async function createProduct(req, res) {
     price,
     imageUrl,
     categories: [],
-    brands,
+    brands: [],
     variants,
+    specs,
   });
   const categoriesCreated = categories.map((el) =>
     Categories.findOrCreate({ name: el })
@@ -74,17 +83,24 @@ async function createProduct(req, res) {
                 .send({ type: "Internal server error.", error: err });
           })
       );
-      return Brands.findOrCreate({ name: brands });
+      const brandsCreated = brands.map((el) =>
+        Brands.findOrCreate({ name: el })
+      );
+      return Promise.all(brandsCreated);
     })
     .then((data) => {
-      data.doc.products.push(product._id);
-      product.brands = data.doc._id;
-      data.doc.save((err) => {
-        if (err)
-          return res
-            .status(500)
-            .send({ type: "Internal server error.", error: err });
-      });
+      data.map(
+        (el) =>
+          el.doc.products.push(product._id) &&
+          product.brands.push(el.doc._id) &&
+          el.doc.save((err) => {
+            if (err)
+              return res
+                .status(500)
+                .send({ type: "Internal server error.", error: err });
+          })
+      );
+
       product.save((err) => {
         if (err)
           return res
@@ -119,7 +135,6 @@ function getAllProducts(req, res) {
 }
 
 function getProducts(req, res) {
-	
   console.log(req.query);
 
   const name =

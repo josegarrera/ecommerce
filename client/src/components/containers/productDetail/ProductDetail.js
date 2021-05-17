@@ -99,7 +99,7 @@ const ProductDetail = (id) => {
 
 							<div className='brand'>
 								{'| '}
-								{product.brands && product.brands.name}
+								{product.brands && product.brands.map((brand) => brand.name)}
 							</div>
 
 							<div className='price'>
