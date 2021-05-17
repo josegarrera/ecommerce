@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {Link, Redirect, useHistory} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import {IoSearch} from 'react-icons/io5';
 import {getProductsSearch} from '../../../redux/actions';
 import FormSearchBar from './styled';
@@ -23,9 +23,11 @@ const SearchBar = () => {
 
 	const handleSearch = (e) => {
 		setValue(e);
-		let productsFilter = allProductss && allProductss.filter((el) =>
-			el.product.name.toLowerCase().includes(e.toLowerCase())
-		);
+		let productsFilter =
+			allProductss &&
+			allProductss.filter((el) =>
+				el.product.name.toLowerCase().includes(e.toLowerCase())
+			);
 		return productsToOptions(productsFilter);
 	};
 

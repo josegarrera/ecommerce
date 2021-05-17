@@ -2,14 +2,16 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {useSelector} from 'react-redux';
-import {IoCart, IoHeart, IoPersonSharp} from 'react-icons/io5';
+import {IoCart, IoHeart} from 'react-icons/io5';
 import SearchBar from '../../containers/searchBar/SearchBar';
 import DivNavBar from './styled';
 import {BsPersonCheckFill, BsPersonPlusFill} from 'react-icons/bs';
+import {Badge} from '@material-ui/core';
 
 import CartHoverView from '../../containers/cartHoverView/CartHoverView';
 
 const NavBar = () => {
+	const cartProduct = useSelector((state) => state.cartProducts);
 	let userId = window.localStorage.getItem('userId');
 	const user = useSelector((state) => state.user);
 
@@ -49,13 +51,15 @@ const NavBar = () => {
 					<div className='iconDiv'>
 						<IoHeart className='icon' />
 					</div>
-					<div className='iconDiv cart'>
-						<Link to='/cart'>
-							<IoCart className='icon' />
-						</Link>
+					<Badge badgeContent={cartProduct.length} color='secondary'>
+						<div className='iconDiv cart'>
+							<Link to='/cart'>
+								<IoCart className='icon' />
+							</Link>
 
-						<CartHoverView className='cartHoverView' />
-					</div>
+							<CartHoverView className='cartHoverView' />
+						</div>
+					</Badge>
 				</div>
 			</div>
 			<div className='bottomNav'>

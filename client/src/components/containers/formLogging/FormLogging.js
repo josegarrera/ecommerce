@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-pascal-case */
 import React, {useState, useEffect} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import Login_Style from './styled';
 import {Link, useHistory} from 'react-router-dom';
 import axios from 'axios';

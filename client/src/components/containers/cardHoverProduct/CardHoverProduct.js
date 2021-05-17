@@ -25,9 +25,9 @@ const CardHoverView = (props) => {
 	return (
 		<div>
 			<div className='cartItem'>
-				<div className='closeBtn'>
+				{/* <div className='closeBtn'>
 					<IoCloseSharp></IoCloseSharp>
-				</div>
+				</div> */}
 
 				<div className='cartItemImg'>
 					<img className='itemImg' src={imageUrl} alt='cart item image'></img>
@@ -41,7 +41,7 @@ const CardHoverView = (props) => {
 					</span>
 				</div>
 
-				<div className='cartItemQty'>
+				{/* <div className='cartItemQty'>
 					<div className='incrementQty'>
 						<FaPlus />
 					</div>
@@ -49,7 +49,7 @@ const CardHoverView = (props) => {
 					<div className='decrementQty'>
 						<FaMinus />
 					</div>
-				</div>
+				</div> */}
 			</div>
 		</div>
 	);

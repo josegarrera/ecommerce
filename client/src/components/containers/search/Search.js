@@ -1,12 +1,7 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {
-	getProducts,
-	cleanCatalogue,
-	cleanSearch,
-} from '../../../redux/actions/index';
+import {getProducts, cleanCatalogue} from '../../../redux/actions/index';
 import ProductList from '../productsList/ProductList';
-import CardProduct from '../../presentationals/cardProduct/CardProduct';
 
 export default function Search({name}) {
 	const dispatch = useDispatch();

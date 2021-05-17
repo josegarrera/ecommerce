@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route, Redirect} from 'react-router-dom';
+import {Route} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import GridLayout from '../utils/GridLayout';
 //import {GlobalStyles} from './GlobalStyles';
@@ -15,7 +15,6 @@ import FormSignup from '../components/containers/formSignup/FormSignup';
 import FomrCategories from '../components/containers/formCategories/FormCategories';
 
 function App() {
-
 	const user = useSelector((state) => state.user);
 
 	return (
