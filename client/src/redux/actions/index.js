@@ -271,6 +271,15 @@ export const postLocalStorage = (body) => {
   };
 };
 
+export const updateCardProduct = (id) => {
+  return (dispatch) => {
+    return dispatch({
+      type: ActionTypes.REMOVE_CART_PRODUCT_LS,
+      payload: id, // TIENE QUE SER UN ""
+    });
+  };
+};
+
 export const removeCartProduct = (data) => {
   console.log("hasta aca llegue", data);
   // remueve un producto del carrito de un usuario y me devuelve el carrito actualizado
