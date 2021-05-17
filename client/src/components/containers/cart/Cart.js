@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import DIV_CART from "./styled";
 import { useSelector, useDispatch } from "react-redux";
 import CardCartProducts from "../cardCartProducts/CardCartProducts";
@@ -30,13 +30,34 @@ const Cart = () => {
   const cartProduct = useSelector((state) => state.cartProducts);
   const user = useSelector((state) => state.userId);
   const dispatch = useDispatch();
-  console.log(user);
+  const [rendering, setRendering] = useState(true);
+
   useEffect(() => {
     if (user) {
       dispatch(postLocalStorage({ cartProduct, user }));
       window.localStorage.setItem("cart", JSON.stringify([]));
     }
   }, []);
+
+  let count$ =
+    cartProduct &&
+    cartProduct
+      .reduce((accumulator, currentValue) => {
+        if (rendering) {
+          if (currentValue.product.price.currency === "USD") {
+            return accumulator + currentValue.product.price.value * 93;
+          }
+          return accumulator + currentValue.product.price.value;
+        } else {
+          if (currentValue.product.price.currency !== "USD") {
+            return accumulator + currentValue.product.price.value / 93;
+          }
+          return accumulator + currentValue.product.price.value;
+        }
+      }, 0)
+      .toFixed(2);
+
+  console.log(count$);
 
   const casa = () => {
     console.log(JSON.parse(window.localStorage.getItem("cart")));
@@ -68,10 +89,31 @@ const Cart = () => {
             <Link to="/catalogue">
               <p className="p_back_home">{"<<"} Continue Shopping</p>
             </Link>
-            <p className="h2__sbt">subtotal = $Subtotal</p>
+
+            {rendering ? (
+              <div>
+                <p className="h2__sbt">Subtotal en $ = AR$ {count$}</p>
+                <button
+                  onClick={() => setRendering(!rendering)}
+                  className="btn__sbt"
+                >
+                  Pay In U$D
+                </button>
+              </div>
+            ) : (
+              <>
+                <p className="h2__sbt">Subtotal en U$D = U$D {count$}</p>
+                <button
+                  onClick={() => setRendering(!rendering)}
+                  className="btn__sbt"
+                >
+                  Pay In $
+                </button>
+              </>
+            )}
           </div>
         </div>
-        <SumarryCart casa={casa} />
+        <SumarryCart casa={casa} count={count$} />
       </div>
     </DIV_CART>
   );

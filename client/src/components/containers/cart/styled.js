@@ -72,7 +72,7 @@ const DIV_CART = styled.div`
   }
 
   .product_cnt {
-    margin-bottom: 80px;
+    margin-bottom: 120px;
   }
   .prd__values {
     display: grid;
@@ -82,7 +82,7 @@ const DIV_CART = styled.div`
   }
   .p_back_home {
     position: absolute;
-    bottom: 20px;
+    bottom: 60px;
     padding: 10px 15px;
     border-radius: 15px;
     cursor: pointer;
@@ -98,7 +98,14 @@ const DIV_CART = styled.div`
   }
   .h2__sbt {
     position: absolute;
-    bottom: 20px;
+    bottom: 60px;
+    right: 0;
+    font-size: 1.5rem;
+  }
+  .btn__sbt {
+    cursor: pointer;
+    position: absolute;
+    bottom: 0px;
     right: 0;
     font-size: 1.5rem;
   }
