@@ -247,6 +247,22 @@ const DivNavBar = styled.div`
 				.subtotal {
 					display: flex;
 					justify-content: space-between;
+
+					.divCurrency {
+						display: flex;
+						flex-direction: column;
+
+						.btn__sbt {
+							border: none;
+							background: none;
+
+							color: #bdbdbd;
+
+							&:hover {
+								cursor: pointer;
+							}
+						}
+					}
 				}
 				.delivery {
 					display: flex;
