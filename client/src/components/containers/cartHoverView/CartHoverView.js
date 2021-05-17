@@ -1,16 +1,19 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {postLocalStorage} from '../../../redux/actions';
 import {IoCloseSharp} from 'react-icons/io5';
 import CardHoverProducts from '../cardHoverProduct/CardHoverProduct';
 import CartHoverStyled from './styled';
+import {changeCartPrice} from '../../../utils/changeCartPrice';
 
 const CartHoverView = () => {
 	const dispatch = useDispatch();
 	const cartProduct = useSelector((state) => state.cartProducts);
 	const user = useSelector((state) => state.userId);
 	let delivery = 100;
+
+	const [rendering, setRendering] = useState(true);
 
 	useEffect(() => {
 		if (user) {
@@ -19,16 +22,7 @@ const CartHoverView = () => {
 		}
 	}, []);
 
-	let count$ =
-		cartProduct &&
-		cartProduct
-			.reduce((accumulator, currentValue) => {
-				if (currentValue.product.price.currency === 'USD') {
-					return accumulator + currentValue.product.price.value * 93;
-				}
-				return accumulator + currentValue.product.price.value;
-			}, 0)
-			.toFixed(2);
+	let count$ = cartProduct && changeCartPrice(cartProduct, rendering);
 
 	let total = parseFloat(count$) + delivery;
 	return (
@@ -59,16 +53,36 @@ const CartHoverView = () => {
 
 			<div className='subtotal'>
 				<div>
-					<span>subtotal ({cartProduct.length} items)</span>
+					<span>Subtotal ({cartProduct.length} items)</span>
 				</div>
 				<div>
-					<span>{count$}</span>
+					{rendering ? (
+						<div className='divCurrency'>
+							<p className='h2__sbt'>AR$ {count$}</p>
+							<button
+								onClick={() => setRendering(!rendering)}
+								className='btn__sbt'
+							>
+								Pay in U$D
+							</button>
+						</div>
+					) : (
+						<div className='divCurrency'>
+							<p className='h2__sbt'>U$D {count$}</p>
+							<button
+								onClick={() => setRendering(!rendering)}
+								className='btn__sbt'
+							>
+								Pay in AR$
+							</button>
+						</div>
+					)}
 				</div>
 			</div>
 
 			<div className='delivery'>
 				<div>
-					<span>delivery charge</span>
+					<span>Delivery charge</span>
 				</div>
 				<div>
 					<span>${delivery}</span>
@@ -82,7 +96,7 @@ const CartHoverView = () => {
 					<span>total</span>
 				</div>
 				<div className='totalPrice'>
-					<span>{total}</span>
+					<span>{rendering ? <>AR$ {total}</> : <>U$D {total}</>}</span>
 				</div>
 			</div>
 
