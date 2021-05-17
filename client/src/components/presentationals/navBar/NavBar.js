@@ -14,6 +14,11 @@ const NavBar = () => {
 	const cartProduct = useSelector((state) => state.cartProducts);
 	let userId = window.localStorage.getItem('userId');
 	const user = useSelector((state) => state.user);
+	const eraseToken = () => {
+		const cart = window.localStorage.getItem('cart');
+		window.localStorage.clear();
+		if (cart) window.localStorage.setItem('cart', cart);
+	};
 
 	return (
 		<DivNavBar>
@@ -29,7 +34,16 @@ const NavBar = () => {
 				<div className='topRight'>
 					<div className='iconDiv login'>
 						{userId ? (
-							<BsPersonCheckFill className='icon' />
+							<div>
+								<BsPersonCheckFill className='icon iconLogin' />
+								<div className='loginHoverCart'>
+									<Link to='/catalogue'>
+										<div className='login' onClick={eraseToken}>
+											Signout
+										</div>
+									</Link>
+								</div>
+							</div>
 						) : (
 							<div>
 								<BsPersonPlusFill className='icon' />

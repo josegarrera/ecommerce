@@ -59,6 +59,10 @@ const DivNavBar = styled.div`
 					font-size: 20px;
 				}
 
+				.iconLogin {
+					color: #ee362e;
+				}
+
 				/* &:hover {
           transform: scale(1.4);
           transition: 0.3s;

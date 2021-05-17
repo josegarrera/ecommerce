@@ -18,7 +18,12 @@ const CardCartProducts = (props) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		dispatch(removeCartProduct(data));
+		if (userId) {
+			dispatch(removeCartProduct(data));
+		} else {
+			//deberia filtrar desde el localStorage
+			console.log('no hay usuario logueado');
+		}
 	};
 
 	return (
@@ -28,7 +33,6 @@ const CardCartProducts = (props) => {
 					<div className='imageDiv'>
 						{<img className='image' src={imageUrl[0]}></img>}
 					</div>
-
 					<div className='nameDiv'>{name}</div>
 				</Link>
 
