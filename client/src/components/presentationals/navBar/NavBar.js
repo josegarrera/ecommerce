@@ -5,10 +5,9 @@ import {useSelector} from 'react-redux';
 import {IoCart, IoHeart, IoPersonSharp} from 'react-icons/io5';
 import SearchBar from '../../containers/searchBar/SearchBar';
 import DivNavBar from './styled';
-import {IoCloseSharp} from 'react-icons/io5';
 import {BsPersonCheckFill, BsPersonPlusFill} from 'react-icons/bs';
-import {FaPlus} from 'react-icons/fa';
-import {FaMinus} from 'react-icons/fa';
+
+import CartHoverView from '../../containers/cartHoverView/CartHoverView';
 
 const NavBar = () => {
 	let userId = window.localStorage.getItem('userId');
@@ -55,77 +54,7 @@ const NavBar = () => {
 							<IoCart className='icon' />
 						</Link>
 
-						<div className='cartHoverView'>
-							<div className='row'>
-								<div className='cartHeader'>
-									<div className='cartHoverTitle'>My Cart</div>
-									<div className='cartHoverItems'>3 Items selected</div>
-								</div>
-
-								<div className='closeBtnHeader'>
-									<IoCloseSharp></IoCloseSharp>
-								</div>
-							</div>
-
-							<div className='cartItem'>
-								<div className='closeBtn'>
-									<IoCloseSharp></IoCloseSharp>
-								</div>
-
-								<div className='cartItemImg'>
-									<img
-										src='https://http2.mlstatic.com/D_NQ_NP_609935-MLA44739405655_012021-O.webp'
-										alt='cart item image'
-									></img>
-								</div>
-
-								<div className='cartItemInfo'>
-									<span className='cardItemTitle'>Motorola</span>
-									<span className='cardItemPrice'>$2500</span>
-								</div>
-
-								<div className='cartItemQty'>
-									<div className='incrementQty'>
-										<FaPlus />
-									</div>
-									<div className='actualQty'>2</div>
-									<div className='decrementQty'>
-										<FaMinus />
-									</div>
-								</div>
-							</div>
-
-							<div className='cartBottom row'>
-								<div>
-									<span>subtotal (1 item)</span>
-								</div>
-								<div>
-									<span>$25.50</span>
-								</div>
-							</div>
-
-							<div className='cartBottom row'>
-								<div>
-									<span>delivery charge</span>
-								</div>
-								<div>
-									<span>$1</span>
-								</div>
-							</div>
-
-							<div className='separator'></div>
-
-							<div className='cartBottom total row'>
-								<div>
-									<span className='totalSpan'>total</span>
-								</div>
-								<div className='totalPrice'>
-									<span>$26.50</span>
-								</div>
-							</div>
-
-							<div className='cartItemBtn'>Continue to checkout</div>
-						</div>
+						<CartHoverView className='cartHoverView' />
 					</div>
 				</div>
 			</div>

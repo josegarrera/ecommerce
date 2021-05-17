@@ -36,6 +36,15 @@ const ProductDetailStyle = styled.div`
 		.topDivLeft {
 			display: flex;
 
+			.back {
+				border: none;
+				background: none;
+				color: #a1a3a6;
+				font-size: 16px;
+				&:hover {
+					cursor: pointer;
+				}
+			}
 			.categories {
 				display: flex;
 			}
