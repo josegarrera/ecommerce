@@ -2,123 +2,78 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {useSelector} from 'react-redux';
-import {IoCart, IoHeart, IoPersonSharp} from 'react-icons/io5';
+import {IoCart, IoHeart} from 'react-icons/io5';
 import SearchBar from '../../containers/searchBar/SearchBar';
 import DivNavBar from './styled';
-import {IoCloseSharp} from 'react-icons/io5';
-import {FaPlus} from 'react-icons/fa';
-import {FaMinus} from 'react-icons/fa';
+import {BsPersonCheckFill, BsPersonPlusFill} from 'react-icons/bs';
+import {Badge} from '@material-ui/core';
+
+import CartHoverView from '../../containers/cartHoverView/CartHoverView';
 
 const NavBar = () => {
+	const cartProduct = useSelector((state) => state.cartProducts);
+	let userId = window.localStorage.getItem('userId');
 	const user = useSelector((state) => state.user);
+	const eraseToken = () => {
+		const cart = window.localStorage.getItem('cart');
+		window.localStorage.clear();
+		if (cart) window.localStorage.setItem('cart', cart);
+	};
+
 	return (
 		<DivNavBar>
 			<div className='topNav'>
-				<div>
+				<div className='topLeft'>
 					<Link to='/'>
 						<h3 className='logo'>{'< Store! />'}</h3>
 					</Link>
 				</div>
-				<div>
+				<div className='topCenter'>
 					<SearchBar />
 				</div>
 				<div className='topRight'>
 					<div className='iconDiv login'>
-						<IoPersonSharp className='icon' />
-
-						<div className='loginHoverCart'>
-							<Link to='/login'>
-								<div className='login'> Sign in </div>
-							</Link>
-							<div className='signUp'>
-								Don't have an account?{' '}
-								<Link className='signText' to='/signup'>
-									{' '}
-									Sign up
-								</Link>
+						{userId ? (
+							<div>
+								<BsPersonCheckFill className='icon iconLogin' />
+								<div className='loginHoverCart'>
+									<Link to='/catalogue'>
+										<div className='login' onClick={eraseToken}>
+											Signout
+										</div>
+									</Link>
+								</div>
 							</div>
-						</div>
+						) : (
+							<div>
+								<BsPersonPlusFill className='icon' />
+								<div className='loginHoverCart'>
+									<Link to='/login'>
+										<div className='login'> Sign in </div>
+									</Link>
+									<div className='signUp'>
+										Don't have an account?{' '}
+										<Link className='signText' to='/signup'>
+											{' '}
+											Sign up
+										</Link>
+									</div>
+								</div>
+							</div>
+						)}
 					</div>
 					<div className='iconDiv'>
 						<IoHeart className='icon' />
 					</div>
-					<div className='iconDiv cart'>
-						<Link to='/cart'>
-							<IoCart className='icon' />
-						</Link>
+					<Badge badgeContent={cartProduct.length} color='secondary'>
+						<div className='iconDiv cart'>
+							<Link to='/cart'>
+								<IoCart className='icon' />
+							</Link>
 
-						<div className='cartHoverView'>
-							<div className='row'>
-								<div className='cartHeader'>
-									<div className='cartHoverTitle'>My Cart</div>
-									<div className='cartHoverItems'>3 Items selected</div>
-								</div>
-
-								<div className='closeBtnHeader'>
-									<IoCloseSharp></IoCloseSharp>
-								</div>
-							</div>
-
-							<div className='cartItem'>
-								<div className='closeBtn'>
-									<IoCloseSharp></IoCloseSharp>
-								</div>
-
-								<div className='cartItemImg'>
-									<img
-										src='https://http2.mlstatic.com/D_NQ_NP_609935-MLA44739405655_012021-O.webp'
-										alt='cart item image'
-									></img>
-								</div>
-
-								<div className='cartItemInfo'>
-									<span className='cardItemTitle'>Motorola</span>
-									<span className='cardItemPrice'>$2500</span>
-								</div>
-
-								<div className='cartItemQty'>
-									<div className='incrementQty'>
-										<FaPlus />
-									</div>
-									<div className='actualQty'>2</div>
-									<div className='decrementQty'>
-										<FaMinus />
-									</div>
-								</div>
-							</div>
-
-							<div className='cartBottom row'>
-								<div>
-									<span>subtotal (1 item)</span>
-								</div>
-								<div>
-									<span>$25.50</span>
-								</div>
-							</div>
-
-							<div className='cartBottom row'>
-								<div>
-									<span>delivery charge</span>
-								</div>
-								<div>
-									<span>$1</span>
-								</div>
-							</div>
-
-							<div className='separator'></div>
-
-							<div className='cartBottom total row'>
-								<div>
-									<span className='totalSpan'>total</span>
-								</div>
-								<div className='totalPrice'>
-									<span>$26.50</span>
-								</div>
-							</div>
-
-							<div className='cartItemBtn'>Continue to checkout</div>
+							<CartHoverView className='cartHoverView' />
 						</div>
-					</div>
+					</Badge>
 				</div>
 			</div>
 			<div className='bottomNav'>

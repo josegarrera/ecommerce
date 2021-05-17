@@ -1,6 +1,6 @@
 import React from "react";
 
-const SumarryCart = ({ casa }) => {
+const SumarryCart = ({ casa, count }) => {
   return (
     <div>
       <div className="summary">
@@ -8,7 +8,7 @@ const SumarryCart = ({ casa }) => {
           <h2>Summary</h2>
           <div className="total__prd">
             <p>total products</p>
-            <p>$Subtotal</p>
+            <p>${count}</p>
           </div>
           <div className="total__prd">
             <p>Shipping Cost </p>

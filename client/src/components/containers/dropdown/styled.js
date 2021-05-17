@@ -18,7 +18,9 @@ export const Dropdown_Style = styled.div`
     font-weight: 500;
     background-color: #ffffff;
   }
-
+  p {
+    height: 21px;
+  }
   .dropdown__header__icon {
     font-size: 1.5rem;
   }

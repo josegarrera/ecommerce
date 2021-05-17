@@ -1,102 +1,170 @@
 /* eslint-disable react/jsx-pascal-case */
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from 'react';
 
 import {
-  getBrands,
-  getCategories,
-  getProducts,
-  getProductsQuery,
-} from "../../../redux/actions/index.js";
-import { useDispatch, useSelector } from "react-redux";
-import { MdKeyboardArrowDown } from "react-icons/md";
-import Dropdown from "../dropdown";
-import Filter_Style from "./styled";
-import axios from "axios";
+	getBrands,
+	getCategories,
+	getProducts,
+} from '../../../redux/actions/index.js';
+import {useDispatch, useSelector} from 'react-redux';
+import {BiDollar} from 'react-icons/bi';
+import {RiCheckboxBlankCircleFill} from 'react-icons/ri';
 
-const Filter = () => {
-  const dispatch = useDispatch();
-  const allCategories = useSelector((state) => state.categories);
-  const allBrands = useSelector((state) => state.brands);
-  const allProducts = useSelector((state) => state.products);
-  const categoryNames = allCategories.map((c) => c.name);
-  const brandNames = allBrands.map((b) => b.name);
+import {IoIosCheckmarkCircle} from 'react-icons/io';
 
-  const [filter, setFilter] = useState([{}]);
-  const [input, setInput] = useState({
-    category: "",
-    brands: "",
-    variants: "",
-    price: Number,
-    direction: "",
-    limit: Number,
-  });
+import Dropdown from '../dropdown';
+import Filter_Style from './styled';
 
-  useEffect(() => {
-    dispatch(getCategories());
-    dispatch(getBrands());
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+const Filter = ({order}) => {
+	const dispatch = useDispatch();
+	const allCategories = useSelector((state) => state.categories);
+	const allBrands = useSelector((state) => state.brands);
+	const categoryNames = allCategories.map((c) => c.name);
+	const brandNames = allBrands.map((b) => b.name);
+	const variantsItemsNames = ['color', 'stock'];
 
-  useEffect(() => {
-    // filter, filterValue, order, direction, limit
+	const [filter, setFilter] = useState([{}]);
+	const [input, setInput] = useState({
+		name: '',
+		category: '',
+		brand: '',
+		variants: '',
+		price: '',
+		order: '',
+		direction: '',
+	});
 
-    var keyName = Object.keys(filter[0]);
-    var actualValue = filter[0][keyName];
-    const response = { ...input, [keyName]: actualValue };
-    input && setInput(() => response);
-  }, [filter]);
+	// (name, category, variants, price, order, direction, limit)
 
-  useEffect(() => {
-    const { name, brands, category, variants, price, order, direction, limit } =
-      input;
+	useEffect(() => {
+		dispatch(getCategories());
+		dispatch(getBrands());
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-    console.log(input);
-    dispatch(
-      getProducts(name, category, variants, price, order, direction, limit)
-    );
-  }, [input]);
+	useEffect(() => {
+		// filter, filterValue, order, direction, limit
 
-  return (
-    <Filter_Style>
-      <div className="filter__options">
-        <div className="filter__title">SEARCH FILTER</div>
-        <div className="separator"></div>
+		var keyName = filter.length && Object.keys(filter[0]);
+		var actualValue = filter.length && filter[0][keyName];
+		var orderValue = 'asc';
 
-        <div className="filter__section">
-          <Dropdown
-            filter
-            title="CATEGORIES"
-            name="category"
-            items={categoryNames}
-            setVariants={(el) => setFilter(el)}
-            variants={filter}
-          ></Dropdown>
+		if (order.length) {
+			orderValue = order[0].order;
+		}
 
-          <Dropdown
-            filter
-            title="BRANDS"
-            name="brands"
-            items={brandNames}
-            setVariants={(el) => setFilter(el)}
-            variants={filter}
-          ></Dropdown>
+		const response = {
+			...input,
+			[keyName]: actualValue,
+			direction: orderValue,
+		};
+		input && setInput(() => response);
+	}, [filter, order]);
 
-          <Dropdown
-            filter
-            title="VARIANTS"
-            name="variants"
-            items={categoryNames}
-            setVariants={(el) => setFilter(el)}
-            variants={filter}
-          ></Dropdown>
+	useEffect(() => {
+		const {name, category, brand, variants, price, order, direction} = input;
 
-          <div className="filter__section__row">
-            <div className="filter__section__title">PRICE</div>
-          </div>
-          <input type="range"></input>
-        </div>
-      </div>
-    </Filter_Style>
-  );
+		dispatch(
+			getProducts(name, category, brand, variants, price, order, direction)
+		);
+	}, [input]);
+
+	return (
+		<Filter_Style>
+			<div className='filter__options'>
+				<div className='filter__title'>SEARCH FILTER</div>
+				<div className='separator'></div>
+
+				<div className='filter__section'>
+					<Dropdown
+						filter
+						title='CATEGORIES'
+						name='category'
+						items={categoryNames}
+						setVariants={(el) => setFilter(el)}
+						variants={filter}
+					></Dropdown>
+
+					<Dropdown
+						filter
+						title='BRANDS'
+						name='brand'
+						items={brandNames}
+						setVariants={(el) => setFilter(el)}
+						variants={filter}
+					></Dropdown>
+
+					<Dropdown
+						filter
+						title='VARIANTS'
+						name='variants'
+						items={variantsItemsNames}
+						setVariants={(el) => setFilter(el)}
+						variants={filter}
+					></Dropdown>
+
+					<div className='filter__section__row'>
+						<div className='filter__section__title'>PRICE</div>
+					</div>
+					<div className='input__wrapper'>
+						<input className='range__price' type='range'></input>
+						<div className='row'>
+							<input
+								className='price__input'
+								type='number'
+								id='price'
+								name='price'
+							></input>
+							{/* <i>
+                <CgBorderStyleSolid />
+              </i>
+              <input
+                className="price__input"
+                type="number"
+                id="price__max"
+                name="price"
+                value="holi"
+                onChange={(e) => onChangeHandler(e)}
+              ></input> */}
+							<i>
+								<BiDollar />
+							</i>
+						</div>
+					</div>
+
+					<div className='filter__section__row'>
+						<div className='filter__section__title'>COLOR</div>
+					</div>
+					<div className='color__selector'>
+						<ul>
+							<li id='white' className='color__item'>
+								<i>
+									<RiCheckboxBlankCircleFill />
+								</i>
+							</li>
+							<li id='black' className='color__item'>
+								<IoIosCheckmarkCircle />
+							</li>
+							<li id='purple' className='color__item'>
+								<RiCheckboxBlankCircleFill />
+							</li>
+							<li id='blue' className='color__item'>
+								<RiCheckboxBlankCircleFill />
+							</li>
+							<li id='red' className='color__item'>
+								<RiCheckboxBlankCircleFill />
+							</li>
+							<li id='yellow' className='color__item'>
+								<RiCheckboxBlankCircleFill />
+							</li>
+							<li id='skyblue' className='color__item'>
+								<RiCheckboxBlankCircleFill />
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</Filter_Style>
+	);
 };
 
 export default Filter;

@@ -14,7 +14,8 @@ const Catalogue = () => {
 	const {products, pages} = useSelector((state) => state.products);
 	const [orderItems, setOrderItems] = useState([]);
 
-	const options = ['opcion1', 'opcion2', 'opcion3'];
+	const options = ['price: Low to High', 'price: High to Low', 'A-Z', 'Z-A'];
+
 	// Este allProducts me trae {products: Array(12), pages: Array(2)}
 
 	useEffect(() => {
@@ -27,7 +28,7 @@ const Catalogue = () => {
 
 	return (
 		<Catalogue_Style>
-			<Filter />
+			<Filter order={orderItems} />
 			<div className='productsPagination'>
 				<div className='sort__elements'>
 					<Dropdown

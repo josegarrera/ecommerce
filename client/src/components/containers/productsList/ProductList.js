@@ -11,7 +11,7 @@ const ProductList = ({products, loadSearch}) => {
 				{products ? (
 					products.map(({product: {name, price, imageUrl, _id}}) => (
 						<CardProduct
-							key={name}
+							key={_id}
 							name={name}
 							price={price}
 							imageUrl={imageUrl}

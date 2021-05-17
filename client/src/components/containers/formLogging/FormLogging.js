@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-pascal-case */
 import React, {useState, useEffect} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import Login_Style from './styled';
 import {Link, useHistory} from 'react-router-dom';
 import axios from 'axios';
@@ -127,14 +127,14 @@ const FormLogging = () => {
 								></input>
 							</div>
 							<div>{errors.password ? errors.password : null}</div>
-							<span className='forgotSpan'> forgot password?</span>
+							<span className='forgotSpan'> Forgot password?</span>
 							<button type='submit' className='signInBtnBottom'>
 								<div>SIGN IN</div>
 							</button>
 						</form>
 
 						<div className='rowBottom'>
-							<p className='signUpBottom'> don't have an account? </p>
+							<p className='signUpBottom'> Don't have an account? </p>
 							<Link to='/signup'>
 								<span className='signUpSpan'> Sign up </span>
 							</Link>

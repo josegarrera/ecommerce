@@ -4,6 +4,7 @@ import {useSelector} from 'react-redux';
 import GridLayout from '../utils/GridLayout';
 //import {GlobalStyles} from './GlobalStyles';
 import NavBar from '../components/presentationals/navBar/NavBar.js';
+import Home from '../components/containers/home/Home.js';
 import Catalogue from '../components/containers/catalogue/Catalogue';
 import FormProduct from '../components/containers/formProduct/FormProduct';
 import Search from '../components/containers/search/Search';
@@ -15,12 +16,14 @@ import FomrCategories from '../components/containers/formCategories/FormCategori
 
 function App() {
 	const user = useSelector((state) => state.user);
+
 	return (
 		<div className='App'>
 			<React.Fragment>
 				<GridLayout>
 					{/* <GlobalStyles /> */}
 					<Route path='/' component={NavBar} />
+					<Route exact path='/' component={Home} />
 					<Route exact path='/login' component={FormLogging} />
 					<Route exact path='/signup' component={FormSignup} />
 					<Route exact path='/catalogue' component={Catalogue} />

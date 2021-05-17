@@ -1,42 +1,27 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import DIV_CART from "./styled";
 import { useSelector, useDispatch } from "react-redux";
 import CardCartProducts from "../cardCartProducts/CardCartProducts";
 import { postLocalStorage } from "../../../redux/actions";
 import { Link } from "react-router-dom";
 import SumarryCart from "../sumarryCart/SumarryCart";
+import { changeCartPrice } from "../../../utils/changeCartPrice";
 
 const Cart = () => {
-  /* 
-  Action que envie a get "/orders" con user._id  ,cart(true)  . Solo tiene que traer las ordenes abiertas. (arreglo con productos agregados en otra session)
-  
-  
-  traer el estado login del useSelector ( si solo necesitamos el id del usuario traer login.user._id)
-  
-  useEffect ==> 
-  getOpenUserOrders(userId)
-
-  boton amount tiene que aumentar la cantidad del producto. 
-  hace un put  a /ordens?userId.items[?].lot
-  como trabajar produtos de base de datos y productos normales(getProducts)
-
-  
-
-
-  postOrders(cartProducts);
-  
-  */
-
   const cartProduct = useSelector((state) => state.cartProducts);
-  const user = useSelector((state) => state.userId);
   const dispatch = useDispatch();
-  console.log(user);
+  const [rendering, setRendering] = useState(true);
+
   useEffect(() => {
+    const user = window.localStorage.getItem("userId");
+    console.log("aca esta el userId", user);
     if (user) {
-      dispatch(postLocalStorage({ cartProduct, user }));
+      dispatch(postLocalStorage({ products: cartProduct, userId: user }));
       window.localStorage.setItem("cart", JSON.stringify([]));
     }
   }, []);
+
+  let count$ = cartProduct && changeCartPrice(cartProduct, rendering);
 
   const casa = () => {
     console.log(JSON.parse(window.localStorage.getItem("cart")));
@@ -68,10 +53,30 @@ const Cart = () => {
             <Link to="/catalogue">
               <p className="p_back_home">{"<<"} Continue Shopping</p>
             </Link>
-            <p className="h2__sbt">subtotal = $Subtotal</p>
+            {rendering ? (
+              <div>
+                <p className="h2__sbt">AR$ {count$}</p>
+                <button
+                  onClick={() => setRendering(!rendering)}
+                  className="btn__sbt"
+                >
+                  Change pay to U$D
+                </button>
+              </div>
+            ) : (
+              <>
+                <p className="h2__sbt">U$D {count$}</p>
+                <button
+                  onClick={() => setRendering(!rendering)}
+                  className="btn__sbt"
+                >
+                  Change pay to AR$
+                </button>
+              </>
+            )}
           </div>
         </div>
-        <SumarryCart casa={casa} />
+        <SumarryCart casa={casa} count={count$} />
       </div>
     </DIV_CART>
   );

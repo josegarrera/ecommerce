@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
-import {getProductDetail} from '../../../redux/actions/index';
+import {getProductDetail, addCartProduct} from '../../../redux/actions/index';
 import {IoLogoWhatsapp, IoReturnDownBack} from 'react-icons/io5';
 import {BsLightning} from 'react-icons/bs';
 import {FaShoppingCart} from 'react-icons/fa';
@@ -11,6 +11,7 @@ import ProductDetailStyle from './styled';
 const ProductDetail = (id) => {
 	const dispatch = useDispatch();
 	const [imageBig, setImageBig] = useState();
+	let history = useHistory();
 
 	const product = useSelector((store) => store.productDetail);
 
@@ -18,12 +19,23 @@ const ProductDetail = (id) => {
 		dispatch(getProductDetail(id));
 	}, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
+	const handleAddCart = () => {
+		//add to cart
+		dispatch(addCartProduct(product._id));
+	};
+
 	return (
 		<ProductDetailStyle>
 			<div className='all'>
 				<div className='topDiv'>
 					<div className='topDivLeft'>
-						<Link to={`/catalogue`}>{'Back |'} </Link>
+						<button
+							className='back'
+							type='button'
+							onClick={() => history.goBack()}
+						>
+							{'Back |'}
+						</button>
 						<div className='categories'>
 							{product.categories &&
 								product.categories.map((categ) => (
@@ -77,15 +89,17 @@ const ProductDetail = (id) => {
 						<div className='infoDivTop'>
 							<div className='title'>
 								<div className='name'>{product.name && product.name}</div>
-								<div>
+								<div className='btns'>
 									<AiOutlineHeart className='fav' />
-									{/* 	<FaShoppingCart className='cart' /> */}
+									<button className='btn__cart' onClick={handleAddCart}>
+										<FaShoppingCart />
+									</button>
 								</div>
 							</div>
 
 							<div className='brand'>
 								{'| '}
-								{product.brands && product.brands.name}
+								{product.brands && product.brands.map((brand) => brand.name)}
 							</div>
 
 							<div className='price'>
