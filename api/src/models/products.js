@@ -17,10 +17,12 @@ const ProductsSchema = new Schema({
 			ref: 'categories',
 		},
 	],
-	brands: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'brands',
-	},
+	brands: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'brands',
+		},
+	],
 	specs: {},
 	variants: [{}],
 });

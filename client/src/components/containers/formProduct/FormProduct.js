@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import FormProductStyle from './styled';
-import Checkbox from '../checkbox';
 import FormBrands from '../formBrands/FormBrands';
 import {IoCloseSharp} from 'react-icons/io5';
 import Dropdown from '../dropdown/specific.js';
@@ -11,6 +10,7 @@ import {
 	getCategories,
 	getProducts,
 	emptyProductCreated,
+	getBrands,
 } from '../../../redux/actions';
 import validate from '../../../utils/formValidate.js';
 import setter from '../../../utils/setterInput.js';
@@ -19,38 +19,55 @@ import Swal from 'sweetalert2';
 const FormProduct = () => {
 	const allCategories = useSelector((state) => state.categories);
 	const allProducts = useSelector((state) => state.products.products);
+	const allBrands = useSelector((state) => state.brands);
 	const productCreated = useSelector((state) => state.productCreated);
 	const dispatch = useDispatch();
-	const [variantSelected, setVariants] = useState([]);
-	const [tags, setTags] = useState([]);
-	const [categorySelected, setCategories] = useState([]);
-	const [currency, setCurrency] = useState([]);
+	const [tagsUrl, setTagsUrl] = useState([]);
 	const [errors, setErrors] = useState({});
 	const [status, setStatus] = useState({
 		init: false,
 		completed: false,
 	});
+	const [variantIdGenerator, setVariantIdGenerator] = useState(1);
 	const [product, setProduct] = useState({
 		name: '',
 		description: '',
-		price: '',
-		brands: '',
+		priceValue: '',
+		currency: [],
+		brands: [],
+		categoriesSelected: [],
+		variantItemSelected: [],
 		variant: {},
 		specs: {},
 		allVariants: [],
 	});
-	const categories = allCategories.map((c) => c.name);
-	const [variantIdGenerator, setVariantIdGenerator] = useState(1);
-	const variants = categorySelected.length
-		? allCategories.filter(
-				(item) => item.name === categorySelected[0].categories
-		  )[0].variants
-		: [];
+	const categoriesNames = allCategories.map((c) => c.name);
+	const brandsNames = allBrands.map((b) => b.name);
+	let variants = [];
+	let specs = [];
+	if (product.categoriesSelected.length) {
+		allCategories.forEach((item) => {
+			if (product.categoriesSelected.includes(item.name)) {
+				variants = [...variants.concat(item.variants)].filter(
+					(valor, indice) => {
+						return (
+							[...variants.concat(item.variants)].indexOf(valor) === indice
+						);
+					}
+				);
+				specs = [...specs.concat(item.specs)].filter((valor, indice) => {
+					return [...specs.concat(item.specs)].indexOf(valor) === indice;
+				});
+			}
+		});
+	}
+
 	const currencies = ['USD', 'ARS'];
 
 	useEffect(() => {
 		dispatch(getProducts('', '', '', '', '', '', '', Infinity));
 		dispatch(getCategories());
+		dispatch(getBrands());
 		return () => {
 			dispatch(emptyProductCreated());
 		};
@@ -81,7 +98,7 @@ const FormProduct = () => {
 		});
 	}, [productCreated]);
 
-	const ChangeInput = (e) => {
+	const changeInput = (e) => {
 		setProduct({
 			...product,
 			[e.target.name]: e.target.value,
@@ -101,6 +118,35 @@ const FormProduct = () => {
 		);
 	};
 
+	const changeInputVariant = (e) => {
+		setProduct({
+			...product,
+			variant: {...product.variant, [e.target.name]: e.target.value},
+		});
+		setStatus({
+			init: true,
+			completed: false,
+		});
+		setErrors(
+			validate(
+				{
+					...product,
+					variant: {...product.variant, [e.target.name]: e.target.value},
+				},
+				allProducts
+			)
+		);
+	};
+	const changeInputSpecs = (e) => {
+		setProduct({
+			...product,
+			specs: {...product.specs, [e.target.name]: e.target.value},
+		});
+		setStatus({
+			init: true,
+			completed: false,
+		});
+	};
 	const handleClickVariants = () => {
 		setVariantIdGenerator(variantIdGenerator + 1);
 		setProduct({
@@ -110,17 +156,6 @@ const FormProduct = () => {
 				{...product.variant, id: variantIdGenerator},
 			],
 			variant: setter({...product.variant}),
-		});
-		setStatus({
-			init: true,
-			completed: false,
-		});
-	};
-
-	const changeInputVariant = (e) => {
-		setProduct({
-			...product,
-			variant: {...product.variant, [e.target.name]: e.target.value},
 		});
 		setStatus({
 			init: true,
@@ -139,23 +174,22 @@ const FormProduct = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		const price = {};
-		price.currency = currency[0].currency;
-		price.value = product.price;
 
 		const obj = {
 			...product,
+			price: {
+				value: product.priceValue,
+				currency: product.currency[0],
+			},
 			variants: product.allVariants,
-			categories: categorySelected[0] ? [categorySelected[0].categories] : [],
-			imageUrl: [...tags],
-			price,
+			brands: product.brands,
+			categories: product.categoriesSelected,
+			imageUrl: [...tagsUrl],
+			specs: product.specs,
 		};
 		dispatch(addNewProduct(obj));
 		setProduct(setter(product));
-		setCategories(setter(categorySelected));
-		setVariants(setter(variantSelected));
-		setTags(setter(tags));
-		setCurrency(setter(currency));
+		setTagsUrl(setter(tagsUrl));
 		setErrors({});
 		setStatus({
 			init: false,
@@ -186,21 +220,28 @@ const FormProduct = () => {
 									id='name'
 									name='name'
 									value={product.name}
-									onChange={(e) => ChangeInput(e)}
+									onChange={(e) => changeInput(e)}
 								></input>
 								{errors.name && <p className='danger'>{errors.name}</p>}
 							</div>
 							<div className='form__element'>
-								<label className='form__label'>brand</label>
-								<input
-									className='form__input'
-									type='text'
-									id='brands'
+								<label className='form__label'>brands</label>
+								<Dropdown
+									title='select brands'
 									name='brands'
-									value={product.brands}
-									onChange={(e) => ChangeInput(e)}
-								></input>
-								{errors.brands && <p className='danger'>{errors.brands}</p>}
+									multiselect
+									items={brandsNames}
+									options={product.brands}
+									setProduct={(el) => setProduct(el)}
+									product={product}
+								></Dropdown>
+								{status.init && !errors.name && !product.brands.length ? (
+									<p className='danger'>
+										{'You must select at least one brand.'}
+									</p>
+								) : (
+									<></>
+								)}
 							</div>
 							<div className='form__element'>
 								<label className='form__label'>description</label>
@@ -209,44 +250,61 @@ const FormProduct = () => {
 									type='text'
 									name='description'
 									value={product.description}
-									onChange={(e) => ChangeInput(e)}
+									onChange={(e) => changeInput(e)}
 								></textarea>
-								{errors.description && (
+								{errors.description && product.brands.length ? (
 									<p className='danger'>{errors.description}</p>
+								) : (
+									<></>
 								)}
 							</div>
 
 							<div className='row'>
 								<div className='form__element'>
-									<label className='form__label'>currency</label>
 									<Dropdown
 										title='currency'
 										name='currency'
 										items={currencies}
-										setOptions={(el) => setCurrency(el)}
-										options={currency}
+										options={product.currency}
+										setProduct={(el) => setProduct(el)}
+										product={product}
 									></Dropdown>
+									{status.init &&
+									!errors.description &&
+									!product.currency.length ? (
+										<p className='danger'>Required field</p>
+									) : (
+										<></>
+									)}
 								</div>
 								<div className='form__element ml mr'>
 									<label className='form__label'>price</label>
 									<input
+										id='form__input__price'
 										className='form__input'
 										type='number'
-										name='price'
-										value={product.price}
-										onChange={(e) => ChangeInput(e)}
+										name='priceValue'
+										value={product.priceValue}
+										onChange={(e) => changeInput(e)}
 									></input>
-									{errors.price && <p className='danger'>{errors.price}</p>}
+									{errors.priceValue && (
+										<p className='danger'>{errors.priceValue}</p>
+									)}
 								</div>
 							</div>
 							<div className='form__element'>
 								<label className='form__label'>Image URL:</label>
 								<TagsInput
-									tags={tags}
-									setTags={setTags}
+									tags={tagsUrl}
+									setTags={setTagsUrl}
 									setErrors={setErrors}
 								></TagsInput>
 								{errors.url && <p className='danger'>{errors.url}</p>}
+								{status.init && !errors.priceValue && !tagsUrl.length ? (
+									<p className='danger'>Required field</p>
+								) : (
+									<></>
+								)}
 							</div>
 						</div>
 
@@ -254,15 +312,13 @@ const FormProduct = () => {
 							<div className='form__element'>
 								<label className='form__label'>categories</label>
 								<Dropdown
-									title='select category'
+									title={'select categories'}
 									name='categories'
-									items={categories}
-									setOptions={(el) => setCategories(el)}
-									options={categorySelected}
-									setVariants={(el) => setVariants(el)}
-									variantsProduct={product.variant}
+									items={categoriesNames}
+									multiselect
+									options={product.categoriesSelected}
 									setProduct={(el) => setProduct(el)}
-									products={product}
+									product={product}
 								></Dropdown>
 							</div>
 
@@ -272,22 +328,23 @@ const FormProduct = () => {
 								name='variants'
 								items={variants}
 								multiselect
-								setOptions={(el) => setVariants(el)}
-								options={variantSelected}
+								options={product.variantItemSelected}
 								variantsProduct={product.variant}
 								setProduct={(el) => setProduct(el)}
-								products={product}
+								product={product}
+								allProducts={allProducts}
+								setErrors={(el) => setErrors(el)}
 							></Dropdown>
 							<div>
 								<div className='form__element'>
-									{variantSelected.length ? (
-										variantSelected.map((variant, index) => (
+									{product.variantItemSelected.length ? (
+										product.variantItemSelected.map((variant, index) => (
 											<div key={variant + index + 'container'}>
 												<label className='form__label'>{variant}</label>
 												<input
 													key={variant + index}
-													className='form__input form__input__variant'
-													type='text'
+													className='variant form__input form__input__variant'
+													type={variant === 'stock' ? 'number' : 'text'}
 													name={variant}
 													value={product.variant[variant]}
 													onChange={(e) => changeInputVariant(e)}
@@ -297,14 +354,33 @@ const FormProduct = () => {
 									) : (
 										<div> </div>
 									)}
-									{variantSelected.length ? (
+									{errors.variantImageUrl && (
+										<p className='danger'>{errors.variantImageUrl}</p>
+									)}
+									{errors.variant && <p className='danger'>{errors.variant}</p>}
+									{product.variantItemSelected.length >
+										Object.keys(product.variant).length && (
+										<p className='danger'>
+											{'You must complete all the fields you select.'}
+										</p>
+									)}
+									{errors.variantStock && (
+										<p className='danger'>{errors.variantStock}</p>
+									)}
+									{product.variantItemSelected.length ? (
 										<button
 											type='button'
 											id='add_variant_btn'
 											className='form__button'
 											onClick={handleClickVariants}
 											disabled={
-												Object.keys(product.variant).length ? '' : 'disabled'
+												Object.keys(errors).length ||
+												product.variantItemSelected.length >
+													Object.values(product.variant).filter(
+														(value) => value
+													).length
+													? 'disabled'
+													: ''
 											}
 										>
 											Add Variant
@@ -349,6 +425,23 @@ const FormProduct = () => {
 											<div> </div>
 										)}
 									</div>
+									{specs.length ? (
+										specs.map((item, i) => (
+											<div>
+												<label className='form__label'>{item}</label>
+												<input
+													key={item + i}
+													className='specs form__input form__input__variant'
+													type='text'
+													name={item}
+													value={product.specs[item]}
+													onChange={(e) => changeInputSpecs(e)}
+												></input>
+											</div>
+										))
+									) : (
+										<div> </div>
+									)}
 								</div>
 							</div>
 						</div>
@@ -361,10 +454,10 @@ const FormProduct = () => {
 							errors.name ||
 							errors.brands ||
 							errors.description ||
-							errors.brands ||
 							errors.price ||
 							errors.url ||
-							!product.name
+							!product.name ||
+							!tagsUrl.length
 								? 'disabled'
 								: ''
 						}

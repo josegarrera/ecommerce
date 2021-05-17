@@ -17,7 +17,10 @@ function filterProducts(data, category, brand, variantSelected, price, quotes) {
 		const filtered = brand
 			? products.filter(
 					(product) =>
-						product.brands && product.brands.name.toLowerCase().includes(brand)
+						product.brands.length &&
+						product.brands.find((item) =>
+							item.name.toLowerCase().includes(brand)
+						)
 			  )
 			: products;
 
