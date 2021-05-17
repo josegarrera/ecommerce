@@ -11,6 +11,16 @@ function deleteUser(req, res) {
 	});
 }
 
+function getAllUsers(req, res) {
+	Users.find({}, ['email', 'role'])
+		.exec()
+		.then((data) => res.send(data))
+		.catch((error) =>
+			res.status(500).send({type: 'Internal Server Error', error: error})
+		);
+}
+
 module.exports = {
 	deleteUser,
+	getAllUsers,
 };
