@@ -30,13 +30,16 @@ const Filter = ({ order }) => {
 
   const [filter, setFilter] = useState([{}]);
   const [input, setInput] = useState({
+    name: "",
     category: "",
-    brands: "",
+    brand: "",
     variants: "",
     price: 0,
-    direction: "",
     order: "",
+    direction: "",
   });
+
+  // (name, category, variants, price, order, direction, limit)
 
   useEffect(() => {
     dispatch(getCategories());
@@ -54,41 +57,21 @@ const Filter = ({ order }) => {
       orderValue = order[0].order;
     }
 
-    console.log(orderValue);
-
     const response = {
       ...input,
       [keyName]: actualValue,
       direction: orderValue,
     };
-
     input && setInput(() => response);
-
-    console.log(input);
   }, [filter, order]);
 
   useEffect(() => {
-    const { name, brands, order, category, variants, price, direction, limit } =
-      input;
-
-    console.log(input);
+    const { name, category, brand, variants, price, order, direction } = input;
 
     dispatch(
-      getProducts(
-        name,
-        category,
-        variants,
-        price,
-        order,
-        direction,
-        limit
-      )
+      getProducts(name, category, brand, variants, price, order, direction)
     );
   }, [input]);
-
-  var onChangeHandler = (char) => {
-    console.log(char);
-  };
 
   return (
     <Filter_Style>
@@ -135,8 +118,6 @@ const Filter = ({ order }) => {
                 type="number"
                 id="price"
                 name="price"
-                value={input.length && input.price}
-                onChange={(e) => onChangeHandler(e.target.value)}
               ></input>
               {/* <i>
                 <CgBorderStyleSolid />
