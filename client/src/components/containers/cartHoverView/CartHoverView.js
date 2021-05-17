@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import {postLocalStorage} from '../../../redux/actions';
 import {IoCloseSharp} from 'react-icons/io5';
 import CardHoverProducts from '../cardHoverProduct/CardHoverProduct';
@@ -41,13 +42,21 @@ const CartHoverView = () => {
 					</div>
 				</div>
 				<div className='productsContainer'>
-					{cartProduct.length ? (
-						cartProduct.map((e) => (
-							<CardHoverProducts key={e._id} product={e} />
-						))
-					) : (
-						<h1>No tienes Producto agregados al carrito</h1>
-					)}
+					<InfiniteScroll
+						dataLength={cartProduct.length}
+						/* next={this.fetchMoreData}
+						hasMore={this.state.hasMore} */
+						loader={<h4>Loading...</h4>}
+						height={450}
+					>
+						{cartProduct.length ? (
+							cartProduct.map((e) => (
+								<CardHoverProducts key={e._id} product={e} />
+							))
+						) : (
+							<h1>No tienes Producto agregados al carrito</h1>
+						)}
+					</InfiniteScroll>
 				</div>
 			</div>
 

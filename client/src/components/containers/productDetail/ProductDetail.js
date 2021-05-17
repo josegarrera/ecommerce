@@ -143,8 +143,7 @@ const ProductDetail = (id) => {
 
 							<div>
 								{'Avaliable Stock:'}
-								{'ACA FALTA EL STOCK '}
-								{/* {product.variants && product.variants.stock}  */}
+								{product.variants && product.variants.stock}
 								{'unids.'}
 							</div>
 						</div>
