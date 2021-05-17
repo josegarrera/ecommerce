@@ -84,12 +84,15 @@ const FormProductStyle = styled.div`
 	.form__input:focus {
 		border-color: #a1a3a6;
 	}
+	#form__input__price {
+		height: 50px;
+		padding: 0.5rem;
+	}
 	.form__label {
 		font-size: 0.9rem;
 		color: #9e9e9e;
 		font-weight: 600;
 		margin-top: 0.5rem;
-		margin-bottom: 0.5rem;
 	}
 
 	.form__element {

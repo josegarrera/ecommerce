@@ -1,7 +1,6 @@
 const {Categories, Products} = require('../models/index.js');
 
 function getAllCategories(req, res) {
-
 	Categories.find({})
 		.populate('products', {name: true})
 		.exec()
@@ -82,11 +81,11 @@ function updateACategorie(req, res) {
 }
 
 function createCategories(req, res) {
-	if (!req.body || !req.body.categories.length > 0 || !req.body.variants.length)
+	if (!req.body || !req.body.categories.length || !req.body.variants.length)
 		return res
 			.status(400)
 			.send({type: 'Bad request.', error: 'The fields are empty.'});
-	const {products, categories, variants} = req.body;
+	const {products, categories, variants, specs} = req.body;
 	const specProducts = products.map((item) => Products.findById(item));
 	let idValidProducts;
 	let validProducts;
@@ -110,6 +109,7 @@ function createCategories(req, res) {
 							categorie.doc.products.concat(idValidProducts).indexOf(item) ===
 							index
 					);
+				categorie.doc.specs = specs;
 			});
 			validProducts.forEach((product) => {
 				product.categories = product.categories
@@ -126,7 +126,8 @@ function createCategories(req, res) {
 			);
 		})
 		.then((data) => {
-			res.send('Success');
+			const result = data.filter((item) => !item.price);
+			res.send(result);
 		})
 
 		.catch((error) =>
