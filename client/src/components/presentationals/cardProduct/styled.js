@@ -14,7 +14,7 @@ const DivCrdProd = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 224px;
-	height: fit-content;
+	height: 430px;
 	border: 1px solid #e0e0e0;
 	border-radius: 20px;
 	position: relative;

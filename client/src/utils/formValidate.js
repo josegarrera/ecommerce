@@ -1,5 +1,3 @@
-import {ImGift} from 'react-icons/im';
-
 export default function validate(product, allProducts) {
 	let errors = {};
 

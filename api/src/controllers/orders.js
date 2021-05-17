@@ -15,7 +15,7 @@ async function getUserOrder(req, res, next) {
 						.exec();
 					return res.send(order);
 				} else {
-					let order = await new Orders({users: userId});
+					let order = await new Orders({users: userId, items: []});
 					order.save();
 					res.send(order);
 				}
@@ -38,8 +38,8 @@ async function getAllUserOrders(req, res, next) {
 		if (userId) {
 			let userExists = await Users.exists({_id: userId});
 			if (userExists) {
-				let orders = await Orders.findOne({users: userId, state: 0});
-				if (orders) {
+				let orders = await Orders.find({users: userId, state: 0});
+				if (orders.length) {
 					return res.send(orders);
 				} else {
 					res.send({message: 'user do not have complete orders yet'});
@@ -57,8 +57,6 @@ async function getAllUserOrders(req, res, next) {
 	}
 }
 
-// funcion de prueba para agregar productos al carrito
-// sientase libre de editar
 async function addProduct(req, res) {
 	const {userId, products} = req.body.data;
 	try {

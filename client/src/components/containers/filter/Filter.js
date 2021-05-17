@@ -5,7 +5,6 @@ import {
 	getBrands,
 	getCategories,
 	getProducts,
-	getProductsQuery,
 } from '../../../redux/actions/index.js';
 import {useDispatch, useSelector} from 'react-redux';
 import Dropdown from '../dropdown';
