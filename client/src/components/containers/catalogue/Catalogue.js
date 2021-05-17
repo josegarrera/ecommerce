@@ -14,7 +14,7 @@ const Catalogue = () => {
 	const {products, pages} = useSelector((state) => state.products);
 	const [orderItems, setOrderItems] = useState([]);
 
-	const options = ['price: Low to High', 'price: High to Low', 'A-Z', 'Z-A'];
+	const options = ['Low > High', 'High > Low', 'A > Z', 'Z > A'];
 
 	// Este allProducts me trae {products: Array(12), pages: Array(2)}
 
