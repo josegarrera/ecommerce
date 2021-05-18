@@ -16,7 +16,6 @@ function index() {
         <form className="product__form">
           <div className="form__wrapper">
             <div className="form__column">
-              
               <div className="form__element">
                 <label className="form__label">Full Name</label>
                 <input
@@ -48,7 +47,7 @@ function index() {
               </div>
 
               <div className="form__element">
-                <label className="form__label">price</label>
+                <label className="form__label">Postal Code</label>
                 <input
                   id="form__input__price"
                   className="form__input"
@@ -57,9 +56,21 @@ function index() {
                 ></input>
               </div>
 
+              <div className="form__element">
+                <label className="form__label">Country</label>
+                <input
+                  id="form__input__price"
+                  className="form__input"
+                  type="number"
+                  name="priceValue"
+                ></input>
+              </div>
+
+              <div className="bottom__row">
+                <button className="form__button">Continue</button>
+              </div>
             </div>
           </div>
-          <button className="form__button">Save</button>
         </form>
       </div>
     </ShippingAddress_Style>
