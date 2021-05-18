@@ -27,10 +27,11 @@ export const ActionTypes = {
 };
 
 export const URLS = {
-  URL_PRODUCTS: "http://localhost:3001/products",
-  URL_USER_ORDERS: "http://localhost:3001/orders",
-  URL_CATEGORIES: "http://localhost:3001/categories",
-  URL_BRANDS: "http://localhost:3001/brands",
-  URL_SIGNUP: "http://localhost:3001/signup",
-  URL_LOGIN: "http://localhost:3001/login",
+	URL_PRODUCTS: 'http://localhost:3001/products',
+	URL_ALL_PRODUCTS: 'http://localhost:3001/allproducts',
+	URL_USER_ORDERS: 'http://localhost:3001/orders',
+	URL_CATEGORIES: 'http://localhost:3001/categories',
+	URL_BRANDS: 'http://localhost:3001/brands',
+	URL_SIGNUP: 'http://localhost:3001/signup',
+	URL_LOGIN: 'http://localhost:3001/login',
 };

@@ -57,7 +57,9 @@ const FormLogging = () => {
 						icon: 'success',
 						confirmButtonText: 'Ok',
 					}).then(() => {
-						history.push('/catalogue');
+						data.user.role === 'admin'
+							? history.push('/admindashboard')
+							: history.push('/catalogue');
 					});
 				}
 			})
