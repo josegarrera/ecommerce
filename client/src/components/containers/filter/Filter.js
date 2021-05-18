@@ -10,6 +10,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {MdDoNotDisturbAlt} from 'react-icons/md';
 import Dropdown from '../dropdown';
 import Filter_Style from './styled';
+import {MdSettingsInputSvideo} from 'react-icons/md';
 
 const Filter = ({order}) => {
 	const dispatch = useDispatch();
@@ -18,6 +19,21 @@ const Filter = ({order}) => {
 	const categoryNames = allCategories.map((c) => c.name);
 	const brandNames = allBrands.map((b) => b.name);
 	const maxPriceValue = 5000;
+	const colors = {
+		white: 'white',
+		black: 'black',
+		purple: 'purple',
+		blue: 'blue',
+		red: 'red',
+		yellow: 'yellow',
+		skyblue: 'skyblue',
+		orange: 'orange',
+		pink: 'pink',
+		green: 'green',
+		silver: 'silver',
+		gold: 'gold',
+		any: 'any',
+	};
 
 	const [filter, setFilter] = useState([{}]);
 	const [input, setInput] = useState({
@@ -171,91 +187,135 @@ const Filter = ({order}) => {
 					</div>
 					<div className='color__selector'>
 						<ul>
-							<li id='white' className='color__item'>
+							<li id={colors.white} className='color__item'>
 								<button
-									id='white'
-									className='color__btn'
+									id={colors.white}
+									className={
+										input.variants.color === colors.white
+											? 'color__btn__selected'
+											: 'color__btn'
+									}
 									onClick={(e) => handleClickColor(e)}
 								></button>
 							</li>
-							<li id='black' className='color__item'>
+							<li id={colors.black} className='color__item'>
 								<button
-									id='black'
-									className='color__btn'
+									id={colors.black}
+									className={
+										input.variants.color === colors.black
+											? 'color__btn__selected'
+											: 'color__btn'
+									}
 									onClick={(e) => handleClickColor(e)}
 								></button>
 							</li>
-							<li id='purple' className='color__item'>
+							<li id={colors.purple} className='color__item'>
 								<button
-									id='purple'
-									className='color__btn'
+									id={colors.purple}
+									className={
+										input.variants.color === colors.purple
+											? 'color__btn__selected'
+											: 'color__btn'
+									}
 									onClick={(e) => handleClickColor(e)}
 								></button>
 							</li>
-							<li id='blue' className='color__item'>
+							<li id={colors.blue} className='color__item'>
 								<button
-									id='blue'
-									className='color__btn'
+									id={colors.blue}
+									className={
+										input.variants.color === colors.blue
+											? 'color__btn__selected'
+											: 'color__btn'
+									}
 									onClick={(e) => handleClickColor(e)}
 								></button>
 							</li>
-							<li id='red' className='color__item'>
+							<li id='{colors.red}' className='color__item'>
 								<button
-									id='red'
-									className='color__btn'
+									id={colors.red}
+									className={
+										input.variants.color === colors.red
+											? 'color__btn__selected'
+											: 'color__btn'
+									}
 									onClick={(e) => handleClickColor(e)}
 								></button>
 							</li>
-							<li id='yellow' className='color__item'>
+							<li id={colors.yellow} className='color__item'>
 								<button
-									id='yellow'
-									className='color__btn'
+									id={colors.yellow}
+									className={
+										input.variants.color === colors.yellow
+											? 'color__btn__selected'
+											: 'color__btn'
+									}
 									onClick={(e) => handleClickColor(e)}
 								></button>
 							</li>
-							<li id='skyblue' className='color__item'>
+							<li id={colors.skyblue} className='color__item'>
 								<button
-									id='skyblue'
-									className='color__btn'
+									id={colors.skyblue}
+									className={
+										input.variants.color === colors.skyblue
+											? 'color__btn__selected'
+											: 'color__btn'
+									}
 									onClick={(e) => handleClickColor(e)}
 								></button>
 							</li>
-							<li id='orange' className='color__item'>
+							<li id={colors.orange} className='color__item'>
 								<button
-									id='orange'
-									className='color__btn'
+									id={colors.orange}
+									className={
+										input.variants.color === colors.orange
+											? 'color__btn__selected'
+											: 'color__btn'
+									}
 									onClick={(e) => handleClickColor(e)}
 								></button>
 							</li>
-							<li id='pink' className='color__item'>
+							<li id={colors.pink} className='color__item'>
 								<button
-									id='pink'
-									className='color__btn'
+									id={colors.pink}
+									className={
+										input.variants.color === colors.pink
+											? 'color__btn__selected'
+											: 'color__btn'
+									}
 									onClick={(e) => handleClickColor(e)}
 								></button>
 							</li>
-							<li id='green' className='color__item'>
+							<li id={colors.green} className='color__item'>
 								<button
-									id='green'
-									className='color__btn'
+									id={colors.green}
+									className={
+										input.variants.color === colors.green
+											? 'color__btn__selected'
+											: 'color__btn'
+									}
 									onClick={(e) => handleClickColor(e)}
 								></button>
 							</li>
-							<li
-								id='silver'
-								className='color__item'
-								onClick={(e) => handleClickColor(e)}
-							>
+							<li id={colors.silver} className='color__item'>
 								<button
-									id='silver'
-									className='color__btn'
+									id={colors.silver}
+									className={
+										input.variants.color === colors.silver
+											? 'color__btn__selected'
+											: 'color__btn'
+									}
 									onClick={(e) => handleClickColor(e)}
 								></button>
 							</li>
-							<li id='gold' className='color__item'>
+							<li id={colors.gold} className='color__item'>
 								<button
-									id='gold'
-									className='color__btn'
+									id={colors.gold}
+									className={
+										input.variants.color === colors.gold
+											? 'color__btn__selected'
+											: 'color__btn'
+									}
 									onClick={(e) => handleClickColor(e)}
 								></button>
 							</li>

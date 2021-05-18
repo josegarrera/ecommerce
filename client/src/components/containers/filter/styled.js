@@ -94,6 +94,18 @@ const Filter_Style = styled.div`
 		width: 100%;
 	}
 
+	.color__btn__selected {
+		width: 1.8rem;
+		height: 1.8rem;
+		border-radius: 50%;
+		border: 2px solid black;
+		transform: scale(1.3);
+		box-shadow: inset 0 10px 15px rgba(255, 255, 255, 1),
+			inset 0 -10px 15px rgba(0, 0, 0, 0.05),
+			inset 10px 0 15px rgba(0, 0, 0, 0.05),
+			inset -10px 0 15px rgba(0, 0, 0, 0.05);
+	}
+
 	.color__selector {
 		display: flex;
 		flex-direction: column;

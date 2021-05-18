@@ -20,7 +20,21 @@ function getAllUsers(req, res) {
 		);
 }
 
+function updateUser(req, res) {
+	const {id} = req.params;
+	const user = req.body; // por body se puede enviar email, role
+	console.log(id, user);
+	Users.findOne({_id: id})
+		.then((doc) => Users.updateOne({_id: doc._id}, user))
+		.then(() => Users.findOne({_id: id}))
+		.then((doc) => res.send(doc))
+		.catch((error) =>
+			res.status(500).send({type: 'Internal Server Error', error: error})
+		);
+}
+
 module.exports = {
 	deleteUser,
 	getAllUsers,
+	updateUser,
 };
