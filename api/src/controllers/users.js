@@ -1,7 +1,7 @@
 const {Users} = require('../models/index.js');
 
 function deleteUser(req, res) {
-	const {userId} = req.body;
+	const userId = req.params.id;
 	Users.findByIdAndRemove(userId, function (err, doc) {
 		if (err) {
 			return res.status(400).send(err);

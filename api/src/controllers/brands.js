@@ -42,8 +42,20 @@ async function updateBrand(req, res) {
 	}
 }
 
+function deleteBrand(req, res) {
+	const {id} = req.params;
+	Brands.findByIdAndRemove(id, function (err, doc) {
+		if (err) {
+			return res.status(400).send(err);
+		} else {
+			res.send(doc);
+		}
+	});
+}
+
 module.exports = {
 	createBrands,
 	getAllBrands,
 	updateBrand,
+	deleteBrand,
 };
