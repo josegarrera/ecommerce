@@ -8,10 +8,12 @@ const {
 	getAllUserOrders,
 	deleteProduct,
 	changeLot,
+	deleteOrder,
 } = require('../controllers/orders');
 
 router.post('/', addProduct);
 router.delete('/', deleteProduct);
+router.delete('/:id', deleteOrder);
 router.put('/', changeLot);
 router.get('/', getUserOrder, getAllUserOrders);
 router.get('/', getAllOrders);

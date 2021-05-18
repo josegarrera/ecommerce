@@ -224,6 +224,17 @@ async function getOrderById(req, res) {
 	}
 }
 
+function deleteOrder(req, res) {
+	const {id} = req.params;
+	Orders.findByIdAndRemove(id, function (err, doc) {
+		if (err) {
+			return res.status(400).send(err);
+		} else {
+			res.send(doc);
+		}
+	});
+}
+
 module.exports = {
 	getUserOrder,
 	addProduct,
@@ -232,4 +243,5 @@ module.exports = {
 	getOrderById,
 	deleteProduct,
 	changeLot,
+	deleteOrder,
 };
