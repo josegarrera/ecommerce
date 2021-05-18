@@ -17,22 +17,25 @@ import ShippingAddress from "../components/containers/shippingAddress/shippingAd
 import PaymentInformation from "../components/containers/paymentInformation/paymentInformation";
 import ConfirmOrder from "../components/containers/confirmOrder/confirmOrder";
 
+import ReactNotification from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
+
 function App() {
   const user = useSelector((state) => state.user);
-
-  return (
-    <div className="App">
-      <React.Fragment>
-        <GridLayout>
-          {/* <GlobalStyles /> */}
-          <Route path="/" component={NavBar} />
-          <Route exact path="/" component={Home} />
-          <Route exact path="/login" component={FormLogging} />
-          <Route exact path="/signup" component={FormSignup} />
-          <Route exact path="/catalogue" component={Catalogue} />
-          {user.role === "admin" ? (
-            <Route exact path="/create" component={FormProduct} />
-          ) : null}
+	return (
+		<div className='App'>
+			<React.Fragment>
+				<GridLayout>
+					{/* <GlobalStyles /> */}
+					<ReactNotification />
+					<Route path='/' component={NavBar} />
+					<Route exact path='/' component={Home} />
+					<Route exact path='/login' component={FormLogging} />
+					<Route exact path='/signup' component={FormSignup} />
+					<Route exact path='/catalogue' component={Catalogue} />
+					{user.role === 'admin' ? (
+						<Route exact path='/create' component={FormProduct} />
+					) : null}
 
           <Route exact path="/categorie" component={FomrCategories} />
           <Route exact path="/cart" component={Cart} />

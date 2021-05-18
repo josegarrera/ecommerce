@@ -136,6 +136,21 @@ const Filter_Style = styled.div`
 			transform: scale(1.1);
 		}
 
+		.color_item2 {
+			display: flex;
+			border: none;
+
+			.color_item_button {
+				display: flex;
+				border: none;
+				background: none;
+
+				.color__btn2 {
+					width: 1.8rem;
+					height: 1.8rem;
+				}
+			}
+		}
 		.color__btn {
 			width: 1.8rem;
 			height: 1.8rem;

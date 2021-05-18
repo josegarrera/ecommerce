@@ -77,6 +77,9 @@ const NavBar = () => {
 				</div>
 			</div>
 			<div className='bottomNav'>
+				<Link className='bottomLinks' to='/home'>
+					home
+				</Link>
 				<Link className='bottomLinks' to='/catalogue'>
 					catalogue
 				</Link>
@@ -85,9 +88,6 @@ const NavBar = () => {
 						create
 					</Link>
 				) : null}
-				<Link className='bottomLinks' to='/home'>
-					home
-				</Link>
 
 				<select className='select bottomLink'>
 					<option selected value='0'>
@@ -100,9 +100,6 @@ const NavBar = () => {
 				</Link>
 				<Link className='bottomLinks' to='/contact'>
 					contact
-				</Link>
-				<Link className='bottomLinks' to='/search'>
-					search
 				</Link>
 			</div>
 		</DivNavBar>
