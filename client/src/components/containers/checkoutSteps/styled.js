@@ -1,9 +1,10 @@
 import styled from "styled-components";
 
 const checkoutSteps_Style = styled.div`
-
-  display: flex;
-  justify-content: space-around;
+  .row {
+    display: flex;
+    justify-content: space-around;
+  }
 
   .checked {
     color: #2ecb84;

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const ShippingAddress_Style = styled.div`
+const PaymentInformation_Style = styled.div`
   margin: 80px auto;
   width: 1200px;
   min-height: 650px;
@@ -103,4 +103,4 @@ const ShippingAddress_Style = styled.div`
   }
 `;
 
-export default ShippingAddress_Style;
+export default PaymentInformation_Style;

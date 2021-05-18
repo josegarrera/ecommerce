@@ -1,14 +1,14 @@
 /* eslint-disable react/jsx-pascal-case */
 import React from "react";
-import ShippingAddress_Style from "./styled";
+import PaymentInformation_Style from "./styled";
 import CheckoutSteps from "../checkoutSteps/checkoutSteps";
 import { Link } from "react-router-dom";
 
 function index() {
   return (
-    <ShippingAddress_Style>
+    <PaymentInformation_Style>
       <div>
-        <CheckoutSteps step1 step2></CheckoutSteps>
+        <CheckoutSteps step1 step2 step3 step4></CheckoutSteps>
 
         <div className="row">
           <h1 className="form__title">Shipping Address</h1>
@@ -27,24 +27,25 @@ function index() {
                 ></input>
               </div>
 
-              <div className="form__element">
-                <label className="form__label">Address</label>
-                <input
-                  id="form__input__price"
-                  className="form__input"
-                  type="number"
-                  name="priceValue"
-                ></input>
-              </div>
-
-              <div className="form__element">
-                <label className="form__label">City</label>
-                <input
-                  id="form__input__price"
-                  className="form__input"
-                  type="number"
-                  name="priceValue"
-                ></input>
+              <div className="row">
+                <div className="form__element">
+                  <label className="form__label">Address</label>
+                  <input
+                    id="form__input__price"
+                    className="form__input"
+                    type="number"
+                    name="priceValue"
+                  ></input>
+                </div>
+                <div className="form__element">
+                  <label className="form__label">City</label>
+                  <input
+                    id="form__input__price"
+                    className="form__input"
+                    type="number"
+                    name="priceValue"
+                  ></input>
+                </div>
               </div>
 
               <div className="form__element">
@@ -68,10 +69,10 @@ function index() {
               </div>
 
               <div className="bottom__row">
-                <Link to="/cart">
+                <Link to="/payment">
                   <button className="form__button">Back</button>
                 </Link>
-                <Link to="/payment">
+                <Link to="/">
                   <button className="form__button">Continue</button>
                 </Link>
               </div>
@@ -79,7 +80,7 @@ function index() {
           </div>
         </form>
       </div>
-    </ShippingAddress_Style>
+    </PaymentInformation_Style>
   );
 }
 

@@ -13,7 +13,9 @@ import Cart from "../components/containers/cart/Cart.js";
 import FormLogging from "../components/containers/formLogging/FormLogging";
 import FormSignup from "../components/containers/formSignup/FormSignup";
 import FomrCategories from "../components/containers/formCategories/FormCategories";
-import shippingAddress from "../components/containers/shippingAddress/shippingAddress";
+import ShippingAddress from "../components/containers/shippingAddress/shippingAddress";
+import PaymentInformation from "../components/containers/paymentInformation/paymentInformation";
+import ConfirmOrder from "../components/containers/confirmOrder/confirmOrder";
 
 function App() {
   const user = useSelector((state) => state.user);
@@ -47,7 +49,9 @@ function App() {
             render={({ match }) => <ProductDetail id={match.params.id} />}
           />
 
-          <Route path="/shipping" component={shippingAddress}></Route>
+          <Route path="/shipping" component={ShippingAddress}></Route>
+          <Route path="/payment" component={PaymentInformation}></Route>
+          <Route path="/confirmation" component={ConfirmOrder}></Route>
         </GridLayout>
       </React.Fragment>
     </div>
