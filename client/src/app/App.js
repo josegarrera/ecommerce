@@ -1,3 +1,4 @@
+
 import React from 'react';
 import {Route, Switch} from 'react-router-dom';
 import {useSelector} from 'react-redux';
@@ -14,13 +15,16 @@ import FormLogging from '../components/containers/formLogging/FormLogging';
 import FormSignup from '../components/containers/formSignup/FormSignup';
 import FomrCategories from '../components/containers/formCategories/FormCategories';
 import homeDashboard from '../components/containers/adminDashboard/homeDashboard/index';
+import ShippingAddress from "../components/containers/shippingAddress/shippingAddress";
+import PaymentInformation from "../components/containers/paymentInformation/paymentInformation";
+import ConfirmOrder from "../components/containers/confirmOrder/confirmOrder";
+
 
 import ReactNotification from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 
 function App() {
-	const user = useSelector((state) => state.user);
-
+  const user = useSelector((state) => state.user);
 	return (
 		<div className='App'>
 			<React.Fragment>
@@ -32,7 +36,7 @@ function App() {
 					) : (
 						<> */}
 					<Route exact path='/admindashboard' component={homeDashboard} />
-					{/* <Route path='/' component={NavBar} /> */}
+			    <Route path='/' component={NavBar} /> 
 					<Route exact path='/' component={Home} />
 					<Route exact path='/login' component={FormLogging} />
 					<Route exact path='/signup' component={FormSignup} />
@@ -49,11 +53,15 @@ function App() {
 						path='/products/id/:id'
 						render={({match}) => <ProductDetail id={match.params.id} />}
 					/>
+          <Route path="/shipping" component={ShippingAddress}></Route>
+          <Route path="/payment" component={PaymentInformation}></Route>
+          <Route path="/confirmation" component={ConfirmOrder}></Route>
 					{/* 			</> */}
 				</GridLayout>
 			</React.Fragment>
 		</div>
 	);
+
 }
 
 export default App;

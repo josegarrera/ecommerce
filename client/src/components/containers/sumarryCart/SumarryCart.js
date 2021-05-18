@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const SumarryCart = ({ casa, count }) => {
   return (
@@ -16,9 +17,11 @@ const SumarryCart = ({ casa, count }) => {
           </div>
         </div>
       </div>
-      <button onClick={casa} className="btn_buy">
-        Checkout
-      </button>
+      <Link to="/shipping">
+        <button onClick={casa} className="btn_buy">
+          Checkout
+        </button>
+      </Link>
     </div>
   );
 };
