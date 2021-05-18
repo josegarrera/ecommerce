@@ -24,6 +24,17 @@ const ShippingAddress_Style = styled.div`
   .row {
     display: flex;
     width: 100%;
+    justify-content: space-around;
+  }
+
+  .row__top {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .row__bot {
+    display: flex;
     justify-content: space-between;
   }
 
@@ -97,10 +108,6 @@ const ShippingAddress_Style = styled.div`
     font-weight: 600;
   }
 
-  .bottom__row {
-    display: flex;
-    justify-content: space-between;
-  }
 `;
 
 export default ShippingAddress_Style;

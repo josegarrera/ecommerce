@@ -21,9 +21,20 @@ const PaymentInformation_Style = styled.div`
     margin: 1rem;
   }
 
+  .row__top {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+  }
+
   .row {
     display: flex;
     width: 100%;
+    justify-content: space-around;
+  }
+
+  .row__bot {
+    display: flex;
     justify-content: space-between;
   }
 
@@ -95,11 +106,6 @@ const PaymentInformation_Style = styled.div`
   .form__span {
     color: #757575;
     font-weight: 600;
-  }
-
-  .bottom__row {
-    display: flex;
-    justify-content: space-between;
   }
 `;
 

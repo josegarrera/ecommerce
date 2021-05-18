@@ -21,9 +21,20 @@ const PaymentInformation_Style = styled.div`
     margin: 1rem;
   }
 
+  .row__top {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+  }
+
   .row {
     display: flex;
     width: 100%;
+    justify-content: center;
+  }
+
+  .row__bot {
+    display: flex;
     justify-content: space-between;
   }
 

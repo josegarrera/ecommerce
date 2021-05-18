@@ -10,7 +10,7 @@ function index() {
       <div>
         <CheckoutSteps step1 step2></CheckoutSteps>
 
-        <div className="row">
+        <div className="row__top">
           <h1 className="form__title">Shipping Address</h1>
         </div>
 
@@ -67,7 +67,7 @@ function index() {
                 ></input>
               </div>
 
-              <div className="bottom__row">
+              <div className="row__bot">
                 <Link to="/cart">
                   <button className="form__button">Back</button>
                 </Link>

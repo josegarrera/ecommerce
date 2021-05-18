@@ -1,8 +1,9 @@
 import styled from "styled-components";
 
 const checkoutSteps_Style = styled.div`
-  .row {
+  .steps__row {
     display: flex;
+    width: 100%;
     justify-content: space-around;
   }
 

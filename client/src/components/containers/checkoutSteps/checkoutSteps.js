@@ -7,7 +7,7 @@ import { RiCheckboxCircleFill } from "react-icons/ri";
 function index({ step1, step2, step3, step4 }) {
   return (
     <CheckoutSteps_Style>
-      <div className="row checkout__steps">
+      <div className="steps__row checkout__steps">
         <div className={step1 ? "checked" : "unchecked"}>
           <div className="step">
             {step1 ? (
