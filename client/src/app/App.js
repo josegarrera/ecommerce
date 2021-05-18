@@ -14,6 +14,9 @@ import FormLogging from '../components/containers/formLogging/FormLogging';
 import FormSignup from '../components/containers/formSignup/FormSignup';
 import FomrCategories from '../components/containers/formCategories/FormCategories';
 
+import ReactNotification from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
+
 function App() {
 	const user = useSelector((state) => state.user);
 
@@ -22,6 +25,7 @@ function App() {
 			<React.Fragment>
 				<GridLayout>
 					{/* <GlobalStyles /> */}
+					<ReactNotification />
 					<Route path='/' component={NavBar} />
 					<Route exact path='/' component={Home} />
 					<Route exact path='/login' component={FormLogging} />

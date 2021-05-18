@@ -7,6 +7,7 @@ import {
 	getProducts,
 } from '../../../redux/actions/index.js';
 import {useDispatch, useSelector} from 'react-redux';
+import {MdDoNotDisturbAlt} from 'react-icons/md';
 import Dropdown from '../dropdown';
 import Filter_Style from './styled';
 
@@ -152,7 +153,7 @@ const Filter = ({order}) => {
 							max={maxPriceValue}
 							onChange={(e) => onChangePrice(e)}
 						></input>
-						<label>Since {input.priceMin} USD</label>
+						<label>From {input.priceMin} USD</label>
 						<input
 							className='range__price'
 							type='range'
@@ -161,7 +162,7 @@ const Filter = ({order}) => {
 							max={maxPriceValue}
 							onChange={(e) => onChangePrice(e)}
 						></input>
-						<label>Until {input.priceMax} USD</label>
+						<label>To {input.priceMax} USD</label>
 						<div className='row'></div>
 					</div>
 
@@ -258,12 +259,14 @@ const Filter = ({order}) => {
 									onClick={(e) => handleClickColor(e)}
 								></button>
 							</li>
-							<li id='any' className='color__item'>
+							<li id='any' className='color_item2'>
 								<button
 									id=''
-									className='color__btn any'
+									className='color_item_button'
 									onClick={(e) => handleClickColor(e)}
-								></button>
+								>
+									<MdDoNotDisturbAlt className='color__btn2' />
+								</button>
 							</li>
 						</ul>
 					</div>
@@ -275,7 +278,7 @@ const Filter = ({order}) => {
 									type='checkbox'
 									onChange={(e) => handleChangeStock(e)}
 								></input>
-								<label> Only products in stock.</label>
+								<label> Products in stock.</label>
 							</div>
 						</div>
 					</div>

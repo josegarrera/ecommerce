@@ -44,8 +44,6 @@ const CartHoverView = () => {
 				<div className='productsContainer'>
 					<InfiniteScroll
 						dataLength={cartProduct.length}
-						/* next={this.fetchMoreData}
-						hasMore={this.state.hasMore} */
 						loader={<h4>Loading...</h4>}
 						height={450}
 					>
