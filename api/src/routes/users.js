@@ -3,6 +3,7 @@ const {
 	getAllUsers,
 	updateUser,
 } = require('../controllers/users.js');
+const {verifyToken} = require('../middlewares/authJwt');
 const {Router} = require('express');
 const router = Router();
 
