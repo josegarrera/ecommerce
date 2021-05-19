@@ -13,9 +13,4 @@ export const StyledContainer = styled.div`
 	.content {
 		grid-area: content;
 	}
-
-
-
 `;
-
-

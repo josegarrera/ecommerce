@@ -3,18 +3,30 @@ import ProductDashboardStyle from './styled';
 
 import {MdDelete, MdEdit} from 'react-icons/md';
 
-const ProductDashboard = ({name, brands, categories, imageUrl, price, _id}) => {
+const ProductDashboard = ({prop1, prop2, prop3, prop4, brands, categories}) => {
 	return (
 		<ProductDashboardStyle>
 			<div className='productAllInfo'>
 				<div className='imageDiv'>
-					<img className='image' rc={imageUrl[0]} alt='imagen de producto' />
+					<img className='image' src={prop3} alt='imagen de producto' />
 				</div>
 				<div className='productInfo'>
-					<div className='name'>Product: {name}</div>
-					<div className='price'>Price: {price}</div>
-				{/* 	<div className='variants'>Variants: {variants}</div> */}
-					<div className='_id'>ID: {_id}</div>
+					<div className='renglon'>
+						<div className='title'>{'Product: '}</div>
+						<div className='name'>{prop1}</div>
+					</div>
+					<div className='renglon'>
+						<div className='title'>Price:</div>
+						<div className='price'>
+							{prop2.currency} {prop2.value}
+						</div>
+					</div>
+					<div className='renglon'>
+						<div className='title'>Id:</div>
+						<div className='_id'> {prop4}</div>
+					</div>
+
+					{/* 	<div className='variants'>Variants: {variants}</div> */}
 				</div>
 			</div>
 			<div className='buttons'>
