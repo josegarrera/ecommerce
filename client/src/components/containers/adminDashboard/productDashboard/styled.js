@@ -14,9 +14,11 @@ const ProductDashboardStyle = styled.div`
 		align-items: center;
 		width: 90%;
 		padding: 0px 20px;
+
 		.imageDiv {
 			display: flex;
 			justify-content: center;
+			align-items: center;
 			width: 70px;
 			height: 70px;
 			border-radius: 5px;
@@ -25,6 +27,10 @@ const ProductDashboardStyle = styled.div`
 				max-width: 95%;
 				max-height: 95%;
 				object-fit: contain;
+			}
+
+			.index {
+				font-size: 30px;
 			}
 		}
 
