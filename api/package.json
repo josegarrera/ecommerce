@@ -19,6 +19,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "mercadopago": "^1.5.7",
     "mongoose": "^5.12.7",
     "mongoose-findorcreate": "^3.0.0",
     "morgan": "^1.10.0",
