@@ -35,7 +35,9 @@ router.post('/login', async (req, res, next) => {
 				if (err) return next(err);
 				const body = {_id: user._id, email: user.email};
 
-				const token = jwt.sign({user: body}, 'top_secret');
+				const token = jwt.sign({user: body}, 'top_secret', {
+					expiresIn: 86400,
+				});
 				return res.json({
 					login: info.message,
 					token,
