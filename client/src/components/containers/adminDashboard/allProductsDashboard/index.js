@@ -68,18 +68,18 @@ const List = ({Options}) => {
 		<div>
 			{Items && <SearchBarDashboard Items={Items} setFilter={setFilter} />}
 			{Options === 'Products' ? (
-				<div>
-					<InfiniteScroll
-						dataLength={Items.length}
-						loader={<h4>Loading...</h4>}
-						height={700}
-					>
-						{Filter &&
-							Filter.map((el, index) => (
-								<ProductDashboard prop={el} index={index} />
-							))}
-					</InfiniteScroll>
-				</div>
+
+				<InfiniteScroll
+					dataLength={Items.length}
+					loader={<h4>Loading...</h4>}
+					height={700}
+				>
+					{Filter &&
+						Filter.map((el, index) => (
+							<ProductDashboard prop={el} index={index} options={Options} />
+						))}
+				</InfiniteScroll>
+
 			) : null}
 			{Options === 'Categories' ? (
 				<InfiniteScroll
@@ -89,7 +89,7 @@ const List = ({Options}) => {
 				>
 					{Filter &&
 						Filter.map((el, index) => (
-							<ProductDashboard prop={el} index={index} />
+							<ProductDashboard prop={el} index={index} options={Options} />
 						))}
 				</InfiniteScroll>
 			) : null}
@@ -101,7 +101,7 @@ const List = ({Options}) => {
 				>
 					{Filter &&
 						Filter.map((el, index) => (
-							<ProductDashboard prop={el} index={index} />
+							<ProductDashboard prop={el} index={index} options={Options} />
 						))}
 				</InfiniteScroll>
 			) : null}
@@ -113,7 +113,7 @@ const List = ({Options}) => {
 				>
 					{Filter &&
 						Filter.map((el, index) => (
-							<ProductDashboard prop={el} index={index} />
+							<ProductDashboard prop={el} index={index} options={Options} />
 						))}
 				</InfiniteScroll>
 			) : null}
@@ -125,7 +125,7 @@ const List = ({Options}) => {
 				>
 					{Filter &&
 						Filter.map((el, index) => (
-							<ProductDashboard prop={el} index={index} />
+							<ProductDashboard prop={el} index={index} options={Options} />
 						))}
 				</InfiniteScroll>
 			) : null}

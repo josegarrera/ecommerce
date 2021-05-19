@@ -14,7 +14,7 @@ import {
 	MdKeyboardArrowUp,
 } from 'react-icons/md';
 
-const ProductDashboard = ({prop, index}) => {
+const ProductDashboard = ({prop, index, options}) => {
 	const [AccStatus, setAccStatus] = useState(false);
 	const {
 		name,
@@ -47,7 +47,9 @@ const ProductDashboard = ({prop, index}) => {
 				<div className='productInfo'>
 					{name && (
 						<div className='renglon'>
-							<div className='title'>Name: &nbsp;</div>
+							<div className='title'>
+								{options.slice(0, options.length - 1)} name: &nbsp;
+							</div>
 							<div className='name'>{name}</div>
 						</div>
 					)}
@@ -59,7 +61,9 @@ const ProductDashboard = ({prop, index}) => {
 					)}
 					{email && (
 						<div className='renglon'>
-							<div className='title'>Email: &nbsp;</div>
+							<div className='title'>
+								{role.charAt(0).toUpperCase() + role.slice(1)} email: &nbsp;
+							</div>
 							<div className='email'>{email}</div>
 						</div>
 					)}
@@ -119,6 +123,48 @@ const ProductDashboard = ({prop, index}) => {
 										<div className='accordionItems'>
 											{products.map((product) => (
 												<AccordionItemPanel>{product.name}</AccordionItemPanel>
+											))}
+										</div>
+									</AccordionItem>
+								}
+							</Accordion>
+						))}
+					{categories &&
+						(categories.length === 0 ? (
+							<div className='renglon'>
+								<div className='title'>No categories.</div>
+							</div>
+						) : categories.length === 1 ? (
+							<div className='renglon'>
+								<div className='title'>1 Categorie: &nbsp;</div>
+								<div className='products'>
+									{' '}
+									{categories.map((el) => (
+										<div>{el.name}</div>
+									))}
+								</div>
+							</div>
+						) : (
+							<Accordion allowZeroExpanded>
+								{
+									<AccordionItem onClick={() => setAccStatus(!AccStatus)}>
+										<AccordionItemButton className='title2'>
+											{categories.length} Categories
+											{AccStatus === false ? (
+												<MdKeyboardArrowDown
+													className='open'
+													onClick={() => setAccStatus(!AccStatus)}
+												/>
+											) : (
+												<MdKeyboardArrowUp
+													className='open'
+													onClick={() => setAccStatus(!AccStatus)}
+												/>
+											)}
+										</AccordionItemButton>
+										<div className='accordionItems'>
+											{categories.map((el) => (
+												<AccordionItemPanel>{el.name}</AccordionItemPanel>
 											))}
 										</div>
 									</AccordionItem>
