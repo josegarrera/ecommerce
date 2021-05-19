@@ -7,18 +7,16 @@ async function getUserOrder(req, res, next) {
 		if (cart) {
 			let userExists = await Users.exists({_id: userId});
 			if (userExists) {
-				let orderExist = await Orders.exists({users: userId, state: 1});
-				if (orderExist) {
-					let order = await Orders.findOne({users: userId, state: 1})
-						.populate('users', {email: 1, _id: 1})
-						.populate('items.product')
-						.exec();
-					return res.send(order);
-				} else {
+				let orderExist = await Orders.exists({users: userId, state: 'created'});
+				if (!orderExist) {
 					let order = await new Orders({users: userId, items: []});
 					order.save();
-					res.send(order);
 				}
+				let order = await Orders.findOne({users: userId, state: 'created'})
+					.populate('users', {email: 1, _id: 1})
+					.populate('items.product')
+					.exec();
+				return res.send(order);
 			} else {
 				res
 					.status(400)
@@ -58,77 +56,85 @@ async function getAllUserOrders(req, res, next) {
 }
 
 async function addProduct(req, res) {
-	const {userId, products} = req.body.data;
+	const {userId, products} = req.body;
 	try {
 		let userExists = await Users.exists({_id: userId});
-		if (userExists) {
-			let orderActive = await Orders.findOne({users: userId, state: 1});
+		console.log(userExists);
+		if (userExists && products) {
+			let orderActive = await Orders.findOne({users: userId, state: 'created'});
 			if (orderActive) {
 				if (Array.isArray(products)) {
 					let toAdd = products.filter((e) =>
-						orderActive.items.find((prod) => prod.product == e.product._id)
+						orderActive.items.find((prod) => prod.product === e.product._id)
 							? false
 							: true
 					);
 					toAdd = toAdd.map((e) => {
-						return {lot: e.lot, product: e.product._id};
+						return {
+							lot: e.lot,
+							product: e.product._id,
+							variant: e.variant,
+						};
 					});
 					orderActive.items = orderActive.items.concat(toAdd);
 					await orderActive.save();
-					orderActive = await Orders.findOne({users: userId, state: 1})
-						.populate('users', {email: 1, _id: 1})
-						.populate('items.product')
-						.exec();
-					return res.send(orderActive);
 				} else {
-					let toAdd = orderActive.items.find(
-						(p) => p.product == products.product._id
-					)
+					let toAdd = orderActive.items.find((p) => {
+						return p.product.toString() === products.product._id;
+					})
 						? false
 						: true;
 					if (toAdd) {
 						orderActive.items = orderActive.items.concat([
-							{lot: products.lot, product: products.product._id},
+							{
+								lot: products.lot,
+								product: products.product._id,
+								variant: products.variant,
+							},
 						]);
-						orderActive.save();
+						await orderActive.save();
 					}
-					orderActive = await Orders.findOne({users: userId, state: 1})
-						.populate('users', {email: 1, _id: 1})
-						.populate('items.product')
-						.exec();
-					return res.send(orderActive);
 				}
 			} else {
 				if (Array.isArray(products)) {
 					let toAdd = products.map((e) => {
-						return {lot: e.lot, product: e.product._id};
+						return {
+							lot: e.lot,
+							product: e.product._id,
+							variant: e.variant,
+						};
 					});
-					let order = await new Orders({users: userId, items: toAdd})
-						.populate('users', {email: 1, _id: 1})
-						.populate('items.product')
-						.exec();
-					order.save();
-					res.send(order);
+					let order = await new Orders({users: userId, items: toAdd});
+					console.log(order);
+					await order.save();
 				} else {
-					console.log(products.lot);
 					let order = await new Orders({
 						users: userId,
-						items: [{lot: products.lot, product: products.product._id}],
+						items: [
+							{
+								lot: products.lot,
+								product: products.product._id,
+								variant: products.variant,
+							},
+						],
 					});
 					await order.save();
-					order = await await Orders.findOne({users: userId, state: 1})
-						.populate('users', {email: 1, _id: 1})
-						.populate('items.product')
-						.exec();
-					res.send(order);
 				}
-
-				order.save();
-				res.send(order);
 			}
+			let order = await Orders.findOne({users: userId, state: 'created'})
+				.populate('users', {email: 1, _id: 1})
+				.populate('items.product')
+				.exec();
+			console.log(order);
+			return res.send(order);
+		} else {
+			res.status(400).send({
+				type: 'bad request',
+				message: userExists ? "there's not products to add" : 'user not found',
+			});
 		}
 	} catch (err) {
-		res.status(500).send({type: 'Internal server error.', error: error});
+		res.status(500).send({type: 'Internal server error.', error: err});
 	}
 }
 
@@ -138,14 +144,14 @@ async function deleteProduct(req, res) {
 		const user = await Users.exists({_id: userId});
 		if (user) {
 			let update = await Orders.findOneAndUpdate(
-				{users: userId, state: 1},
+				{users: userId, state: 'created'},
 				{
 					$pull: {
 						items: {product: {_id: productId}},
 					},
 				}
 			).exec();
-			update = await Orders.findOne({users: userId, state: 1})
+			update = await Orders.findOne({users: userId, state: 'created'})
 				.populate('users', {email: 1, _id: 1})
 				.populate('items.product')
 				.exec();
@@ -162,7 +168,7 @@ async function changeLot(req, res) {
 	const {userId, productId, num} = req.body;
 	try {
 		if (await Users.exists({_id: userId})) {
-			let update = await Orders.findOne({users: userId, state: 1});
+			let update = await Orders.findOne({users: userId, state: 'created'});
 			let modificarLot = update.items.find((e) => e.product == productId);
 			if (modificarLot) {
 				modificarLot.lot =
@@ -170,13 +176,13 @@ async function changeLot(req, res) {
 						? modificarLot.lot + num
 						: modificarLot.lot;
 				await update.save();
-				update = await Orders.findOne({users: userId, state: 1})
+				update = await Orders.findOne({users: userId, state: 'created'})
 					.populate('users', {email: 1, _id: 1})
 					.populate('items.product')
 					.exec();
 				res.send(update);
 			} else {
-				update = await Orders.findOne({users: userId, state: 1})
+				update = await Orders.findOne({users: userId, state: 'created'})
 					.populate('users', {email: 1, _id: 1})
 					.populate('items.product')
 					.exec();
