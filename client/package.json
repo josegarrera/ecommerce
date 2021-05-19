@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.1",
     "react": "^17.0.2",
+    "react-accessible-accordion": "^3.3.4",
     "react-content-loader": "^6.0.3",
     "react-datalist-input": "^2.2.1",
     "react-dom": "^17.0.2",
