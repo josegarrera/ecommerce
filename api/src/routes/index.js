@@ -8,6 +8,7 @@ const brands = require('./brands.js');
 const orders = require('./orders.js');
 const currencies = require('./currencies.js');
 const users = require('./users.js');
+const checkout = require('./checkout.js');
 
 // authentication
 router.post(
@@ -66,5 +67,6 @@ router.use('/brands', brands);
 router.use('/orders', orders);
 router.use('/currencies', currencies);
 router.use('/users', users);
+router.use('/checkout', checkout);
 
 module.exports = router;
