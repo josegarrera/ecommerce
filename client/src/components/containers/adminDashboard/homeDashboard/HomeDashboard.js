@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {StyledContainer} from './styles';
-import List from '../allProductsDashboard/index';
+import ListDashboard from '../listDashboard/ListDashboard';
 const HomeDashboard = () => {
 	const [Options, setOptions] = useState('');
 
@@ -28,7 +28,7 @@ const HomeDashboard = () => {
 			</div>
 
 			<div className='content'>
-				<List Options={Options} />
+				<ListDashboard Options={Options} />
 			</div>
 		</StyledContainer>
 	);

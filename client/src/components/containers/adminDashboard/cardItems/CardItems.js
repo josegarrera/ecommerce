@@ -14,7 +14,7 @@ import {
 	MdKeyboardArrowUp,
 } from 'react-icons/md';
 
-const ProductDashboard = ({prop, index, options}) => {
+const CardItems = ({prop, index, options}) => {
 	const [AccStatus, setAccStatus] = useState(false);
 	const {
 		name,
@@ -196,4 +196,4 @@ const ProductDashboard = ({prop, index, options}) => {
 	);
 };
 
-export default ProductDashboard;
+export default CardItems;

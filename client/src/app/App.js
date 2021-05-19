@@ -13,7 +13,7 @@ import Cart from '../components/containers/cart/Cart.js';
 import FormLogging from '../components/containers/formLogging/FormLogging';
 import FormSignup from '../components/containers/formSignup/FormSignup';
 import FomrCategories from '../components/containers/formCategories/FormCategories';
-import homeDashboard from '../components/containers/adminDashboard/homeDashboard/index';
+import HomeDashboard from '../components/containers/adminDashboard/homeDashboard/HomeDashboard';
 import ShippingAddress from '../components/containers/shippingAddress/shippingAddress';
 import PaymentInformation from '../components/containers/paymentInformation/paymentInformation';
 import ConfirmOrder from '../components/containers/confirmOrder/confirmOrder';
@@ -33,7 +33,7 @@ function App() {
 						<Route exact path='/admindashboard' component={homeDashboard} />
 					) : (
 						<> */}
-					<Route exact path='/admindashboard' component={homeDashboard} />
+					<Route exact path='/admindashboard' component={HomeDashboard} />
 					<Route path='/' component={NavBar} />
 					<Route exact path='/' component={Home} />
 					<Route exact path='/login' component={FormLogging} />

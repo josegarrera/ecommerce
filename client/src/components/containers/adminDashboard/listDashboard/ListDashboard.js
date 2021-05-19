@@ -2,12 +2,12 @@ import axios from 'axios';
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {URLS} from '../../../../utils/constants';
-import ProductDashboard from '../productDashboard';
+import CardItems from '../cardItems/CardItems';
 import SearchBarDashboard from '../searchBarDashboard';
 
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-const List = ({Options}) => {
+const ListDashboard = ({Options}) => {
 	const [Items, setItems] = useState([]);
 	const [Filter, setFilter] = useState([]);
 
@@ -68,64 +68,62 @@ const List = ({Options}) => {
 		<div>
 			{Items && <SearchBarDashboard Items={Items} setFilter={setFilter} />}
 			{Options === 'Products' ? (
-
 				<InfiniteScroll
-					dataLength={Items.length}
+					dataLength={Filter.length}
 					loader={<h4>Loading...</h4>}
-					height={700}
+					height={600}
 				>
 					{Filter &&
 						Filter.map((el, index) => (
-							<ProductDashboard prop={el} index={index} options={Options} />
+							<CardItems prop={el} index={index} options={Options} />
 						))}
 				</InfiniteScroll>
-
 			) : null}
 			{Options === 'Categories' ? (
 				<InfiniteScroll
-					dataLength={Items.length}
+					dataLength={Filter.length}
 					loader={<h4>Loading...</h4>}
-					height={700}
+					height={600}
 				>
 					{Filter &&
 						Filter.map((el, index) => (
-							<ProductDashboard prop={el} index={index} options={Options} />
+							<CardItems prop={el} index={index} options={Options} />
 						))}
 				</InfiniteScroll>
 			) : null}
 			{Options === 'Users' ? (
 				<InfiniteScroll
-					dataLength={Items.length}
+					dataLength={Filter.length}
 					loader={<h4>Loading...</h4>}
-					height={700}
+					height={600}
 				>
 					{Filter &&
 						Filter.map((el, index) => (
-							<ProductDashboard prop={el} index={index} options={Options} />
+							<CardItems prop={el} index={index} options={Options} />
 						))}
 				</InfiniteScroll>
 			) : null}
 			{Options === 'Orders' ? (
 				<InfiniteScroll
-					dataLength={Items.length}
+					dataLength={Filter.length}
 					loader={<h4>Loading...</h4>}
-					height={700}
+					height={600}
 				>
 					{Filter &&
 						Filter.map((el, index) => (
-							<ProductDashboard prop={el} index={index} options={Options} />
+							<CardItems prop={el} index={index} options={Options} />
 						))}
 				</InfiniteScroll>
 			) : null}
 			{Options === 'Brands' ? (
 				<InfiniteScroll
-					dataLength={Items.length}
+					dataLength={Filter.length}
 					loader={<h4>Loading...</h4>}
-					height={700}
+					height={600}
 				>
 					{Filter &&
 						Filter.map((el, index) => (
-							<ProductDashboard prop={el} index={index} options={Options} />
+							<CardItems prop={el} index={index} options={Options} />
 						))}
 				</InfiniteScroll>
 			) : null}
@@ -133,4 +131,4 @@ const List = ({Options}) => {
 	);
 };
 
-export default List;
+export default ListDashboard;
