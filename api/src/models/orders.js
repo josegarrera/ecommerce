@@ -25,8 +25,11 @@ const OrdersSchema = new Schema({
 		},
 	],
 	state: {
-		type: Number,
-		default: 1,
+		type: String,
+		enum: {
+			values: ['created', 'processing', 'completed', 'canceled'],
+		},
+		default: 'created',
 	},
 	subTotal: Number,
 	shipping: Number,
