@@ -8,10 +8,10 @@ const HomeDashboard = () => {
 		setOptions(e.target.name);
 	};
 	const arrayButtons = [
-		{name: 'Users'},
 		{name: 'Products'},
-		{name: 'Orders'},
 		{name: 'Categories'},
+		{name: 'Users'},
+		{name: 'Orders'},
 		{name: 'Brands'},
 	];
 

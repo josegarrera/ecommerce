@@ -2,15 +2,18 @@ import styled from 'styled-components';
 
 const ProductDashboardStyle = styled.div`
 	display: flex;
-	width: 90%;
+	width: 85%;
 	margin: 10px 0px;
+	padding: 10px 10px;
+	background-color: white;
+	border-radius: 10px;
 
 	.productAllInfo {
 		display: flex;
-		justify-content: center;
+		justify-content: left;
 		align-items: center;
-		width: 70%;
-
+		width: 90%;
+		padding: 0px 20px;
 		.imageDiv {
 			display: flex;
 			justify-content: center;
@@ -19,8 +22,8 @@ const ProductDashboardStyle = styled.div`
 			border-radius: 5px;
 
 			.image {
-				max-width: 100%;
-				max-height: 100%;
+				max-width: 95%;
+				max-height: 95%;
 				object-fit: contain;
 			}
 		}
@@ -29,27 +32,44 @@ const ProductDashboardStyle = styled.div`
 			display: flex;
 			flex-direction: column;
 			justify-content: flex-start;
+			margin-left: 20px;
+
+			.renglon {
+				display: flex;
+				color: #58585a;
+			}
+			.title {
+				font-weight: 600;
+			}
 		}
 	}
 	.buttons {
 		display: flex;
 		justify-content: space-around;
 		align-items: center;
-		width: 30%;
+		width: 15%;
 
 		.buttonDiv {
 			display: flex;
 			justify-content: center;
-			width: 15px;
-			height: 15px;
-			background-color: #f8f9f9;
-			border-radius: 5px;
+			align-items: center;
+			width: 25px;
+			height: 25px;
+			background: none;
+			border: none;
 
 			.button {
-				max-width: 70%;
-				max-height: 70%;
 				object-fit: contain;
 				color: #58585a;
+				font-size: 20px;
+
+				&:hover {
+					cursor: pointer;
+				}
+
+				&:active {
+					transform: scale(0.9);
+				}
 			}
 		}
 	}
