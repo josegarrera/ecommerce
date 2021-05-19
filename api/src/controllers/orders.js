@@ -64,8 +64,11 @@ async function addProduct(req, res) {
 			let orderActive = await Orders.findOne({users: userId, state: 'created'});
 			if (orderActive) {
 				if (Array.isArray(products)) {
+					console.log(products, '=================================products');
 					let toAdd = products.filter((e) =>
-						orderActive.items.find((prod) => prod.product === e.product._id)
+						orderActive.items.find(
+							(prod) => prod.product.toString() === e.product._id
+						)
 							? false
 							: true
 					);
@@ -76,6 +79,7 @@ async function addProduct(req, res) {
 							variant: e.variant,
 						};
 					});
+					console.log(toAdd, 'TO ADD<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
 					orderActive.items = orderActive.items.concat(toAdd);
 					await orderActive.save();
 				} else {
