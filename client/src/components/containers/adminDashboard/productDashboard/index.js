@@ -1,9 +1,21 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ProductDashboardStyle from './styled';
-
-import {MdDelete, MdEdit} from 'react-icons/md';
+import {
+	Accordion,
+	AccordionItem,
+	AccordionItemHeading,
+	AccordionItemButton,
+	AccordionItemPanel,
+} from 'react-accessible-accordion';
+import {
+	MdDelete,
+	MdEdit,
+	MdKeyboardArrowDown,
+	MdKeyboardArrowUp,
+} from 'react-icons/md';
 
 const ProductDashboard = ({prop, index}) => {
+	const [AccStatus, setAccStatus] = useState(false);
 	const {
 		name,
 		price,
@@ -39,42 +51,6 @@ const ProductDashboard = ({prop, index}) => {
 							<div className='name'>{name}</div>
 						</div>
 					)}
-					{price && (
-						<div className='renglon'>
-							<div className='title'>Price: &nbsp;</div>
-							<div className='price'>
-								{price.currency} {price.value}
-							</div>
-						</div>
-					)}
-					{_id && (
-						<div className='renglon'>
-							<div className='title'>Id: &nbsp;</div>
-							<div className='_id'> {_id}</div>
-						</div>
-					)}
-					{products && (
-						<div className='renglon'>
-							<div className='title'>Products: &nbsp;</div>
-							<div className='products'>
-								{' '}
-								{products.map((product) => (
-									<div>{product.name}</div>
-								))}
-							</div>
-						</div>
-					)}
-					{/* {variants && (
-						<div className='renglon'>
-							<div className='title'>Variants: </div>
-							<div className='variants'>
-								{' '}
-								{variants.map((variant) => (
-									<div>{variant}</div>
-								))}
-							</div>
-						</div>
-					)} */}
 					{role && (
 						<div className='renglon'>
 							<div className='title'>Role: &nbsp;</div>
@@ -87,12 +63,79 @@ const ProductDashboard = ({prop, index}) => {
 							<div className='email'>{email}</div>
 						</div>
 					)}
+					{price && (
+						<div className='renglon'>
+							<div className='title'>Price: &nbsp;</div>
+							<div className='price'>
+								{price.currency} {price.value}
+							</div>
+						</div>
+					)}
 					{users && (
 						<div className='renglon'>
 							<div className='title'>User: &nbsp;</div>
 							<div className='users'>{users}</div>
 						</div>
 					)}
+					{_id && (
+						<div className='renglon'>
+							<div className='title'>Id: &nbsp;</div>
+							<div className='_id'> {_id}</div>
+						</div>
+					)}
+					{products &&
+						(products.length === 0 ? (
+							<div className='renglon'>
+								<div className='title'>No Products.</div>
+							</div>
+						) : products.length === 1 ? (
+							<div className='renglon'>
+								<div className='title'>1 Product: &nbsp;</div>
+								<div className='products'>
+									{' '}
+									{products.map((product) => (
+										<div>{product.name}</div>
+									))}
+								</div>
+							</div>
+						) : (
+							<Accordion allowZeroExpanded>
+								{
+									<AccordionItem onClick={() => setAccStatus(!AccStatus)}>
+										<AccordionItemButton className='title2'>
+											{products.length} Products
+											{AccStatus === false ? (
+												<MdKeyboardArrowDown
+													className='open'
+													onClick={() => setAccStatus(!AccStatus)}
+												/>
+											) : (
+												<MdKeyboardArrowUp
+													className='open'
+													onClick={() => setAccStatus(!AccStatus)}
+												/>
+											)}
+										</AccordionItemButton>
+										<div className='accordionItems'>
+											{products.map((product) => (
+												<AccordionItemPanel>{product.name}</AccordionItemPanel>
+											))}
+										</div>
+									</AccordionItem>
+								}
+							</Accordion>
+						))}
+					{/* {variants && (
+						<div className='renglon'>
+							<div className='title'>Variants: </div>
+							<div className='variants'>
+								{' '}
+								{variants.map((variant) => (
+									<div>{variant}</div>
+								))}
+							</div>
+						</div>
+					)} */}
 				</div>
 			</div>
 			<div className='buttons'>

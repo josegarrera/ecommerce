@@ -7,6 +7,7 @@ const ProductDashboardStyle = styled.div`
 	padding: 10px 10px;
 	background-color: white;
 	border-radius: 10px;
+	color: #58585a;
 
 	.productAllInfo {
 		display: flex;
@@ -42,10 +43,36 @@ const ProductDashboardStyle = styled.div`
 
 			.renglon {
 				display: flex;
-				color: #58585a;
 			}
+
 			.title {
+				display: flex;
+				align-items: center;
 				font-weight: 600;
+			}
+
+			.title2 {
+				display: flex;
+				align-items: center;
+				font-weight: 600;
+
+				&:hover {
+					cursor: pointer;
+				}
+
+				.open {
+					margin-left: 5px;
+					font-size: 16px;
+
+					&:active {
+						transform: scale(0.9);
+					}
+				}
+			}
+
+			.accordionItems {
+				margin-left: 20px;
+				font-size: 14px;
 			}
 		}
 	}
