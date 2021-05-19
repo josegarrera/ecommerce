@@ -74,7 +74,7 @@ const List = ({Options}) => {
 				>
 					{Items &&
 						Items.map((el, index) => (
-							<ProductDashboard prop={el} index={index} />
+							<ProductDashboard prop={el} index={index} options={Options} />
 						))}
 				</InfiniteScroll>
 			) : null}
@@ -86,7 +86,7 @@ const List = ({Options}) => {
 				>
 					{Categories &&
 						Categories.map((el, index) => (
-							<ProductDashboard prop={el} index={index} />
+							<ProductDashboard prop={el} index={index} options={Options} />
 						))}
 				</InfiniteScroll>
 			) : null}
@@ -98,7 +98,7 @@ const List = ({Options}) => {
 				>
 					{Users &&
 						Users.map((el, index) => (
-							<ProductDashboard prop={el} index={index} />
+							<ProductDashboard prop={el} index={index} options={Options} />
 						))}
 				</InfiniteScroll>
 			) : null}
@@ -110,7 +110,7 @@ const List = ({Options}) => {
 				>
 					{Orders &&
 						Orders.map((el, index) => (
-							<ProductDashboard prop={el} index={index} />
+							<ProductDashboard prop={el} index={index} options={Options} />
 						))}
 				</InfiniteScroll>
 			) : null}
@@ -122,7 +122,7 @@ const List = ({Options}) => {
 				>
 					{Brands &&
 						Brands.map((el, index) => (
-							<ProductDashboard prop={el} index={index} />
+							<ProductDashboard prop={el} index={index} options={Options} />
 						))}
 				</InfiniteScroll>
 			) : null}
