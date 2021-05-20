@@ -10,13 +10,17 @@ function getAllCategories(req, res) {
 		);
 }
 
-function deleteACategorie(req, res) {
-	const {id, products} = req.body;
+async function deleteACategorie(req, res) {
+	const {id} = req.params;
 	if (!id) {
 		return res
 			.status(400)
 			.send({type: 'Bad request.', error: 'The fields are empty.'});
 	} else {
+		const category = await Categories.find({_id: id});
+		const products = await Products.find({categories: id});
+		console.log(category);
+		console.log(products);
 		Categories.deleteOne({_id: id}, (err) => {
 			if (err)
 				return res.status(500).send({error: 'error in deleting Categorie'});
@@ -25,7 +29,7 @@ function deleteACategorie(req, res) {
 				products &&
 				products.map((el) =>
 					Products.findOneAndUpdate(
-						{_id: el},
+						{_id: el._id},
 						{$pull: {categories: id}},
 						(err, dataa) => {
 							if (err) {
