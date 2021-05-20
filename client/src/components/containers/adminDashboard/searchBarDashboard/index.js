@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import SearchStyles from './styled';
 
 let props = ['email', 'role', 'name', '_id', 'price.value', 'user'];
 
@@ -12,8 +13,7 @@ const SearchBar = ({Items, setFilter}) => {
 						el.email.toLowerCase().includes(e.target.value.toLowerCase())) ||
 					(el.role &&
 						el.role.toLowerCase().includes(e.target.value.toLowerCase())) ||
-					(el.users &&
-						el.users.includes(e.target.value)) ||
+					(el.users && el.users.includes(e.target.value)) ||
 					(el.name &&
 						el.name.toLowerCase().includes(e.target.value.toLowerCase())) ||
 					(el._id && el._id.includes(e.target.value)) ||
@@ -35,9 +35,14 @@ const SearchBar = ({Items, setFilter}) => {
 				); */
 
 	return (
-		<div>
-			<input type='text' onChange={handleOnChangue} />
-		</div>
+		<SearchStyles>
+			<input
+				className='searchInput'
+				type='text'
+				placeHolder='   Search by name, price, id, categorie, role, email, etc'
+				onChange={handleOnChangue}
+			/>
+		</SearchStyles>
 	);
 };
 

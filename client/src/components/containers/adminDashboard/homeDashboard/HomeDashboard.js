@@ -1,8 +1,11 @@
 import React, {useState} from 'react';
 import {StyledContainer} from './styles';
 import ListDashboard from '../listDashboard/ListDashboard';
+import GraphicsDashboard from '../graphicsDashboard/GraphicsDashboard';
+import {IoIosArrowForward} from 'react-icons/io';
+
 const HomeDashboard = () => {
-	const [Options, setOptions] = useState('');
+	const [Options, setOptions] = useState('Home');
 
 	const handleOnClick = (e) => {
 		setOptions(e.target.name);
@@ -18,9 +21,17 @@ const HomeDashboard = () => {
 	return (
 		<StyledContainer>
 			<div className='sidebar'>
-				<div>
+				<div className='dashboard'>{'Admin Dashboard'}</div>
+				<button className='brand' name={'Home'} onClick={handleOnClick}>
+					{'<Store! />'}
+				</button>
+				<div className='options'>
 					{arrayButtons.map((el) => (
-						<button name={el.name} onClick={handleOnClick}>
+						<button className='option' name={el.name} onClick={handleOnClick}>
+							{Options === el.name ? (
+								<IoIosArrowForward className='arrow' />
+							) : null}
+							&nbsp;
 							{el.name}
 						</button>
 					))}
@@ -28,7 +39,11 @@ const HomeDashboard = () => {
 			</div>
 
 			<div className='content'>
-				<ListDashboard Options={Options} />
+				{Options === 'Home' ? (
+					<GraphicsDashboard />
+				) : (
+					<ListDashboard Options={Options} />
+				)}
 			</div>
 		</StyledContainer>
 	);

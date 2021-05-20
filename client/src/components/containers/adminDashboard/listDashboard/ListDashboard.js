@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {URLS} from '../../../../utils/constants';
 import CardItems from '../cardItems/CardItems';
 import SearchBarDashboard from '../searchBarDashboard';
+import ListStyles from './styled';
 
 import InfiniteScroll from 'react-infinite-scroll-component';
 
@@ -65,10 +66,11 @@ const ListDashboard = ({Options}) => {
 	};
 
 	return (
-		<div>
+		<ListStyles>
 			{Items && <SearchBarDashboard Items={Items} setFilter={setFilter} />}
 			{Options === 'Products' ? (
 				<InfiniteScroll
+					className='listProduct'
 					dataLength={Filter.length}
 					loader={<h4>Loading...</h4>}
 					height={600}
@@ -81,6 +83,7 @@ const ListDashboard = ({Options}) => {
 			) : null}
 			{Options === 'Categories' ? (
 				<InfiniteScroll
+					className='listProduct'
 					dataLength={Filter.length}
 					loader={<h4>Loading...</h4>}
 					height={600}
@@ -93,6 +96,7 @@ const ListDashboard = ({Options}) => {
 			) : null}
 			{Options === 'Users' ? (
 				<InfiniteScroll
+					className='listProduct'
 					dataLength={Filter.length}
 					loader={<h4>Loading...</h4>}
 					height={600}
@@ -105,6 +109,7 @@ const ListDashboard = ({Options}) => {
 			) : null}
 			{Options === 'Orders' ? (
 				<InfiniteScroll
+					className='listProduct'
 					dataLength={Filter.length}
 					loader={<h4>Loading...</h4>}
 					height={600}
@@ -117,6 +122,7 @@ const ListDashboard = ({Options}) => {
 			) : null}
 			{Options === 'Brands' ? (
 				<InfiniteScroll
+					className='listProduct'
 					dataLength={Filter.length}
 					loader={<h4>Loading...</h4>}
 					height={600}
@@ -127,7 +133,7 @@ const ListDashboard = ({Options}) => {
 						))}
 				</InfiniteScroll>
 			) : null}
-		</div>
+		</ListStyles>
 	);
 };
 
