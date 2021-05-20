@@ -10,6 +10,6 @@ const router = Router();
 router.get('/', getAllCategories);
 router.post('/', createCategories);
 router.put('/', updateACategorie);
-router.delete('/', deleteACategorie);
+router.delete('/:id', deleteACategorie);
 
 module.exports = router;
