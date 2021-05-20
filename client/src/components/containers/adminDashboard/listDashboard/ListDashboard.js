@@ -77,7 +77,12 @@ const ListDashboard = ({Options}) => {
 				>
 					{Filter &&
 						Filter.map((el, index) => (
-							<CardItems prop={el} index={index} options={Options} />
+							<CardItems
+								prop={el}
+								index={index}
+								options={Options}
+								allProducts={allProducts}
+							/>
 						))}
 				</InfiniteScroll>
 			) : null}
@@ -90,7 +95,12 @@ const ListDashboard = ({Options}) => {
 				>
 					{Filter &&
 						Filter.map((el, index) => (
-							<CardItems prop={el} index={index} options={Options} />
+							<CardItems
+								prop={el}
+								index={index}
+								options={Options}
+								allProducts={allProducts}
+							/>
 						))}
 				</InfiniteScroll>
 			) : null}
@@ -103,7 +113,12 @@ const ListDashboard = ({Options}) => {
 				>
 					{Filter &&
 						Filter.map((el, index) => (
-							<CardItems prop={el} index={index} options={Options} />
+							<CardItems
+								prop={el}
+								index={index}
+								options={Options}
+								allProducts={allProducts}
+							/>
 						))}
 				</InfiniteScroll>
 			) : null}
@@ -116,7 +131,12 @@ const ListDashboard = ({Options}) => {
 				>
 					{Filter &&
 						Filter.map((el, index) => (
-							<CardItems prop={el} index={index} options={Options} />
+							<CardItems
+								prop={el}
+								index={index}
+								options={Options}
+								allProducts={allProducts}
+							/>
 						))}
 				</InfiniteScroll>
 			) : null}
@@ -129,7 +149,12 @@ const ListDashboard = ({Options}) => {
 				>
 					{Filter &&
 						Filter.map((el, index) => (
-							<CardItems prop={el} index={index} options={Options} />
+							<CardItems
+								prop={el}
+								index={index}
+								options={Options}
+								allProducts={allProducts}
+							/>
 						))}
 				</InfiniteScroll>
 			) : null}
