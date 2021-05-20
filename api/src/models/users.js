@@ -28,6 +28,17 @@ const UsersSchema = new Schema({
 		},
 		default: 'client',
 	},
+	address: [
+		{
+			zip_code: String,
+			street_name: String,
+			street_number: Number,
+		},
+	],
+	identification: {
+		number: String,
+		type: String,
+	},
 	orders: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
