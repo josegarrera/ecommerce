@@ -44,6 +44,56 @@ const PaymentInformation_Style = styled.div`
     color: #616161;
   }
 
+  /* Payment Method */
+
+  .row__payment {
+    display: flex;
+    margin-top: 1rem;
+    justify-content: space-around;
+
+    .payment__option {
+      display: flex;
+      margin: 1rem 0;
+      padding: 1rem;
+      width: 45%;
+      font-weight: 500;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #fafafa;
+      color: #9e9e9e;
+      border-radius: 0.5rem;
+      border: 1px solid #bdbdbd;
+
+      .payment__method {
+        margin-left: 1rem;
+      }
+
+      .payment__option__left {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
+    .active {
+      display: flex;
+      margin: 1rem 0;
+      padding: 1rem;
+      width: 45%;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #c8e6c9;
+      color: #43a047;
+      font-weight: 500;
+      border-radius: 0.5rem;
+      border: 1px solid #4caf50;
+
+      .payment__method {
+        margin-left: 1rem;
+      }
+    }
+  }
+
   .form__input {
     padding: 0.5rem;
     color: #757575;
