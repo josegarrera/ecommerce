@@ -42,9 +42,12 @@ const OrdersSchema = new Schema({
 		},
 		default: 'USD',
 	},
+	paymentId: String, // Información del pago procesado
+	transactionStatus: String,
+	paymentStatus: String,
+	datePayment: String,
+	transactionDetail: {},
 });
-// state == 1 => active
-// state == 0 => inactive
 
 OrdersSchema.plugin(findOrCreate);
 

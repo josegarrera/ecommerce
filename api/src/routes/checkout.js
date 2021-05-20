@@ -1,8 +1,13 @@
-const {Router} = require('express');
+const {Router, response} = require('express');
 const router = Router();
-const {makePayment} = require('../controllers/mercadopago.js');
+const {
+	initiatePayment,
+	getOrderData,
+	getResultPayment,
+} = require('../controllers/mercadopago.js');
 
-router.post('/', makePayment);
-/* router.post("/", otroController) aca mando la info del carrito*/
+router.post('/', initiatePayment);
+router.get('/mp/payments/', getResultPayment);
+router.get('/mp/payments/:id', getOrderData);
 
 module.exports = router;
