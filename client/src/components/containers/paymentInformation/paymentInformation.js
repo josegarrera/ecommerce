@@ -1,22 +1,83 @@
 /* eslint-disable react/jsx-pascal-case */
-import React from "react";
+import React, { useState } from "react";
 import PaymentInformation_Style from "./styled";
 import CheckoutSteps from "../checkoutSteps/checkoutSteps";
 import { Link } from "react-router-dom";
+import { FaCcPaypal } from "react-icons/fa";
+import { ImCheckboxChecked } from "react-icons/im";
 
-function index() {
+function Index() {
+  const [toggle, setToggle] = useState({
+    paymentMethod: "",
+  });
+
+  const onClickHandler = (e) => {
+    setToggle({ paymentMethod: e });
+  };
+
+  console.log(toggle.paymentMethod);
+
   return (
     <PaymentInformation_Style>
       <div>
         <CheckoutSteps step1 step2 step3></CheckoutSteps>
 
-        <div className="row__top">
-          <h1 className="form__title">Payment Information</h1>
-        </div>
-
         <form className="product__form">
           <div className="form__wrapper">
             <div className="form__column">
+              <div className="row__top">
+                <h1 className="form__title">Payment</h1>
+              </div>
+
+              <div className="row__payment">
+                <div
+                  className={
+                    toggle
+                      ? toggle.paymentMethod === "stripe"
+                        ? "active"
+                        : "payment__option"
+                      : ""
+                  }
+                  name="stripe"
+                  onClick={() => onClickHandler("stripe")}
+                >
+                  <div className="payment__option__left">
+                    <i>
+                      <FaCcPaypal />
+                    </i>
+                    <span className="payment__method">Stripe</span>
+                  </div>
+                  <div className="payment__option__right">
+                    <i className="payment__selected">
+                      <ImCheckboxChecked />
+                    </i>
+                  </div>
+                </div>
+                <div
+                  className={
+                    toggle
+                      ? toggle.paymentMethod === "mercadopago"
+                        ? "active"
+                        : "payment__option"
+                      : ""
+                  }
+                  name="stripe"
+                  onClick={() => onClickHandler("mercadopago")}
+                >
+                  <div className="payment__option__left">
+                    <i>
+                      <FaCcPaypal />
+                    </i>
+                    <span className="payment__method">MercadoPago</span>
+                  </div>
+                  <div className="payment__option__right">
+                    <i className="payment__selected">
+                      <ImCheckboxChecked />
+                    </i>
+                  </div>
+                </div>
+              </div>
+
               <div className="form__element">
                 <label className="form__label">Card Holder Name</label>
                 <input
@@ -73,4 +134,4 @@ function index() {
   );
 }
 
-export default index;
+export default Index;
