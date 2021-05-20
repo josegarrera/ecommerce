@@ -72,6 +72,12 @@ const CardItems = ({prop, index, options, allProducts}) => {
 					</div>
 				)}
 				<div className='productInfo'>
+					{_id && (
+						<div className='renglon'>
+							<div className='title'>Id: &nbsp;</div>
+							<div className='_id'> {_id}</div>
+						</div>
+					)}
 					{name && (
 						<div className='renglon'>
 							<div className='title'>
@@ -138,12 +144,7 @@ const CardItems = ({prop, index, options, allProducts}) => {
 							)}
 						</div>
 					)}
-					{_id && (
-						<div className='renglon'>
-							<div className='title'>Id: &nbsp;</div>
-							<div className='_id'> {_id}</div>
-						</div>
-					)}
+
 					{products &&
 						(products.length === 0 ? (
 							<div className='renglon'>
