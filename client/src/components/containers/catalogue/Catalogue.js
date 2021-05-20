@@ -6,6 +6,7 @@ import {
   getProducts,
   cleanCatalogue,
   getAllProducts,
+  postLocalStorage,
 } from "../../../redux/actions/index.js";
 import Filter from "../filter/Filter";
 import ProductList from "../productsList/ProductList";
@@ -18,6 +19,7 @@ const Catalogue = () => {
   const { products, pages } = useSelector((state) => state.products);
   const allProducts = useSelector((state) => state.allProducts);
   const [orderItems, setOrderItems] = useState([]);
+  const cartProduct = useSelector((state) => state.cartProducts);
 
   const options = ["Low > High", "High > Low", "A > Z", "Z > A"];
 
@@ -27,6 +29,13 @@ const Catalogue = () => {
     dispatch(getProducts());
     dispatch(getAllProducts());
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  
+  useEffect(() => {
+		const user = window.localStorage.getItem('userId');
+		if (user) {
+			dispatch(postLocalStorage({products: cartProduct, userId: user}));
+			window.localStorage.setItem('cart', JSON.stringify([]));
+		}
 
   useEffect(() => {
     return () => dispatch(cleanCatalogue());

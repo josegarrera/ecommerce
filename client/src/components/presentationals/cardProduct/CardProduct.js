@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import DivCrdProd, { StyledLoder } from "./styled";
-
 import { Link } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
@@ -10,6 +9,7 @@ import {
   addFavProduct,
   getProducts,
   removeFavProduct,
+  postLocalStorage,
 } from "../../../redux/actions";
 import cardLoder from "../../../utils/cardLoader";
 
@@ -19,11 +19,15 @@ const CardProduct = ({ name, imageUrl, price, _id, loading }) => {
   const [fav, setFav] = useState(true);
   const [Load, setLoad] = useState("loading");
 
-  const handleAddCart = () => {
-    //add to cart
-    dispatch(addCartProduct(_id));
-  };
-
+	const handleAddCart = () => {
+		//add to cart
+		dispatch(addCartProduct(_id));
+		const user = window.localStorage.getItem('userId');
+		if (user) {
+			dispatch(postLocalStorage({products: _id, userId: user}));
+			window.localStorage.setItem('cart', JSON.stringify([]));
+		}
+	};
   const handleAddFav = () => {
     //add to fav
     setFav(!fav);

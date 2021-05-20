@@ -59,12 +59,10 @@ async function addProduct(req, res) {
 	const {userId, products} = req.body;
 	try {
 		let userExists = await Users.exists({_id: userId});
-		console.log(userExists);
 		if (userExists && products) {
 			let orderActive = await Orders.findOne({users: userId, state: 'created'});
 			if (orderActive) {
 				if (Array.isArray(products)) {
-					console.log(products, '=================================products');
 					let toAdd = products.filter((e) =>
 						orderActive.items.find(
 							(prod) => prod.product.toString() === e.product._id
@@ -79,21 +77,18 @@ async function addProduct(req, res) {
 							variant: e.variant,
 						};
 					});
-					console.log(toAdd, 'TO ADD<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
 					orderActive.items = orderActive.items.concat(toAdd);
 					await orderActive.save();
 				} else {
 					let toAdd = orderActive.items.find((p) => {
-						return p.product.toString() === products.product._id;
+						return p.product.toString() === products;
 					})
 						? false
 						: true;
 					if (toAdd) {
 						orderActive.items = orderActive.items.concat([
 							{
-								lot: products.lot,
-								product: products.product._id,
-								variant: products.variant,
+								product: products,
 							},
 						]);
 						await orderActive.save();
@@ -109,16 +104,13 @@ async function addProduct(req, res) {
 						};
 					});
 					let order = await new Orders({users: userId, items: toAdd});
-					console.log(order);
 					await order.save();
 				} else {
 					let order = await new Orders({
 						users: userId,
 						items: [
 							{
-								lot: products.lot,
-								product: products.product._id,
-								variant: products.variant,
+								product: products,
 							},
 						],
 					});
@@ -129,7 +121,6 @@ async function addProduct(req, res) {
 				.populate('users', {email: 1, _id: 1})
 				.populate('items.product')
 				.exec();
-			console.log(order);
 			return res.send(order);
 		} else {
 			res.status(400).send({
