@@ -17,6 +17,8 @@ import {
 } from 'react-icons/md';
 
 const CardItems = ({prop, index, options, allProducts}) => {
+	const [isEditAItem, setisEditAItem] = useState(false);
+
 	const [AccStatus, setAccStatus] = useState(false);
 	const {
 		name,
@@ -75,13 +77,25 @@ const CardItems = ({prop, index, options, allProducts}) => {
 							<div className='title'>
 								{options.slice(0, options.length - 1)} name: &nbsp;
 							</div>
-							<div className='name'>{name}</div>
+							{isEditAItem ? (
+								<div>
+									<input value={name} />
+								</div>
+							) : (
+								<div className='name'>{name}</div>
+							)}
 						</div>
 					)}
 					{role && (
 						<div className='renglon'>
 							<div className='title'>Role: &nbsp;</div>
-							<div className='role'>{role}</div>
+							{isEditAItem ? (
+								<div>
+									<input value={role} />
+								</div>
+							) : (
+								<div className='role'>{role}</div>
+							)}
 						</div>
 					)}
 					{email && (
@@ -89,21 +103,39 @@ const CardItems = ({prop, index, options, allProducts}) => {
 							<div className='title'>
 								{role.charAt(0).toUpperCase() + role.slice(1)} email: &nbsp;
 							</div>
-							<div className='email'>{email}</div>
+							{isEditAItem ? (
+								<div>
+									<input value={email} />
+								</div>
+							) : (
+								<div className='email'>{email}</div>
+							)}
 						</div>
 					)}
 					{price && (
 						<div className='renglon'>
 							<div className='title'>Price: &nbsp;</div>
-							<div className='price'>
-								{price.currency} {price.value}
-							</div>
+							{isEditAItem ? (
+								<div>
+									<input value={price.value} />
+								</div>
+							) : (
+								<div className='price'>
+									{price.currency} {price.value}
+								</div>
+							)}
 						</div>
 					)}
 					{users && (
 						<div className='renglon'>
 							<div className='title'>User: &nbsp;</div>
-							<div className='users'>{users}</div>
+							{isEditAItem ? (
+								<div>
+									<input value={users} />
+								</div>
+							) : (
+								<div className='users'>{users}</div>
+							)}
 						</div>
 					)}
 					{_id && (
@@ -211,7 +243,7 @@ const CardItems = ({prop, index, options, allProducts}) => {
 			</div>
 			<div className='buttons'>
 				<button className='buttonDiv'>
-					<MdEdit className='button' />
+					<MdEdit onClick={() => setisEditAItem(!isEditAItem)} className='button' />
 				</button>
 				<button className='buttonDiv' onClick={deleteById}>
 					<MdDelete className='button' />
