@@ -5,8 +5,8 @@ import {Link} from 'react-router-dom';
 import {FaShoppingCart} from 'react-icons/fa';
 import {AiOutlineHeart} from 'react-icons/ai';
 import {useDispatch} from 'react-redux';
-import {addCartProduct} from '../../../redux/actions';
-import cardLoder from '../../../utils/cardLoader'
+import {addCartProduct, postLocalStorage} from '../../../redux/actions';
+import cardLoder from '../../../utils/cardLoader';
 
 const CardProduct = ({name, imageUrl, price, _id, loading}) => {
 	const dispatch = useDispatch();
@@ -16,12 +16,15 @@ const CardProduct = ({name, imageUrl, price, _id, loading}) => {
 	const handleAddCart = () => {
 		//add to cart
 		dispatch(addCartProduct(_id));
+		const user = window.localStorage.getItem('userId');
+		if (user) {
+			dispatch(postLocalStorage({products: _id, userId: user}));
+			window.localStorage.setItem('cart', JSON.stringify([]));
+		}
 	};
 	const handleAddFav = () => {
 		//add to fav
 	};
-
-
 
 	const handleImageLoaded = () => {
 		setLoad('loaded');
@@ -60,7 +63,6 @@ const CardProduct = ({name, imageUrl, price, _id, loading}) => {
 			</DivCrdProd>
 		);
 	}
-
 };
 
 export default CardProduct;
