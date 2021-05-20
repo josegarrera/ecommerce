@@ -1,3 +1,4 @@
+const {Users} = require('../models/index.js');
 const jwt = require('jsonwebtoken');
 
 async function verifyToken(req, res, next) {
@@ -8,8 +9,7 @@ async function verifyToken(req, res, next) {
 			if (err) {
 				return res.sendStatus(403);
 			}
-			req.user = user;
-			console.log(user);
+			req.user = user.user;
 			next();
 		});
 	} else {
@@ -17,6 +17,17 @@ async function verifyToken(req, res, next) {
 	}
 }
 
+async function isAdmin(req, res, next) {
+	const id = req.user._id;
+	const user = await Users.findById(id);
+	if (user.role === 'admin') {
+		next();
+	} else {
+		res.sendStatus(401);
+	}
+}
+
 module.exports = {
 	verifyToken,
+	isAdmin,
 };
