@@ -19,6 +19,7 @@ function initiatePayment(req, res) {
 		.exec()
 		.then((order) => {
 			if (!order.length) return res.send('The order does not exist.');
+			if (!order[0].items.length) return res.send('Product list is empty.');
 			const items = order[0].items.map((item) => {
 				return {
 					id: item.product._id,
@@ -28,6 +29,7 @@ function initiatePayment(req, res) {
 					currency_id: item.product.price.currency,
 				};
 			});
+			const expirationDate = new Date(Date.now() + 210000000);
 			const preference = {
 				items: items,
 				purpose: 'wallet_purchase',
@@ -43,6 +45,8 @@ function initiatePayment(req, res) {
 					cost: 500,
 					mode: 'not_specified',
 				},
+				expires: true,
+				date_of_expiration: expirationDate.toISOString(),
 			};
 			order[0].state = 'processing';
 			return Promise.all([
