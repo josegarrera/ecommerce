@@ -9,7 +9,6 @@ import {BsPersonPlusFill, BsPersonCheckFill} from 'react-icons/bs';
 const HomeDashboard = () => {
 	const [Options, setOptions] = useState('Home');
 	let userId = window.localStorage.getItem('userId');
-	console.log('userrrr', userId);
 
 	const eraseToken = () => {
 		window.localStorage.clear();
@@ -46,6 +45,8 @@ const HomeDashboard = () => {
 							</button>
 						))}
 					</div>
+					<div className='separator'></div>
+					<Link to='/home'>Back to Store!</Link>
 				</div>
 				<div className='bottomSidebar'>
 					<button className='iconDiv'>
@@ -60,7 +61,7 @@ const HomeDashboard = () => {
 					<div>
 						{userId ? (
 							<div className='login'>
-								<div className='userName'>Paveglio Bruno</div>
+								<div className='userName'>Paveglio Bruno.</div>
 								<div className='signOut' onClick={eraseToken}>
 									Sign out.
 								</div>
@@ -71,7 +72,6 @@ const HomeDashboard = () => {
 					<div></div>
 				</div>
 			</div>
-
 			<div className='content'>
 				{Options === 'Home' ? (
 					<GraphicsDashboard setOptions={setOptions} />

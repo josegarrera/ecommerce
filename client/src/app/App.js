@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route, Switch} from 'react-router-dom';
+import {Route, Switch, Redirect} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import GridLayout from '../utils/GridLayout';
 //import {GlobalStyles} from './GlobalStyles';
@@ -29,10 +29,19 @@ function App() {
 				<GridLayout>
 					{/* <GlobalStyles /> */}
 					<ReactNotification />
-					{/* 				{user.role === 'admin' ? (
-						<Route exact path='/admindashboard' component={homeDashboard} />
-					) : (
-						<> */}
+
+					<Route path='/'>
+						{user.role ? (
+							user.role === 'admin' ? (
+								<Redirect to='/adminDashboard' component={HomeDashboard} />
+							) : (
+								<Redirect to='/home' component={Home} />
+							)
+						) : (
+							<Redirect to='/login' component={FormLogging} />
+						)}
+					</Route>
+
 					<Route exact path='/admindashboard' component={HomeDashboard} />
 					<Route path='/' component={NavBar} />
 					<Route exact path='/' component={Home} />

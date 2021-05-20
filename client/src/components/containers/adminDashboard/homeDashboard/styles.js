@@ -63,6 +63,10 @@ export const StyledContainer = styled.div`
 			}
 		}
 
+		.separator {
+			border-top: 2px solid #f8f9f9;
+		}
+
 		.bottomSidebar {
 			display: flex;
 			align-items: center;
