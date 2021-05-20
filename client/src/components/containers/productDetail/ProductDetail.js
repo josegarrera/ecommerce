@@ -48,7 +48,7 @@ const ProductDetail = (id) => {
 					</div>
 
 					<a
-						href={`whatsapp://send?text=http://localhost:3000/products/id/${product._id}`}
+						href={`whatsapp://send?text=https://storeft11g01.herokuapp.com/products/id/${product._id}`}
 						data-action='share/whatsapp/share'
 					>
 						<IoLogoWhatsapp />

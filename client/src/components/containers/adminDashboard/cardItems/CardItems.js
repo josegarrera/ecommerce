@@ -1,5 +1,7 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import ProductDashboardStyle from './styled';
+import axios from 'axios';
+import {URLS} from '../../../../utils/constants';
 import {
 	Accordion,
 	AccordionItem,
@@ -14,7 +16,9 @@ import {
 	MdKeyboardArrowUp,
 } from 'react-icons/md';
 
-const CardItems = ({prop, index, options}) => {
+const CardItems = ({prop, index, options, allProducts}) => {
+	const [isEditAItem, setisEditAItem] = useState(false);
+
 	const [AccStatus, setAccStatus] = useState(false);
 	const {
 		name,
@@ -31,6 +35,29 @@ const CardItems = ({prop, index, options}) => {
 		email,
 		users,
 	} = prop;
+
+	const deleteById = async () => {
+		let result = window.confirm('Are you sure you want to delete?');
+		if (result) {
+			const id = _id;
+			if (options === 'Products') {
+				await axios.delete(`${URLS.URL_PRODUCTS}/${id}`);
+			}
+			if (options === 'Categories') {
+				await axios.delete(`${URLS.URL_CATEGORIES}/${id}`);
+			}
+			if (options === 'Users') {
+				await axios.delete(`${URLS.URL_USERS}/${id}`);
+			}
+			if (options === 'Orders') {
+				await axios.delete(`${URLS.URL_USER_ORDERS}/${id}`);
+			}
+			if (options === 'Brands') {
+				await axios.delete(`${URLS.URL_BRANDS}/${id}`);
+			}
+			allProducts();
+		}
+	};
 
 	return (
 		<ProductDashboardStyle>
@@ -50,13 +77,25 @@ const CardItems = ({prop, index, options}) => {
 							<div className='title'>
 								{options.slice(0, options.length - 1)} name: &nbsp;
 							</div>
-							<div className='name'>{name}</div>
+							{isEditAItem ? (
+								<div>
+									<input value={name} />
+								</div>
+							) : (
+								<div className='name'>{name}</div>
+							)}
 						</div>
 					)}
 					{role && (
 						<div className='renglon'>
 							<div className='title'>Role: &nbsp;</div>
-							<div className='role'>{role}</div>
+							{isEditAItem ? (
+								<div>
+									<input value={role} />
+								</div>
+							) : (
+								<div className='role'>{role}</div>
+							)}
 						</div>
 					)}
 					{email && (
@@ -64,21 +103,39 @@ const CardItems = ({prop, index, options}) => {
 							<div className='title'>
 								{role.charAt(0).toUpperCase() + role.slice(1)} email: &nbsp;
 							</div>
-							<div className='email'>{email}</div>
+							{isEditAItem ? (
+								<div>
+									<input value={email} />
+								</div>
+							) : (
+								<div className='email'>{email}</div>
+							)}
 						</div>
 					)}
 					{price && (
 						<div className='renglon'>
 							<div className='title'>Price: &nbsp;</div>
-							<div className='price'>
-								{price.currency} {price.value}
-							</div>
+							{isEditAItem ? (
+								<div>
+									<input value={price.value} />
+								</div>
+							) : (
+								<div className='price'>
+									{price.currency} {price.value}
+								</div>
+							)}
 						</div>
 					)}
 					{users && (
 						<div className='renglon'>
 							<div className='title'>User: &nbsp;</div>
-							<div className='users'>{users}</div>
+							{isEditAItem ? (
+								<div>
+									<input value={users} />
+								</div>
+							) : (
+								<div className='users'>{users}</div>
+							)}
 						</div>
 					)}
 					{_id && (
@@ -186,9 +243,9 @@ const CardItems = ({prop, index, options}) => {
 			</div>
 			<div className='buttons'>
 				<button className='buttonDiv'>
-					<MdEdit className='button' />
+					<MdEdit onClick={() => setisEditAItem(!isEditAItem)} className='button' />
 				</button>
-				<button className='buttonDiv'>
+				<button className='buttonDiv' onClick={deleteById}>
 					<MdDelete className='button' />
 				</button>
 			</div>

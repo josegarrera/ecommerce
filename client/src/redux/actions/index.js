@@ -146,6 +146,41 @@ export const emptyProductCreated = () => {
 	};
 };
 
+export const getAllProducts = (
+  name,
+  category,
+  brand,
+  variants,
+  price,
+  order,
+  direction,
+  limit = Infinity
+) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(
+        `${URLS.URL_PRODUCTS}?name=${name}&category=${category}&brand=${brand}&variants=${variants}&price=${price}&order=${order}&direction=${direction}&limit=${limit}`
+      );
+
+      let newData = data.products.map((e) => {
+        return { lot: 0, product: { ...e } };
+      });
+
+      dispatch({
+        type: ActionTypes.GET_ALL_PRODUCTS,
+        payload: newData,
+      });
+    } catch (error) {
+      dispatch({
+        type: ActionTypes.GET_PRODUCTS,
+        payload: {
+          error: "Not found",
+        },
+      });
+    }
+  };
+};
+
 /*----------------------------------------------------------------PENDING---------------------------------------------------------------
 
 DUDAS , PREGUNTAR AUTENTIFICACION, DISPATCHA DE PUT/DELETE
@@ -344,4 +379,25 @@ export const loginUser = (user) => {
 		type: ActionTypes.LOGIN_USER,
 		payload: user,
 	};
+};
+
+////////////////////////////////////////  WISH LIST  ////////////////////////////////////////
+
+export const addFavProduct = (id) => {
+  // AGREGA UN PRODUCTO A FAVORITOS
+  return async (dispatch) => {
+    return dispatch({
+      type: ActionTypes.ADD_FAV_PRODUCT,
+      payload: id, // TIENE QUE SER UN {}
+    });
+  };
+};
+export const removeFavProduct = (id) => {
+  // AGREGA UN PRODUCTO A FAVORITOS
+  return async (dispatch) => {
+    return dispatch({
+      type: ActionTypes.REMOVE_FAV_PRODUCT,
+      payload: id, // TIENE QUE SER UN ID
+    });
+  };
 };

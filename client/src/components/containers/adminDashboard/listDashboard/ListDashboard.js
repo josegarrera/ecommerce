@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {URLS} from '../../../../utils/constants';
 import CardItems from '../cardItems/CardItems';
 import SearchBarDashboard from '../searchBarDashboard';
+import ListStyles from './styled';
 
 import InfiniteScroll from 'react-infinite-scroll-component';
 
@@ -65,69 +66,99 @@ const ListDashboard = ({Options}) => {
 	};
 
 	return (
-		<div>
+		<ListStyles>
 			{Items && <SearchBarDashboard Items={Items} setFilter={setFilter} />}
 			{Options === 'Products' ? (
 				<InfiniteScroll
+					className='listProduct'
 					dataLength={Filter.length}
 					loader={<h4>Loading...</h4>}
 					height={600}
 				>
 					{Filter &&
 						Filter.map((el, index) => (
-							<CardItems prop={el} index={index} options={Options} />
+							<CardItems
+								prop={el}
+								index={index}
+								options={Options}
+								allProducts={allProducts}
+							/>
 						))}
 				</InfiniteScroll>
 			) : null}
 			{Options === 'Categories' ? (
 				<InfiniteScroll
+					className='listProduct'
 					dataLength={Filter.length}
 					loader={<h4>Loading...</h4>}
 					height={600}
 				>
 					{Filter &&
 						Filter.map((el, index) => (
-							<CardItems prop={el} index={index} options={Options} />
+							<CardItems
+								prop={el}
+								index={index}
+								options={Options}
+								allProducts={allProducts}
+							/>
 						))}
 				</InfiniteScroll>
 			) : null}
 			{Options === 'Users' ? (
 				<InfiniteScroll
+					className='listProduct'
 					dataLength={Filter.length}
 					loader={<h4>Loading...</h4>}
 					height={600}
 				>
 					{Filter &&
 						Filter.map((el, index) => (
-							<CardItems prop={el} index={index} options={Options} />
+							<CardItems
+								prop={el}
+								index={index}
+								options={Options}
+								allProducts={allProducts}
+							/>
 						))}
 				</InfiniteScroll>
 			) : null}
 			{Options === 'Orders' ? (
 				<InfiniteScroll
+					className='listProduct'
 					dataLength={Filter.length}
 					loader={<h4>Loading...</h4>}
 					height={600}
 				>
 					{Filter &&
 						Filter.map((el, index) => (
-							<CardItems prop={el} index={index} options={Options} />
+							<CardItems
+								prop={el}
+								index={index}
+								options={Options}
+								allProducts={allProducts}
+							/>
 						))}
 				</InfiniteScroll>
 			) : null}
 			{Options === 'Brands' ? (
 				<InfiniteScroll
+					className='listProduct'
 					dataLength={Filter.length}
 					loader={<h4>Loading...</h4>}
 					height={600}
 				>
 					{Filter &&
 						Filter.map((el, index) => (
-							<CardItems prop={el} index={index} options={Options} />
+							<CardItems
+								prop={el}
+								index={index}
+								options={Options}
+								allProducts={allProducts}
+							/>
 						))}
 				</InfiniteScroll>
 			) : null}
-		</div>
+		</ListStyles>
 	);
 };
 
