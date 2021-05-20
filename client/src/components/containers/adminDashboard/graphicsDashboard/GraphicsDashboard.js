@@ -21,6 +21,10 @@ const GraphicsDashboard = () => {
 				<FaDolly />
 				Orders
 			</div>
+			<div className='graphic'>
+				<FaDolly />
+				Brands
+			</div>
 		</GraphicStyled>
 	);
 };
