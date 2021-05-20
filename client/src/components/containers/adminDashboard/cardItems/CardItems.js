@@ -1,5 +1,7 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import ProductDashboardStyle from './styled';
+import axios from 'axios';
+import {URLS} from '../../../../utils/constants';
 import {
 	Accordion,
 	AccordionItem,
@@ -14,7 +16,7 @@ import {
 	MdKeyboardArrowUp,
 } from 'react-icons/md';
 
-const CardItems = ({prop, index, options}) => {
+const CardItems = ({prop, index, options, allProducts}) => {
 	const [AccStatus, setAccStatus] = useState(false);
 	const {
 		name,
@@ -31,6 +33,29 @@ const CardItems = ({prop, index, options}) => {
 		email,
 		users,
 	} = prop;
+
+	const deleteById = async () => {
+		let result = window.confirm('Are you sure you want to delete?');
+		if (result) {
+			const id = _id;
+			if (options === 'Products') {
+				await axios.delete(`${URLS.URL_PRODUCTS}/${id}`);
+			}
+			if (options === 'Categories') {
+				await axios.delete(`${URLS.URL_CATEGORIES}/${id}`);
+			}
+			if (options === 'Users') {
+				await axios.delete(`${URLS.URL_USERS}/${id}`);
+			}
+			if (options === 'Orders') {
+				await axios.delete(`${URLS.URL_USER_ORDERS}/${id}`);
+			}
+			if (options === 'Brands') {
+				await axios.delete(`${URLS.URL_BRANDS}/${id}`);
+			}
+			allProducts();
+		}
+	};
 
 	return (
 		<ProductDashboardStyle>
@@ -188,7 +213,7 @@ const CardItems = ({prop, index, options}) => {
 				<button className='buttonDiv'>
 					<MdEdit className='button' />
 				</button>
-				<button className='buttonDiv'>
+				<button className='buttonDiv' onClick={deleteById}>
 					<MdDelete className='button' />
 				</button>
 			</div>
