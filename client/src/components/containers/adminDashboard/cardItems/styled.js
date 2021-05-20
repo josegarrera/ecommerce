@@ -2,10 +2,10 @@ import styled from 'styled-components';
 
 const ProductDashboardStyle = styled.div`
 	display: flex;
-	width: 85%;
+	width: 95%;
 	margin: 10px 0px;
 	padding: 10px 10px;
-	background-color: white;
+	background-color: #ffffff;
 	border-radius: 10px;
 	color: #58585a;
 
@@ -13,15 +13,15 @@ const ProductDashboardStyle = styled.div`
 		display: flex;
 		justify-content: left;
 		align-items: center;
-		width: 90%;
+		width: 80%;
 		padding: 0px 20px;
 
 		.imageDiv {
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			width: 70px;
-			height: 70px;
+			width: 80px;
+			height: 80px;
 			border-radius: 5px;
 
 			.image {
@@ -39,7 +39,7 @@ const ProductDashboardStyle = styled.div`
 			display: flex;
 			flex-direction: column;
 			justify-content: flex-start;
-			margin-left: 20px;
+			margin-left: 35px;
 
 			.renglon {
 				display: flex;
@@ -80,21 +80,21 @@ const ProductDashboardStyle = styled.div`
 		display: flex;
 		justify-content: space-around;
 		align-items: center;
-		width: 15%;
+		width: 20%;
 
 		.buttonDiv {
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			width: 25px;
-			height: 25px;
+			width: 30px;
+			height: 30px;
 			background: none;
 			border: none;
 
 			.button {
 				object-fit: contain;
 				color: #58585a;
-				font-size: 20px;
+				font-size: 25px;
 
 				&:hover {
 					cursor: pointer;
