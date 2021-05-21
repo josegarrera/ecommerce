@@ -18,6 +18,7 @@ import {
 
 const CardItems = ({prop, index, options, allProducts}) => {
 	const [isEditAItem, setisEditAItem] = useState(false);
+	const [SeeMore, setSeeMore] = useState(false);
 
 	const [AccStatus, setAccStatus] = useState(false);
 	const {
@@ -187,48 +188,7 @@ const CardItems = ({prop, index, options, allProducts}) => {
 								}
 							</Accordion>
 						))}
-					{categories &&
-						(categories.length === 0 ? (
-							<div className='renglon'>
-								<div className='title'>No categories.</div>
-							</div>
-						) : categories.length === 1 ? (
-							<div className='renglon'>
-								<div className='title'>1 Categorie: &nbsp;</div>
-								<div className='products'>
-									{' '}
-									{categories.map((el) => (
-										<div>{el.name}</div>
-									))}
-								</div>
-							</div>
-						) : (
-							<Accordion allowZeroExpanded>
-								{
-									<AccordionItem onClick={() => setAccStatus(!AccStatus)}>
-										<AccordionItemButton className='title2'>
-											{categories.length} Categories
-											{AccStatus === false ? (
-												<MdKeyboardArrowDown
-													className='open'
-													onClick={() => setAccStatus(!AccStatus)}
-												/>
-											) : (
-												<MdKeyboardArrowUp
-													className='open'
-													onClick={() => setAccStatus(!AccStatus)}
-												/>
-											)}
-										</AccordionItemButton>
-										<div className='accordionItems'>
-											{categories.map((el) => (
-												<AccordionItemPanel>{el.name}</AccordionItemPanel>
-											))}
-										</div>
-									</AccordionItem>
-								}
-							</Accordion>
-						))}
+
 					{/* {variants && (
 						<div className='renglon'>
 							<div className='title'>Variants: </div>
@@ -240,11 +200,117 @@ const CardItems = ({prop, index, options, allProducts}) => {
 							</div>
 						</div>
 					)} */}
+					{SeeMore ? (
+						<div onClick={() => setSeeMore(!SeeMore)}>
+							{brands &&
+								(brands.length === 0 ? (
+									<div className='renglon'>
+										<div className='title'>No brands.</div>
+									</div>
+								) : brands.length === 1 ? (
+									<div className='renglon'>
+										<div className='title'>1 Brand: &nbsp;</div>
+										<div className='products'>
+											{' '}
+											{brands.map((el) => (
+												<div>{el.name}</div>
+											))}
+										</div>
+									</div>
+								) : (
+									<Accordion allowZeroExpanded>
+										{
+											<AccordionItem onClick={() => setAccStatus(!AccStatus)}>
+												<AccordionItemButton className='title2'>
+													{brands.length} Brands
+													{AccStatus === false ? (
+														<MdKeyboardArrowDown
+															className='open'
+															onClick={() => setAccStatus(!AccStatus)}
+														/>
+													) : (
+														<MdKeyboardArrowUp
+															className='open'
+															onClick={() => setAccStatus(!AccStatus)}
+														/>
+													)}
+												</AccordionItemButton>
+												<div className='accordionItems'>
+													{brands.map((el) => (
+														<AccordionItemPanel>{el.name}</AccordionItemPanel>
+													))}
+												</div>
+											</AccordionItem>
+										}
+									</Accordion>
+								))}
+							{categories &&
+								(categories.length === 0 ? (
+									<div className='renglon'>
+										<div className='title'>No categories.</div>
+									</div>
+								) : categories.length === 1 ? (
+									<div className='renglon'>
+										<div className='title'>1 Categorie: &nbsp;</div>
+										<div className='products'>
+											{' '}
+											{categories.map((el) => (
+												<div>{el.name}</div>
+											))}
+										</div>
+									</div>
+								) : (
+									<Accordion allowZeroExpanded>
+										{
+											<AccordionItem onClick={() => setAccStatus(!AccStatus)}>
+												<AccordionItemButton className='title2'>
+													{categories.length} Categories
+													{AccStatus === false ? (
+														<MdKeyboardArrowDown
+															className='open'
+															onClick={() => setAccStatus(!AccStatus)}
+														/>
+													) : (
+														<MdKeyboardArrowUp
+															className='open'
+															onClick={() => setAccStatus(!AccStatus)}
+														/>
+													)}
+												</AccordionItemButton>
+												<div className='accordionItems'>
+													{categories.map((el) => (
+														<AccordionItemPanel>{el.name}</AccordionItemPanel>
+													))}
+												</div>
+											</AccordionItem>
+										}
+									</Accordion>
+								))}
+
+							{description && (
+								<div className='renglon2'>
+									<div className='title'>Description: &nbsp;</div>
+									<div className='description'> {description}</div>
+								</div>
+							)}
+
+							<div className='renglon'>
+								<div className='seeMore'> Close!</div>
+							</div>
+						</div>
+					) : (
+						<div className='seeMore' onClick={() => setSeeMore(!SeeMore)}>
+							See more!
+						</div>
+					)}
 				</div>
 			</div>
 			<div className='buttons'>
 				<button className='buttonDiv'>
-					<MdEdit onClick={() => setisEditAItem(!isEditAItem)} className='button' />
+					<MdEdit
+						onClick={() => setisEditAItem(!isEditAItem)}
+						className='button'
+					/>
 				</button>
 				<button className='buttonDiv' onClick={deleteById}>
 					<MdDelete className='button' />
