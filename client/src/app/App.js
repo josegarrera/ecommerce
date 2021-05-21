@@ -1,7 +1,8 @@
-import React from "react";
-import { Route, Switch } from "react-router-dom";
-import { useSelector } from "react-redux";
-import GridLayout from "../utils/GridLayout";
+
+import React from 'react';
+import {Route, Switch, Redirect} from 'react-router-dom';
+import {useSelector} from 'react-redux';
+import GridLayout from '../utils/GridLayout';
 //import {GlobalStyles} from './GlobalStyles';
 import NavBar from "../components/presentationals/navBar/NavBar.js";
 import Home from "../components/containers/home/Home.js";
@@ -23,44 +24,53 @@ import "react-notifications-component/dist/theme.css";
 import Favourites from "../components/containers/favourites/Favourites";
 
 function App() {
-  const user = useSelector((state) => state.user);
-  return (
-    <div className="App">
-      <React.Fragment>
-        <GridLayout>
-          {/* <GlobalStyles /> */}
-          <ReactNotification />
-          {/* 				{user.role === 'admin' ? (
-						<Route exact path='/admindashboard' component={homeDashboard} />
-					) : (
-						<> */}
-          <Route exact path="/admindashboard" component={HomeDashboard} />
-          <Route path="/" component={NavBar} />
-          <Route exact path="/" component={Home} />
-          <Route exact path="/login" component={FormLogging} />
-          <Route exact path="/signup" component={FormSignup} />
-          <Route exact path="/catalogue" component={Catalogue} />
-          <Route exact path="/categorie" component={FomrCategories} />
-          <Route exact path="/cart" component={Cart} />
+	const user = useSelector((state) => state.user);
+	return (
+		<div className='App'>
+			<React.Fragment>
+				<GridLayout>
+					{/* <GlobalStyles /> */}
+					<ReactNotification />
+
+					<Route path='/'>
+						{user.role ? (
+							user.role === 'admin' ? (
+								<Redirect to='/adminDashboard' component={HomeDashboard} />
+							) : (
+								<Redirect to='/home' component={Home} />
+							)
+						) : (
+							<Redirect to='/login' component={FormLogging} />
+						)}
+					</Route>
+
+					<Route exact path='/admindashboard' component={HomeDashboard} />
+					<Route path='/' component={NavBar} />
+					<Route exact path='/' component={Home} />
+					<Route exact path='/login' component={FormLogging} />
+					<Route exact path='/signup' component={FormSignup} />
+					<Route exact path='/catalogue' component={Catalogue} />
+					<Route exact path='/categorie' component={FomrCategories} />
+					<Route exact path='/cart' component={Cart} />
           <Route exact path="/favorites" component={Favourites} />
-          <Route
-            exact
-            path="/products/name/:name"
-            render={({ match }) => <Search name={match.params.name} />}
-          />
-          <Route
-            exact
-            path="/products/id/:id"
-            render={({ match }) => <ProductDetail id={match.params.id} />}
-          />
-          <Route path="/shipping" component={ShippingAddress}></Route>
-          <Route path="/payment" component={PaymentInformation}></Route>
-          <Route path="/confirmation" component={ConfirmOrder}></Route>
-          {/* 			</> */}
-        </GridLayout>
-      </React.Fragment>
-    </div>
-  );
+					<Route
+						exact
+						path='/products/name/:name'
+						render={({match}) => <Search name={match.params.name} />}
+					/>
+					<Route
+						exact
+						path='/products/id/:id'
+						render={({match}) => <ProductDetail id={match.params.id} />}
+					/>
+					<Route path='/shipping' component={ShippingAddress}></Route>
+					<Route path='/payment' component={PaymentInformation}></Route>
+					<Route path='/confirmation' component={ConfirmOrder}></Route>
+					{/* 			</> */}
+				</GridLayout>
+			</React.Fragment>
+		</div>
+	);
 }
 
 export default App;

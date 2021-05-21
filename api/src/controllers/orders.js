@@ -163,26 +163,30 @@ async function changeLot(req, res) {
 	const {userId, productId, num} = req.body;
 	try {
 		if (await Users.exists({_id: userId})) {
-			let update = await Orders.findOne({users: userId, state: 'created'});
-			let modificarLot = update.items.find((e) => e.product == productId);
-			if (modificarLot) {
-				modificarLot.lot =
-					modificarLot.lot + num >= 1
-						? modificarLot.lot + num
-						: modificarLot.lot;
-				await update.save();
-				update = await Orders.findOne({users: userId, state: 'created'})
-					.populate('users', {email: 1, _id: 1})
-					.populate('items.product')
-					.exec();
-				res.send(update);
-			} else {
-				update = await Orders.findOne({users: userId, state: 'created'})
-					.populate('users', {email: 1, _id: 1})
-					.populate('items.product')
-					.exec();
-				res.send(update);
+			let update = await Orders.findOne({
+				users: userId,
+				state: 'created',
+			}).populate('items.product');
+			let modificarLot = update.items.find((e) => e.product._id == productId);
+			let stock = modificarLot.product.variants[0].stock;
+			let update2 = await Orders.findOne({
+				users: userId,
+				state: 'created',
+			});
+			let modificarLot2 = update2.items.find((e) => e.product == productId);
+			if (modificarLot2) {
+				modificarLot2.lot =
+					modificarLot2.lot + parseInt(num) >= 1 &&
+					modificarLot2.lot + parseInt(num) <= stock
+						? modificarLot2.lot + parseInt(num)
+						: modificarLot2.lot;
+				await update2.save();
 			}
+			update = await Orders.findOne({users: userId, state: 'created'})
+				.populate('users', {email: 1, _id: 1})
+				.populate('items.product')
+				.exec();
+			res.send(update);
 		}
 	} catch (error) {
 		res.status(500).send({type: 'Internal server error.', error: error});

@@ -156,38 +156,38 @@ export const emptyProductCreated = () => {
 };
 
 export const getAllProducts = (
-  name,
-  category,
-  brand,
-  variants,
-  price,
-  order,
-  direction,
-  limit = Infinity
+	name,
+	category,
+	brand,
+	variants,
+	price,
+	order,
+	direction,
+	limit = Infinity
 ) => {
-  return async (dispatch) => {
-    try {
-      const { data } = await axios.get(
-        `${URLS.URL_PRODUCTS}?name=${name}&category=${category}&brand=${brand}&variants=${variants}&price=${price}&order=${order}&direction=${direction}&limit=${limit}`
-      );
+	return async (dispatch) => {
+		try {
+			const {data} = await axios.get(
+				`${URLS.URL_PRODUCTS}?name=${name}&category=${category}&brand=${brand}&variants=${variants}&price=${price}&order=${order}&direction=${direction}&limit=${limit}`
+			);
 
-      let newData = data.products.map((e) => {
-        return { lot: 0, product: { ...e } };
-      });
+			let newData = data.products.map((e) => {
+				return {lot: 0, product: {...e}};
+			});
 
-      dispatch({
-        type: ActionTypes.GET_ALL_PRODUCTS,
-        payload: newData,
-      });
-    } catch (error) {
-      dispatch({
-        type: ActionTypes.GET_PRODUCTS,
-        payload: {
-          error: "Not found",
-        },
-      });
-    }
-  };
+			dispatch({
+				type: ActionTypes.GET_ALL_PRODUCTS,
+				payload: newData,
+			});
+		} catch (error) {
+			dispatch({
+				type: ActionTypes.GET_PRODUCTS,
+				payload: {
+					error: 'Not found',
+				},
+			});
+		}
+	};
 };
 
 /*----------------------------------------------------------------PENDING---------------------------------------------------------------
@@ -337,6 +337,16 @@ export const removeCartProduct = (body) => {
   };
 };
 
+export const changeLot = (body) => {
+	return async (dispatch) => {
+		const {data} = await axios.put(URLS.URL_USER_ORDERS, body);
+		return dispatch({
+			type: 'CHANGE_LOT',
+			payload: data.items,
+		});
+	};
+};
+
 ////////////////////////////////////////  BRANDS ACTIONS  ////////////////////////////////////////
 
 export const getBrands = () => {
@@ -393,20 +403,20 @@ export const loginUser = (user) => {
 ////////////////////////////////////////  WISH LIST  ////////////////////////////////////////
 
 export const addFavProduct = (id) => {
-  // AGREGA UN PRODUCTO A FAVORITOS
-  return async (dispatch) => {
-    return dispatch({
-      type: ActionTypes.ADD_FAV_PRODUCT,
-      payload: id, // TIENE QUE SER UN {}
-    });
-  };
+	// AGREGA UN PRODUCTO A FAVORITOS
+	return async (dispatch) => {
+		return dispatch({
+			type: ActionTypes.ADD_FAV_PRODUCT,
+			payload: id, // TIENE QUE SER UN {}
+		});
+	};
 };
 export const removeFavProduct = (id) => {
-  // AGREGA UN PRODUCTO A FAVORITOS
-  return async (dispatch) => {
-    return dispatch({
-      type: ActionTypes.REMOVE_FAV_PRODUCT,
-      payload: id, // TIENE QUE SER UN ID
-    });
-  };
+	// AGREGA UN PRODUCTO A FAVORITOS
+	return async (dispatch) => {
+		return dispatch({
+			type: ActionTypes.REMOVE_FAV_PRODUCT,
+			payload: id, // TIENE QUE SER UN ID
+		});
+	};
 };
