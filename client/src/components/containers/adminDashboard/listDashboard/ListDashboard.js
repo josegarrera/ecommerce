@@ -107,6 +107,7 @@ const ListDashboard = ({Options}) => {
 					setFilter={setFilter}
 					setCreate={setCreate}
 					create={create}
+					options={Options}
 				/>
 			)}
 			{Options === 'Products' ? (
