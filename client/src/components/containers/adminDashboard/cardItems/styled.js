@@ -40,9 +40,14 @@ const ProductDashboardStyle = styled.div`
 			flex-direction: column;
 			justify-content: flex-start;
 			margin-left: 35px;
+			max-width: 80%;
 
 			.renglon {
 				display: flex;
+			}
+			.renglon2 {
+				display: flex;
+				align-items: flex-start;
 			}
 
 			.title {
@@ -73,6 +78,20 @@ const ProductDashboardStyle = styled.div`
 			.accordionItems {
 				margin-left: 20px;
 				font-size: 14px;
+			}
+
+			.description {
+				max-width: 80%;
+			}
+
+			.seeMore {
+				color: gray;
+				font-size: 13px;
+				font-weight: 600;
+
+				&:hover {
+					cursor: pointer;
+				}
 			}
 		}
 	}
