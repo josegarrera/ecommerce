@@ -19,8 +19,8 @@ const OrdersSchema = new Schema({
 				default: 1,
 			},
 			variant: {
-				type: Map,
-				of: String,
+				type: Number,
+				default: 0,
 			},
 		},
 	],
