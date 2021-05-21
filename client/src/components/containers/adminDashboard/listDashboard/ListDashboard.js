@@ -5,12 +5,17 @@ import {URLS} from '../../../../utils/constants';
 import CardItems from '../cardItems/CardItems';
 import SearchBarDashboard from '../searchBarDashboard';
 import ListStyles from './styled';
+import {clearObjectValues} from '../../../../utils/clearObjetcValues';
 
 import InfiniteScroll from 'react-infinite-scroll-component';
+
+var _ = require('lodash');
 
 const ListDashboard = ({Options}) => {
 	const [Items, setItems] = useState([]);
 	const [Filter, setFilter] = useState([]);
+	const [create, setCreate] = useState(false);
+	const [control, setControl] = useState(0);
 
 	useEffect(() => {
 		allProducts();
@@ -19,6 +24,35 @@ const ListDashboard = ({Options}) => {
 	useEffect(() => {
 		setFilter(Items);
 	}, [Items]);
+
+	useEffect(() => {
+		if (typeof Items[0] === 'object') {
+			let obj = clearObjectValues(_.cloneDeep(Items[0]));
+			console.log(obj);
+			if (create) {
+				setItems([obj].concat([...Items]));
+			} else {
+				setItems(Items.slice(1));
+			}
+		}
+	}, [create]);
+
+	// useEffect(() => {
+	// 	if (control === 0) {
+	// 		if (typeof Items[0] === 'object') {
+	// 			let obj = clearObjectValues(_.cloneDeep(Items[0]));
+	// 			console.log(obj);
+	// 			if (create) {
+	// 				setItems([obj].concat([...Items]));
+	// 			}
+	// 		}
+	// 		setControl(control + 1);
+	// 	} else {
+	// 		let array = [...Items].shift();
+	// 		setItems(array);
+	// 		setControl(control - 1);
+	// 	}
+	// }, [create]);
 
 	const allProducts = async () => {
 		if (Options === 'Products') {
@@ -67,7 +101,14 @@ const ListDashboard = ({Options}) => {
 
 	return (
 		<ListStyles>
-			{Items && <SearchBarDashboard Items={Items} setFilter={setFilter} />}
+			{Items && (
+				<SearchBarDashboard
+					Items={Items}
+					setFilter={setFilter}
+					setCreate={setCreate}
+					create={create}
+				/>
+			)}
 			{Options === 'Products' ? (
 				<InfiniteScroll
 					className='listProduct'

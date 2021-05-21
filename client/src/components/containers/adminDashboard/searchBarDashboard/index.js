@@ -3,7 +3,7 @@ import SearchStyles from './styled';
 
 let props = ['email', 'role', 'name', '_id', 'price.value', 'user'];
 
-const SearchBar = ({Items, setFilter}) => {
+const SearchBar = ({Items, setFilter, setCreate, create}) => {
 	const handleOnChangue = (e) => {
 		let arrayFilter =
 			Items &&
@@ -22,6 +22,11 @@ const SearchBar = ({Items, setFilter}) => {
 
 		setFilter(arrayFilter);
 	};
+
+	const handleClick = (e) => {
+		setCreate(!create);
+	};
+
 	/* 
 				Items.filter(
 					(el) =>
@@ -42,6 +47,9 @@ const SearchBar = ({Items, setFilter}) => {
 				placeHolder='   Search by name, price, id, categorie, role, email, etc'
 				onChange={handleOnChangue}
 			/>
+			<button className='form__button' onClick={handleClick}>
+				Create
+			</button>
 		</SearchStyles>
 	);
 };
