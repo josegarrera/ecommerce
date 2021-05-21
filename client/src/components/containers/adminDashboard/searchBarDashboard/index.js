@@ -1,9 +1,12 @@
 import React, {useState, useEffect} from 'react';
+import {useHistory} from 'react-router-dom';
 import SearchStyles from './styled';
 
 let props = ['email', 'role', 'name', '_id', 'price.value', 'user'];
 
-const SearchBar = ({Items, setFilter, setCreate, create}) => {
+const SearchBar = ({Items, setFilter, setCreate, create, options}) => {
+	let history = useHistory();
+
 	const handleOnChangue = (e) => {
 		let arrayFilter =
 			Items &&
@@ -24,7 +27,10 @@ const SearchBar = ({Items, setFilter, setCreate, create}) => {
 	};
 
 	const handleClick = (e) => {
-		setCreate(!create);
+		if (options === 'Products') history.push('/create');
+		if (options === 'Categories') history.push('/categorie');
+		if (options === 'Users' || options === 'Orders' || options === 'Brands')
+			setCreate(!create);
 	};
 
 	/* 
