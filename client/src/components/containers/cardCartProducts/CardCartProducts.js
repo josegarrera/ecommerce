@@ -5,6 +5,7 @@ import {IoCloseSharp} from 'react-icons/io5';
 import {
 	removeCartProduct,
 	updateCardProduct,
+	changeLot,
 } from '../../../redux/actions/index.js';
 import DivCard from './styled';
 
@@ -19,13 +20,18 @@ const CardCartProducts = (props) => {
 		productId: _id,
 	};
 
-	const handleSubmit = (e) => {
+	const handleSubmitDelete = (e) => {
 		e.preventDefault();
 		if (userId) {
 			dispatch(removeCartProduct(data));
 		} else {
 			//deberia filtrar desde el localStorage
 			dispatch(updateCardProduct(props.product.product._id));
+		}
+	};
+	const handleChangeLot = (e) => {
+		if (userId) {
+			dispatch(changeLot({...data, num: e}));
 		}
 	};
 
@@ -40,14 +46,22 @@ const CardCartProducts = (props) => {
 				</Link>
 
 				<div className='amountDiv'>
-					<button className='amount'>+</button>
+					<button className='amount' onClick={(e) => handleChangeLot(1)}>
+						+
+					</button>
 					<div className='amount'>{lot}</div>
-					<button className='amount'>-</button>
+					<button
+						className='amount'
+						value='-1'
+						onClick={(e) => handleChangeLot(-1)}
+					>
+						-
+					</button>
 				</div>
 				<div className='priceDiv'>
-					{price.currency} {price.value}
+					{price.currency} {lot * price.value}
 				</div>
-				<button className='closeDiv' onClick={(e) => handleSubmit(e)}>
+				<button className='closeDiv' onClick={(e) => handleSubmitDelete(e)}>
 					<IoCloseSharp />
 				</button>
 			</div>
