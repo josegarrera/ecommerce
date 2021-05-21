@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^12.8.3",
     "add": "^2.0.6",
     "axios": "^0.21.1",
+    "lodash": "^4.17.21",
     "react": "^17.0.2",
     "react-accessible-accordion": "^3.3.4",
     "react-content-loader": "^6.0.3",
