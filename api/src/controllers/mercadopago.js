@@ -79,7 +79,8 @@ function getOrderData(req, res) {
 					return order[0].save();
 				})
 				.then((orderSaved) => {
-					res.redirect('http://localhost:3000/catalogue');
+					if (!data) return res.redirect('http://localhost:3000/catalogue');
+					return res.send(orderSaved);
 				})
 				.catch((error) => {
 					res.status(500).send({type: 'Internal server error.', error: error});
@@ -92,6 +93,7 @@ function getOrderData(req, res) {
 
 function getResultPayment(req, res) {
 	const orderId = req.query.external_reference;
+	const data = req.query.data;
 	if (!orderId)
 		return res
 			.status(400)
@@ -122,8 +124,9 @@ function getResultPayment(req, res) {
 						transactionStatus === 'approved' ? 'completed' : 'canceled';
 					return order[0].save();
 				})
-				.then(() => {
-					res.redirect('http://localhost:3000/catalogue');
+				.then((orderSaved) => {
+					if (!data) return res.redirect('http://localhost:3000/catalogue');
+					return res.send(orderSaved);
 				})
 				.catch((error) => {
 					res.status(500).send({type: 'Internal server error.', error: error});
