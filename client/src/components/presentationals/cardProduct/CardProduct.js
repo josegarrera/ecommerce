@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addCartProduct,
   addFavProduct,
-  getProducts,
   removeFavProduct,
   postLocalStorage,
 } from "../../../redux/actions";
@@ -16,30 +15,29 @@ import cardLoder from "../../../utils/cardLoader";
 const CardProduct = ({ name, imageUrl, price, _id, loading }) => {
   const wishlist = useSelector((state) => state.wishlist);
   const dispatch = useDispatch();
-  const [fav, setFav] = useState(true);
   const [Load, setLoad] = useState("loading");
 
-	const handleAddCart = () => {
-		//add to cart
-		dispatch(addCartProduct(_id));
-		const user = window.localStorage.getItem('userId');
-		if (user) {
-			dispatch(postLocalStorage({products: _id, userId: user}));
-			window.localStorage.setItem('cart', JSON.stringify([]));
-		}
-	};
+  const handleAddCart = () => {
+    //add to cart
+    dispatch(addCartProduct(_id));
+    const user = window.localStorage.getItem("userId");
+    if (user) {
+      dispatch(postLocalStorage({ products: _id, userId: user }));
+      window.localStorage.setItem("cart", JSON.stringify([]));
+    }
+  };
+
+  const fav = wishlist.find(({ product }) => product._id === _id);
+
   const handleAddFav = () => {
     //add to fav
-    setFav(!fav);
     dispatch(addFavProduct(_id));
     //addToFav action=>reducer=>localStorage
   };
 
   const handleRemoveFav = () => {
     //add to fav
-    setFav(!fav);
     dispatch(removeFavProduct(_id));
-    //removeToFav action=>reducer=>localStorage
   };
 
   const handleImageLoaded = () => {
@@ -67,7 +65,7 @@ const CardProduct = ({ name, imageUrl, price, _id, loading }) => {
               <h5>{name}</h5>
             </Link>
             <h6>{price.currency + price.value}</h6>
-            {fav ? (
+            {!fav ? (
               <button className="btn__fav" onClick={handleAddFav}>
                 <AiOutlineHeart />
               </button>
