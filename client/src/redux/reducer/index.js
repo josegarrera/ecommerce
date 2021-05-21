@@ -129,6 +129,11 @@ const r = (state = initialState, { type, payload }) => {
         ...state,
         productDetail: payload,
       };
+    case ActionTypes.CLEAN_PRODUCT_DETAIL:
+      return {
+        ...state,
+        productDetail: payload,
+      };
     case ActionTypes.PRODUCT_CREATED:
       return {
         ...state,

@@ -2,19 +2,19 @@ import styled from "styled-components";
 
 const DIV_CART = styled.div`
   margin: 80px auto;
-  width: 1200px;
+  max-width: 80vw;
+  min-width: 38rem;
   height: fit-content;
-  min-height: 650px;
-  padding: 50px;
-  border-radius: 10px;
+  min-height: 40rem;
+  padding: 3.5rem;
+  border-radius: 1rem;
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
   position: relative;
-  font: inherit;
-
   .title_cnt {
     color: #ee362c;
+    border-bottom: 3px solid rgba(0, 0, 0, 0.1);
     h5 {
       color: #8f8f8f;
     }
