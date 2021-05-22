@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { confirmCheckout } from "../../../redux/actions";
+import React, {useEffect} from 'react';
+import {Link} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
+import {confirmCheckout} from '../../../redux/actions';
 
-const FORM_ID = "payment-form";
+const FORM_ID = 'payment-form';
 
 const SumarryCart = ({ casa, count, placeOrder }) => {
   const preferenceId = useSelector((state) => state.paymentMethod);
@@ -18,38 +18,39 @@ const SumarryCart = ({ casa, count, placeOrder }) => {
     dispatch(confirmCheckout({ userId, shippingAddress }));
   };
 
-  useEffect(() => {
-    if (preferenceId) {
-      // con el preferenceId en mano, inyectamos el script de mercadoPago
-      const script = document.createElement("script");
-      script.type = "text/javascript";
-      script.src =
-        "https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js";
-      script.setAttribute("data-preference-id", preferenceId);
-      const form = document.getElementById(FORM_ID);
-      form.appendChild(script);
-      return () => {
-        //Elimina el script como nodo hijo del elemento form
-        form.removeChild(script);
-      };
-    }
-  }, [preferenceId]);
 
-  return (
-    <div>
-      <div className="summary">
-        <div className="summary__title">
-          <h2>Summary</h2>
-          <div className="total__prd">
-            <p>total products</p>
-            <p>${count}</p>
-          </div>
-          <div className="total__prd">
-            <p>Shipping Cost </p>
-            <p>$500</p>
-          </div>
-        </div>
-      </div>
+	useEffect(() => {
+		if (preferenceId) {
+			// con el preferenceId en mano, inyectamos el script de mercadoPago
+			const script = document.createElement('script');
+			script.type = 'text/javascript';
+			script.src =
+				'https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js';
+			script.setAttribute('data-preference-id', preferenceId);
+			const form = document.getElementById(FORM_ID);
+			form.appendChild(script);
+			return () => {
+				//Elimina el script como nodo hijo del elemento form
+				form.removeChild(script);
+			};
+		}
+	}, [preferenceId]);
+
+	return (
+		<div>
+			<div className='summary'>
+				<div className='summary__title'>
+					<h2>Summary</h2>
+					<div className='total__prd'>
+						<p>total products</p>
+						<p>${count}</p>
+					</div>
+					<div className='total__prd'>
+						<p>Shipping Cost </p>
+						<p>$500</p>
+					</div>
+				</div>
+			</div>
 
       {placeOrder ? (
         <form id={FORM_ID} onSubmit={handleOrderSubmit}>
@@ -67,35 +68,8 @@ const SumarryCart = ({ casa, count, placeOrder }) => {
       )}
     </div>
   );
+
 };
 
 export default SumarryCart;
 
-// const FORM_ID = 'payment-form';
-
-// export default function Product() {
-
-//   useEffect(() => {
-//     if (preferenceId) {
-//       // con el preferenceId en mano, inyectamos el script de mercadoPago
-//       const script = document.createElement('script');
-//       script.type = 'text/javascript';
-//       script.src =
-//         'https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js';
-//       script.setAttribute('data-preference-id', preferenceId);
-//       const form = document.getElementById(FORM_ID);
-//       form.appendChild(script);
-//       return () =>{
-//         //Elimina el script como nodo hijo del elemento form
-//         form.removeChild(script);
-//       }
-//     }
-//   }, [preferenceId]);
-
-//   return (
-//     <form id={FORM_ID} onSubmit={onSubmit} >
-//       <button type='submit'></button>
-//     </form>
-
-//   );
-// }

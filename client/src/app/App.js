@@ -23,25 +23,27 @@ import Favourites from "../components/containers/favourites/Favourites";
 import FormCategorie from "../components/containers/formCategories/FormCategories";
 
 function App() {
-  const user = useSelector((state) => state.user);
-  return (
-    <div className="App">
-      <React.Fragment>
-        <GridLayout>
-          {/* <GlobalStyles /> */}
-          <ReactNotification />
 
-          <Route path="/">
-            {user.role ? (
-              user.role === "admin" ? (
-                <Redirect to="/adminDashboard" component={HomeDashboard} />
-              ) : (
-                <Redirect to="/home" component={Home} />
-              )
-            ) : (
-              <Redirect to="/login" component={FormLogging} />
-            )}
-          </Route>
+	const user = useSelector((state) => state.user);
+	const userId = window.localStorage.getItem('userId');
+	return (
+		<div className='App'>
+			<React.Fragment>
+				<GridLayout>
+					{/* <GlobalStyles /> */}
+					<ReactNotification />
+
+					<Route path='/'>
+						{user.role ? (
+							user.role === 'admin' ? (
+								<Redirect to='/adminDashboard' component={HomeDashboard} />
+							) : (
+								<Redirect to='/home' component={Home} />
+							)
+						) : !userId ? (
+							<Redirect to='/home' component={Home} />
+						) : null}
+					</Route>
 
           <Route exact path="/admindashboard" component={HomeDashboard} />
           <Route path="/" component={NavBar} />

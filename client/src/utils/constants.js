@@ -1,4 +1,5 @@
 export const ActionTypes = {
+
   GET_PRODUCTS: "GET_PRODUCTS",
   GET_ALL_PRODUCTS: "GET_ALL_PRODUCTS",
   GET_PRODUCTS_SEARCH: "GET_PRODUCTS_SEARCH",
@@ -33,16 +34,18 @@ export const ActionTypes = {
   CONFIRM_CHECKOUT: "CONFIRM_CHECKOUT",
 
   SET_SHIPPING_INFO: "SET_SHIPPING_INFO",
+
 };
 
 export const URLS = {
-  URL_CHECKOUT: "http://localhost:3001/checkout",
-  URL_PRODUCTS: "http://localhost:3001/products",
-  URL_ALL_PRODUCTS: "http://localhost:3001/allproducts",
-  URL_USER_ORDERS: "http://localhost:3001/orders",
-  URL_CATEGORIES: "http://localhost:3001/categories",
-  URL_BRANDS: "http://localhost:3001/brands",
-  URL_SIGNUP: "http://localhost:3001/signup",
-  URL_LOGIN: "http://localhost:3001/login",
-  URL_USERS: "http://localhost:3001/users",
+	URL_CHECKOUT: 'http://localhost:3001/checkout',
+	URL_PRODUCTS: 'http://localhost:3001/products',
+	URL_ALL_PRODUCTS: 'http://localhost:3001/allproducts',
+	URL_USER_ORDERS: 'http://localhost:3001/orders',
+	URL_CATEGORIES: 'http://localhost:3001/categories',
+	URL_FAVORITES: 'http://localhost:3001/favourites',
+	URL_BRANDS: 'http://localhost:3001/brands',
+	URL_SIGNUP: 'http://localhost:3001/signup',
+	URL_LOGIN: 'http://localhost:3001/login',
+	URL_USERS: 'http://localhost:3001/users',
 };
