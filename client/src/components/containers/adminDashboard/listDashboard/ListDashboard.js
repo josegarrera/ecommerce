@@ -52,7 +52,7 @@ const ListDashboard = ({Options}) => {
 		if (Options === 'Categories') {
 			try {
 				let itemss = await axios.get(`${URLS.URL_CATEGORIES}`);
-				setItems(itemss.data.reverse());
+				setItems(itemss.data.response.reverse());
 			} catch (error) {
 				console.log(error);
 			}
@@ -60,7 +60,7 @@ const ListDashboard = ({Options}) => {
 		if (Options === 'Users') {
 			try {
 				let itemss = await axios.get(`${URLS.URL_USERS}`);
-				setItems(itemss.data.reverse());
+				setItems(itemss.data.response.reverse());
 			} catch (error) {
 				console.log(error);
 			}
@@ -68,7 +68,7 @@ const ListDashboard = ({Options}) => {
 		if (Options === 'Orders') {
 			try {
 				let itemss = await axios.get(`${URLS.URL_USER_ORDERS}`);
-				setItems(itemss.data.reverse());
+				setItems(itemss.data.response.reverse());
 			} catch (error) {
 				console.log(error);
 			}
@@ -76,7 +76,7 @@ const ListDashboard = ({Options}) => {
 		if (Options === 'Brands') {
 			try {
 				let itemss = await axios.get(`${URLS.URL_BRANDS}`);
-				setItems(itemss.data.reverse());
+				setItems(itemss.data.response.reverse());
 			} catch (error) {
 				console.log(error);
 			}
