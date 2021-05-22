@@ -7,6 +7,8 @@ import {
 	cleanProductDetail,
 	addFavProduct,
 	removeFavProduct,
+	addFavProductToDB,
+	removeFavProductToDB,
 } from '../../../redux/actions/index';
 import {IoLogoWhatsapp, IoReturnDownBack} from 'react-icons/io5';
 import {BsLightning} from 'react-icons/bs';
@@ -42,12 +44,15 @@ const ProductDetail = (id) => {
 	const handleAddFav = () => {
 		//add to fav
 		dispatch(addFavProduct(product._id));
+		dispatch(addFavProductToDB({userId, productId: product._id}));
+
 		//addToFav action=>reducer=>localStorage
 	};
 
 	const handleRemoveFav = () => {
 		//add to fav
 		dispatch(removeFavProduct(product._id));
+		dispatch(removeFavProductToDB({userId, productId: product._id}));
 	};
 
 	if (product.name) {

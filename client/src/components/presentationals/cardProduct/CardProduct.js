@@ -9,6 +9,8 @@ import {
 	addFavProduct,
 	removeFavProduct,
 	postLocalStorage,
+	addFavProductToDB,
+	removeFavProductToDB,
 } from '../../../redux/actions';
 import cardLoder from '../../../utils/cardLoader';
 import {store} from 'react-notifications-component';
@@ -28,17 +30,19 @@ const CardProduct = ({name, imageUrl, price, _id, loading}) => {
 		}
 	};
 
-	const fav = wishlist.find(({product}) => product._id === _id);
+	const fav = wishlist && wishlist.find(({product}) => product._id === _id);
 
 	const handleAddFav = () => {
 		//add to fav
 		dispatch(addFavProduct(_id));
+		dispatch(addFavProductToDB({userId, productId: _id}));
 		//addToFav action=>reducer=>localStorage
 	};
 
 	const handleRemoveFav = () => {
 		//add to fav
 		dispatch(removeFavProduct(_id));
+		dispatch(removeFavProductToDB({userId, productId: _id}));
 	};
 
 	const handleImageLoaded = () => {

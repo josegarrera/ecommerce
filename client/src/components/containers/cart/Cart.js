@@ -1,30 +1,26 @@
 import React, {useEffect, useState} from 'react';
 import DIV_CART from './styled';
-import {useSelector, useDispatch} from 'react-redux';
+import {postLocalStorage} from '../../../redux/actions/index';
+import {useDispatch, useSelector} from 'react-redux';
 import CardCartProducts from '../cardCartProducts/CardCartProducts';
-import {postLocalStorage} from '../../../redux/actions';
 import {Link} from 'react-router-dom';
 import SumarryCart from '../sumarryCart/SumarryCart';
 import {changeCartPrice} from '../../../utils/changeCartPrice';
 
 const Cart = () => {
-	const cartProduct = useSelector((state) => state.cartProducts);
 	const dispatch = useDispatch();
+	const cartProduct = useSelector((state) => state.cartProducts);
 	const [rendering, setRendering] = useState(true);
 
-	// useEffect(() => {
-	// 	const user = window.localStorage.getItem('userId');
-	// 	if (user) {
-	// 		dispatch(postLocalStorage({products: cartProduct, userId: user}));
-	// 		window.localStorage.setItem('cart', JSON.stringify([]));
-	// 	}
-	// }, []);
+	useEffect(() => {
+		const user = window.localStorage.getItem('userId');
+		if (user) {
+			dispatch(postLocalStorage({products: cartProduct, userId: user}));
+			window.localStorage.setItem('cart', JSON.stringify([]));
+		}
+	}, []);
 
 	let count$ = cartProduct && changeCartPrice(cartProduct, rendering);
-
-	const casa = () => {
-		console.log(JSON.parse(window.localStorage.getItem('cart')));
-	};
 
 	return (
 		<DIV_CART>
@@ -75,7 +71,7 @@ const Cart = () => {
 						)}
 					</div>
 				</div>
-				<SumarryCart casa={casa} count={count$} />
+				<SumarryCart count={count$} />
 			</div>
 		</DIV_CART>
 	);
