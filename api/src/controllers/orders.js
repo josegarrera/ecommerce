@@ -16,17 +16,21 @@ async function getUserOrder(req, res, next) {
 					.populate('users', {email: 1, _id: 1})
 					.populate('items.product')
 					.exec();
-				return res.send(order);
+				return res.send({response: order, type: 'Ok', message: 'Success'});
 			} else {
-				res
-					.status(400)
-					.send({type: 'Bad request', error: 'user does not exist'});
+				res.status(400).send({
+					response: '',
+					type: 'Bad request',
+					error: 'user does not exist',
+				});
 			}
 		} else {
 			next();
 		}
 	} catch (error) {
-		res.status(500).send({type: 'Internal server error.', error: error});
+		res
+			.status(500)
+			.send({response: '', type: 'Internal server error.', message: error});
 	}
 }
 
@@ -38,20 +42,28 @@ async function getAllUserOrders(req, res, next) {
 			if (userExists) {
 				let orders = await Orders.find({users: userId, state: 0});
 				if (orders.length) {
-					return res.send(orders);
+					return res.send({response: orders, type: 'Ok', message: 'Success'});
 				} else {
-					res.send({message: 'user do not have complete orders yet'});
+					res.send({
+						response: '',
+						type: 'Ok',
+						message: 'User do not have complete orders yet',
+					});
 				}
 			} else {
-				res
-					.status(400)
-					.send({type: 'Bad request', error: 'user does not exist'});
+				res.status(400).send({
+					response: '',
+					type: 'Bad request',
+					message: 'User does not exist',
+				});
 			}
 		} else {
 			next();
 		}
 	} catch (error) {
-		res.status(500).send({type: 'Internal server error.', error: error});
+		res
+			.status(500)
+			.send({response: '', type: 'Internal server error.', message: error});
 	}
 }
 
@@ -121,15 +133,18 @@ async function addProduct(req, res) {
 				.populate('users', {email: 1, _id: 1})
 				.populate('items.product')
 				.exec();
-			return res.send(order);
+			return res.send({response: order, type: 'Ok', message: 'Success'});
 		} else {
 			res.status(400).send({
 				type: 'bad request',
 				message: userExists ? "there's not products to add" : 'user not found',
+				response: '',
 			});
 		}
 	} catch (err) {
-		res.status(500).send({type: 'Internal server error.', error: err});
+		res
+			.status(500)
+			.send({response: '', type: 'Internal server error.', message: err});
 	}
 }
 
@@ -150,12 +165,18 @@ async function deleteProduct(req, res) {
 				.populate('users', {email: 1, _id: 1})
 				.populate('items.product')
 				.exec();
-			res.send(update);
+			res.send({response: update, type: 'Ok', message: 'Success'});
 		} else {
-			res.send({message: 'The user id does not exist'});
+			res.status(400).send({
+				response: '',
+				type: 'Bad request',
+				message: 'The user id does not exist',
+			});
 		}
 	} catch (err) {
-		res.status(500).send({type: 'Internal server error.', error: error});
+		res
+			.status(500)
+			.send({response: '', type: 'Internal server error.', message: err});
 	}
 }
 
@@ -186,19 +207,23 @@ async function changeLot(req, res) {
 				.populate('users', {email: 1, _id: 1})
 				.populate('items.product')
 				.exec();
-			res.send(update);
+			res.send({response: update, type: 'Ok', message: 'Success'});
 		}
 	} catch (error) {
-		res.status(500).send({type: 'Internal server error.', error: error});
+		res
+			.status(500)
+			.send({response: '', type: 'Internal server error.', message: error});
 	}
 }
 
 function getAllOrders(req, res) {
 	Orders.find({})
 		.exec()
-		.then((data) => res.send(data))
+		.then((data) => res.send({response: data, type: 'Ok', message: 'Success'}))
 		.catch((error) =>
-			res.status(500).send({type: 'Internal Server Error', error: error})
+			res
+				.status(500)
+				.send({response: '', type: 'Internal Server Error', message: error})
 		);
 }
 
@@ -206,24 +231,29 @@ async function getOrderById(req, res) {
 	const {id} = req.params;
 	if (!id)
 		return res.status(400).send({
+			response: '',
 			type: 'Bad Request',
-			error: 'No ID in params',
+			message: 'No ID in params',
 		});
 	if (!mongoose.Types.ObjectId.isValid(id))
 		return res.status(400).send({
+			response: '',
 			type: 'Bad Request',
-			error: 'ID is invalid',
+			message: 'ID is invalid',
 		});
 	else {
 		Orders.findById(id)
 			.populate('products', {name: 1})
 			.populate('users', {email: 1})
 			.exec()
-			.then((data) => res.send(data))
+			.then((data) =>
+				res.send({response: data, type: 'Ok', message: 'Success'})
+			)
 			.catch((err) =>
 				res.status(500).send({
+					response: '',
 					type: 'Internal server error.',
-					error: err,
+					message: err,
 				})
 			);
 	}
@@ -231,11 +261,21 @@ async function getOrderById(req, res) {
 
 function deleteOrder(req, res) {
 	const {id} = req.params;
+	if (!id)
+		return res.status(400).send({
+			response: '',
+			type: 'Bad Request',
+			message: 'No ID in params',
+		});
 	Orders.findByIdAndRemove(id, function (err, doc) {
 		if (err) {
-			return res.status(400).send(err);
+			res.status(500).send({
+				response: '',
+				type: 'Internal server error.',
+				message: err,
+			});
 		} else {
-			res.send(doc);
+			res.send({response: doc, type: 'Ok', message: 'Success'});
 		}
 	});
 }

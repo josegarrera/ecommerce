@@ -10,6 +10,7 @@ const currencies = require('./currencies.js');
 const users = require('./users.js');
 const checkout = require('./checkout.js');
 const favourites = require('./favourites.js');
+const {getAllProducts} = require('../controllers/products.js');
 
 // authentication
 router.post(
@@ -63,7 +64,7 @@ router.get(
 		});
 	}
 );
-
+router.get('/allproducts', getAllProducts);
 router.use('/products', products);
 router.use('/categories', categories);
 router.use('/brands', brands);
