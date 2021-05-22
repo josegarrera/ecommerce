@@ -7,12 +7,21 @@ import SumaryCart from "../sumarryCart/SumarryCart";
 import { Link } from "react-router-dom";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { MdPayment } from "react-icons/md";
-import { FaCcPaypal } from "react-icons/fa";
+import { FaCcStripe } from "react-icons/fa";
 import { ImCheckboxChecked } from "react-icons/im";
 import { FiBox } from "react-icons/fi";
+import { useSelector } from "react-redux";
 
 function Index() {
-  const [payment, setPayment] = useState({ paymentMethod: "mercadopago" });
+
+  const [payment, setPayment] = useState({ paymentMethod: "" });
+
+  const onClickHandler = (e) => {
+    setPayment({ paymentMethod: e });
+  };
+
+  console.log(payment);
+
   return (
     <PaymentInformation_Style>
       <CheckoutSteps step1 step2 step3 step4></CheckoutSteps>
@@ -53,17 +62,56 @@ function Index() {
                 <i className="payment__icon ">
                   <MdPayment />
                 </i>
-                <div className="payment__option">
-                  <div className="payment__option__left">
-                    <i>
-                      <FaCcPaypal />
-                    </i>
-                    <span className="payment__method">Paypal</span>
+
+                <div className="payment__options">
+                  {/* Option 1 */}
+                  <div
+                    className={
+                      payment
+                        ? payment.paymentMethod === "stripe"
+                          ? "active"
+                          : "payment__option"
+                        : ""
+                    }
+                    name="stripe"
+                    onClick={() => onClickHandler("stripe")}
+                  >
+                    <div className="payment__option__left">
+                      <i>
+                        <FaCcStripe />
+                      </i>
+                      <span className="payment__method">Stripe</span>
+                    </div>
+                    <div className="payment__option__right">
+                      <i className="payment__selected">
+                        <ImCheckboxChecked />
+                      </i>
+                    </div>
                   </div>
-                  <div className="payment__option__right">
-                    <i className="payment__selected">
-                      <ImCheckboxChecked />
-                    </i>
+
+                  {/* Option 2 */}
+                  <div
+                    className={
+                      payment
+                        ? payment.paymentMethod === "mercadopago"
+                          ? "active"
+                          : "payment__option"
+                        : ""
+                    }
+                    name="stripe"
+                    onClick={() => onClickHandler("mercadopago")}
+                  >
+                    <div className="payment__option__left">
+                      <i>
+                        <FaCcStripe />
+                      </i>
+                      <span className="payment__method ">Mercadopago</span>
+                    </div>
+                    <div className="payment__option__right">
+                      <i className="payment__selected">
+                        <ImCheckboxChecked />
+                      </i>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -124,7 +172,7 @@ function Index() {
         </div>
 
         <div className="row__bot">
-          <Link to="/payment">
+          <Link to="/shipping">
             <button className="form__button">Back</button>
           </Link>
         </div>

@@ -38,21 +38,6 @@ function index({ step1, step2, step3, step4 }) {
           </div>
         </div>
 
-        <div className={step3 ? "checked" : "unchecked"}>
-          <div className="step">
-            {step2 ? (
-              <i>
-                <RiCheckboxCircleFill />
-              </i>
-            ) : (
-              <i>
-                <RiCheckboxBlankCircleLine />
-              </i>
-            )}
-            <span>Payment</span>
-          </div>
-        </div>
-
         <div className={step4 ? "checked" : "unchecked"}>
           <div className="step">
             {step2 ? (
