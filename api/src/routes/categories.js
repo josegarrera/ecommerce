@@ -1,15 +1,15 @@
 const {
 	createCategories,
 	getAllCategories,
-	updateACategorie,
-	deleteACategorie,
+	updateACategory,
+	deleteACategory,
 } = require('../controllers/categories.js');
 const {Router} = require('express');
 const router = Router();
 
 router.get('/', getAllCategories);
 router.post('/', createCategories);
-router.put('/', updateACategorie);
-router.delete('/:id', deleteACategorie);
+router.put('/:id', updateACategory);
+router.delete('/:id', deleteACategory);
 
 module.exports = router;

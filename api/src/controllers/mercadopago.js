@@ -9,17 +9,29 @@ mercadopago.configure({
 function initiatePayment(req, res) {
 	const userId = req.body.userId;
 	if (!userId) {
-		return res
-			.status(400)
-			.send({type: 'Bad request.', error: 'The fields are empty.'});
+		return res.status(400).send({
+			response: '',
+			type: 'Bad request',
+			message: 'The fields are empty',
+		});
 	}
 	Orders.find({users: userId, state: 'created'})
 		.populate('users', {email: 1, _id: 1})
 		.populate('items.product', {_id: 1, price: 1, name: 1})
 		.exec()
 		.then((order) => {
-			if (!order.length) return res.send('The order does not exist.');
-			if (!order[0].items.length) return res.send('Product list is empty.');
+			if (!order.length)
+				return res.status(400).send({
+					response: '',
+					type: 'Bad request',
+					message: 'The order does not exist',
+				});
+			if (!order[0].items.length)
+				return res.status(400).send({
+					response: '',
+					type: 'Bad request',
+					message: 'Product list is empty.',
+				});
 			const items = order[0].items.map((item) => {
 				return {
 					id: item.product._id,
@@ -34,13 +46,7 @@ function initiatePayment(req, res) {
 				items: items,
 				purpose: 'wallet_purchase',
 				external_reference: `${order[0]._id}`,
-				auto_return: 'approved',
-				back_urls: {
-					success: 'http://localhost:3001/checkout/mp/payments',
-					failure: 'http://localhost:3001/checkout/mp/payments/',
-					pending: `http://localhost:3001/checkout/mp/payments/${order[0]._id}`,
-				},
-
+				notification_url: `${process.env.MP_NOTIFICATION_URL}/mp/notifications`,
 				shipments: {
 					cost: 500,
 					mode: 'not_specified',
@@ -55,14 +61,13 @@ function initiatePayment(req, res) {
 			]);
 		})
 		.then((response) => {
-			if (!response.length)
-				return res
-					.status(500)
-					.send({type: 'Internal server error.', error: error});
-			res.send(response[1]);
+			if (!response.length) throw new Error();
+			res.send({response: response[1].body.id, type: 'Ok', message: 'Success'});
 		})
 		.catch((error) => {
-			res.status(500).send({type: 'Internal server error.', error: error});
+			res
+				.status(500)
+				.send({response: '', type: 'Internal server error.', error: error});
 		});
 }
 
@@ -79,63 +84,97 @@ function getOrderData(req, res) {
 					return order[0].save();
 				})
 				.then((orderSaved) => {
-					if (!data) return res.redirect('http://localhost:3000/catalogue');
-					return res.send(orderSaved);
+					return res.send({
+						response: orderSaved,
+						type: 'Ok',
+						message: 'Success',
+					});
 				})
 				.catch((error) => {
-					res.status(500).send({type: 'Internal server error.', error: error});
+					res.status(500).send({
+						response: '',
+						type: 'Internal server error.',
+						message: error,
+					});
 				});
 		})
 		.catch((error) => {
-			res.status(500).send({type: 'Internal server error.', error: error});
+			res
+				.status(500)
+				.send({response: '', type: 'Internal server error.', message: error});
 		});
 }
 
 function getResultPayment(req, res) {
 	const orderId = req.query.external_reference;
-	const data = req.query.data;
 	if (!orderId)
-		return res
-			.status(400)
-			.send({type: 'Bad request.', error: 'The fields are empty.'});
+		return res.status(400).send({
+			response: '',
+			type: 'Bad request.',
+			error: 'The fields are empty.',
+		});
 	mercadopago
 		.get('/v1/payments/search', {external_reference: orderId})
 		.then((payment) => {
-			const paymentId = payment.body.results[0].id;
-			const transactionStatus = payment.body.results[0].status;
-			const datePayment = payment.body.results[0].date_approved;
-			const paymentStatus = payment.body.results[0].status_detail;
-			const transactionDetail = {
-				...payment.body.results[0].transaction_details,
-				installments: payment.body.results[0].installments,
-				shippingCost: payment.body.results[0].shipping_cost,
-				currency: payment.body.results[0].currency_id,
-			};
-
-			Orders.find({_id: orderId})
-				.exec()
-				.then((order) => {
-					order[0].paymentId = paymentId;
-					order[0].transactionStatus = transactionStatus;
-					order[0].paymentStatus = paymentStatus;
-					order[0].datePayment = datePayment;
-					order[0].transactionDetail = transactionDetail;
-					order[0].state =
-						transactionStatus === 'approved' ? 'completed' : 'canceled';
-					return order[0].save();
-				})
-				.then((orderSaved) => {
-					if (!data) return res.redirect('http://localhost:3000/catalogue');
-					return res.send(orderSaved);
-				})
-				.catch((error) => {
-					res.status(500).send({type: 'Internal server error.', error: error});
-				});
+			return res.send({response: payment, type: 'Ok', message: 'Success'});
+		})
+		.catch((error) => {
+			res
+				.status(500)
+				.send({response: '', type: 'Internal server error.', message: error});
 		});
+}
+
+function getNotificationsMp(req, res) {
+	const id = req.query['data.id'];
+	if (id) {
+		let paymentId;
+		let transactionStatus;
+		let datePayment;
+		let paymentStatus;
+		let transactionDetail;
+		mercadopago.payments
+			.get(id)
+			.then((payment) => {
+				console.log(payment.body, 'recibiendo el payment');
+				paymentId = payment.body.id;
+				transactionStatus = payment.body.status;
+				datePayment = payment.body.date_approved;
+				paymentStatus = payment.body.status_detail;
+				transactionDetail = {
+					...payment.body.transaction_details,
+					installments: payment.body.installments,
+					shippingCost: payment.body.shipping_cost,
+					currency: payment.body.currency_id,
+				};
+				const orderId = payment.external_reference;
+				return Orders.find({_id: orderId}).exec();
+			})
+			.then((order) => {
+				order[0].paymentId = paymentId;
+				order[0].transactionStatus = transactionStatus;
+				order[0].paymentStatus = paymentStatus;
+				order[0].datePayment = datePayment;
+				order[0].transactionDetail = transactionDetail;
+				order[0].state =
+					transactionStatus === 'approved' ? 'completed' : 'canceled';
+				console.log(order, 'actualizando la order');
+				return order[0].save();
+			});
+		/* .then((orderSaved) => {
+			return res.send({response: orderSaved, type: 'Ok', message: 'Success'});
+		})
+		.catch((error) => {
+			res
+				.status(500)
+				.send({response: '', type: 'Internal server error.', message: error});
+		}); */
+	}
 }
 
 module.exports = {
 	initiatePayment,
 	getOrderData,
 	getResultPayment,
+	getNotificationsMp,
 };

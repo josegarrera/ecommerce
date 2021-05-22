@@ -11,25 +11,28 @@ async function getProductsDetail(req, res) {
 	const {id} = req.params;
 	if (!id)
 		return res.status(400).send({
+			response: '',
 			type: 'Bad Request',
-			error: 'No ID in params',
+			message: 'No ID in params',
 		});
 	if (!mongoose.Types.ObjectId.isValid(id))
 		return res.status(400).send({
+			response: '',
 			type: 'Bad Request',
-			error: 'ID is invalid',
+			message: 'ID is invalid',
 		});
 	else {
 		Products.findById(id)
 			.populate('categories', {name: true})
 			.populate('brands', {name: true})
 			.exec()
-			.then((data) => res.send(data))
+			.then((data) =>
+				res.send({response: data, type: 'Ok', message: 'Success'})
+			)
 			.catch((err) =>
-				res.status(500).send({
-					type: 'Internal server error.',
-					error: err,
-				})
+				res
+					.status(500)
+					.send({response: '', type: 'Internal Server Error', message: err})
 			);
 	}
 }
@@ -48,13 +51,16 @@ async function createProduct(req, res) {
 	const checkExists = await Products.exists({name});
 
 	if (!req.body || !name || !description || !price || !brands || !imageUrl)
-		return res
-			.status(400)
-			.send({type: 'Bad request.', error: 'The fields are empty.'});
+		return res.status(400).send({
+			response: '',
+			type: 'Bad request.',
+			message: 'The fields are empty.',
+		});
 	if (checkExists)
 		return res.status(500).send({
+			response: '',
 			type: 'Internal server error.',
-			error: 'A product with this name already exists',
+			message: 'A product with this name already exists',
 		});
 
 	const product = new Products({
@@ -78,9 +84,11 @@ async function createProduct(req, res) {
 					product.categories.push(el.doc._id) &&
 					el.doc.save((err) => {
 						if (err)
-							return res
-								.status(500)
-								.send({type: 'Internal server error.', error: err});
+							return res.status(500).send({
+								response: '',
+								type: 'Internal Server Error',
+								message: err,
+							});
 					})
 			);
 			const brandsCreated = brands.map((el) => Brands.findOrCreate({name: el}));
@@ -93,22 +101,28 @@ async function createProduct(req, res) {
 					product.brands.push(el.doc._id) &&
 					el.doc.save((err) => {
 						if (err)
-							return res
-								.status(500)
-								.send({type: 'Internal server error.', error: err});
+							return res.status(500).send({
+								response: '',
+								type: 'Internal Server Error',
+								message: err,
+							});
 					})
 			);
 
 			product.save((err) => {
 				if (err)
-					return res
-						.status(500)
-						.send({type: 'Internal server error.', error: err});
-				res.send(product);
+					return res.status(500).send({
+						response: '',
+						type: 'Internal Server Error',
+						message: err,
+					});
+				res.send({response: product, type: 'Ok', message: 'Success'});
 			});
 		})
 		.catch((error) =>
-			res.status(500).send({type: 'Internal server error.', error: error})
+			res
+				.status(500)
+				.send({response: '', type: 'Internal Server Error', message: error})
 		);
 }
 
@@ -116,19 +130,19 @@ function getAllProducts(req, res) {
 	Products.find()
 		.populate('categories', {name: 1})
 		.populate('brands', {name: 1})
-		.sort(order)
 		.exec()
 		.then((data) => {
 			if (!data.length)
 				return res.send({
 					products: [],
-					pages: [],
 					message: 'Query parameters do not match.',
 				});
-			return res.send(data);
+			return res.send({response: data, type: 'Ok', message: 'Success'});
 		})
 		.catch((error) =>
-			res.status(500).send({type: 'Internal Server Error', error: error})
+			res
+				.status(500)
+				.send({response: '', type: 'Internal Server Error', message: error})
 		);
 }
 
@@ -216,16 +230,20 @@ function getProducts(req, res) {
 			return res.send({products, pages});
 		})
 		.catch((error) =>
-			res.status(500).send({type: 'Internal Server Error', error: error})
+			res
+				.status(500)
+				.send({response: '', type: 'Internal Server Error', message: error})
 		);
 }
 
 async function updateProduct(req, res) {
 	const {body} = req;
 	if (!body)
-		return res
-			.status(400)
-			.send({type: 'Bad request.', error: 'The fields are empty.'});
+		return res.status(400).send({
+			response: '',
+			type: 'Bad request.',
+			message: 'The fields are empty.',
+		});
 	const product = {};
 	for (const key in body) {
 		if (body[key]) product[key] = body[key];
@@ -235,10 +253,65 @@ async function updateProduct(req, res) {
 			{_id: req.params.id},
 			product
 		);
-		if (updatedProduct) return res.send(product);
-		return res.send({message: 'No results.'});
+		if (product.categories) {
+			product.categories.length &&
+				(await Promise.all(
+					product.categories.map((id) =>
+						Categories.findByIdAndUpdate(
+							{_id: id},
+							{$addToSet: {products: req.params.id}}
+						)
+					)
+				));
+			const categoriesWithProduct = await Categories.find({
+				products: req.params.id,
+			});
+			const categoriesToUpdate = categoriesWithProduct
+				.map((category) => category._doc._id)
+				.filter((id) => !product.categories.includes(String(id)));
+
+			categoriesToUpdate.length &&
+				(await Promise.all(
+					categoriesToUpdate.map((id) =>
+						Categories.findByIdAndUpdate(
+							{_id: id},
+							{$pull: {products: req.params.id}}
+						)
+					)
+				));
+		}
+		if (product.brands) {
+			product.brands.length &&
+				(await Promise.all(
+					product.brands.map((id) =>
+						Brands.findByIdAndUpdate(
+							{_id: id},
+							{$addToSet: {products: req.params.id}}
+						)
+					)
+				));
+			const brandsWithProduct = await Brands.find({
+				products: req.params.id,
+			});
+			const brandsToUpdate = brandsWithProduct
+				.map((brand) => brand._doc._id)
+				.filter((id) => !product.brands.includes(String(id)));
+
+			brandsToUpdate.length &&
+				(await Promise.all(
+					brandsToUpdate.map((id) =>
+						Brands.findByIdAndUpdate(
+							{_id: id},
+							{$pull: {products: req.params.id}}
+						)
+					)
+				));
+		}
+		return res.send({response: product, type: 'Ok', message: 'Success'});
 	} catch (error) {
-		res.status(500).send({type: 'Internal Server Error', error: error});
+		res
+			.status(500)
+			.send({response: '', type: 'Internal Server Error', message: error});
 	}
 }
 
@@ -247,13 +320,50 @@ async function deleteProduct(req, res) {
 	if (!idProduct)
 		return res
 			.status(400)
-			.send({type: 'Bad request.', error: 'The fields are empty.'});
+			.send({
+				response: '',
+				type: 'Bad request.',
+				error: 'The fields are empty.',
+			});
 	try {
 		const deletedProduct = await Products.findByIdAndDelete(idProduct);
+
+		const brandsWithProduct = await Brands.find({
+			products: idProduct,
+		});
+		const brandsToDeleteProduct = brandsWithProduct.map(
+			(brand) => brand._doc._id
+		);
+		brandsToDeleteProduct.length &&
+			(await Promise.all(
+				brandsToDeleteProduct.map((idBrand) =>
+					Brands.findByIdAndUpdate(
+						{_id: idBrand},
+						{$pull: {products: idProduct}}
+					)
+				)
+			));
+		const categoriesWithProduct = await Categories.find({
+			products: idProduct,
+		});
+		const categoriesToDeleteProduct = categoriesWithProduct.map(
+			(category) => category._doc._id
+		);
+		categoriesToDeleteProduct.length &&
+			(await Promise.all(
+				categoriesToDeleteProduct.map((idCategory) =>
+					Categories.findByIdAndUpdate(
+						{_id: idCategory},
+						{$pull: {products: idProduct}}
+					)
+				)
+			));
 		if (deletedProduct) return res.send(deletedProduct);
 		return res.send({message: 'No results.'});
 	} catch (error) {
-		res.status(500).send({type: 'Internal Server Error', error: error});
+		res
+			.status(500)
+			.send({response: '', type: 'Internal Server Error', message: error});
 	}
 }
 

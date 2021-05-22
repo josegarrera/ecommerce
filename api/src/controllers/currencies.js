@@ -22,14 +22,20 @@ function getCurrencyToday(req, res) {
 					date: today.getDate(),
 					month: today.getMonth(),
 				});
-				res.send(currency);
+				res.send({response: currency, type: 'Ok', message: 'Success'});
 				return currency.save();
 			} else {
-				res.send('The currency is up to date');
+				res.send({
+					response: 'The currency is up to date',
+					type: 'Ok',
+					message: 'Success',
+				});
 			}
 		})
 		.catch((err) =>
-			res.status(500).send({type: 'Internal server error.', error: err})
+			res
+				.status(500)
+				.send({response: '', type: 'Internal server error.', message: err})
 		);
 }
 

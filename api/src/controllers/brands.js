@@ -1,27 +1,29 @@
-const {compareSync} = require('bcrypt');
-const brands = require('../models/brands.js');
 const {Brands, Products} = require('../models/index.js');
 
 function getAllBrands(req, res) {
 	Brands.find({}, 'name')
 		.exec()
-		.then((data) => res.send(data))
+		.then((data) => res.send({response: data, type: 'Ok', message: 'Success'}))
 		.catch((error) =>
-			res.status(500).send({type: 'Internal Server Error', error: error})
+			res
+				.status(500)
+				.send({response: '', type: 'Internal Server Error', message: error})
 		);
 }
 
 async function createBrands(req, res) {
 	if (!req.body || !req.body.name) {
-		return res
-			.status(400)
-			.send({type: 'Bad request.', error: 'The fields are empty.'});
+		return res.status(400).send({
+			response: '',
+			type: 'Bad request.',
+			error: 'The fields are empty.',
+		});
 	}
 	try {
 		const productsFound = await Promise.all(
 			req.body.products.map((id) => Products.findOne({_id: id}))
 		);
-		const brandedProducts = productsFound.forEach((product) => {
+		productsFound.forEach((product) => {
 			product.brands = product.brands.concat(req.body.products);
 		});
 		await Promise.all(productsFound.map((prod) => prod.save()));
@@ -30,13 +32,13 @@ async function createBrands(req, res) {
 			if (err)
 				return res
 					.status(500)
-					.send({type: 'Internal server error.', error: err.message});
-			res.send(brand);
+					.send({response: '', type: 'Internal Server Error', message: err});
+			res.send({response: brand, type: 'Ok', message: 'Success'});
 		});
 	} catch (err) {
 		return res
 			.status(500)
-			.send({type: 'Internal server error.', error: err.message});
+			.send({response: '', type: 'Internal Server Error', message: err});
 	}
 }
 
@@ -45,7 +47,7 @@ async function updateBrand(req, res) {
 	if (!name || !products)
 		return res
 			.status(400)
-			.send({type: 'Bad request.', error: 'The brand is empty.'});
+			.send({response: '', type: 'Bad request.', error: 'The brand is empty.'});
 	try {
 		const updatedBrand = await Brands.findByIdAndUpdate(req.params.id, {
 			name: name,
@@ -78,9 +80,11 @@ async function updateBrand(req, res) {
 				)
 			));
 
-		return res.send({message: 'Brand updated', updatedBrand});
+		return res.send({response: updatedBrand, type: 'Ok', message: 'Success'});
 	} catch (error) {
-		res.status(500).send({type: 'Internal Server Error', error: error});
+		res
+			.status(500)
+			.send({response: '', type: 'Internal Server Error', message: error});
 	}
 }
 
@@ -100,9 +104,11 @@ async function deleteBrand(req, res) {
 				)
 			));
 		const brandRemoved = await Brands.findByIdAndRemove(id);
-		return res.send(brandRemoved);
+		return res.send({response: brandRemoved, type: 'Ok', message: 'Success'});
 	} catch (error) {
-		res.status(500).send({type: 'Internal Server Error', error: error});
+		res
+			.status(500)
+			.send({response: '', type: 'Internal Server Error', message: error});
 	}
 }
 
