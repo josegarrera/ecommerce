@@ -25,6 +25,7 @@ import FormCategorie from '../components/containers/formCategories/FormCategorie
 
 function App() {
 	const user = useSelector((state) => state.user);
+	const userId = window.localStorage.getItem('userId');
 	return (
 		<div className='App'>
 			<React.Fragment>
@@ -39,8 +40,10 @@ function App() {
 							) : (
 								<Redirect to='/home' component={Home} />
 							)
+						) : !userId ? (
+							<Redirect to='/home' component={Home} />
 						) : (
-							<Redirect to='/login' component={FormLogging} />
+							<Redirect to='/catalogue' component={Catalogue} />
 						)}
 					</Route>
 
