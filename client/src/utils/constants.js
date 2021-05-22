@@ -29,9 +29,12 @@ export const ActionTypes = {
 
   ADD_FAV_PRODUCT: "ADD_FAV_PRODUCT",
   REMOVE_FAV_PRODUCT: "REMOVE_FAV_PRODUCT",
+
+  CONFIRM_CHECKOUT: "CONFIRM_CHECKOUT",
 };
 
 export const URLS = {
+  URL_CHECKOUT: "http://localhost:3001/checkout",
   URL_PRODUCTS: "http://localhost:3001/products",
   URL_ALL_PRODUCTS: "http://localhost:3001/allproducts",
   URL_USER_ORDERS: "http://localhost:3001/orders",
