@@ -42,9 +42,7 @@ function App() {
 							)
 						) : !userId ? (
 							<Redirect to='/home' component={Home} />
-						) : (
-							<Redirect to='/catalogue' component={Catalogue} />
-						)}
+						) : null}
 					</Route>
 
 					<Route exact path='/admindashboard' component={HomeDashboard} />
