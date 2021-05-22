@@ -46,16 +46,16 @@ const CardCartProducts = (props) => {
 				</Link>
 
 				<div className='amountDiv'>
-					<button className='amount' onClick={(e) => handleChangeLot(1)}>
-						+
-					</button>
-					<div className='amount'>{lot}</div>
 					<button
 						className='amount'
 						value='-1'
 						onClick={(e) => handleChangeLot(-1)}
 					>
 						-
+					</button>
+					<div className='amount'>{lot}</div>
+					<button className='amount' onClick={(e) => handleChangeLot(1)}>
+						+
 					</button>
 				</div>
 				<div className='priceDiv'>
