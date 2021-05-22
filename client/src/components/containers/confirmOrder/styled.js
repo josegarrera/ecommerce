@@ -98,8 +98,8 @@ const PaymentInformation_Style = styled.div`
   }
 
   .payment__content {
-    padding: 1rem 0;
     display: flex;
+    padding: 1rem 0;
     align-items: center;
   }
 
@@ -107,6 +107,36 @@ const PaymentInformation_Style = styled.div`
 
   .payment__option {
     display: flex;
+    margin: 0.5rem 0;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fafafa;
+    border-radius: 0.5rem;
+    border: 1px solid #eeeeee;
+
+    i {
+      color: #bdbdbd;
+    }
+
+    .payment__option__left {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .payment__option__right {
+      font-size: 1rem;
+    }
+
+    .payment__selected {
+      font-size: 1rem;
+    }
+  }
+
+  .active {
+    display: flex;
+    margin: 0.5rem 0;
     width: 100%;
     justify-content: space-between;
     align-items: center;
@@ -119,15 +149,14 @@ const PaymentInformation_Style = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
-
-      i {
-        width: 30px;
-        height: 30px;
-      }
     }
 
     .payment__selected {
       font-size: 1rem;
+    }
+
+    i {
+      color: #ee362e;
     }
   }
 

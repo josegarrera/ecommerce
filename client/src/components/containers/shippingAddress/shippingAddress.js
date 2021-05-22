@@ -71,7 +71,7 @@ function index() {
                 <Link to="/cart">
                   <button className="form__button">Back</button>
                 </Link>
-                <Link to="/payment">
+                <Link to="/confirmation">
                   <button className="form__button">Continue</button>
                 </Link>
               </div>

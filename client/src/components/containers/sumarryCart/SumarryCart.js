@@ -9,7 +9,8 @@ const SumarryCart = ({ casa, count, placeOrder }) => {
   const preferenceId = useSelector((state) => state.paymentMethod);
 
   const dispatch = useDispatch();
-  const userId = "60a1b963f57cc824c8a58513";
+  const userId = localStorage.userId;
+  console.log(userId)
 
   const handleOrderSubmit = (e) => {
     e.preventDefault();
@@ -48,7 +49,6 @@ const SumarryCart = ({ casa, count, placeOrder }) => {
           </div>
         </div>
       </div>
-
 
       {placeOrder ? (
         <form id={FORM_ID} onSubmit={handleOrderSubmit}>
