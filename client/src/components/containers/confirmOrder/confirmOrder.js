@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/jsx-pascal-case */
-import React from "react";
+import React, { useState } from "react";
 import PaymentInformation_Style from "./styled";
 import CheckoutSteps from "../checkoutSteps/checkoutSteps";
 import SumaryCart from "../sumarryCart/SumarryCart";
@@ -11,7 +11,8 @@ import { FaCcPaypal } from "react-icons/fa";
 import { ImCheckboxChecked } from "react-icons/im";
 import { FiBox } from "react-icons/fi";
 
-function index() {
+function Index() {
+  const [payment, setPayment] = useState({ paymentMethod: "mercadopago" });
   return (
     <PaymentInformation_Style>
       <CheckoutSteps step1 step2 step3 step4></CheckoutSteps>
@@ -19,8 +20,6 @@ function index() {
       <div className="confirmation">
         <div className="main">
           <div className="left__col">
-
-
             <div className="section">
               <div className="row__top">
                 <h1 className="form__title">Shipping Address</h1>
@@ -120,7 +119,7 @@ function index() {
           </div>
 
           <div className="right__col">
-            <SumaryCart></SumaryCart>
+            <SumaryCart placeOrder={true}></SumaryCart>
           </div>
         </div>
 
@@ -134,4 +133,4 @@ function index() {
   );
 }
 
-export default index;
+export default Index;

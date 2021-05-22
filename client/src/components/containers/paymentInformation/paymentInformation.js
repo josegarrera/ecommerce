@@ -7,15 +7,15 @@ import { FaCcPaypal } from "react-icons/fa";
 import { ImCheckboxChecked } from "react-icons/im";
 
 function Index() {
-  const [toggle, setToggle] = useState({
+  const [payment, setPayment] = useState({
     paymentMethod: "",
   });
 
   const onClickHandler = (e) => {
-    setToggle({ paymentMethod: e });
+    setPayment({ paymentMethod: e });
   };
 
-  console.log(toggle.paymentMethod);
+  console.log(payment.paymentMethod);
 
   return (
     <PaymentInformation_Style>
@@ -32,8 +32,8 @@ function Index() {
               <div className="row__payment">
                 <div
                   className={
-                    toggle
-                      ? toggle.paymentMethod === "stripe"
+                    payment
+                      ? payment.paymentMethod === "stripe"
                         ? "active"
                         : "payment__option"
                       : ""
@@ -55,8 +55,8 @@ function Index() {
                 </div>
                 <div
                   className={
-                    toggle
-                      ? toggle.paymentMethod === "mercadopago"
+                    payment
+                      ? payment.paymentMethod === "mercadopago"
                         ? "active"
                         : "payment__option"
                       : ""
