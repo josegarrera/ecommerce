@@ -85,7 +85,7 @@ const FormProduct = () => {
 		} else if (!productCreated.hasOwnProperty('name') && status.completed) {
 			Swal.fire({
 				title: 'Error',
-				text: productCreated.error,
+				text: productCreated.message,
 				icon: 'error',
 				confirmButtonText: 'Ok',
 			});

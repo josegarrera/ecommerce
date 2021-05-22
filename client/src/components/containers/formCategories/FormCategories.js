@@ -98,8 +98,6 @@ const FormCategorie = () => {
 		);
 	};
 
-
-
 	const handleVariantsInput = (e) => {
 		console.log(Inputs);
 		setErrors(
@@ -139,7 +137,7 @@ const FormCategorie = () => {
 					products: [],
 					periferic: false,
 				});
-				if (response.data === 'Success') {
+				if (response.data.message === 'Success') {
 					Swal.fire({
 						title: 'Success!',
 						text: 'Categorie succesfully Delete',
@@ -151,7 +149,7 @@ const FormCategorie = () => {
 		} catch (err) {
 			Swal.fire({
 				title: 'Error',
-				text: err.response.data.error,
+				text: err.response.data.message,
 				icon: 'error',
 				confirmButtonText: 'Ok',
 			});
@@ -162,7 +160,7 @@ const FormCategorie = () => {
 		try {
 			if (Inputs.edit === true) {
 				let response = await axios.put(URLS.URL_CATEGORIES, Inputs);
-				if (response.data === 'Success') {
+				if (response.data.message === 'Success') {
 					Swal.fire({
 						title: 'Success!',
 						text: 'Categorie succesfully Modified',
@@ -172,7 +170,7 @@ const FormCategorie = () => {
 				}
 			} else {
 				let response = await axios.post(URLS.URL_CATEGORIES, Inputs);
-				if (response.data === 'Success') {
+				if (response.data.message === 'Success') {
 					Swal.fire({
 						title: 'Success!',
 						text: 'Categorie succesfully Created',
@@ -185,13 +183,12 @@ const FormCategorie = () => {
 		} catch (err) {
 			Swal.fire({
 				title: 'Error',
-				text: err.response.data.error,
+				text: err.response.data.message,
 				icon: 'error',
 				confirmButtonText: 'Ok',
 			});
 		}
 	};
-
 
 	return (
 		<StyleContainer>
