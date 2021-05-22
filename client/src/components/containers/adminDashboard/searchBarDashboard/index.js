@@ -26,7 +26,7 @@ const SearchBar = ({Items, setFilter, setCreate, create, options}) => {
 		setFilter(arrayFilter);
 	};
 
-	const handleClick = (e) => {
+	const handleClick = () => {
 		if (options === 'Products') history.push('/create');
 		if (options === 'Categories') history.push('/categorie');
 		if (options === 'Users' || options === 'Orders' || options === 'Brands')

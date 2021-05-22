@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {URLS} from '../../../../utils/constants';
 import CardItems from '../cardItems/CardItems';
+import Create from '../../create/Create';
 import SearchBarDashboard from '../searchBarDashboard';
 import ListStyles from './styled';
 import {clearObjectValues} from '../../../../utils/clearObjetcValues';
@@ -25,32 +26,15 @@ const ListDashboard = ({Options}) => {
 		setFilter(Items);
 	}, [Items]);
 
-	useEffect(() => {
-		if (typeof Items[0] === 'object') {
-			let obj = clearObjectValues(_.cloneDeep(Items[0]));
-			console.log(obj);
-			if (create) {
-				setItems([obj].concat([...Items]));
-			} else {
-				setItems(Items.slice(1));
-			}
-		}
-	}, [create]);
-
 	// useEffect(() => {
-	// 	if (control === 0) {
-	// 		if (typeof Items[0] === 'object') {
-	// 			let obj = clearObjectValues(_.cloneDeep(Items[0]));
-	// 			console.log(obj);
-	// 			if (create) {
-	// 				setItems([obj].concat([...Items]));
-	// 			}
+	// 	if (typeof Items[0] === 'object') {
+	// 		let obj = clearObjectValues(_.cloneDeep(Items[0]));
+	// 		console.log(obj);
+	// 		if (create) {
+	// 			setItems([obj].concat([...Items]));
+	// 		} else {
+	// 			setItems(Items.slice(1));
 	// 		}
-	// 		setControl(control + 1);
-	// 	} else {
-	// 		let array = [...Items].shift();
-	// 		setItems(array);
-	// 		setControl(control - 1);
 	// 	}
 	// }, [create]);
 
@@ -111,58 +95,70 @@ const ListDashboard = ({Options}) => {
 				/>
 			)}
 			{Options === 'Products' ? (
-				<InfiniteScroll
-					className='listProduct'
-					dataLength={Filter.length}
-					loader={<h4>Loading...</h4>}
-					height={600}
-				>
-					{Filter &&
-						Filter.map((el, index) => (
-							<CardItems
-								prop={el}
-								index={index}
-								options={Options}
-								allProducts={allProducts}
-							/>
-						))}
-				</InfiniteScroll>
+				<>
+					{/* {create ? <Create options={Options} /> : null} */}
+
+					<InfiniteScroll
+						className='listProduct'
+						dataLength={Filter.length}
+						loader={<h4>Loading...</h4>}
+						height={600}
+					>
+						{Filter &&
+							Filter.map((el, index) => (
+								<CardItems
+									prop={el}
+									index={index}
+									options={Options}
+									allProducts={allProducts}
+								/>
+							))}
+					</InfiniteScroll>
+				</>
 			) : null}
 			{Options === 'Categories' ? (
-				<InfiniteScroll
-					className='listProduct'
-					dataLength={Filter.length}
-					loader={<h4>Loading...</h4>}
-					height={600}
-				>
-					{Filter &&
-						Filter.map((el, index) => (
-							<CardItems
-								prop={el}
-								index={index}
-								options={Options}
-								allProducts={allProducts}
-							/>
-						))}
-				</InfiniteScroll>
+				<>
+					{/* {create ? <Create options={Options} /> : null} */}
+					<InfiniteScroll
+						className='listProduct'
+						dataLength={Filter.length}
+						loader={<h4>Loading...</h4>}
+						height={600}
+					>
+						{Filter &&
+							Filter.map((el, index) => (
+								<CardItems
+									prop={el}
+									index={index}
+									options={Options}
+									allProducts={allProducts}
+								/>
+							))}
+					</InfiniteScroll>
+				</>
 			) : null}
 			{Options === 'Users' ? (
-				<InfiniteScroll
-					className='listProduct'
-					dataLength={Filter.length}
-					loader={<h4>Loading...</h4>}
-					height={600}
-				>
-					{Filter &&
-						Filter.map((el, index) => (
-							<CardItems
-								prop={el}
-								index={index}
-								options={Options}
-								allProducts={allProducts}
-							/>
-						))}
-				</InfiniteScroll>
+				<>
+					{create ? (
+						<Create options={Options} setCreate={setCreate} create={create} />
+					) : null}
+					<InfiniteScroll
+						className='listProduct'
+						dataLength={Filter.length}
+						loader={<h4>Loading...</h4>}
+						height={600}
+					>
+						{Filter &&
+							Filter.map((el, index) => (
+								<CardItems
+									prop={el}
+									index={index}
+									options={Options}
+									allProducts={allProducts}
+								/>
+							))}
+					</InfiniteScroll>
+				</>
 			) : null}
 			{Options === 'Orders' ? (
 				<InfiniteScroll
