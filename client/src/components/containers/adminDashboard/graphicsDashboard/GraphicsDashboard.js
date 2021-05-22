@@ -29,14 +29,14 @@ const GraphicsDashboard = ({setOptions}) => {
 		);
 		setProducts(productss.data.products);
 		let categoriess = await axios.get(`${URLS.URL_CATEGORIES}`);
-		setCategories(categoriess.data);
+		setCategories(categoriess.data.response);
 		let userss = await axios.get(`${URLS.URL_USERS}`);
 
-		setUsers(userss.data);
+		setUsers(userss.data.response);
 		let orderss = await axios.get(`${URLS.URL_USER_ORDERS}`);
-		setOrders(orderss.data);
+		setOrders(orderss.data.response);
 		let brandss = await axios.get(`${URLS.URL_BRANDS}`);
-		setBrands(brandss.data);
+		setBrands(brandss.data.response);
 	};
 
 	return (
