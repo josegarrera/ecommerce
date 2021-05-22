@@ -31,6 +31,8 @@ export const ActionTypes = {
   REMOVE_FAV_PRODUCT: "REMOVE_FAV_PRODUCT",
 
   CONFIRM_CHECKOUT: "CONFIRM_CHECKOUT",
+
+  SET_SHIPPING_INFO: "SET_SHIPPING_INFO",
 };
 
 export const URLS = {

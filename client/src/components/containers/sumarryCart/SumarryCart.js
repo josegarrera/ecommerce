@@ -7,14 +7,15 @@ const FORM_ID = "payment-form";
 
 const SumarryCart = ({ casa, count, placeOrder }) => {
   const preferenceId = useSelector((state) => state.paymentMethod);
+  const shippingAddress = useSelector((state) => state.shippingAddress);
 
   const dispatch = useDispatch();
   const userId = localStorage.userId;
-  console.log(userId)
+  console.log(userId);
 
   const handleOrderSubmit = (e) => {
     e.preventDefault();
-    dispatch(confirmCheckout({ userId }));
+    dispatch(confirmCheckout({ userId, shippingAddress }));
   };
 
   useEffect(() => {

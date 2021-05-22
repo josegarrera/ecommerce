@@ -216,6 +216,14 @@ const r = (state = initialState, { type, payload }) => {
         paymentMethod: payload,
       };
 
+    ///////////////  SHIPPING  ///////////////
+
+    case ActionTypes.SET_SHIPPING_INFO:
+      return {
+        ...state,
+        shippingAddress: payload,
+      };
+
     default:
       return state;
   }

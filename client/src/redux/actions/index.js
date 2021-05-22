@@ -443,3 +443,15 @@ export const confirmCheckout = (body) => {
     }
   };
 };
+
+////////////////////////////////////////  CHECKOUT ACTIONS  ////////////////////////////////////////
+
+export const saveShippingInfo = (body) => {
+  // AGREGA UN PRODUCTO A FAVORITOS
+  return async (dispatch) => {
+    return dispatch({
+      type: ActionTypes.SET_SHIPPING_INFO,
+      payload: body, // TIENE QUE SER UN ID
+    });
+  };
+};

@@ -105,6 +105,10 @@ const PaymentInformation_Style = styled.div`
 
   /* Payment Method */
 
+  .payment__options {
+    width: 100%;
+  }
+
   .payment__option {
     display: flex;
     margin: 0.5rem 0;

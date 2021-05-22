@@ -10,8 +10,10 @@ import { MdPayment } from "react-icons/md";
 import { FaCcStripe } from "react-icons/fa";
 import { ImCheckboxChecked } from "react-icons/im";
 import { FiBox } from "react-icons/fi";
+import { useSelector } from "react-redux";
 
 function Index() {
+
   const [payment, setPayment] = useState({ paymentMethod: "" });
 
   const onClickHandler = (e) => {
@@ -61,7 +63,7 @@ function Index() {
                   <MdPayment />
                 </i>
 
-                <div className="payments__options">
+                <div className="payment__options">
                   {/* Option 1 */}
                   <div
                     className={
