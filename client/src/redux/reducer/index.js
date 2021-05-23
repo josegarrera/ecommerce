@@ -82,152 +82,151 @@ const r = (state = initialState, {type, payload}) => {
 				({_id}) => _id !== payload
 			); */
 
-      setCartLocalStorage(payload);
-      return {
-        ...state,
-        cartProducts: payload,
-      };
+			setCartLocalStorage(payload);
+			return {
+				...state,
+				cartProducts: payload,
+			};
 
-    case ActionTypes.REMOVE_CART_PRODUCT_LS:
-      const delateProduct = state.cartProducts.filter(
-        (e) => e.product._id !== payload
-      );
+		case ActionTypes.REMOVE_CART_PRODUCT_LS:
+			const delateProduct = state.cartProducts.filter(
+				(e) => e.product._id !== payload
+			);
 
-      if (state.cartProducts.length > 1) {
-        setCartLocalStorage(delateProduct);
-      } else setCartLocalStorage(delateProduct);
-      return {
-        ...state,
-        cartProducts: delateProduct,
-      };
+			if (state.cartProducts.length > 1) {
+				setCartLocalStorage(delateProduct);
+			} else setCartLocalStorage(delateProduct);
+			return {
+				...state,
+				cartProducts: delateProduct,
+			};
 
-    ///////////////  PRODUCTS  ///////////////
+		///////////////  PRODUCTS  ///////////////
 
-    case ActionTypes.GET_PRODUCTS:
-      return {
-        ...state,
-        products: payload,
-      };
-    case ActionTypes.GET_ALL_PRODUCTS:
-      return {
-        ...state,
-        allProducts: payload,
-      };
-    case ActionTypes.GET_PRODUCTS_SEARCH:
-      return {
-        ...state,
-        productSearch: payload,
-      };
-    case ActionTypes.GET_PRODUCTS_QUERY:
-      return {
-        ...state,
-        products: payload,
-      };
-    case ActionTypes.UPDATE_PRODUCT:
-      return {
-        ...state,
-        products: payload,
-      };
-    case ActionTypes.PRODUCT_DETAIL:
-      return {
-        ...state,
-        productDetail: payload,
-      };
-    case ActionTypes.CLEAN_PRODUCT_DETAIL:
-      return {
-        ...state,
-        productDetail: payload,
-      };
-    case ActionTypes.PRODUCT_CREATED:
-      return {
-        ...state,
-        productCreated: payload,
-      };
-    case ActionTypes.EMPTY_PRODUCT_CREATED:
-      return {
-        ...state,
-        productCreated: {},
-      };
+		case ActionTypes.GET_PRODUCTS:
+			return {
+				...state,
+				products: payload,
+			};
+		case ActionTypes.GET_ALL_PRODUCTS:
+			return {
+				...state,
+				allProducts: payload,
+			};
+		case ActionTypes.GET_PRODUCTS_SEARCH:
+			return {
+				...state,
+				productSearch: payload,
+			};
+		case ActionTypes.GET_PRODUCTS_QUERY:
+			return {
+				...state,
+				products: payload,
+			};
+		case ActionTypes.UPDATE_PRODUCT:
+			return {
+				...state,
+				products: payload,
+			};
+		case ActionTypes.PRODUCT_DETAIL:
+			return {
+				...state,
+				productDetail: payload,
+			};
+		case ActionTypes.CLEAN_PRODUCT_DETAIL:
+			return {
+				...state,
+				productDetail: payload,
+			};
+		case ActionTypes.PRODUCT_CREATED:
+			return {
+				...state,
+				productCreated: payload,
+			};
+		case ActionTypes.EMPTY_PRODUCT_CREATED:
+			return {
+				...state,
+				productCreated: {},
+			};
 
-    ///////////////  ORDERS  ///////////////
-    case ActionTypes.GET_ORDERS:
-      return {
-        ...state,
-        orders: payload,
-      };
-    case ActionTypes.ORDER_DETAIL:
-      return {
-        ...state,
-        orderDetail: payload,
-      };
+		///////////////  ORDERS  ///////////////
+		case ActionTypes.GET_ORDERS:
+			return {
+				...state,
+				orders: payload,
+			};
+		case ActionTypes.ORDER_DETAIL:
+			return {
+				...state,
+				orderDetail: payload,
+			};
 
-    ///////////////  CATEGORIES  ///////////////
-    case ActionTypes.GET_CATEGORIES:
-      return {
-        ...state,
-        categories: payload,
-      };
-    ///////////////  BRANDS  ///////////////
-    case ActionTypes.GET_BRANDS:
-      return {
-        ...state,
-        brands: payload,
-      };
-    case ActionTypes.UPDATE_BRAND:
-      return {
-        ...state,
-        updateBrand: payload,
-      };
+		///////////////  CATEGORIES  ///////////////
+		case ActionTypes.GET_CATEGORIES:
+			return {
+				...state,
+				categories: payload,
+			};
+		///////////////  BRANDS  ///////////////
+		case ActionTypes.GET_BRANDS:
+			return {
+				...state,
+				brands: payload,
+			};
+		case ActionTypes.UPDATE_BRAND:
+			return {
+				...state,
+				updateBrand: payload,
+			};
 
-    ///////////////  USERS  ///////////////
-    case ActionTypes.LOGIN_USER:
-      return {
-        ...state,
-        user: payload,
-      };
+		///////////////  USERS  ///////////////
+		case ActionTypes.LOGIN_USER:
+			return {
+				...state,
+				user: payload,
+			};
 
-    ///////////////  WISHLIST  ///////////////
+		///////////////  WISHLIST  ///////////////
 
-    case ActionTypes.ADD_FAV_PRODUCT:
-      const found = state.allProducts.find(
-        ({ product: { _id } }) => _id === payload
-      );
+		case ActionTypes.ADD_FAV_PRODUCT:
+			const found = state.allProducts.find(
+				({product: {_id}}) => _id === payload
+			);
 
-      const addFav = found && state.wishlist.concat(found);
-      found && setWishListLocalStorage(addFav);
-      return {
-        ...state,
-        wishlist: addFav,
-      };
+			const addFav = found && state.wishlist.concat(found);
+			found && setWishListLocalStorage(addFav);
+			return {
+				...state,
+				wishlist: addFav,
+			};
 
-    case ActionTypes.REMOVE_FAV_PRODUCT:
-      const removeFav = state.wishlist.filter((e) => e.product._id !== payload);
-      setWishListLocalStorage(removeFav);
-      return {
-        ...state,
-        wishlist: removeFav,
-      };
+		case ActionTypes.REMOVE_FAV_PRODUCT:
+			const removeFav = state.wishlist.filter((e) => e.product._id !== payload);
+			setWishListLocalStorage(removeFav);
+			return {
+				...state,
+				wishlist: removeFav,
+			};
 
-    ///////////////  CHECKOUT  ///////////////
+		///////////////  CHECKOUT  ///////////////
 
-    case ActionTypes.CONFIRM_CHECKOUT:
-      return {
-        ...state,
-        paymentMethod: payload,
-      };
+		case ActionTypes.CONFIRM_CHECKOUT:
+			return {
+				...state,
+				paymentMethod: payload,
+			};
 
-    ///////////////  SHIPPING  ///////////////
+		///////////////  SHIPPING  ///////////////
 
-    case ActionTypes.SET_SHIPPING_INFO:
-      return {
-        ...state,
-        shippingAddress: payload,
-      };
+		case ActionTypes.SET_SHIPPING_INFO:
+			return {
+				...state,
+				shippingInfo: payload,
+			};
 
-    default:
-      return state;
-  }
-
+		default:
+			return state;
+	}
 };
 
 export default r;

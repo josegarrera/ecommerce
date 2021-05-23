@@ -5,19 +5,17 @@ import {confirmCheckout} from '../../../redux/actions';
 
 const FORM_ID = 'payment-form';
 
-const SumarryCart = ({ casa, count, placeOrder }) => {
-  const preferenceId = useSelector((state) => state.paymentMethod);
-  const shippingAddress = useSelector((state) => state.shippingAddress);
+const SumarryCart = ({casa, count, placeOrder}) => {
+	const preferenceId = useSelector((state) => state.paymentMethod);
+	const shippingInfo = useSelector((state) => state.shippingInfo);
 
-  const dispatch = useDispatch();
-  const userId = localStorage.userId;
-  console.log(userId);
+	const dispatch = useDispatch();
+	const userId = localStorage.userId;
 
-  const handleOrderSubmit = (e) => {
-    e.preventDefault();
-    dispatch(confirmCheckout({ userId, shippingAddress }));
-  };
-
+	const handleOrderSubmit = (e) => {
+		e.preventDefault();
+		userId && dispatch(confirmCheckout({userId, shippingInfo}));
+	};
 
 	useEffect(() => {
 		if (preferenceId) {
@@ -28,7 +26,7 @@ const SumarryCart = ({ casa, count, placeOrder }) => {
 				'https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js';
 			script.setAttribute('data-preference-id', preferenceId);
 			const form = document.getElementById(FORM_ID);
-			form.appendChild(script);
+			form && form.appendChild(script);
 			return () => {
 				//Elimina el script como nodo hijo del elemento form
 				form.removeChild(script);
@@ -52,24 +50,22 @@ const SumarryCart = ({ casa, count, placeOrder }) => {
 				</div>
 			</div>
 
-      {placeOrder ? (
-        <form id={FORM_ID} onSubmit={handleOrderSubmit}>
-          <button type="submit" className="btn_buy">
-            Place Order
-          </button>
-          <button type="submit"></button>
-        </form>
-      ) : (
-        <Link to="/shipping">
-          <button onClick={casa} className="btn_buy">
-            Checkout
-          </button>
-        </Link>
-      )}
-    </div>
-  );
-
+			{placeOrder ? (
+				<form id={FORM_ID} onSubmit={handleOrderSubmit}>
+					<button type='submit' className='btn_buy'>
+						Place Order
+					</button>
+					<button type='submit'></button>
+				</form>
+			) : (
+				<Link to='/shipping'>
+					<button onClick={casa} className='btn_buy'>
+						Checkout
+					</button>
+				</Link>
+			)}
+		</div>
+	);
 };
 
 export default SumarryCart;
-
