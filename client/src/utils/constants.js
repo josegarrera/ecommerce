@@ -41,6 +41,7 @@ export const URLS = {
 	URL_ALL_PRODUCTS: `${process.env.REACT_APP_BACKEND_URL}/allproducts`,
 	URL_USER_ORDERS: `${process.env.REACT_APP_BACKEND_URL}/orders`,
 	URL_CATEGORIES: `${process.env.REACT_APP_BACKEND_URL}/categories`,
+	URL_FAVORITES: `${process.env.REACT_APP_BACKEND_URL}/favourites`,
 	URL_BRANDS: `${process.env.REACT_APP_BACKEND_URL}/brands`,
 	URL_SIGNUP: `${process.env.REACT_APP_BACKEND_URL}/signup`,
 	URL_LOGIN: `${process.env.REACT_APP_BACKEND_URL}/login`,
