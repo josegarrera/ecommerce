@@ -7,6 +7,7 @@ import {
 	cleanCatalogue,
 	getAllProducts,
 	postLocalStorage,
+	getWishListOfDB,
 } from '../../../redux/actions/index.js';
 import Filter from '../filter/Filter';
 import ProductList from '../productsList/ProductList';
@@ -35,6 +36,7 @@ const Catalogue = () => {
 		if (user) {
 			dispatch(postLocalStorage({products: cartProduct, userId: user}));
 			window.localStorage.setItem('cart', JSON.stringify([]));
+			dispatch(getWishListOfDB(user));
 		}
 	}, []);
 

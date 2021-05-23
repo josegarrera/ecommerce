@@ -1,84 +1,84 @@
-import { ActionTypes } from "../../utils/constants";
+import {ActionTypes} from '../../utils/constants';
 import {
-  getCartLocalStorage,
-  setCartLocalStorage,
-  getWishListLocalStorage,
-  setWishListLocalStorage,
-} from "../../utils/localStorage";
-import { store } from "react-notifications-component";
+	getCartLocalStorage,
+	setCartLocalStorage,
+	getWishListLocalStorage,
+	setWishListLocalStorage,
+} from '../../utils/localStorage';
+import {store} from 'react-notifications-component';
 
 const initialState = {
-  allProducts: [],
-  products: {},
-  productSearch: {},
-  productDetail: {},
-  productCreated: {},
-  orders: [],
-  orderDetail: {},
-  categories: [],
-  brands: [],
-  updateBrand: {},
-  cartProducts: getCartLocalStorage(),
-  user: {},
-  wishlist: getWishListLocalStorage(),
+	allProducts: [],
+	products: {},
+	productSearch: {},
+	productDetail: {},
+	productCreated: {},
+	orders: [],
+	orderDetail: {},
+	categories: [],
+	brands: [],
+	updateBrand: {},
+	cartProducts: getCartLocalStorage(),
+	user: {},
+	wishlist: getWishListLocalStorage(),
 };
 
-const r = (state = initialState, { type, payload }) => {
-  switch (type) {
-    ///////////////  CART PRODUCTS  ///////////////
-    case "CHANGE_LOT":
-      return {
-        ...state,
-        cartProducts: payload,
-      };
-    case ActionTypes.ADD_DB_PRODUCT_CART:
-      return {
-        ...state,
-        cartProducts: payload,
-      };
+const r = (state = initialState, {type, payload}) => {
+	switch (type) {
+		///////////////  CART PRODUCTS  ///////////////
+		case 'CHANGE_LOT':
+			return {
+				...state,
+				cartProducts: payload,
+			};
+		case ActionTypes.ADD_DB_PRODUCT_CART:
+			return {
+				...state,
+				cartProducts: payload,
+			};
 
-    case ActionTypes.ADD_PRODUCT_CART:
-      const findOne = state.cartProducts.find(
-        (e) => e.product._id === payload.product._id
-      );
-      if (findOne) {
-        store.addNotification({
-          title: "Already exist!",
-          message: "The item is already in the cart.",
-          type: "warning",
-          insert: "top",
-          container: "bottom-right",
-          animationIn: ["animate__animated", "animate__fadeIn"],
-          animationOut: ["animate__animated", "animate__fadeOut"],
-          dismiss: {
-            duration: 3000,
-            onScreen: true,
-          },
-        });
-        return { ...state };
-      } else {
-        store.addNotification({
-          title: "Added item!",
-          message: "The item was added to the cart.",
-          type: "success",
-          insert: "top",
-          container: "bottom-right",
-          animationIn: ["animate__animated", "animate__fadeIn"],
-          animationOut: ["animate__animated", "animate__fadeOut"],
-          dismiss: {
-            duration: 3000,
-            onScreen: true,
-          },
-        });
-        setCartLocalStorage(state.cartProducts.concat(payload));
-        return {
-          ...state,
-          cartProducts: state.cartProducts.concat(payload),
-        };
-      }
+		case ActionTypes.ADD_PRODUCT_CART:
+			const findOne = state.cartProducts.find(
+				(e) => e.product._id === payload.product._id
+			);
+			if (findOne) {
+				store.addNotification({
+					title: 'Already exist!',
+					message: 'The item is already in the cart.',
+					type: 'warning',
+					insert: 'top',
+					container: 'bottom-right',
+					animationIn: ['animate__animated', 'animate__fadeIn'],
+					animationOut: ['animate__animated', 'animate__fadeOut'],
+					dismiss: {
+						duration: 3000,
+						onScreen: true,
+					},
+				});
+				return {...state};
+			} else {
+				store.addNotification({
+					title: 'Added item!',
+					message: 'The item was added to the cart.',
+					type: 'success',
+					insert: 'top',
+					container: 'bottom-right',
+					animationIn: ['animate__animated', 'animate__fadeIn'],
+					animationOut: ['animate__animated', 'animate__fadeOut'],
+					dismiss: {
+						duration: 3000,
+						onScreen: true,
+					},
+				});
+				setCartLocalStorage(state.cartProducts.concat(payload));
+				return {
+					...state,
+					cartProducts: state.cartProducts.concat(payload),
+				};
+			}
 
-    case ActionTypes.REMOVE_PRODUCT_CART:
-      /* const remove_product = state.cartProducts.filter(
+		case ActionTypes.REMOVE_PRODUCT_CART:
+			/* const remove_product = state.cartProducts.filter(
 				({_id}) => _id !== payload
 			); */
 
@@ -216,9 +216,18 @@ const r = (state = initialState, { type, payload }) => {
         paymentMethod: payload,
       };
 
+    ///////////////  SHIPPING  ///////////////
+
+    case ActionTypes.SET_SHIPPING_INFO:
+      return {
+        ...state,
+        shippingAddress: payload,
+      };
+
     default:
       return state;
   }
+
 };
 
 export default r;
