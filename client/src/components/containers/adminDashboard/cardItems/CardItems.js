@@ -107,7 +107,7 @@ const CardItems = ({prop, index, options, allProducts}) => {
 	};
 
 	const handleDeleteBrandsOnEdit = ({target: {id}}) => {
-		console.log(id)
+		console.log(id);
 		let filter =
 			EditAItem.brands && EditAItem.brands.filter((el) => el.name !== id);
 		setEditAItem({...EditAItem, brands: filter});
