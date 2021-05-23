@@ -325,11 +325,9 @@ export const updateCardProduct = (id) => {
 };
 
 export const removeCartProduct = (body) => {
-	console.log('hasta aca llegue', body);
 	// remueve un producto del carrito de un usuario y me devuelve el carrito actualizado
 	return async (dispatch) => {
 		const {data} = await axios.delete(URLS.URL_USER_ORDERS, {data: body});
-		console.log('esta es la respuesta', data);
 		return dispatch({
 			type: ActionTypes.REMOVE_PRODUCT_CART,
 			payload: data.response.items, // TIENE QUE SER UN {}
@@ -369,7 +367,6 @@ export const addBrand = (body) => {
 				url: URLS.URL_BRANDS,
 				data: body,
 			});
-			console.log('Se creo la marca', data.response.name);
 		} catch (err) {
 			console.log('No se creo la marca');
 		}
@@ -382,7 +379,6 @@ export const updateBrand = (update) => {
 	return async (dispatch) => {
 		try {
 			const {data} = await axios.put(`${URLS.URL_BRANDS}/${_id}`, {name});
-			console.log('Se actualizo la marca', data.response);
 			return dispatch({
 				type: ActionTypes.UPDATE_BRAND,
 				payload: data.response, // TIENE QUE SER UN {}
@@ -418,7 +414,6 @@ export const getWishListOfDB = (id) => {
 export const addFavProduct = (id) => {
 	// AGREGA UN PRODUCTO A FAVORITOS
 	return async (dispatch) => {
-		console.log('entre add');
 		return dispatch({
 			type: ActionTypes.ADD_FAV_PRODUCT,
 			payload: id, // TIENE QUE SER UN {}
@@ -429,7 +424,6 @@ export const addFavProduct = (id) => {
 export const addFavProductToDB = (body) => {
 	// AGREGA UN PRODUCTO A FAVORITOS a la base de datos
 	return async (dispatch) => {
-		console.log('entre add');
 		const {
 			data: {response},
 		} = await axios.post(URLS.URL_FAVORITES, body);
@@ -443,7 +437,6 @@ export const addFavProductToDB = (body) => {
 export const removeFavProduct = (id) => {
 	// AGREGA UN PRODUCTO A FAVORITOS
 	return async (dispatch) => {
-		console.log('entre delete');
 		return dispatch({
 			type: ActionTypes.REMOVE_FAV_PRODUCT,
 			payload: id, // TIENE QUE SER UN ID
@@ -453,7 +446,6 @@ export const removeFavProduct = (id) => {
 export const removeFavProductToDB = (body) => {
 	// REMUEVE UN PRODUCTO DE FAVORITOS DE LA BASE DE DATOS
 	return async (dispatch) => {
-		console.log('entre delete');
 		const {
 			data: {response},
 		} = await axios.delete(URLS.URL_FAVORITES, {data: body});
@@ -490,9 +482,17 @@ export const confirmCheckout = (body) => {
 
 export const saveShippingInfo = (body) => {
 	// AGREGA INFO DE LA COMPRA
-	console.log(body);
 	return {
 		type: ActionTypes.SET_SHIPPING_INFO,
 		payload: body,
+	};
+};
+
+////////////////////////////////////////  CURRENCIES  ///////////////////////////////////////
+
+export const setPayIn = () => {
+	// AGREGA INFO DE LA COMPRA
+	return {
+		type: ActionTypes.SET_PAY_IN,
 	};
 };
