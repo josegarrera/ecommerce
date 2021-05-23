@@ -70,6 +70,10 @@ const CardItems = ({prop, index, options, allProducts}) => {
 		return () => setEditAItem({});
 	}, []);
 
+	useEffect(() => {
+		setEditAItem({...prop});
+	}, [prop]);
+
 	const handleInput = (e) => {
 		e.target.name === 'price'
 			? setEditAItem({...EditAItem, price: {value: e.target.value}})
@@ -93,8 +97,11 @@ const CardItems = ({prop, index, options, allProducts}) => {
 	const handleUpdateButton = async () => {
 		if (options === 'Products') {
 			try {
-				await axios.put(`${URLS.URL_PRODUCTS}/${EditAItem._id}`, EditAItem);
-				allProducts();
+				await axios.put(`${URLS.URL_PRODUCTS}/${EditAItem._id}`, {
+					name: EditAItem.name,
+					description: EditAItem.description,
+				});
+				//allProducts();
 			} catch (error) {
 				console.log(error.response.data.message);
 			}
@@ -308,7 +315,9 @@ const CardItems = ({prop, index, options, allProducts}) => {
 								<div className='renglon'>
 									<div className='title'>No categories.</div>
 								</div>
-							) : EditAItem.categories.length === 1 ? (
+							) : categories &&
+							  EditAItem.categories &&
+							  EditAItem.categories.length === 1 ? (
 								<div className='renglon'>
 									<div className='title'>Categorie: &nbsp;</div>
 									<div className='products'>
@@ -335,7 +344,10 @@ const CardItems = ({prop, index, options, allProducts}) => {
 									{
 										<AccordionItem onClick={() => setAccStatus(!AccStatus)}>
 											<AccordionItemButton className='title2'>
-												{EditAItem.categories.length} Categories
+												{categories &&
+													EditAItem.categories &&
+													EditAItem.categories.length}{' '}
+												Categories
 												{AccStatus === false ? (
 													<MdKeyboardArrowDown
 														className='open'
@@ -349,24 +361,26 @@ const CardItems = ({prop, index, options, allProducts}) => {
 												)}
 											</AccordionItemButton>
 											<div className='accordionItems'>
-												{EditAItem.categories.map((el) =>
-													isEditAItem ? (
-														<AccordionItemPanel>
-															<div className='div_delete_categorie'>
-																{el.name}
-																<button className='buttonDiv'>
-																	<TiDeleteOutline
-																		id={el.name}
-																		onClick={handleDeleteOnEdit}
-																		className='button'
-																	/>
-																</button>
-															</div>
-														</AccordionItemPanel>
-													) : (
-														<AccordionItemPanel>{el.name}</AccordionItemPanel>
-													)
-												)}
+												{categories &&
+													EditAItem.categories &&
+													EditAItem.categories.map((el) =>
+														isEditAItem ? (
+															<AccordionItemPanel>
+																<div className='div_delete_categorie'>
+																	{el.name}
+																	<button className='buttonDiv'>
+																		<TiDeleteOutline
+																			id={el.name}
+																			onClick={handleDeleteOnEdit}
+																			className='button'
+																		/>
+																	</button>
+																</div>
+															</AccordionItemPanel>
+														) : (
+															<AccordionItemPanel>{el.name}</AccordionItemPanel>
+														)
+													)}
 											</div>
 										</AccordionItem>
 									}

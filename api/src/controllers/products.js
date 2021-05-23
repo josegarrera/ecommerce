@@ -240,6 +240,7 @@ function getProducts(req, res) {
 
 async function updateProduct(req, res) {
 	const {body} = req;
+	console.log(body);
 	if (!body)
 		return res.status(400).send({
 			response: '',
