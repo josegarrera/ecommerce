@@ -215,13 +215,15 @@ function getProducts(req, res) {
 				.fill('')
 				.map(
 					(path, index) =>
-						`http://localhost:3001/products/?name=${req.query.name}&category=${
-							req.query.category
-						}&brand=${req.query.brand}&variants=${req.query.variants}&price=${
-							req.query.price
-						}&order=${req.query.order}&direction=${
-							req.query.direction
-						}&offset=${limit * index}&limit=${limit}`
+						`${process.env.REACT_APP_BACKEND_URL}/products/?name=${
+							req.query.name
+						}&category=${req.query.category}&brand=${
+							req.query.brand
+						}&variants=${req.query.variants}&price=${req.query.price}&order=${
+							req.query.order
+						}&direction=${req.query.direction}&offset=${
+							limit * index
+						}&limit=${limit}`
 				);
 			const products =
 				result.length - offset > limit
@@ -318,13 +320,11 @@ async function updateProduct(req, res) {
 async function deleteProduct(req, res) {
 	const idProduct = req.params.id;
 	if (!idProduct)
-		return res
-			.status(400)
-			.send({
-				response: '',
-				type: 'Bad request.',
-				error: 'The fields are empty.',
-			});
+		return res.status(400).send({
+			response: '',
+			type: 'Bad request.',
+			error: 'The fields are empty.',
+		});
 	try {
 		const deletedProduct = await Products.findByIdAndDelete(idProduct);
 
