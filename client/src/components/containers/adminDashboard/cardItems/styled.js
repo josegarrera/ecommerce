@@ -95,6 +95,37 @@ const ProductDashboardStyle = styled.div`
 			}
 		}
 	}
+
+	.div_delete_categorie {
+		display: flex;
+		align-items: center;
+		width: 100%;
+
+		.buttonDiv {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 30px;
+			height: 30px;
+			background: none;
+			border: none;
+
+			.button {
+				object-fit: contain;
+				color: #58585a;
+				font-size: 25px;
+
+				&:hover {
+					cursor: pointer;
+				}
+
+				&:active {
+					transform: scale(0.9);
+				}
+			}
+		}
+	}
+
 	.buttons {
 		display: flex;
 		justify-content: space-around;
@@ -122,6 +153,10 @@ const ProductDashboardStyle = styled.div`
 				&:active {
 					transform: scale(0.9);
 				}
+			}
+
+			.button_check {
+				color: green;
 			}
 		}
 	}
