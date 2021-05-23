@@ -11,6 +11,7 @@ import {
 } from 'react-accessible-accordion';
 import {
 	MdDelete,
+	MdCancel,
 	MdEdit,
 	MdKeyboardArrowDown,
 	MdKeyboardArrowUp,
@@ -19,6 +20,7 @@ import {
 const CardItems = ({prop, index, options, allProducts}) => {
 	const [isEditAItem, setisEditAItem] = useState(false);
 	const [SeeMore, setSeeMore] = useState(false);
+	const [EditAItem, setEditAItem] = useState({});
 
 	const [AccStatus, setAccStatus] = useState(false);
 	const {
@@ -59,6 +61,18 @@ const CardItems = ({prop, index, options, allProducts}) => {
 			allProducts();
 		}
 	};
+
+	const handleInput = (e) => {
+		e.target.name === 'price'
+			? setEditAItem({...EditAItem, price: {value: e.target.value}})
+			: setEditAItem({...EditAItem, [e.target.name]: e.target.value});
+	};
+
+		const handleEditButton = () => {
+			setisEditAItem(!isEditAItem);
+			isEditAItem === false ? setEditAItem({...prop}) : setEditAItem({...prop});
+		};
+
 
 	return (
 		<ProductDashboardStyle>
@@ -290,7 +304,19 @@ const CardItems = ({prop, index, options, allProducts}) => {
 							{description && (
 								<div className='renglon2'>
 									<div className='title'>Description: &nbsp;</div>
-									<div className='description'> {description}</div>
+									{isEditAItem && EditAItem ? (
+										<div>
+											<textarea
+												rows='4'
+												cols='80'
+												name='description'
+												onChange={handleInput}
+												value={EditAItem.description}
+											/>
+										</div>
+									) : (
+										<div className='description'> {description}</div>
+									)}
 								</div>
 							)}
 
@@ -306,11 +332,12 @@ const CardItems = ({prop, index, options, allProducts}) => {
 				</div>
 			</div>
 			<div className='buttons'>
-				<button className='buttonDiv'>
-					<MdEdit
-						onClick={() => setisEditAItem(!isEditAItem)}
-						className='button'
-					/>
+				<button onClick={handleEditButton} className='buttonDiv'>
+					{isEditAItem ? (
+						<MdCancel className='button' />
+					) : (
+						<MdEdit className='button' />
+					)}
 				</button>
 				<button className='buttonDiv' onClick={deleteById}>
 					<MdDelete className='button' />
