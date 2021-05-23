@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {AiOutlineClose} from 'react-icons/ai';
 import CreateStyle from './styled';
 import userValidate from '../../../utils/userValidate';
+import brandValidate from '../../../utils/brandValidate';
 import axios from 'axios';
 import {URLS} from '../../../utils/constants';
 
@@ -12,13 +13,18 @@ const Create = ({options, setCreate, create, Items, allProducts}) => {
 		role: '',
 	});
 
+	const [inputBrand, setInputBrand] = useState({
+		name: '',
+	});
+
 	const [errorUser, setErrorUser] = useState({});
+	const [errorBrand, setErrorBrand] = useState({});
 
 	const handleClick = () => {
 		setCreate(!create);
 	};
 
-	const handleOnChange = (e) => {
+	const handleOnChangeUser = (e) => {
 		setInputUser({
 			...inputUser,
 			[e.target.name]: e.target.value,
@@ -34,20 +40,50 @@ const Create = ({options, setCreate, create, Items, allProducts}) => {
 		);
 	};
 
-	const handleUserSave = (e) => {
-		axios
-			.post(URLS.URL_SIGNUP, inputUser)
-			.then((resp) => resp.data)
-			.then((data) => {
-				if (data.message === 'Signup successfull!') {
-					window.alert('New user successfully created');
-				}
-			})
-			.catch((err) => window.alert(err));
+	const handleOnChangeBrand = (e) => {
+		setInputBrand({
+			...inputBrand,
+			[e.target.name]: e.target.value,
+		});
+		setErrorBrand(
+			brandValidate(
+				{
+					...inputBrand,
+					[e.target.name]: e.target.value,
+				},
+				Items
+			)
+		);
+	};
+
+	const handleUserSave = async (e) => {
+		try {
+			const resp = await axios.post(URLS.URL_SIGNUP, inputUser);
+			if (resp.data.message === 'Signup successfull!') {
+				window.alert('New user successfully created');
+			}
+		} catch (error) {
+			window.alert(error);
+		}
 		setInputUser({
 			email: '',
 			password: '',
 			role: '',
+		});
+		allProducts();
+	};
+
+	const handleBrandSave = async (e) => {
+		try {
+			const resp = await axios.post(URLS.URL_BRANDS, inputBrand);
+			if (resp.data.message === 'Signup successfull!') {
+				window.alert('New brand successfully created');
+			}
+		} catch (error) {
+			window.alert(error);
+		}
+		setInputUser({
+			name: '',
 		});
 		allProducts();
 	};
@@ -66,7 +102,7 @@ const Create = ({options, setCreate, create, Items, allProducts}) => {
 								name='email'
 								value={inputUser.email}
 								className='title2'
-								onChange={handleOnChange}
+								onChange={handleOnChangeUser}
 							></input>
 							{errorUser.email && <p className='danger'>{errorUser.email}</p>}
 						</div>
@@ -77,14 +113,14 @@ const Create = ({options, setCreate, create, Items, allProducts}) => {
 								type='password'
 								value={inputUser.password}
 								className='title2'
-								onChange={handleOnChange}
+								onChange={handleOnChangeUser}
 							></input>
 							{errorUser.password && (
 								<p className='danger'>{errorUser.password}</p>
 							)}
 						</div>
 						<div className='row'>
-							<div onChange={handleOnChange} className='title'>
+							<div onChange={handleOnChangeUser} className='title'>
 								Role: &nbsp;
 								<input
 									className='radio-button'
@@ -119,15 +155,31 @@ const Create = ({options, setCreate, create, Items, allProducts}) => {
 			) : null}
 			{options === 'Brands' ? (
 				<div className='container'>
-					<AiOutlineClose className='close' onClick={handleClick} />
+					<div className='close-container'>
+						<AiOutlineClose className='close' onClick={handleClick} />
+					</div>
 					<div className='column'>
 						<div className='row'>
-							<div className='title'>Name: &nbsp;</div>
-							<input className='title2'></input>
+							<div className='title'>Brand Name: &nbsp;</div>
+							<input
+								name='name'
+								value={inputBrand.name}
+								className='title2'
+								onChange={handleOnChangeBrand}
+							></input>
+							{errorBrand.name && <p className='danger'>{errorBrand.name}</p>}
 						</div>
 					</div>
 					<div className='column'>
-						<button className='button'>Save</button>
+						<div className='button-container'>
+							<button
+								onClick={handleBrandSave}
+								className='button'
+								disabled={Object.keys(errorBrand).length > 0}
+							>
+								Save
+							</button>
+						</div>
 					</div>
 				</div>
 			) : null}

@@ -192,7 +192,13 @@ const ListDashboard = ({Options}) => {
 			{Options === 'Brands' ? (
 				<>
 					{create ? (
-						<Create options={Options} setCreate={setCreate} create={create} />
+						<Create
+							options={Options}
+							setCreate={setCreate}
+							create={create}
+							Items={Items}
+							allProducts={allProducts}
+						/>
 					) : null}
 					<InfiniteScroll
 						className='listProduct'
