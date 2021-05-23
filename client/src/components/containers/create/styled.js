@@ -13,7 +13,6 @@ const CreateStyle = styled.div`
 	.container {
 		display: flex;
 		flex-direction: column;
-        
 	}
 
 	.column {
@@ -38,7 +37,7 @@ const CreateStyle = styled.div`
 		letter-spacing: 3px;
 		height: 28px;
 		width: 15%;
-		margin: 20px 600px;
+		margin: 20px;
 		display: flex;
 		justify-content: center;
 		border: 1px solid #ee362e;
@@ -49,7 +48,6 @@ const CreateStyle = styled.div`
 		background: #ffffff;
 		border: 1px solid #ee362c;
 		color: #ee362c;
-	    }
 	}
 
 	.title {
@@ -58,12 +56,26 @@ const CreateStyle = styled.div`
 		font-weight: 600;
 	}
 
+	.close-container {
+		display: flex;
+		justify-content: flex-end;
+	}
+
+	.button-container {
+		display: flex;
+		justify-content: flex-end;
+	}
+
+	.radio-button {
+		margin: 20px;
+	}
+
 	.close {
 		align-items: flex-end;
 		object-fit: contain;
 		color: #58585a;
 		font-size: 25px;
-        margin: 0 700px;
+		margin: 0;
 
 		&:hover {
 			cursor: pointer;

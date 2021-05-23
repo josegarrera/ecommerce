@@ -23,6 +23,10 @@ const ListDashboard = ({Options}) => {
 	}, [Options]);
 
 	useEffect(() => {
+		allProducts();
+	}, [Options]);
+
+	useEffect(() => {
 		setFilter(Items);
 	}, [Items]);
 
@@ -39,6 +43,7 @@ const ListDashboard = ({Options}) => {
 	// }, [create]);
 
 	const allProducts = async () => {
+		console.log('entré a allProducts');
 		if (Options === 'Products') {
 			try {
 				let itemss = await axios.get(
@@ -140,7 +145,13 @@ const ListDashboard = ({Options}) => {
 			{Options === 'Users' ? (
 				<>
 					{create ? (
-						<Create options={Options} setCreate={setCreate} create={create} />
+						<Create
+							options={Options}
+							setCreate={setCreate}
+							create={create}
+							Items={Items}
+							allProducts={allProducts}
+						/>
 					) : null}
 					<InfiniteScroll
 						className='listProduct'
@@ -179,22 +190,27 @@ const ListDashboard = ({Options}) => {
 				</InfiniteScroll>
 			) : null}
 			{Options === 'Brands' ? (
-				<InfiniteScroll
-					className='listProduct'
-					dataLength={Filter.length}
-					loader={<h4>Loading...</h4>}
-					height={600}
-				>
-					{Filter &&
-						Filter.map((el, index) => (
-							<CardItems
-								prop={el}
-								index={index}
-								options={Options}
-								allProducts={allProducts}
-							/>
-						))}
-				</InfiniteScroll>
+				<>
+					{create ? (
+						<Create options={Options} setCreate={setCreate} create={create} />
+					) : null}
+					<InfiniteScroll
+						className='listProduct'
+						dataLength={Filter.length}
+						loader={<h4>Loading...</h4>}
+						height={600}
+					>
+						{Filter &&
+							Filter.map((el, index) => (
+								<CardItems
+									prop={el}
+									index={index}
+									options={Options}
+									allProducts={allProducts}
+								/>
+							))}
+					</InfiniteScroll>
+				</>
 			) : null}
 		</ListStyles>
 	);
