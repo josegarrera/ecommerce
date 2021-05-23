@@ -5,7 +5,7 @@ import {confirmCheckout} from '../../../redux/actions';
 
 const FORM_ID = 'payment-form';
 
-const SumarryCart = ({casa, count, placeOrder}) => {
+const SumarryCart = ({payIn, count, placeOrder}) => {
 	const preferenceId = useSelector((state) => state.paymentMethod);
 	const shippingInfo = useSelector((state) => state.shippingInfo);
 
@@ -45,7 +45,7 @@ const SumarryCart = ({casa, count, placeOrder}) => {
 					</div>
 					<div className='total__prd'>
 						<p>Shipping Cost </p>
-						<p>$500</p>
+						<p>${payIn === 'USD' ? 500 : (500 / 93).toFixed(2)}</p>
 					</div>
 				</div>
 			</div>
@@ -59,9 +59,7 @@ const SumarryCart = ({casa, count, placeOrder}) => {
 				</form>
 			) : (
 				<Link to='/shipping'>
-					<button onClick={casa} className='btn_buy'>
-						Checkout
-					</button>
+					<button className='btn_buy'>Checkout</button>
 				</Link>
 			)}
 		</div>
