@@ -74,7 +74,7 @@ const Cart = () => {
 					</div>
 				</div>
 
-				<SumarryCart count={count$} />
+				<SumarryCart count={count$} payIn={payIn} />
 			</div>
 		</DIV_CART>
 	);
