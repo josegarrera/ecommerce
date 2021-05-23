@@ -1,5 +1,4 @@
 export const ActionTypes = {
-
 	GET_PRODUCTS: 'GET_PRODUCTS',
 	GET_ALL_PRODUCTS: 'GET_ALL_PRODUCTS',
 	GET_PRODUCTS_SEARCH: 'GET_PRODUCTS_SEARCH',
@@ -32,6 +31,8 @@ export const ActionTypes = {
 	REMOVE_FAV_PRODUCT: 'REMOVE_FAV_PRODUCT',
 
 	CONFIRM_CHECKOUT: 'CONFIRM_CHECKOUT',
+
+	SET_SHIPPING_INFO: 'SET_SHIPPING_INFO',
 };
 
 export const URLS = {
@@ -44,5 +45,4 @@ export const URLS = {
 	URL_SIGNUP: `${process.env.REACT_APP_BACKEND_URL}/signup`,
 	URL_LOGIN: `${process.env.REACT_APP_BACKEND_URL}/login`,
 	URL_USERS: `${process.env.REACT_APP_BACKEND_URL}/users`,
-
 };

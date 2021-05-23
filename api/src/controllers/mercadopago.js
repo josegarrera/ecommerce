@@ -7,8 +7,18 @@ mercadopago.configure({
 });
 
 function initiatePayment(req, res) {
+	/* {
+  userId: '60a00272322a89771f81269c',
+  shippingInfo: {
+    firstName: '',
+    lastName: '',
+    zip_code: '',
+    street_name: '',
+    street_number: '',
+    id: ''
+  }
+} */
 	const userId = req.body.userId;
-	console.log(userId);
 	if (!userId) {
 		return res.status(400).send({
 			response: '',

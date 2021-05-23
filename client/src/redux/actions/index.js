@@ -469,7 +469,6 @@ export const removeFavProductToDB = (body) => {
 export const confirmCheckout = (body) => {
 	// el body sólo consiste en el id del user {id: "id"}
 	//inicia una orden de pago
-	console.log(body);
 	return async (dispatch) => {
 		try {
 			const {data} = await axios({
@@ -490,11 +489,10 @@ export const confirmCheckout = (body) => {
 ////////////////////////////////////////  CHECKOUT ACTIONS  ////////////////////////////////////////
 
 export const saveShippingInfo = (body) => {
-  // AGREGA UN PRODUCTO A FAVORITOS
-  return async (dispatch) => {
-    return dispatch({
-      type: ActionTypes.SET_SHIPPING_INFO,
-      payload: body, // TIENE QUE SER UN ID
-    });
-  };
+	// AGREGA INFO DE LA COMPRA
+	console.log(body);
+	return {
+		type: ActionTypes.SET_SHIPPING_INFO,
+		payload: body,
+	};
 };
