@@ -41,5 +41,9 @@ const searchStyles = styled.div`
 		border: 1px solid #ee362c;
 		color: #ee362c;
 	}
+
+	.form__button__hidden {
+		visibility: hidden;
+	}
 `;
 export default searchStyles;

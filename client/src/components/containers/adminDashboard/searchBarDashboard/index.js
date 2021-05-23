@@ -57,7 +57,14 @@ const SearchBar = ({Items, setFilter, setCreate, create, options}) => {
 				<button className='form__button' onClick={handleClick}>
 					Create
 				</button>
-			) : null}
+			) : (
+				<button
+					className='form__button form__button__hidden'
+					onClick={handleClick}
+				>
+					Create
+				</button>
+			)}
 		</SearchStyles>
 	);
 };
