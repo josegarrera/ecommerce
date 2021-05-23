@@ -87,7 +87,6 @@ const CardItems = ({prop, index, options, allProducts}) => {
 	};
 
 	const handleDeleteOnEdit = ({target: {id}}) => {
-		console.log(id);
 		let filter =
 			EditAItem.categories &&
 			EditAItem.categories.filter((el) => el.name !== id);
@@ -107,7 +106,6 @@ const CardItems = ({prop, index, options, allProducts}) => {
 			}
 		}
 	};
-	console.log(EditAItem);
 
 	return (
 		<ProductDashboardStyle>
