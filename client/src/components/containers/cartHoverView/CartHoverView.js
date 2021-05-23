@@ -48,8 +48,8 @@ const CartHoverView = () => {
 						height={450}
 					>
 						{cartProduct.length ? (
-							cartProduct.map((e) => (
-								<CardHoverProducts key={e._id} product={e} />
+							cartProduct.map((e, i) => (
+								<CardHoverProducts key={i} product={e} />
 							))
 						) : (
 							<h1>No tienes Producto agregados al carrito</h1>

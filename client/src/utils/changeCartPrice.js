@@ -1,4 +1,4 @@
-export const changeCartPrice = (cartProducts, rendering) => {
+export const changeCartPrice = (cartProducts, payIn) => {
 	return cartProducts
 		.reduce(
 			(
@@ -10,7 +10,7 @@ export const changeCartPrice = (cartProducts, rendering) => {
 					},
 				}
 			) => {
-				if (rendering) {
+				if (payIn === 'USD') {
 					if (currency === 'USD') {
 						return acc + value * lot * 93;
 					}
