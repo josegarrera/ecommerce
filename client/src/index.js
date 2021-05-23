@@ -5,6 +5,8 @@ import App from './app/App';
 import store from './redux/store';
 import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
+import dotenv from 'dotenv';
+dotenv.config();
 
 ReactDOM.render(
 	<Provider store={store}>
