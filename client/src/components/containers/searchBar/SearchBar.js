@@ -10,6 +10,7 @@ const SearchBar = () => {
 	const dispatch = useDispatch();
 	const [Value, setValue] = useState('');
 	const allProductss = useSelector((state) => state.productSearch.products);
+	
 	const [Datalist, setDatalist] = useState([{key: 0, label: 'PC'}]);
 	let history = useHistory();
 
