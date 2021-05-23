@@ -88,8 +88,6 @@ const ProductDashboardStyle = styled.div`
 				color: gray;
 				font-size: 13px;
 				font-weight: 600;
-				width: fit-content;
-				height: fit-content;
 
 				&:hover {
 					cursor: pointer;

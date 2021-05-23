@@ -21,8 +21,8 @@ const CardItems = ({prop, index, options, allProducts}) => {
 	const [isEditAItem, setisEditAItem] = useState(false);
 	const [SeeMore, setSeeMore] = useState(false);
 	const [EditAItem, setEditAItem] = useState({});
-
 	const [AccStatus, setAccStatus] = useState(false);
+
 	const {
 		name,
 		price,
@@ -61,6 +61,9 @@ const CardItems = ({prop, index, options, allProducts}) => {
 			allProducts();
 		}
 	};
+	useEffect(() => {
+		return () => setEditAItem({});
+	}, []);
 
 	const handleInput = (e) => {
 		e.target.name === 'price'
@@ -68,11 +71,10 @@ const CardItems = ({prop, index, options, allProducts}) => {
 			: setEditAItem({...EditAItem, [e.target.name]: e.target.value});
 	};
 
-		const handleEditButton = () => {
-			setisEditAItem(!isEditAItem);
-			isEditAItem === false ? setEditAItem({...prop}) : setEditAItem({...prop});
-		};
-
+	const handleEditButton = () => {
+		setisEditAItem(!isEditAItem);
+		isEditAItem === false ? setEditAItem({...prop}) : setEditAItem({...prop});
+	};
 
 	return (
 		<ProductDashboardStyle>
@@ -215,7 +217,7 @@ const CardItems = ({prop, index, options, allProducts}) => {
 						</div>
 					)} */}
 					{SeeMore ? (
-						<div onClick={() => setSeeMore(!SeeMore)}>
+						<div>
 							{brands &&
 								(brands.length === 0 ? (
 									<div className='renglon'>
@@ -321,7 +323,9 @@ const CardItems = ({prop, index, options, allProducts}) => {
 							)}
 
 							<div className='renglon'>
-								<div className='seeMore'> Close!</div>
+								<div onClick={() => setSeeMore(!SeeMore)} className='seeMore'>
+									Close!
+								</div>
 							</div>
 						</div>
 					) : (
