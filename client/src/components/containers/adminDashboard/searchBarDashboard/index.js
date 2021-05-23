@@ -53,9 +53,11 @@ const SearchBar = ({Items, setFilter, setCreate, create, options}) => {
 				placeHolder='   Search by name, price, id, categorie, role, email, etc'
 				onChange={handleOnChangue}
 			/>
-			<button className='form__button' onClick={handleClick}>
-				Create
-			</button>
+			{options && options !== 'Orders' ? (
+				<button className='form__button' onClick={handleClick}>
+					Create
+				</button>
+			) : null}
 		</SearchStyles>
 	);
 };

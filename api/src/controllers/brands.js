@@ -20,13 +20,15 @@ async function createBrands(req, res) {
 		});
 	}
 	try {
-		const productsFound = await Promise.all(
-			req.body.products.map((id) => Products.findOne({_id: id}))
-		);
-		productsFound.forEach((product) => {
-			product.brands = product.brands.concat(req.body.products);
-		});
-		await Promise.all(productsFound.map((prod) => prod.save()));
+		if (req.products) {
+			const productsFound = await Promise.all(
+				req.body.products.map((id) => Products.findOne({_id: id}))
+			);
+			productsFound.forEach((product) => {
+				product.brands = product.brands.concat(req.body.products);
+			});
+			await Promise.all(productsFound.map((prod) => prod.save()));
+		}
 		const brand = new Brands(req.body);
 		await brand.save((err, data) => {
 			if (err)
