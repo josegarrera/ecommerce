@@ -9,7 +9,7 @@ const {Router} = require('express');
 const router = Router();
 const upload = require('../middlewares/uploads.js');
 
-router.post('/', upload.array('images'), createProduct);
+router.post('/', upload.array('images', 12), createProduct);
 router.get('/', getProducts);
 router.get('/:id', getProductsDetail);
 router.put('/:id', updateProduct);

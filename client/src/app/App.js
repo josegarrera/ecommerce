@@ -1,5 +1,7 @@
 import React from 'react';
-import {Route, Redirect} from 'react-router-dom';
+
+import {Route, Switch, Redirect} from 'react-router-dom';
+
 import {useSelector} from 'react-redux';
 import GridLayout from '../utils/GridLayout';
 //import {GlobalStyles} from './GlobalStyles';
@@ -21,6 +23,9 @@ import ReactNotification from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 import Favourites from '../components/containers/favourites/Favourites';
 import FormCategorie from '../components/containers/formCategories/FormCategories';
+
+import FormProductDashboard from '../components/containers/adminDashboard/addProductDashboard/index.js';
+
 
 function App() {
 	const user = useSelector((state) => state.user);
@@ -47,10 +52,9 @@ function App() {
 					<Route exact path='/admindashboard' component={HomeDashboard} />
 					<Route path='/' component={NavBar} />
 					<Route exact path='/' component={Home} />
-					<Route exact path='/home' component={Home} />
 					<Route exact path='/login' component={FormLogging} />
 					<Route exact path='/signup' component={FormSignup} />
-					<Route exact path='/create' component={FormProduct} />
+					<Route exact path='/create' component={FormProductDashboard} />
 					<Route exact path='/categorie' component={FormCategorie} />
 					<Route exact path='/catalogue' component={Catalogue} />
 					<Route exact path='/categorie' component={FomrCategories} />

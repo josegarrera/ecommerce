@@ -38,6 +38,9 @@ async function getProductsDetail(req, res) {
 }
 
 async function createProduct(req, res) {
+	const info = JSON.parse(req.body.info);
+	console.log(req.files);
+	console.log(info);
 	const {
 		name,
 		description,
