@@ -1,16 +1,16 @@
-import React, {useEffect} from 'react';
-import {Link, useHistory} from 'react-router-dom';
+import React from 'react';
+/* import {Link, useHistory} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import {IoCloseSharp} from 'react-icons/io5';
 import {removeCartProduct} from '../../../redux/actions/index.js';
 import {FaPlus} from 'react-icons/fa';
-import {FaMinus} from 'react-icons/fa';
+import {FaMinus} from 'react-icons/fa'; */
 
 const CardHoverView = (props) => {
 	//const dispatch = useDispatch();
-	let {imageUrl, name, price, _id} = props.product.product;
-	let {lot} = props.product;
-	let userId = window.localStorage.getItem('userId');
+	let {imageUrl, name, price} = props.product.product;
+	/* 	let {lot} = props.product;
+	let userId = window.localStorage.getItem('userId'); */
 
 	/* let data = {
 		userId: userId,
@@ -30,7 +30,7 @@ const CardHoverView = (props) => {
 				</div> */}
 
 				<div className='cartItemImg'>
-					<img className='itemImg' src={imageUrl} alt='cart item image'></img>
+					<img className='itemImg' src={imageUrl} alt='cart item'></img>
 				</div>
 
 				<div className='cartItemInfo'>

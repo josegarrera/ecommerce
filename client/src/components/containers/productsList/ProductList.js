@@ -22,7 +22,7 @@ const ProductList = ({products, loadSearch}) => {
 				) : loadSearch === true ? (
 					<CardProduct loading={true} />
 				) : (
-					loader.map((e) => <CardProduct loading={true} />)
+					loader.map((e, i) => <CardProduct key={i} loading={true} />)
 				)}
 			</div>
 		</PRODUCTS_LIST_STYLE>

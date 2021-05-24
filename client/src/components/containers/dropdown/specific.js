@@ -7,8 +7,6 @@ import {ImCheckboxUnchecked} from 'react-icons/im';
 import {ImCheckboxChecked} from 'react-icons/im';
 import {MdKeyboardArrowUp} from 'react-icons/md';
 import {MdKeyboardArrowDown} from 'react-icons/md';
-import setterVariants from '../../../utils/setterVariants.js';
-import validate from '../../../utils/formValidate.js';
 
 function Dropdown({
 	title,

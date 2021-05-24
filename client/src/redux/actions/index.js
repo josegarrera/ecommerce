@@ -362,13 +362,13 @@ export const addBrand = (body) => {
 	//agrega ua marca
 	return async (dispatch) => {
 		try {
-			const {data} = await axios({
+			await axios({
 				method: 'post',
 				url: URLS.URL_BRANDS,
 				data: body,
 			});
 		} catch (err) {
-			console.log('No se creo la marca');
+			console.log('No se creo la marca', err);
 		}
 	};
 };

@@ -10,7 +10,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import {MdDoNotDisturbAlt} from 'react-icons/md';
 import Dropdown from '../dropdown';
 import Filter_Style from './styled';
-import {MdSettingsInputSvideo} from 'react-icons/md';
 
 const Filter = ({order}) => {
 	const dispatch = useDispatch();
@@ -80,6 +79,7 @@ const Filter = ({order}) => {
 			direction: direction,
 		};
 		input && setInput(() => response);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [filter, order]);
 
 	useEffect(() => {
@@ -103,6 +103,7 @@ const Filter = ({order}) => {
 		dispatch(
 			getProducts(name, category, brand, variants, price, order, direction)
 		);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [input]);
 
 	const onChangePrice = (e) => {

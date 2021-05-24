@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route, Switch, Redirect} from 'react-router-dom';
+import {Route, Redirect} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import GridLayout from '../utils/GridLayout';
 //import {GlobalStyles} from './GlobalStyles';

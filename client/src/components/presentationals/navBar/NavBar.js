@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React from 'react';
-import {Link, useHistory} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import {IoCart, IoHeart} from 'react-icons/io5';
 import SearchBar from '../../containers/searchBar/SearchBar';
@@ -11,7 +11,6 @@ import {Badge} from '@material-ui/core';
 import CartHoverView from '../../containers/cartHoverView/CartHoverView';
 
 const NavBar = () => {
-	let history = useHistory();
 	const cartProduct = useSelector((state) => state.cartProducts);
 	let userId = window.localStorage.getItem('userId');
 	const user = useSelector((state) => state.user);
@@ -94,9 +93,7 @@ const NavBar = () => {
 				) : null}
 
 				<select className='select bottomLink'>
-					<option selected value='0'>
-						all categories
-					</option>
+					<option>all categories</option>
 				</select>
 
 				<Link className='bottomLinks' to='/about'>

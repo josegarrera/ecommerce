@@ -3,13 +3,12 @@ import ProductDashboardStyle from './styled';
 import axios from 'axios';
 import {URLS} from '../../../../utils/constants';
 
-
 import DataList from '../../dataList';
 
 import {
 	Accordion,
 	AccordionItem,
-	AccordionItemHeading,
+	/* AccordionItemHeading, */
 	AccordionItemButton,
 	AccordionItemPanel,
 } from 'react-accessible-accordion';
@@ -25,13 +24,18 @@ import {IoMdCheckmarkCircleOutline} from 'react-icons/io';
 
 import {TiDeleteOutline} from 'react-icons/ti';
 
-const CardItems = ({prop, index, options, allProducts,allBrands,allCategories}) => {
-	
+const CardItems = ({
+	prop,
+	index,
+	options,
+	allProducts,
+	allBrands,
+	allCategories,
+}) => {
 	const [isEditAItem, setisEditAItem] = useState(false);
 	const [SeeMore, setSeeMore] = useState(false);
 	const [EditAItem, setEditAItem] = useState({});
 	const [AccStatus, setAccStatus] = useState(false);
-
 
 	const {
 		name,
@@ -40,10 +44,10 @@ const CardItems = ({prop, index, options, allProducts,allBrands,allCategories}) 
 		description,
 		categories,
 		brands,
-		variants,
+		/* variants, */
 		_id,
 		products,
-		specs,
+		/* specs, */
 		role,
 		email,
 		users,

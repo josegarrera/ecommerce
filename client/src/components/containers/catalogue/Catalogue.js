@@ -18,7 +18,7 @@ import Dropdown from '../dropdown/index.js';
 const Catalogue = () => {
 	const dispatch = useDispatch();
 	const {products, pages} = useSelector((state) => state.products);
-	const allProducts = useSelector((state) => state.allProducts);
+	/* const allProducts = useSelector((state) => state.allProducts); */
 	const [orderItems, setOrderItems] = useState([]);
 	const cartProduct = useSelector((state) => state.cartProducts);
 
@@ -37,7 +37,7 @@ const Catalogue = () => {
 			dispatch(postLocalStorage({products: cartProduct, userId: user}));
 			window.localStorage.setItem('cart', JSON.stringify([]));
 			dispatch(getWishListOfDB(user));
-		}
+		} // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {

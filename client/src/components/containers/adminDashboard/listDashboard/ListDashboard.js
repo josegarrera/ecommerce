@@ -6,32 +6,34 @@ import CardItems from '../cardItems/CardItems';
 import Create from '../../create/Create';
 import SearchBarDashboard from '../searchBarDashboard';
 import ListStyles from './styled';
-import {clearObjectValues} from '../../../../utils/clearObjetcValues';
+/* import {clearObjectValues} from '../../../../utils/clearObjetcValues'; */
 import {getCategories, getBrands} from '../../../../redux/actions';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-var _ = require('lodash');
+/* var _ = require('lodash'); */
 
 const ListDashboard = ({Options}) => {
 	const [Items, setItems] = useState([]);
 	const [Filter, setFilter] = useState([]);
 	const [create, setCreate] = useState(false);
-	const [control, setControl] = useState(0);
+	/* const [control, setControl] = useState(0); */
 	const dispatch = useDispatch();
 	const allCategories = useSelector((state) => state.categories);
 	const allBrands = useSelector((state) => state.brands);
 
 	useEffect(() => {
 		allProducts();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [Options]);
 
 	useEffect(() => {
 		dispatch(getCategories());
 		dispatch(getBrands());
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
-		setFilter(Items);
+		setFilter(Items); // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [Items]);
 
 	// useEffect(() => {

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import DIV_CART, {CheckBoxWrapper, CheckBox, CheckBoxLabel} from './styled';
 import {postLocalStorage, setPayIn} from '../../../redux/actions/index';
 import {useDispatch, useSelector} from 'react-redux';
@@ -16,7 +16,7 @@ const Cart = () => {
 		if (user) {
 			dispatch(postLocalStorage({products: cartProduct, userId: user}));
 			window.localStorage.setItem('cart', JSON.stringify([]));
-		}
+		} // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const handleCheck = () => {

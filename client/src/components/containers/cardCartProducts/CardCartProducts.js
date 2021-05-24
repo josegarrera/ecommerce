@@ -39,7 +39,7 @@ const CardCartProducts = (props) => {
 			<div className='productCont'>
 				<Link className='cincuenta' to={`/products/id/${_id}`}>
 					<div className='imageDiv'>
-						{<img className='image' src={imageUrl[0]}></img>}
+						{<img className='image' alt='IMG' src={imageUrl[0]}></img>}
 					</div>
 					<div className='nameDiv'>{name}</div>
 				</Link>
