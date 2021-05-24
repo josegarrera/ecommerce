@@ -12,7 +12,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 
 /* var _ = require('lodash'); */
 
-const ListDashboard = ({Options}) => {
+const ListDashboard = ({Options, setOptions}) => {
 	const [Items, setItems] = useState([]);
 	const [Filter, setFilter] = useState([]);
 	const [create, setCreate] = useState(false);
@@ -103,6 +103,7 @@ const ListDashboard = ({Options}) => {
 					setCreate={setCreate}
 					create={create}
 					options={Options}
+					setOptions={setOptions}
 				/>
 			)}
 			{Options === 'Products' ? (

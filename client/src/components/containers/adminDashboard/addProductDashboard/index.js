@@ -137,7 +137,7 @@ const FormProductDashboard = () => {
 							<div className='title'>Name: &nbsp;</div>
 							<input
 								type='text'
-								className='inputText'
+								className='form_input'
 								name='name'
 								value={product.name}
 								onChange={(e) =>
@@ -155,7 +155,7 @@ const FormProductDashboard = () => {
 						{errors.name && <p className='danger'>{errors.name}</p>}
 						<div className='renglon2'>
 							<div className='title'>Description: &nbsp;</div>
-							<input
+							<textarea
 								type='text'
 								className='inputText'
 								name='description'
@@ -170,7 +170,7 @@ const FormProductDashboard = () => {
 										allProducts
 									)
 								}
-							></input>
+							></textarea>
 						</div>
 						{errors.description && (
 							<p className='danger'>{errors.description}</p>
@@ -179,7 +179,7 @@ const FormProductDashboard = () => {
 							<div className='title'>Price: &nbsp;</div>
 							<input
 								id='form__input__price'
-								className='form__input'
+								className='form_input'
 								type='number'
 								name='priceValue'
 								value={product.priceValue}
