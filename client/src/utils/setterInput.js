@@ -3,7 +3,7 @@ export default function setter(input) {
 	if (typeof input === 'number') return (input = 0);
 	if (typeof input === 'boolean') return (input = !input);
 	if (Array.isArray(input)) return (input = []);
-	for (const key in input) {
+	for (let key in input) {
 		if (typeof input[key] === 'boolean') {
 			input[key] = !input[key];
 		} else if (Array.isArray(input[key])) {
@@ -14,5 +14,6 @@ export default function setter(input) {
 			input[key] = '';
 		}
 	}
+
 	return input;
 }

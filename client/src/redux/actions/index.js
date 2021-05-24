@@ -125,12 +125,42 @@ export const cleanProductDetail = () => {
 
 export const addNewProduct = (body) => {
 	//agrega un producto
-	return async (dispatch) => {
+	return function (dispatch) {
+		return fetch(URLS.URL_PRODUCTS, {
+			method: 'POST',
+			body: body,
+			headers: {
+				Accept: 'application/json',
+			},
+		})
+			.then((response) => response.json())
+			.then((json) => {
+				dispatch({
+					type: ActionTypes.PRODUCT_CREATED,
+					payload: json.response, // TIENE QUE SER UN {}
+				});
+			})
+			.catch((err) =>
+				dispatch({
+					type: ActionTypes.EMPTY_PRODUCT_CREATED,
+					payload: {
+						error: err,
+						message: 'Internal server error',
+					},
+				})
+			);
+	};
+};
+
+/* return async (dispatch) => {
 		try {
 			const {data} = await axios({
 				method: 'post',
 				url: URLS.URL_PRODUCTS,
 				data: body,
+				headers: {
+					'Content-Type': 'multipart / form-data',
+				},
 			});
 			return dispatch({
 				type: ActionTypes.PRODUCT_CREATED,
@@ -146,7 +176,7 @@ export const addNewProduct = (body) => {
 			});
 		}
 	};
-};
+}; */
 
 export const emptyProductCreated = () => {
 	// vacía el producto creado
