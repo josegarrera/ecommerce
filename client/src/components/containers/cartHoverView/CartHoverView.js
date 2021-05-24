@@ -5,7 +5,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import {postLocalStorage} from '../../../redux/actions';
 import {IoCloseSharp} from 'react-icons/io5';
 import CardHoverProducts from '../cardHoverProduct/CardHoverProduct';
-import CartHoverStyled from './styled';
+/* import CartHoverStyled from './styled'; */
 import {changeCartPrice} from '../../../utils/changeCartPrice';
 
 const CartHoverView = () => {
@@ -20,7 +20,7 @@ const CartHoverView = () => {
 		if (user) {
 			dispatch(postLocalStorage({cartProduct, user}));
 			window.localStorage.setItem('cart', JSON.stringify([]));
-		}
+		} // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	let count$ = cartProduct && changeCartPrice(cartProduct, rendering);

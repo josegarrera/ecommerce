@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {useHistory} from 'react-router-dom';
 import SearchStyles from './styled';
 
-let props = ['email', 'role', 'name', '_id', 'price.value', 'user'];
+/* let props = ['email', 'role', 'name', '_id', 'price.value', 'user']; */
 
 const SearchBar = ({Items, setFilter, setCreate, create, options}) => {
 	let history = useHistory();

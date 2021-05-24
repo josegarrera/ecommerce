@@ -72,7 +72,7 @@ const FormProduct = () => {
 		return () => {
 			dispatch(emptyProductCreated());
 		};
-	}, []); // eslint-disable-line react-hooks/exhaustive-deps
+	}, [dispatch]); // eslint-disable-next-line react-hooks/exhaustive-deps
 
 	useEffect(() => {
 		if (productCreated.hasOwnProperty('name') && status.completed) {
@@ -96,8 +96,8 @@ const FormProduct = () => {
 		setStatus({
 			...status,
 			completed: false,
-		});
-	}, [productCreated]); /* eslint-disable react/jsx-pascal-case */
+		}); // eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [productCreated]);
 
 	const changeInput = (e) => {
 		setProduct({
