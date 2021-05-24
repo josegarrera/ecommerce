@@ -7,7 +7,7 @@ import Create from '../../create/Create';
 import SearchBarDashboard from '../searchBarDashboard';
 import ListStyles from './styled';
 import {clearObjectValues} from '../../../../utils/clearObjetcValues';
-
+import {getCategories, getBrands} from '../../../../redux/actions';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 var _ = require('lodash');
@@ -17,14 +17,18 @@ const ListDashboard = ({Options}) => {
 	const [Filter, setFilter] = useState([]);
 	const [create, setCreate] = useState(false);
 	const [control, setControl] = useState(0);
+	const dispatch = useDispatch();
+	const allCategories = useSelector((state) => state.categories);
+	const allBrands = useSelector((state) => state.brands);
 
 	useEffect(() => {
 		allProducts();
 	}, [Options]);
 
 	useEffect(() => {
-		allProducts();
-	}, [Options]);
+		dispatch(getCategories());
+		dispatch(getBrands());
+	}, []);
 
 	useEffect(() => {
 		setFilter(Items);
@@ -116,6 +120,8 @@ const ListDashboard = ({Options}) => {
 									index={index}
 									options={Options}
 									allProducts={allProducts}
+									allBrands={allBrands}
+									allCategories={allCategories}
 								/>
 							))}
 					</InfiniteScroll>
