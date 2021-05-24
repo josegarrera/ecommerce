@@ -135,6 +135,7 @@ export const addNewProduct = (body) => {
 		})
 			.then((response) => response.json())
 			.then((json) => {
+				console.log(json);
 				dispatch({
 					type: ActionTypes.PRODUCT_CREATED,
 					payload: json.response, // TIENE QUE SER UN {}

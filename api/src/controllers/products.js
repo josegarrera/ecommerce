@@ -6,6 +6,8 @@ const {
 } = require('../models/index.js');
 const mongoose = require('mongoose');
 const {filterProducts} = require('../utils/utils.js');
+const {STORAGE_BASEURL} = process.env;
+const bucket = require('../storage.js');
 
 async function getProductsDetail(req, res) {
 	const {id} = req.params;
@@ -39,8 +41,7 @@ async function getProductsDetail(req, res) {
 
 async function createProduct(req, res) {
 	const info = JSON.parse(req.body.info);
-	console.log(req.files);
-	console.log(info);
+	const files = req.files;
 	const {
 		name,
 		description,
@@ -50,7 +51,8 @@ async function createProduct(req, res) {
 		categories,
 		brands,
 		specs,
-	} = req.body;
+	} = info;
+
 	const checkExists = await Products.exists({name});
 
 	if (!req.body || !name || !description || !price || !brands || !imageUrl)
@@ -77,10 +79,11 @@ async function createProduct(req, res) {
 		specs,
 	});
 	const categoriesCreated = categories.map((el) =>
-		Categories.findOrCreate({name: el})
+		Categories.findOrCreate({_id: el})
 	);
 	Promise.all(categoriesCreated)
 		.then((data) => {
+			console.log('entrando a 1 then', data);
 			data.map(
 				(el) =>
 					el.doc.products.push(product._id) &&
@@ -94,10 +97,11 @@ async function createProduct(req, res) {
 							});
 					})
 			);
-			const brandsCreated = brands.map((el) => Brands.findOrCreate({name: el}));
+			const brandsCreated = brands.map((el) => Brands.findOrCreate({_id: el}));
 			return Promise.all(brandsCreated);
 		})
 		.then((data) => {
+			console.log('2do then', data);
 			data.map(
 				(el) =>
 					el.doc.products.push(product._id) &&
@@ -112,15 +116,10 @@ async function createProduct(req, res) {
 					})
 			);
 
-			product.save((err) => {
-				if (err)
-					return res.status(500).send({
-						response: '',
-						type: 'Internal Server Error',
-						message: err,
-					});
-				res.send({response: product, type: 'Ok', message: 'Success'});
-			});
+			return product.save();
+		})
+		.then((data) => {
+			res.send({response: data, type: 'Ok', message: 'Success'});
 		})
 		.catch((error) =>
 			res
