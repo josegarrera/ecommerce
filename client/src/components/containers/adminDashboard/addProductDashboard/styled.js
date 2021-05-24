@@ -3,12 +3,43 @@ import styled from 'styled-components';
 const FormProductStyle = styled.div`
 	display: flex;
 	width: 95%;
+	height: 95%;
 	margin: 10px 0px;
 	padding: 10px 10px;
 	background-color: #ffffff;
 	border-radius: 10px;
 	color: #58585a;
+	justify-content: center;
+	align-items: center;
 
+	.form__button_green {
+		display: flex;
+		margin-top: 0.5rem;
+		align-self: flex-end;
+		padding: 1rem;
+		color: #ffffff;
+		background-color: #2ec4b6;
+		border: none;
+		border-radius: 0.5rem;
+		font-size: 1.2rem;
+		font-weight: 600;
+	}
+	.form__input {
+		padding: 1rem;
+		color: #757575;
+		border-radius: 0.6rem;
+		font-size: 1rem;
+		font-weight: 600;
+		background-color: #ffffff;
+		border: 1.5px solid #e0e0e0;
+	}
+	.form__label {
+		font-size: 0.9rem;
+		color: #9e9e9e;
+		font-weight: 600;
+		margin-top: 0.5rem;
+		margin-bottom: 0.5rem;
+	}
 	.productAllInfo {
 		display: flex;
 		justify-content: left;
@@ -47,6 +78,7 @@ const FormProductStyle = styled.div`
 			.renglon2 {
 				display: flex;
 				align-items: flex-start;
+				padding-bottom: 1rem;
 			}
 
 			.inputText {
@@ -104,6 +136,8 @@ const FormProductStyle = styled.div`
 	.btnFormProduct {
 		height: 26px;
 		padding: 1px 2px;
+		background-color: #0395b8;
+		color: #ffffff;
 	}
 	.div_delete_categorie {
 		display: flex;

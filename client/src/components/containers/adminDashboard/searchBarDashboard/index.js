@@ -4,7 +4,14 @@ import SearchStyles from './styled';
 
 /* let props = ['email', 'role', 'name', '_id', 'price.value', 'user']; */
 
-const SearchBar = ({Items, setFilter, setCreate, create, options}) => {
+const SearchBar = ({
+	Items,
+	setFilter,
+	setCreate,
+	create,
+	options,
+	setOptions
+}) => {
 	let history = useHistory();
 
 	const handleOnChangue = (e) => {
@@ -27,7 +34,8 @@ const SearchBar = ({Items, setFilter, setCreate, create, options}) => {
 	};
 
 	const handleClick = () => {
-		if (options === 'Products') history.push('/create');
+		if (options === 'Products') setOptions('createProduct')
+
 		if (
 			options === 'Users' ||
 			options === 'Categories' ||

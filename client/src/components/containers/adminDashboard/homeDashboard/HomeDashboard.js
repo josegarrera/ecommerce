@@ -5,6 +5,7 @@ import ListDashboard from '../listDashboard/ListDashboard';
 import GraphicsDashboard from '../graphicsDashboard/GraphicsDashboard';
 import {IoIosArrowForward} from 'react-icons/io';
 import {BsPersonPlusFill, BsPersonCheckFill} from 'react-icons/bs';
+import FormProductDashboard from '../addProductDashboard/index';
 
 const HomeDashboard = () => {
 	const [Options, setOptions] = useState('Home');
@@ -75,8 +76,10 @@ const HomeDashboard = () => {
 			<div className='content'>
 				{Options === 'Home' ? (
 					<GraphicsDashboard setOptions={setOptions} />
+				) : Options === 'createProduct' ? (
+					<FormProductDashboard />
 				) : (
-					<ListDashboard Options={Options} />
+					<ListDashboard Options={Options} setOptions={setOptions} />
 				)}
 			</div>
 		</StyledContainer>
