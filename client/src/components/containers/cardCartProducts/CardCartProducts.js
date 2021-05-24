@@ -24,10 +24,9 @@ const CardCartProducts = (props) => {
 		e.preventDefault();
 		if (userId) {
 			dispatch(removeCartProduct(data));
-		} else {
-			//deberia filtrar desde el localStorage
-			dispatch(updateCardProduct(props.product.product._id));
 		}
+		//deberia filtrar desde el localStorage
+		dispatch(updateCardProduct(props.product.product._id));
 	};
 	const handleChangeLot = (e) => {
 		if (userId) {
@@ -46,11 +45,7 @@ const CardCartProducts = (props) => {
 				</Link>
 
 				<div className='amountDiv'>
-					<button
-						className='amount'
-						value='-1'
-						onClick={(e) => handleChangeLot(-1)}
-					>
+					<button className='amount' onClick={(e) => handleChangeLot(-1)}>
 						-
 					</button>
 					<div className='amount'>{lot}</div>
