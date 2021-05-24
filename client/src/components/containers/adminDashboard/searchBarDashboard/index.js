@@ -28,8 +28,12 @@ const SearchBar = ({Items, setFilter, setCreate, create, options}) => {
 
 	const handleClick = () => {
 		if (options === 'Products') history.push('/create');
-		if (options === 'Categories') history.push('/categorie');
-		if (options === 'Users' || options === 'Orders' || options === 'Brands')
+		if (
+			options === 'Users' ||
+			options === 'Categories' ||
+			options === 'Orders' ||
+			options === 'Brands'
+		)
 			setCreate(!create);
 	};
 

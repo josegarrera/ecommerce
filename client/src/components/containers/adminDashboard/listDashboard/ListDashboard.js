@@ -129,7 +129,15 @@ const ListDashboard = ({Options}) => {
 			) : null}
 			{Options === 'Categories' ? (
 				<>
-					{/* {create ? <Create options={Options} /> : null} */}
+					{create ? (
+						<Create
+							options={Options}
+							setCreate={setCreate}
+							create={create}
+							Items={Items}
+							allProducts={allProducts}
+						/>
+					) : null}
 					<InfiniteScroll
 						className='listProduct'
 						dataLength={Filter.length}
