@@ -1,5 +1,7 @@
 import React from 'react';
+
 import {Route, Switch, Redirect} from 'react-router-dom';
+
 import {useSelector} from 'react-redux';
 import GridLayout from '../utils/GridLayout';
 //import {GlobalStyles} from './GlobalStyles';
@@ -21,7 +23,9 @@ import ReactNotification from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 import Favourites from '../components/containers/favourites/Favourites';
 import FormCategorie from '../components/containers/formCategories/FormCategories';
+
 import FormProductDashboard from '../components/containers/adminDashboard/addProductDashboard/index.js';
+
 
 function App() {
 	const user = useSelector((state) => state.user);

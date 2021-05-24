@@ -21,6 +21,7 @@ const initialState = {
 	cartProducts: getCartLocalStorage(),
 	user: {},
 	wishlist: getWishListLocalStorage(),
+	payIn: window.localStorage.getItem('dollar'),
 };
 
 const r = (state = initialState, {type, payload}) => {
@@ -224,6 +225,20 @@ const r = (state = initialState, {type, payload}) => {
 				shippingInfo: payload,
 			};
 
+		///////////////  SHIPPING  ///////////////
+		case ActionTypes.SET_PAY_IN:
+			let currency = window.localStorage.getItem('dollar');
+			if (currency === 'ARS') {
+				currency = 'USD';
+				window.localStorage.setItem('dollar', 'USD');
+			} else {
+				currency = 'ARS';
+				window.localStorage.setItem('dollar', 'ARS');
+			}
+			return {
+				...state,
+				payIn: currency,
+			};
 		default:
 			return state;
 	}

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import DivCrdProd, {StyledLoder} from './styled';
 import {Link} from 'react-router-dom';
 import {FaShoppingCart} from 'react-icons/fa';
@@ -69,7 +69,9 @@ const CardProduct = ({name, imageUrl, price, _id, loading}) => {
 						<Link to={`/products/id/${_id}`}>
 							<h5>{name}</h5>
 						</Link>
-						<h6>{price.currency + price.value}</h6>
+						<h6>
+							{price.currency} {price.value}
+						</h6>
 						{!userId ? (
 							<Link
 								to='/login'

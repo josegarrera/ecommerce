@@ -24,10 +24,9 @@ const CardCartProducts = (props) => {
 		e.preventDefault();
 		if (userId) {
 			dispatch(removeCartProduct(data));
-		} else {
-			//deberia filtrar desde el localStorage
-			dispatch(updateCardProduct(props.product.product._id));
 		}
+		//deberia filtrar desde el localStorage
+		dispatch(updateCardProduct(props.product.product._id));
 	};
 	const handleChangeLot = (e) => {
 		if (userId) {
@@ -40,17 +39,13 @@ const CardCartProducts = (props) => {
 			<div className='productCont'>
 				<Link className='cincuenta' to={`/products/id/${_id}`}>
 					<div className='imageDiv'>
-						{<img className='image' src={imageUrl[0]}></img>}
+						{<img className='image' alt='IMG' src={imageUrl[0]}></img>}
 					</div>
 					<div className='nameDiv'>{name}</div>
 				</Link>
 
 				<div className='amountDiv'>
-					<button
-						className='amount'
-						value='-1'
-						onClick={(e) => handleChangeLot(-1)}
-					>
+					<button className='amount' onClick={(e) => handleChangeLot(-1)}>
 						-
 					</button>
 					<div className='amount'>{lot}</div>

@@ -6,24 +6,34 @@ import CardItems from '../cardItems/CardItems';
 import Create from '../../create/Create';
 import SearchBarDashboard from '../searchBarDashboard';
 import ListStyles from './styled';
-import {clearObjectValues} from '../../../../utils/clearObjetcValues';
-
+/* import {clearObjectValues} from '../../../../utils/clearObjetcValues'; */
+import {getCategories, getBrands} from '../../../../redux/actions';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-var _ = require('lodash');
+/* var _ = require('lodash'); */
 
 const ListDashboard = ({Options}) => {
 	const [Items, setItems] = useState([]);
 	const [Filter, setFilter] = useState([]);
 	const [create, setCreate] = useState(false);
-	const [control, setControl] = useState(0);
+	/* const [control, setControl] = useState(0); */
+	const dispatch = useDispatch();
+	const allCategories = useSelector((state) => state.categories);
+	const allBrands = useSelector((state) => state.brands);
 
 	useEffect(() => {
 		allProducts();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [Options]);
 
 	useEffect(() => {
-		setFilter(Items);
+		dispatch(getCategories());
+		dispatch(getBrands());
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	useEffect(() => {
+		setFilter(Items); // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [Items]);
 
 	// useEffect(() => {
@@ -39,6 +49,7 @@ const ListDashboard = ({Options}) => {
 	// }, [create]);
 
 	const allProducts = async () => {
+		console.log('entré a allProducts');
 		if (Options === 'Products') {
 			try {
 				let itemss = await axios.get(
@@ -111,6 +122,8 @@ const ListDashboard = ({Options}) => {
 									index={index}
 									options={Options}
 									allProducts={allProducts}
+									allBrands={allBrands}
+									allCategories={allCategories}
 								/>
 							))}
 					</InfiniteScroll>
@@ -118,7 +131,15 @@ const ListDashboard = ({Options}) => {
 			) : null}
 			{Options === 'Categories' ? (
 				<>
-					{/* {create ? <Create options={Options} /> : null} */}
+					{create ? (
+						<Create
+							options={Options}
+							setCreate={setCreate}
+							create={create}
+							Items={Items}
+							allProducts={allProducts}
+						/>
+					) : null}
 					<InfiniteScroll
 						className='listProduct'
 						dataLength={Filter.length}
@@ -140,7 +161,13 @@ const ListDashboard = ({Options}) => {
 			{Options === 'Users' ? (
 				<>
 					{create ? (
-						<Create options={Options} setCreate={setCreate} create={create} />
+						<Create
+							options={Options}
+							setCreate={setCreate}
+							create={create}
+							Items={Items}
+							allProducts={allProducts}
+						/>
 					) : null}
 					<InfiniteScroll
 						className='listProduct'
@@ -179,22 +206,33 @@ const ListDashboard = ({Options}) => {
 				</InfiniteScroll>
 			) : null}
 			{Options === 'Brands' ? (
-				<InfiniteScroll
-					className='listProduct'
-					dataLength={Filter.length}
-					loader={<h4>Loading...</h4>}
-					height={600}
-				>
-					{Filter &&
-						Filter.map((el, index) => (
-							<CardItems
-								prop={el}
-								index={index}
-								options={Options}
-								allProducts={allProducts}
-							/>
-						))}
-				</InfiniteScroll>
+				<>
+					{create ? (
+						<Create
+							options={Options}
+							setCreate={setCreate}
+							create={create}
+							Items={Items}
+							allProducts={allProducts}
+						/>
+					) : null}
+					<InfiniteScroll
+						className='listProduct'
+						dataLength={Filter.length}
+						loader={<h4>Loading...</h4>}
+						height={600}
+					>
+						{Filter &&
+							Filter.map((el, index) => (
+								<CardItems
+									prop={el}
+									index={index}
+									options={Options}
+									allProducts={allProducts}
+								/>
+							))}
+					</InfiniteScroll>
+				</>
 			) : null}
 		</ListStyles>
 	);

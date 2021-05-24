@@ -16,7 +16,7 @@ const FavCard = ({imageUrl, name, price: {value, currency}, _id}) => {
 		<DivCardFav>
 			<Link className='cincuenta' to={`/products/id/${_id}`}>
 				<div className='imageDiv'>
-					<img className='image' src={imageUrl[0]} alt="Favorite's image" />
+					<img className='image' src={imageUrl[0]} alt="Favorite's" />
 				</div>
 			</Link>
 			<div className='name__price'>

@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import DIV_CART from './styled';
-import {postLocalStorage} from '../../../redux/actions/index';
+import React, {useEffect} from 'react';
+import DIV_CART, {CheckBoxWrapper, CheckBox, CheckBoxLabel} from './styled';
+import {postLocalStorage, setPayIn} from '../../../redux/actions/index';
 import {useDispatch, useSelector} from 'react-redux';
 import CardCartProducts from '../cardCartProducts/CardCartProducts';
 import {Link} from 'react-router-dom';
@@ -10,17 +10,19 @@ import {changeCartPrice} from '../../../utils/changeCartPrice';
 const Cart = () => {
 	const dispatch = useDispatch();
 	const cartProduct = useSelector((state) => state.cartProducts);
-	const [rendering, setRendering] = useState(true);
-
+	const payIn = useSelector((state) => state.payIn);
 	useEffect(() => {
 		const user = window.localStorage.getItem('userId');
 		if (user) {
 			dispatch(postLocalStorage({products: cartProduct, userId: user}));
 			window.localStorage.setItem('cart', JSON.stringify([]));
-		}
+		} // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	let count$ = cartProduct && changeCartPrice(cartProduct, rendering);
+	const handleCheck = () => {
+		dispatch(setPayIn());
+	};
+	let count$ = cartProduct && changeCartPrice(cartProduct, payIn);
 
 	return (
 		<DIV_CART>
@@ -28,6 +30,18 @@ const Cart = () => {
 				<h1>Shopping Cart</h1>
 			</div>
 
+			<div className='pay__in'>Pay In :</div>
+			<div className={payIn === 'USD' ? 'USD' : 'USD_IN'}>USD</div>
+			<div className={payIn === 'ARS' ? 'ARS' : 'ARS_IN'}>ARS</div>
+			<CheckBoxWrapper>
+				<CheckBox
+					id='checkbox'
+					type='checkbox'
+					onClick={handleCheck}
+					defaultChecked={payIn === 'USD' ? true : false}
+				/>
+				<CheckBoxLabel htmlFor='checkbox' />
+			</CheckBoxWrapper>
 			<div className='products__summ__cnt'>
 				<div className='prd__link'>
 					<div className='product_cnt'>
@@ -37,8 +51,8 @@ const Cart = () => {
 							<div>Price</div>
 						</div>
 						{cartProduct.length ? (
-							cartProduct.map((e) => (
-								<CardCartProducts key={e._id} product={e} />
+							cartProduct.map((e, i) => (
+								<CardCartProducts key={i} product={e} />
 							))
 						) : (
 							<h1>No tienes Producto agregados al carrito</h1>
@@ -48,30 +62,19 @@ const Cart = () => {
 						<Link to='/catalogue'>
 							<p className='p_back_home'>{'<<'} Continue Shopping</p>
 						</Link>
-						{rendering ? (
-							<div>
-								<p className='h2__sbt'>AR$ {count$}</p>
-								<button
-									onClick={() => setRendering(!rendering)}
-									className='btn__sbt'
-								>
-									Change pay to U$D
-								</button>
-							</div>
-						) : (
+						{payIn === 'ARS' ? (
 							<>
 								<p className='h2__sbt'>U$D {count$}</p>
-								<button
-									onClick={() => setRendering(!rendering)}
-									className='btn__sbt'
-								>
-									Change pay to AR$
-								</button>
+							</>
+						) : (
+							<>
+								<p className='h2__sbt'>AR$ {count$}</p>
 							</>
 						)}
 					</div>
 				</div>
-				<SumarryCart count={count$} />
+
+				<SumarryCart count={count$} payIn={payIn} />
 			</div>
 		</DIV_CART>
 	);

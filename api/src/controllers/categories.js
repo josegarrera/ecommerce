@@ -93,62 +93,80 @@ async function updateACategory(req, res) {
 }
 
 function createCategories(req, res) {
-	if (!req.body || !req.body.categories.length || !req.body.variants.length)
+	if (!req.body || !req.body.variants.length)
 		return res.status(400).send({
 			response: '',
 			type: 'Bad request.',
 			message: 'The fields are empty.',
 		});
-	const {products, categories, variants, specs} = req.body;
-	const specProducts = products.map((item) => Products.findById(item));
-	let idValidProducts;
-	let validProducts;
-	Promise.all(specProducts)
-		.then((data) => {
-			idValidProducts = data.map((id) => id._id);
-			validProducts = data;
-			const categoriesCreated = categories.map((item) =>
-				Categories.findOrCreate({name: item})
+	if (req.body.name) {
+		const {name, periferic, variants, products} = req.body;
+		Categories.findOrCreate({
+			name,
+			periferic,
+			variants,
+			products,
+		})
+			.then((data) => {
+				res.send({response: data.doc, type: 'Ok', message: 'Success'});
+			})
+			.catch((error) =>
+				res
+					.status(500)
+					.send({response: '', type: 'Internal Server Error', message: error})
 			);
-			return Promise.all(categoriesCreated);
-		})
-		.then((data) => {
-			let idCategories = data.map((item) => item.doc._id);
-			data.forEach((categorie) => {
-				categorie.doc.variants = variants;
-				categorie.doc.products = categorie.doc.products
-					.concat(idValidProducts)
-					.filter(
-						(item, index) =>
-							categorie.doc.products.concat(idValidProducts).indexOf(item) ===
-							index
-					);
-				categorie.doc.specs = specs;
-			});
-			validProducts.forEach((product) => {
-				product.categories = product.categories
-					.concat(idCategories)
-					.filter(
-						(item, index) =>
-							product.categories.concat(idCategories).indexOf(item) === index
-					);
-			});
-			return Promise.all(
-				data
-					.map((item) => item.doc.save())
-					.concat(validProducts.map((item) => item.save()))
-			);
-		})
-		.then((data) => {
-			const result = data.filter((item) => !item.price);
-			res.send({response: result, type: 'Ok', message: 'Success'});
-		})
+	} else {
+		const {products, categories, variants, specs} = req.body;
+		const specProducts = products.map((item) => Products.findById(item));
+		let idValidProducts;
+		let validProducts;
+		Promise.all(specProducts)
+			.then((data) => {
+				idValidProducts = data.map((id) => id._id);
+				validProducts = data;
+				const categoriesCreated = categories.map((item) =>
+					Categories.findOrCreate({name: item})
+				);
+				return Promise.all(categoriesCreated);
+			})
+			.then((data) => {
+				let idCategories = data.map((item) => item.doc._id);
+				data.forEach((categorie) => {
+					categorie.doc.variants = variants;
+					categorie.doc.products = categorie.doc.products
+						.concat(idValidProducts)
+						.filter(
+							(item, index) =>
+								categorie.doc.products.concat(idValidProducts).indexOf(item) ===
+								index
+						);
+					categorie.doc.specs = specs;
+				});
+				validProducts.forEach((product) => {
+					product.categories = product.categories
+						.concat(idCategories)
+						.filter(
+							(item, index) =>
+								product.categories.concat(idCategories).indexOf(item) === index
+						);
+				});
+				return Promise.all(
+					data
+						.map((item) => item.doc.save())
+						.concat(validProducts.map((item) => item.save()))
+				);
+			})
+			.then((data) => {
+				const result = data.filter((item) => !item.price);
+				res.send({response: result, type: 'Ok', message: 'Success'});
+			})
 
-		.catch((error) =>
-			res
-				.status(500)
-				.send({response: '', type: 'Internal Server Error', message: error})
-		);
+			.catch((error) =>
+				res
+					.status(500)
+					.send({response: '', type: 'Internal Server Error', message: error})
+			);
+	}
 }
 
 module.exports = {

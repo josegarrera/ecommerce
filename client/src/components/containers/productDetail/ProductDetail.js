@@ -25,7 +25,6 @@ const ProductDetail = (id) => {
 
 	const product = useSelector((store) => store.productDetail);
 	const wishlist = useSelector((store) => store.wishlist);
-	console.log(`wishlist`, wishlist);
 	const fav = wishlist.find(({product: {_id}}) => _id === product._id);
 	const userId = window.localStorage.getItem('userId');
 
@@ -71,10 +70,7 @@ const ProductDetail = (id) => {
 							<div className='categories'>
 								{product.categories &&
 									product.categories.map((categ, i) => (
-										<div key={i}>
-											{' > '}
-											{categ.name}{' '}
-										</div>
+										<div key={i}>{categ.name} </div>
 									))}
 							</div>
 						</div>
@@ -89,8 +85,9 @@ const ProductDetail = (id) => {
 					<div className='centerDiv'>
 						<div className='imagesBox'>
 							{product.imageUrl &&
-								product.imageUrl.map((image) => (
+								product.imageUrl.map((image, i) => (
 									<div
+										key={i}
 										className='imageBox'
 										onMouseOver={() => setImageBig(image)}
 									>

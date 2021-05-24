@@ -218,7 +218,7 @@ function getProducts(req, res) {
 				.fill('')
 				.map(
 					(path, index) =>
-						`${process.env.REACT_APP_BACKEND_URL}/products/?name=${
+						`${process.env.BACKEND_URL}/products/?name=${
 							req.query.name
 						}&category=${req.query.category}&brand=${
 							req.query.brand

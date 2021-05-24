@@ -1,13 +1,12 @@
 /* eslint-disable react/jsx-pascal-case */
 import React, {useState} from 'react';
-import {Dropdown_Style, orderStyled} from './styled';
+import {Dropdown_Style} from './styled';
 // import onClickOutside from "react-onclickoutside";
 
 import {ImCheckboxUnchecked} from 'react-icons/im';
 import {ImCheckboxChecked} from 'react-icons/im';
 import {MdKeyboardArrowUp} from 'react-icons/md';
 import {MdKeyboardArrowDown} from 'react-icons/md';
-import setterVariants from '../../../utils/setterVariants.js';
 
 function Dropdown({
 	order,

@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {useHistory} from 'react-router-dom';
 import SearchStyles from './styled';
 
-let props = ['email', 'role', 'name', '_id', 'price.value', 'user'];
+/* let props = ['email', 'role', 'name', '_id', 'price.value', 'user']; */
 
 const SearchBar = ({Items, setFilter, setCreate, create, options}) => {
 	let history = useHistory();
@@ -28,8 +28,12 @@ const SearchBar = ({Items, setFilter, setCreate, create, options}) => {
 
 	const handleClick = () => {
 		if (options === 'Products') history.push('/create');
-		if (options === 'Categories') history.push('/categorie');
-		if (options === 'Users' || options === 'Orders' || options === 'Brands')
+		if (
+			options === 'Users' ||
+			options === 'Categories' ||
+			options === 'Orders' ||
+			options === 'Brands'
+		)
 			setCreate(!create);
 	};
 
@@ -53,9 +57,18 @@ const SearchBar = ({Items, setFilter, setCreate, create, options}) => {
 				placeHolder='   Search by name, price, id, categorie, role, email, etc'
 				onChange={handleOnChangue}
 			/>
-			<button className='form__button' onClick={handleClick}>
-				Create
-			</button>
+			{options && options !== 'Orders' ? (
+				<button className='form__button' onClick={handleClick}>
+					Create
+				</button>
+			) : (
+				<button
+					className='form__button form__button__hidden'
+					onClick={handleClick}
+				>
+					Create
+				</button>
+			)}
 		</SearchStyles>
 	);
 };

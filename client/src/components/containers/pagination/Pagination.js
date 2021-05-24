@@ -3,7 +3,7 @@ import {useDispatch} from 'react-redux';
 import DivPag from './styled';
 import {getProductsQuery} from '../../../redux/actions/index.js';
 
-const Pagination = ({pages, actualizar}) => {
+const Pagination = ({pages}) => {
 	const dispatch = useDispatch();
 
 	function actualizar(page) {
