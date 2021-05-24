@@ -70,6 +70,21 @@ const CreateStyle = styled.div`
 		margin: 20px;
 	}
 
+	.variants-container {
+		display: flex;
+	}
+
+	.close-button {
+		display: inline;
+		width: 7%;
+	}
+
+	.variants {
+		display: inline;
+		width: 20%;
+		margin-right: 10px;
+	}
+
 	.close {
 		align-items: flex-end;
 		object-fit: contain;
