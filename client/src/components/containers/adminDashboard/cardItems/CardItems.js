@@ -2,8 +2,7 @@ import React, {useEffect, useState} from 'react';
 import ProductDashboardStyle from './styled';
 import axios from 'axios';
 import {URLS} from '../../../../utils/constants';
-import {useDispatch, useSelector} from 'react-redux';
-import {getCategories, getBrands} from '../../../../redux/actions';
+
 
 import DataList from '../../dataList';
 
@@ -26,14 +25,13 @@ import {IoMdCheckmarkCircleOutline} from 'react-icons/io';
 
 import {TiDeleteOutline} from 'react-icons/ti';
 
-const CardItems = ({prop, index, options, allProducts}) => {
-	const dispatch = useDispatch();
+const CardItems = ({prop, index, options, allProducts,allBrands,allCategories}) => {
+	
 	const [isEditAItem, setisEditAItem] = useState(false);
 	const [SeeMore, setSeeMore] = useState(false);
 	const [EditAItem, setEditAItem] = useState({});
 	const [AccStatus, setAccStatus] = useState(false);
-	const allCategories = useSelector((state) => state.categories);
-	const allBrands = useSelector((state) => state.brands);
+
 
 	const {
 		name,
@@ -74,8 +72,6 @@ const CardItems = ({prop, index, options, allProducts}) => {
 		}
 	};
 	useEffect(() => {
-		dispatch(getCategories());
-		dispatch(getBrands());
 		return () => setEditAItem({});
 	}, []);
 
