@@ -10,7 +10,7 @@ const SearchBar = ({
 	setCreate,
 	create,
 	options,
-	setOptions
+	setOptions,
 }) => {
 	let history = useHistory();
 
@@ -34,7 +34,7 @@ const SearchBar = ({
 	};
 
 	const handleClick = () => {
-		if (options === 'Products') setOptions('createProduct')
+		if (options === 'Products') setOptions('createProduct');
 
 		if (
 			options === 'Users' ||
@@ -67,14 +67,14 @@ const SearchBar = ({
 			/>
 			{options && options !== 'Orders' ? (
 				<button className='form__button' onClick={handleClick}>
-					Create
+					Add {options.toLowerCase().slice(0, options.length - 1)}
 				</button>
 			) : (
 				<button
 					className='form__button form__button__hidden'
 					onClick={handleClick}
 				>
-					Create
+					Add {options.toLowerCase().slice(0, options.length - 1)}
 				</button>
 			)}
 		</SearchStyles>

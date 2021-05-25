@@ -23,6 +23,7 @@ const CreateStyle = styled.div`
 	.row {
 		display: flex;
 		flex-direction: column;
+		margin: 10px 0px;
 	}
 
 	.button {
@@ -50,6 +51,11 @@ const CreateStyle = styled.div`
 		color: #ee362c;
 	}
 
+	.createTitle {
+		font-size: 23px;
+		font-weight: 600;
+	}
+
 	.title {
 		display: flex;
 		align-items: center;
@@ -67,7 +73,10 @@ const CreateStyle = styled.div`
 	}
 
 	.radio-button {
-		margin: 20px;
+	}
+	.option {
+		font-weight: 400;
+		margin: 0px 15px 0px 3px;
 	}
 
 	.variants-container {

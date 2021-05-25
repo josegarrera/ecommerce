@@ -9,9 +9,11 @@ import {BsPersonCheckFill, BsPersonPlusFill} from 'react-icons/bs';
 import {Badge} from '@material-ui/core';
 
 import CartHoverView from '../../containers/cartHoverView/CartHoverView';
+import FavoritesHoverView from '../../containers/favoritesHoverView/FavoritesHoverView';
 
 const NavBar = () => {
 	const cartProduct = useSelector((state) => state.cartProducts);
+	const favsProduct = useSelector((state) => state.wishlist);
 	let userId = window.localStorage.getItem('userId');
 	const user = useSelector((state) => state.user);
 	const eraseToken = () => {
@@ -62,18 +64,20 @@ const NavBar = () => {
 						)}
 					</div>
 					{userId ? (
-						<Link to='/favorites'>
-							<div className='iconDiv'>
-								<IoHeart className='icon' />
+						<Badge badgeContent={favsProduct.length} color='secondary'>
+							<div className='iconDiv cart'>
+								<Link to='/favorites'>
+									<IoHeart className='icon' />
+								</Link>
+								<FavoritesHoverView className='cartHoverView' />
 							</div>
-						</Link>
+						</Badge>
 					) : null}
 					<Badge badgeContent={cartProduct.length} color='secondary'>
 						<div className='iconDiv cart'>
 							<Link to='/cart'>
 								<IoCart className='icon' />
 							</Link>
-
 							<CartHoverView className='cartHoverView' />
 						</div>
 					</Badge>

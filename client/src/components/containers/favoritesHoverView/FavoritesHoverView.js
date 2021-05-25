@@ -1,62 +1,55 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {postLocalStorage} from '../../../redux/actions';
 import CardHoverProducts from '../cardHoverProduct/CardHoverProduct';
-import {changeCartPrice} from '../../../utils/changeCartPrice';
 
-const CartHoverView = () => {
+const FavoritesHoverView = () => {
 	const dispatch = useDispatch();
-	const cartProduct = useSelector((state) => state.cartProducts);
+	const favsProduct = useSelector((state) => state.wishlist);
 	const user = useSelector((state) => state.userId);
-	let delivery = 100;
-
-	const [rendering, setRendering] = useState(true);
 
 	useEffect(() => {
 		if (user) {
-			dispatch(postLocalStorage({cartProduct, user}));
+			dispatch(postLocalStorage({favsProduct, user}));
 			window.localStorage.setItem('cart', JSON.stringify([]));
 		} // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	let count$ = cartProduct && changeCartPrice(cartProduct, rendering);
-
-	let total = parseFloat(count$) + delivery;
 	return (
 		<div className='cartHoverView'>
 			<div className='row'>
 				<div className='cartHeader'>
 					<div>
-						<div className='cartHoverTitle'>My Cart</div>
+						<div className='cartHoverTitle'>My Favorites</div>
 						<div className='cartHoverItems'>
-							{cartProduct.length} Items selected
+							{favsProduct.length} Items selected
 						</div>
 					</div>
 				</div>
 				<div className='productsContainer'>
-					{cartProduct.length > 3 ? (
+					{favsProduct.length > 3 ? (
 						<InfiniteScroll
-							dataLength={cartProduct.length}
+							dataLength={favsProduct.length}
 							loader={<h4>Loading...</h4>}
 							height={450}
 						>
-							{cartProduct.length
-								? cartProduct.map((e, i) => (
+							{favsProduct.length
+								? favsProduct.map((e, i) => (
 										<CardHoverProducts key={i} product={e} />
 								  ))
 								: null}
 						</InfiniteScroll>
-					) : cartProduct.length ? (
-						cartProduct.map((e, i) => <CardHoverProducts key={i} product={e} />)
+					) : favsProduct.length ? (
+						favsProduct.map((e, i) => <CardHoverProducts key={i} product={e} />)
 					) : null}
 				</div>
 			</div>
 
-			<div className='subtotal'>
+			{/* <div className='subtotal'>
 				<div>
-					<span>Subtotal ({cartProduct.length} items)</span>
+					<span>Subtotal ({favsProduct.length} items)</span>
 				</div>
 				<div>
 					{rendering ? (
@@ -103,9 +96,9 @@ const CartHoverView = () => {
 				</div>
 			</div>
 
-			<div className='cartItemBtn'>Continue to checkout</div>
+			<div className='cartItemBtn'>Continue to checkout</div> */}
 		</div>
 	);
 };
 
-export default CartHoverView;
+export default FavoritesHoverView;

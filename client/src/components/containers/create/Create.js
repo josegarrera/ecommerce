@@ -177,12 +177,13 @@ const Create = ({options, setCreate, create, Items, allProducts}) => {
 		<CreateStyle>
 			{options === 'Categories' ? (
 				<div className='container'>
+					<div className='createTitle'>Create categorie:</div>
 					<div className='close-container'>
 						<AiOutlineClose className='close' onClick={handleClick} />
 					</div>
 					<div className='column'>
 						<div className='row'>
-							<div className='title'>Category Name: &nbsp;</div>
+							<div className='title'> • Name: &nbsp;</div>
 							<input
 								name='name'
 								value={inputCategory.name}
@@ -195,28 +196,28 @@ const Create = ({options, setCreate, create, Items, allProducts}) => {
 						</div>
 						<div className='row'>
 							<div onChange={handleOnChangeCategory} className='title'>
-								Is a periferic?: &nbsp;
+								• Is it a peripheral?: &nbsp;
 								<input
 									className='radio-button'
 									type='radio'
 									value={true}
 									name='periferic'
 								/>{' '}
-								Yes
+								<div className='option'> Yes</div>
 								<input
 									className='radio-button'
 									type='radio'
 									value={false}
 									name='periferic'
 								/>{' '}
-								No
+								<div className='option'> No</div>
 							</div>
 							{errorCategory.periferic && (
 								<p className='danger'>{errorCategory.periferic}</p>
 							)}
 						</div>
 						<div className='row'>
-							<div className='title'>Variants: &nbsp;</div>
+							<div className='title'>• Variants: &nbsp;</div>
 							<input
 								name='variant'
 								value={variant}
@@ -257,12 +258,13 @@ const Create = ({options, setCreate, create, Items, allProducts}) => {
 			) : null}
 			{options === 'Users' ? (
 				<div className='container'>
+					<div className='createTitle'>Create user:</div>
 					<div className='close-container'>
 						<AiOutlineClose className='close' onClick={handleClick} />
 					</div>
 					<div className='column'>
 						<div className='row'>
-							<div className='title'>Email: &nbsp;</div>
+							<div className='title'>• Email: &nbsp;</div>
 							<input
 								name='email'
 								value={inputUser.email}
@@ -272,7 +274,7 @@ const Create = ({options, setCreate, create, Items, allProducts}) => {
 							{errorUser.email && <p className='danger'>{errorUser.email}</p>}
 						</div>
 						<div className='row'>
-							<div className='title'>Password: &nbsp;</div>
+							<div className='title'>• Password: &nbsp;</div>
 							<input
 								name='password'
 								type='password'
@@ -286,21 +288,21 @@ const Create = ({options, setCreate, create, Items, allProducts}) => {
 						</div>
 						<div className='row'>
 							<div onChange={handleOnChangeUser} className='title'>
-								Role: &nbsp;
+								• Role: &nbsp;
 								<input
 									className='radio-button'
 									type='radio'
 									value='client'
 									name='role'
 								/>{' '}
-								Client
+								<div className='option'> Client</div>
 								<input
 									className='radio-button'
 									type='radio'
 									value='admin'
 									name='role'
 								/>{' '}
-								Admin
+								<div className='option'> Admin</div>
 							</div>
 							{errorUser.role && <p className='danger'>{errorUser.role}</p>}
 						</div>
@@ -320,12 +322,13 @@ const Create = ({options, setCreate, create, Items, allProducts}) => {
 			) : null}
 			{options === 'Brands' ? (
 				<div className='container'>
+					<div className='createTitle'>Create brand:</div>
 					<div className='close-container'>
 						<AiOutlineClose className='close' onClick={handleClick} />
 					</div>
 					<div className='column'>
 						<div className='row'>
-							<div className='title'>Brand Name: &nbsp;</div>
+							<div className='title'>• Name: &nbsp;</div>
 							<input
 								name='name'
 								value={inputBrand.name}
