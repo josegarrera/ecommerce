@@ -22,7 +22,7 @@ Se implementaron metodologías ágiles SCRUM y control de versiones con Github.
 ## Members:
 
 <p align="left">
-  <code><a href="https://www.linkedin.com/in/pavegliobruno/" target="_blank"> <img src="https://res.cloudinary.com/dlexbrcrv/image/upload/v1621273442/Proyects/linkedin_1_wfivod.svg" alt="Paveglio Bruno" height="30"/></a> > Paveglio Bruno</code>
+  <p><a href="https://www.linkedin.com/in/pavegliobruno/" target="_blank" rel="noopener noreferrer"> <img src="https://res.cloudinary.com/dlexbrcrv/image/upload/v1621273442/Proyects/linkedin_1_wfivod.svg" alt="Paveglio Bruno" height="30"/></a> > Paveglio Bruno</p>
 
 <code><a href="https://www.linkedin.com/in/josegarrera/" target="_blank"> <img src="https://res.cloudinary.com/dlexbrcrv/image/upload/v1621273442/Proyects/linkedin_1_wfivod.svg" alt="Garrera José" height="30"/></a> > Garrera José</code>
 
