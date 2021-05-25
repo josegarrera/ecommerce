@@ -81,7 +81,7 @@ export const addItemListSelected = (
 	setErrors,
 	allProducts
 ) => {
-	if (e.target.name === 'imagesUrl') {
+	if (e.target.name === 'imagesUrl' && itemSelected) {
 		setProduct({
 			...product,
 			imageUrlInput: '',
@@ -90,7 +90,7 @@ export const addItemListSelected = (
 			),
 		});
 	}
-	if (e.target.name === 'brands') {
+	if (e.target.name === 'brands' && itemSelected.key) {
 		setProduct({
 			...product,
 			[e.target.name]: removeRepeats(
@@ -98,7 +98,7 @@ export const addItemListSelected = (
 			),
 		});
 	}
-	if (e.target.name === 'categories') {
+	if (e.target.name === 'categories' && itemSelected.key) {
 		const categoryItems = allCategories.find(
 			(category) => category._id === itemSelected.key
 		);
@@ -264,8 +264,6 @@ export const handleClickVariants = (
 		if (key !== 'file' && key !== 'fileInput') {
 			if (key === 'imageFile') {
 				variantFinal.imageFile = product.variant.imageFile.name || '';
-			} else if (key === 'imageUrl') {
-				variantFinal.imageUrl = product.variant.imageUrl.slice(0, 40) + '...';
 			} else variantFinal[key] = product.variant[key];
 		}
 	}
@@ -378,6 +376,7 @@ export const handleSubmit = (
 	setProduct(
 		setterInputs({
 			...product,
+			currency: 'USD',
 			files: [],
 			images: [],
 			allVariantsFiles: [],

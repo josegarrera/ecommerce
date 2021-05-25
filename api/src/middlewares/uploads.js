@@ -3,9 +3,11 @@ const path = require('path');
 
 const fileFilter = (req, file, cb) => {
 	if (file) {
-		file.mimetype === 'image/jpeg' || file.mimetype === 'image/png'
+		file.mimetype === 'image/jpeg' ||
+		file.mimetype === 'image/png' ||
+		file.mimetype === 'image/jpg'
 			? cb(null, true)
-			: cb(new Error('The file must be in jpeg / png format'), false);
+			: cb(new Error('The file must be in jpeg/jpg/png format'), false);
 	} else {
 		cb(new Error('Sorry, file upload failed.'));
 	}

@@ -8,7 +8,6 @@ const mongoose = require('mongoose');
 const {filterProducts} = require('../utils/utils.js');
 const {STORAGE_BASEURL} = process.env;
 const bucket = require('../storage.js');
-const products = require('../models/products.js');
 
 async function getProductsDetail(req, res) {
 	const {id} = req.params;
@@ -53,12 +52,17 @@ async function createProduct(req, res) {
 		brands,
 		specs,
 	} = info;
-	if (!req.body || !name || !description || !price || !brands || !imageUrl)
+	if (Object.values(info).length < Object.keys(info).length)
 		return res.status(400).send({
 			response: '',
 			type: 'Bad request.',
 			message: 'The fields are empty.',
 		});
+	variants.forEach((variant) => {
+		variant.imageUrl = variant.imageUrl ? [variant.imageUrl] : [];
+		let i = files.findIndex((file) => file.originalname === variant.imageFile);
+		if (i > -1) variant.imageFile = files[i].filename;
+	});
 
 	try {
 		const checkExists = await Products.exists({name});
@@ -88,12 +92,31 @@ async function createProduct(req, res) {
 		await brands.map((el) =>
 			Brands.findByIdAndUpdate({_id: el}, {$addToSet: {products: product._id}})
 		);
-		if (files.length) files.map((item) => console.log(item));
+		if (files.length) {
+			const filesUpdates = await Promise.all(
+				files.map((file) =>
+					bucket.upload(file.path, {
+						destination: files.filename,
+					})
+				)
+			);
 
-		await bucket.upload(file.path, {
-			destination: file.filename,
-		});
+			const filesUrl = filesUpdates.map(
+				(file) => STORAGE_BASEURL + file[0].name
+			);
 
+			filesUrl.forEach((url) => {
+				let i = product.variants.findIndex((variant) =>
+					url.includes(variant.imageFile)
+				);
+				if (i > -1) {
+					product.variants[i].imageUrl = [...product.variants[i].imageUrl, url];
+				} else {
+					product.imageUrl.push(url);
+				}
+			});
+		}
+		product.variants.map((variant) => delete variant.imageFile);
 		await product.save();
 		res.send({response: product, type: 'Ok', message: 'Success'});
 	} catch (error) {

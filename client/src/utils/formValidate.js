@@ -24,7 +24,7 @@ export default function validate(product, allProducts) {
 		return errors;
 	}
 	if (!product.priceValue) {
-		errors.priceValue = 'Required field.';
+		errors.priceValue = 'Required field (only numbers).';
 		return errors;
 	}
 
@@ -55,6 +55,10 @@ export default function validate(product, allProducts) {
 	}
 	if (!product.brands.length) {
 		errors.brands = 'You must add at least one brand.';
+		return errors;
+	}
+	if (!product.categories.length) {
+		errors.categories = 'You must add at least one brand.';
 		return errors;
 	}
 

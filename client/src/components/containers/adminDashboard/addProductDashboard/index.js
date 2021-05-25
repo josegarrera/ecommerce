@@ -386,7 +386,10 @@ const FormProductDashboard = () => {
 							</button>
 						</div>
 						<div>
-							{product.categories &&
+							{errors.categories ? (
+								<p className='danger'>{errors.categories}</p>
+							) : (
+								product.categories &&
 								product.categories.map((category) => (
 									<span>
 										{' '}
@@ -402,7 +405,8 @@ const FormProductDashboard = () => {
 											X{' '}
 										</button>{' '}
 									</span>
-								))}
+								))
+							)}
 						</div>
 						<div className='renglon2'>
 							<div className='title'>Variants: &nbsp;</div>
@@ -580,7 +584,7 @@ const FormProductDashboard = () => {
 							<input
 								className='btnFormProduct'
 								type='submit'
-								text='Create product'
+								text='Create'
 								disabled={
 									Object.keys(errors).length || !status.init ? 'disabled' : ''
 								}
