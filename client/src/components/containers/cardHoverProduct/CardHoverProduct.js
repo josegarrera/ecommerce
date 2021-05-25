@@ -36,7 +36,7 @@ const CardHoverView = (props) => {
 				<div className='cartItemInfo'>
 					<span className='cardItemTitle'>{name}</span>
 					<span className='cardItemPrice'>
-						{price.currency}
+						{price.currency} &nbsp;
 						{price.value}
 					</span>
 				</div>
