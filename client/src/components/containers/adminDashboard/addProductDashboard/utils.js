@@ -81,7 +81,16 @@ export const addItemListSelected = (
 	setErrors,
 	allProducts
 ) => {
-	if (e.target.name === 'brands' || e.target.name === 'imagesUrl') {
+	if (e.target.name === 'imagesUrl') {
+		setProduct({
+			...product,
+			imageUrlInput: '',
+			[e.target.name]: removeRepeats(
+				product[e.target.name].concat(itemSelected)
+			),
+		});
+	}
+	if (e.target.name === 'brands') {
 		setProduct({
 			...product,
 			[e.target.name]: removeRepeats(
@@ -295,6 +304,39 @@ export const changeInputSpecs = (e, setProduct) => {
 			specs: {...prevState.specs, [e.target.name]: e.target.value},
 		};
 	});
+};
+
+export const handleDeleteLabels = (e, setProduct) => {
+	if (e.target.name === 'imagesUrl') {
+		setProduct((prevState) => {
+			return {
+				...prevState,
+				[e.target.name]: prevState[e.target.name].filter(
+					(item) => item !== e.target.id
+				),
+			};
+		});
+	} else if (e.target.name === 'categories') {
+		setProduct((prevState) => {
+			return {
+				...prevState,
+				[e.target.name]: prevState[e.target.name].filter(
+					(item) => item.key !== e.target.id
+				),
+				variantItems: [],
+				variant: {},
+			};
+		});
+	} else {
+		setProduct((prevState) => {
+			return {
+				...prevState,
+				[e.target.name]: prevState[e.target.name].filter(
+					(item) => item.key !== e.target.id
+				),
+			};
+		});
+	}
 };
 
 export const handleSubmit = (

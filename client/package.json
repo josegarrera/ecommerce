@@ -12,6 +12,7 @@
     "dotenv": "^8.2.0",
     "fetch": "^1.1.0",
     "lodash": "^4.17.21",
+    "path-to-regexp": "^1.8.0",
     "react": "^17.0.2",
     "react-accessible-accordion": "^3.3.4",
     "react-content-loader": "^6.0.3",

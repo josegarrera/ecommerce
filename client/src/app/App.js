@@ -1,14 +1,11 @@
 import React from 'react';
-
-import {Route, Switch, Redirect} from 'react-router-dom';
-
+import {Route, Redirect} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import GridLayout from '../utils/GridLayout';
 //import {GlobalStyles} from './GlobalStyles';
 import NavBar from '../components/presentationals/navBar/NavBar.js';
 import Home from '../components/containers/home/Home.js';
 import Catalogue from '../components/containers/catalogue/Catalogue';
-import FormProduct from '../components/containers/formProduct/FormProduct';
 import Search from '../components/containers/search/Search';
 import ProductDetail from '../components/containers/productDetail/ProductDetail';
 import Cart from '../components/containers/cart/Cart.js';
@@ -18,15 +15,11 @@ import FomrCategories from '../components/containers/formCategories/FormCategori
 import HomeDashboard from '../components/containers/adminDashboard/homeDashboard/HomeDashboard';
 import ShippingAddress from '../components/containers/shippingAddress/shippingAddress';
 import ConfirmOrder from '../components/containers/confirmOrder/confirmOrder';
-
 import ReactNotification from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 import Favourites from '../components/containers/favourites/Favourites';
 import FormCategorie from '../components/containers/formCategories/FormCategories';
-
 import FormProductDashboard from '../components/containers/adminDashboard/addProductDashboard/index.js';
-
-
 function App() {
 	const user = useSelector((state) => state.user);
 	const userId = window.localStorage.getItem('userId');
@@ -50,7 +43,28 @@ function App() {
 					</Route>
 
 					<Route exact path='/admindashboard' component={HomeDashboard} />
-					<Route path='/' component={NavBar} />
+
+					<Route
+						render={({location}) =>
+							[
+								'/',
+								'/home',
+								'/signup',
+								'/login',
+								'/catalogue',
+								'/cart',
+								'/favorites',
+								'/products',
+								'/shipping',
+								'/confirmation',
+								'/about',
+								'/contact',
+							].includes(location.pathname) ? (
+								<NavBar />
+							) : null
+						}
+					/>
+
 					<Route exact path='/' component={Home} />
 					<Route exact path='/login' component={FormLogging} />
 					<Route exact path='/signup' component={FormSignup} />

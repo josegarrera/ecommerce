@@ -35,8 +35,8 @@ import {
 	handleVariantDelete,
 	changeInputSpecs,
 	handleSubmit,
+	handleDeleteLabels,
 } from './utils.js';
-import setter from '../../../../utils/setterInput.js';
 import Swal from 'sweetalert2';
 
 const FormProductDashboard = () => {
@@ -98,7 +98,8 @@ const FormProductDashboard = () => {
 				icon: 'success',
 				confirmButtonText: 'Ok',
 			});
-		} else if (!productCreated.hasOwnProperty('name') && status.completed) {
+		}
+		if (!productCreated.hasOwnProperty('name') && status.completed) {
 			Swal.fire({
 				title: 'Error',
 				text: productCreated.message,
@@ -108,11 +109,11 @@ const FormProductDashboard = () => {
 		}
 		if (!status.init && status.completed) {
 			dispatch(emptyProductCreated());
+			setStatus({
+				...status,
+				completed: false,
+			});
 		}
-		setStatus({
-			...status,
-			completed: false,
-		});
 	}, [productCreated]); /* eslint-disable react/jsx-pascal-case */
 
 	return (
@@ -181,6 +182,7 @@ const FormProductDashboard = () => {
 								id='form__input__price'
 								className='form_input'
 								type='number'
+								min='1'
 								name='priceValue'
 								value={product.priceValue}
 								onChange={(e) =>
@@ -276,7 +278,19 @@ const FormProductDashboard = () => {
 						{errors.url && <p className='danger'>{errors.url}</p>}
 						{product.imagesUrl &&
 							product.imagesUrl.map((image) => (
-								<label> {image.slice(0, 40)}...</label>
+								<div>
+									<label> {image.slice(0, 40)}...</label>
+									<button
+										id={image}
+										name='imagesUrl'
+										type='button'
+										className='btnFormProduct'
+										onClick={(e) => handleDeleteLabels(e, setProduct)}
+									>
+										{' '}
+										X{' '}
+									</button>
+								</div>
 							))}
 						<div className='renglon2'>
 							<div className='title'>Brands: &nbsp;</div>
@@ -314,7 +328,22 @@ const FormProductDashboard = () => {
 							{errors.brands ? (
 								<p className='danger'>{errors.brands}</p>
 							) : product.brands.length ? (
-								product.brands.map((brand) => <label> {brand.label}-</label>)
+								product.brands.map((brand) => (
+									<span>
+										{' '}
+										<label> {brand.label} </label>{' '}
+										<button
+											id={brand.key}
+											name='brands'
+											type='button'
+											className='btnFormProduct'
+											onClick={(e) => handleDeleteLabels(e, setProduct)}
+										>
+											{' '}
+											X{' '}
+										</button>{' '}
+									</span>
+								))
 							) : (
 								<></>
 							)}
@@ -359,7 +388,20 @@ const FormProductDashboard = () => {
 						<div>
 							{product.categories &&
 								product.categories.map((category) => (
-									<label> {category.label}-</label>
+									<span>
+										{' '}
+										<label> {category.label} </label>{' '}
+										<button
+											id={category.key}
+											name='categories'
+											type='button'
+											className='btnFormProduct'
+											onClick={(e) => handleDeleteLabels(e, setProduct)}
+										>
+											{' '}
+											X{' '}
+										</button>{' '}
+									</span>
 								))}
 						</div>
 						<div className='renglon2'>
@@ -408,7 +450,6 @@ const FormProductDashboard = () => {
 																	e,
 																	product,
 																	setProduct,
-
 																	setErrors,
 																	allProducts
 																)

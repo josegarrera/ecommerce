@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const {filterProducts} = require('../utils/utils.js');
 const {STORAGE_BASEURL} = process.env;
 const bucket = require('../storage.js');
+const products = require('../models/products.js');
 
 async function getProductsDetail(req, res) {
 	const {id} = req.params;
@@ -52,80 +53,54 @@ async function createProduct(req, res) {
 		brands,
 		specs,
 	} = info;
-
-	const checkExists = await Products.exists({name});
-
 	if (!req.body || !name || !description || !price || !brands || !imageUrl)
 		return res.status(400).send({
 			response: '',
 			type: 'Bad request.',
 			message: 'The fields are empty.',
 		});
-	if (checkExists)
-		return res.status(500).send({
-			response: '',
-			type: 'Internal server error.',
-			message: 'A product with this name already exists',
+
+	try {
+		const checkExists = await Products.exists({name});
+		if (checkExists)
+			return res.status(400).send({
+				response: '',
+				type: 'Internal server error.',
+				message: 'A product with this name already exists',
+			});
+
+		const product = new Products({
+			name,
+			description,
+			price,
+			imageUrl,
+			categories,
+			brands,
+			variants,
+			specs,
+		});
+		await categories.map((el) =>
+			Categories.findByIdAndUpdate(
+				{_id: el},
+				{$addToSet: {products: product._id}}
+			)
+		);
+		await brands.map((el) =>
+			Brands.findByIdAndUpdate({_id: el}, {$addToSet: {products: product._id}})
+		);
+		if (files.length) files.map((item) => console.log(item));
+
+		await bucket.upload(file.path, {
+			destination: file.filename,
 		});
 
-	const product = new Products({
-		name,
-		description,
-		price,
-		imageUrl,
-		categories: [],
-		brands: [],
-		variants,
-		specs,
-	});
-	const categoriesCreated = categories.map((el) =>
-		Categories.findOrCreate({_id: el})
-	);
-	Promise.all(categoriesCreated)
-		.then((data) => {
-			console.log('entrando a 1 then', data);
-			data.map(
-				(el) =>
-					el.doc.products.push(product._id) &&
-					product.categories.push(el.doc._id) &&
-					el.doc.save((err) => {
-						if (err)
-							return res.status(500).send({
-								response: '',
-								type: 'Internal Server Error',
-								message: err,
-							});
-					})
-			);
-			const brandsCreated = brands.map((el) => Brands.findOrCreate({_id: el}));
-			return Promise.all(brandsCreated);
-		})
-		.then((data) => {
-			console.log('2do then', data);
-			data.map(
-				(el) =>
-					el.doc.products.push(product._id) &&
-					product.brands.push(el.doc._id) &&
-					el.doc.save((err) => {
-						if (err)
-							return res.status(500).send({
-								response: '',
-								type: 'Internal Server Error',
-								message: err,
-							});
-					})
-			);
-
-			return product.save();
-		})
-		.then((data) => {
-			res.send({response: data, type: 'Ok', message: 'Success'});
-		})
-		.catch((error) =>
-			res
-				.status(500)
-				.send({response: '', type: 'Internal Server Error', message: error})
-		);
+		await product.save();
+		res.send({response: product, type: 'Ok', message: 'Success'});
+	} catch (error) {
+		res
+			.status(500)
+			.send({response: '', type: 'Internal Server Error', message: error});
+	}
 }
 
 function getAllProducts(req, res) {
