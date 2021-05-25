@@ -28,7 +28,7 @@ Se implementaron metodologías ágiles SCRUM y control de versiones con Github.
 
 <code><a href="https://www.linkedin.com/in/pavegliobruno/" target="_blank"> <img src="https://res.cloudinary.com/dlexbrcrv/image/upload/v1621273442/Proyects/linkedin_1_wfivod.svg" alt="Diaz Alonso" height="30"/></a> > Diaz Alonso</code>
 
-<code><a href="https://www.linkedin.com/in/pavegliobruno/" target="_blank"> <img src="https://res.cloudinary.com/dlexbrcrv/image/upload/v1621273442/Proyects/linkedin_1_wfivod.svg" alt="Cordoba Facundo" height="30"/></a> > Cordoba Facundo</code>
+<code><a href="https://www.linkedin.com/in/facundocordobaperez/" target="_blank"> <img src="https://res.cloudinary.com/dlexbrcrv/image/upload/v1621273442/Proyects/linkedin_1_wfivod.svg" alt="Cordoba Facundo" height="30"/></a> > Cordoba Facundo</code>
 
 <code><a href="https://www.linkedin.com/in/pavegliobruno/" target="_blank"> <img src="https://res.cloudinary.com/dlexbrcrv/image/upload/v1621273442/Proyects/linkedin_1_wfivod.svg" alt="s" height="30"/></a> > Contreras Pedro</code>
 
