@@ -54,6 +54,8 @@ const ProductDetail = (id) => {
 		dispatch(removeFavProductToDB({userId, productId: product._id}));
 	};
 
+	console.log(product);
+
 	if (product.name) {
 		return (
 			<ProductDetailStyle>
@@ -65,12 +67,12 @@ const ProductDetail = (id) => {
 								type='button'
 								onClick={() => history.goBack()}
 							>
-								{'Back |'}
+								{'Back |'} &nbsp;
 							</button>
 							<div className='categories'>
 								{product.categories &&
 									product.categories.map((categ, i) => (
-										<div key={i}>{categ.name} </div>
+										<div key={i}>{categ.name} &nbsp;</div>
 									))}
 							</div>
 						</div>
@@ -199,15 +201,19 @@ const ProductDetail = (id) => {
 							<div className='infoDivBottom'>
 								<div>{product.description && product.description}</div>
 
-								<div>
-									{'Variants: '}
-									{'ACA FALTAN LAS VARIANTS'}
-								</div>
-
-								<div>
-									{'Avaliable Stock:'}
-									{product.variants && product.variants.stock}
-									{'unids.'}
+								<div className='stockDiv'>
+									{'Stock: '}
+									<div className='variants'>
+										{product.variants
+											? product.variants.map((variant, i) => (
+													<div key={i} className='variant'>
+														{variant.color.charAt(0).toUpperCase() +
+															variant.color.slice(1)}
+														, {variant.stock}u.
+													</div>
+											  ))
+											: null}
+									</div>
 								</div>
 							</div>
 							<button className='button'> Buy now</button>

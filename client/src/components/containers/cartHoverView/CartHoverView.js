@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React, {useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {postLocalStorage} from '../../../redux/actions';
@@ -102,8 +103,9 @@ const CartHoverView = () => {
 					<span>{rendering ? <>AR$ {total}</> : <>U$D {total}</>}</span>
 				</div>
 			</div>
-
-			<div className='cartItemBtn'>Continue to checkout</div>
+			<Link to='/shipping'>
+				<div className='cartItemBtn'>Continue to checkout</div>
+			</Link>
 		</div>
 	);
 };

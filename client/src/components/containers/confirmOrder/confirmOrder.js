@@ -1,6 +1,8 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/jsx-pascal-case */
 import React, {useState} from 'react';
+
+import {useSelector} from 'react-redux';
 import PaymentInformation_Style from './styled';
 import CheckoutSteps from '../checkoutSteps/checkoutSteps';
 import SumaryCart from '../sumarryCart/SumarryCart';
@@ -12,6 +14,7 @@ import {ImCheckboxChecked} from 'react-icons/im';
 import {FiBox} from 'react-icons/fi';
 
 function Index() {
+	const cartProduct = useSelector((state) => state.cartProducts);
 	const [payment, setPayment] = useState({paymentMethod: ''});
 
 	const onClickHandler = (e) => {
@@ -129,7 +132,35 @@ function Index() {
 								</i>
 
 								<div className='order__items'>
-									<div className='product'>
+									{cartProduct &&
+										cartProduct.map((el) => (
+											<div className='product'>
+												<div className='product__left'>
+													<div className='product__img'>
+														<img
+															className='img'
+															src={el.product.imageUrl[0]}
+														></img>
+													</div>
+												</div>
+												<div className='product__info'>
+													<span className='product__name'>
+														<h2>{el.product.name}</h2>
+													</span>
+													<span className='product__model'>
+														{el.product.brands}
+													</span>
+													<span className='product__price'>
+														{el.product.price.currency}
+														&nbsp;
+														{el.product.price.value}
+													</span>
+												</div>
+
+												<div className='product__right'>x {el.lot}</div>
+											</div>
+										))}
+									{/* <div className='product'>
 										<div className='product__left'>
 											<div className='product__img'>
 												<img></img>
@@ -143,22 +174,7 @@ function Index() {
 											</div>
 										</div>
 										<div className='product__right'>x 1</div>
-									</div>
-									<div className='product'>
-										<div className='product__left'>
-											<div className='product__img'>
-												<img></img>
-											</div>
-											<div className='product__info'>
-												<span className='product__name'>
-													<h2>Galaxy S21</h2>
-												</span>
-												<span className='product__model'>Samsung</span>
-												<span className='product__price'>$500</span>
-											</div>
-										</div>
-										<div className='product__right'>x 1</div>
-									</div>
+									</div> */}
 								</div>
 							</div>
 						</div>

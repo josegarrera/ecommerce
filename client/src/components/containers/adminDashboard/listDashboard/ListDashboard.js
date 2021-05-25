@@ -114,7 +114,7 @@ const ListDashboard = ({Options, setOptions}) => {
 						className='listProduct'
 						dataLength={Filter.length}
 						loader={<h4>Loading...</h4>}
-						height={600}
+						height={700}
 					>
 						{Filter &&
 							Filter.map((el, index) => (
