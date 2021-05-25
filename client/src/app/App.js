@@ -20,6 +20,7 @@ import 'react-notifications-component/dist/theme.css';
 import Favourites from '../components/containers/favourites/Favourites';
 import FormCategorie from '../components/containers/formCategories/FormCategories';
 import FormProductDashboard from '../components/containers/adminDashboard/addProductDashboard/index.js';
+
 function App() {
 	const user = useSelector((state) => state.user);
 	const userId = window.localStorage.getItem('userId');
@@ -54,7 +55,6 @@ function App() {
 								'/catalogue',
 								'/cart',
 								'/favorites',
-								'/products',
 								'/shipping',
 								'/confirmation',
 								'/about',
@@ -64,6 +64,7 @@ function App() {
 							) : null
 						}
 					/>
+					<Route path='/products' component={NavBar} />
 
 					<Route exact path='/' component={Home} />
 					<Route exact path='/login' component={FormLogging} />
@@ -71,7 +72,6 @@ function App() {
 					<Route exact path='/create' component={FormProductDashboard} />
 					<Route exact path='/categorie' component={FormCategorie} />
 					<Route exact path='/catalogue' component={Catalogue} />
-					<Route exact path='/categorie' component={FomrCategories} />
 					<Route exact path='/cart' component={Cart} />
 					<Route exact path='/favorites' component={Favourites} />
 					<Route
