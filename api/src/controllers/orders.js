@@ -14,7 +14,10 @@ async function getUserOrder(req, res, next) {
 				}
 				let order = await Orders.findOne({users: userId, state: 'created'})
 					.populate('users', {email: 1, _id: 1})
-					.populate('items.product')
+					.populate({
+						path: 'items.product',
+						populate: {path: 'brands', select: 'name'},
+					})
 					.exec();
 				return res.send({response: order, type: 'Ok', message: 'Success'});
 			} else {
