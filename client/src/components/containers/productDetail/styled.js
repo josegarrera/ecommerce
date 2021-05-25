@@ -219,6 +219,21 @@ const ProductDetailStyle = styled.div`
 				flex-direction: column;
 				justify-content: space-around;
 				height: 35%;
+
+				.stockDiv {
+					display: flex;
+
+					.variants {
+						display: flex;
+						flex-wrap: wrap;
+
+						.variant {
+							display: flex;
+							margin: 0px 0px 0px 5px;
+							font-weight: 300;
+						}
+					}
+				}
 			}
 
 			.button {
