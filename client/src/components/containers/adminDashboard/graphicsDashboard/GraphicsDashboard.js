@@ -21,6 +21,7 @@ const GraphicsDashboard = ({setOptions}) => {
 
 	useEffect(() => {
 		allProducts();
+
 	}, []);
 
 	const allProducts = async () => {

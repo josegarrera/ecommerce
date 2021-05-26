@@ -7,7 +7,7 @@ import Create from '../../create/Create';
 import SearchBarDashboard from '../searchBarDashboard';
 import ListStyles from './styled';
 /* import {clearObjectValues} from '../../../../utils/clearObjetcValues'; */
-import {getCategories, getBrands} from '../../../../redux/actions';
+import {getCategories, getBrands, getProducts} from '../../../../redux/actions';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 /* var _ = require('lodash'); */
@@ -20,6 +20,7 @@ const ListDashboard = ({Options, setOptions}) => {
 	const dispatch = useDispatch();
 	const allCategories = useSelector((state) => state.categories);
 	const allBrands = useSelector((state) => state.brands);
+	const allProductsDataList = useSelector((state) => state.products.products);
 
 	useEffect(() => {
 		allProducts();
@@ -29,12 +30,16 @@ const ListDashboard = ({Options, setOptions}) => {
 	useEffect(() => {
 		dispatch(getCategories());
 		dispatch(getBrands());
+		dispatch(getProducts('', '', '', '', '', '', '', Infinity));
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
 		setFilter(Items); // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [Items]);
+
+
+
 
 	// useEffect(() => {
 	// 	if (typeof Items[0] === 'object') {
@@ -49,7 +54,6 @@ const ListDashboard = ({Options, setOptions}) => {
 	// }, [create]);
 
 	const allProducts = async () => {
-		console.log('entré a allProducts');
 		if (Options === 'Products') {
 			try {
 				let itemss = await axios.get(
@@ -93,6 +97,8 @@ const ListDashboard = ({Options, setOptions}) => {
 			}
 		}
 	};
+
+		console.log(allProductsDataList);
 
 	return (
 		<ListStyles>
@@ -154,6 +160,7 @@ const ListDashboard = ({Options, setOptions}) => {
 									index={index}
 									options={Options}
 									allProducts={allProducts}
+									allProductsDataList={allProductsDataList}
 								/>
 							))}
 					</InfiniteScroll>
