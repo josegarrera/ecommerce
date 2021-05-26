@@ -30,7 +30,7 @@ const CardHoverView = (props) => {
 				</div> */}
 
 				<div className='cartItemImg'>
-					<img className='itemImg' src={imageUrl} alt='cart item'></img>
+					<img className='itemImg' src={imageUrl[0]} alt='cart item'></img>
 				</div>
 
 				<div className='cartItemInfo'>

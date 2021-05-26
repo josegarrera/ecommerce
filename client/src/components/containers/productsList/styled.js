@@ -8,7 +8,6 @@ const Products_List_Style = styled.div`
 		display: flex;
 		justify-content: center;
 		align-content: flex-start;
-		height: 90vh;
 		padding: 0rem 2rem;
 		flex-wrap: wrap;
 
