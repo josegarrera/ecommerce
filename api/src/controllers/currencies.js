@@ -39,6 +39,20 @@ function getCurrencyToday(req, res) {
 		);
 }
 
+function getCurrencies(req, res) {
+	Currencies.find()
+		.sort({month: -1, date: -1})
+		.limit(1)
+		.exec()
+		.then((data) => res.send({response: data, type: 'Ok', message: 'Success'}))
+		.catch((err) =>
+			res
+				.status(500)
+				.send({response: '', type: 'Internal server error.', message: err})
+		);
+}
+
 module.exports = {
 	getCurrencyToday,
+	getCurrencies,
 };

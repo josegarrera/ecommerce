@@ -18,7 +18,7 @@ mongoose
 		server.listen('3001', () => console.log('Listen in port 3001.'));
 		console.log('Conexión exitosa a DB ' + data.connections[0].name);
 		console.log('Conexión exitosa a Storage ' + bucket.name);
-		return axios.get(`${process.env.BACKEND_URL}/currencies`);
+		return axios.get(`${process.env.BACKEND_URL}/currencies/today`);
 	})
 	.catch((err) => console.log(err.message));
 
