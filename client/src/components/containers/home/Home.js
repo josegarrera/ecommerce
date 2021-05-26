@@ -1,25 +1,37 @@
-import React from 'react';
-import HomeStyle from './styled';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllProducts, getProducts } from "../../../redux/actions";
+import Footer from "../footer/Footer";
+import ProductList from "../productsList/ProductList";
+import HomeStyle from "./styled";
 
 const Home = () => {
-	return (
-		<HomeStyle>
-			<div className='carrousel'>Carrousel</div>
-			<div className='offers'>
-				<div className='offer'>Offers</div>
-				<div className='offer'>Offers</div>
-				<div className='offer'>Offers</div>
-				<div className='offer'>Offers</div>
-			</div>
-			<div className='carrousel'>Carrousel</div>
-			<div className='offers'>
-				<div className='offer'>Offers</div>
-				<div className='offer'>Offers</div>
-				<div className='offer'>Offers</div>
-				<div className='offer'>Offers</div>
-			</div>
-		</HomeStyle>
-	);
+  const { products, pages } = useSelector((state) => state.products);
+
+  var limit4 = [];
+  if (products) {
+    limit4 = products.slice(0, 4);
+  }
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getProducts());
+    dispatch(getAllProducts());
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  return (
+    <HomeStyle>
+      <div className="carrousel">Carrousel</div>
+      <div className="offers">
+        <ProductList products={limit4} />
+      </div>
+      <div className="carrousel">Carrousel</div>
+      <div className="offers">
+        <ProductList products={limit4} />
+      </div>
+      <Footer></Footer>
+    </HomeStyle>
+  );
 };
 
 export default Home;
