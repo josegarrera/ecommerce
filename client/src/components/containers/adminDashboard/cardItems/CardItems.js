@@ -31,6 +31,7 @@ const CardItems = ({
 	allProducts,
 	allBrands,
 	allCategories,
+	allProductsDataList,
 }) => {
 	const [isEditAItem, setisEditAItem] = useState(false);
 	const [SeeMore, setSeeMore] = useState(false);
@@ -97,6 +98,7 @@ const CardItems = ({
 		isEditAItem && setEditAItem({...prop});
 		SeeMore === false ? setSeeMore(true) : setSeeMore(true);
 		setisEditAItem(!isEditAItem);
+		console.log(EditAItem);
 	};
 
 	const handleDeleteOnEdit = ({target: {id}}) => {
@@ -104,6 +106,19 @@ const CardItems = ({
 			EditAItem.categories &&
 			EditAItem.categories.filter((el) => el.name !== id);
 		setEditAItem({...EditAItem, categories: filter});
+	};
+
+	const handleDeleteProductsOnEdit = ({target: {id}}) => {
+		let filter =
+			EditAItem.products && EditAItem.products.filter((el) => el.name !== id);
+		setEditAItem({...EditAItem, products: filter});
+	};
+	const handleProductsDataList = (e) => {
+		let newProduct = {name: e.label, _id: e.key};
+		setEditAItem({
+			...EditAItem,
+			products: EditAItem.products.concat(newProduct),
+		});
 	};
 
 	const handleDeleteBrandsOnEdit = ({target: {id}}) => {
@@ -212,6 +227,10 @@ const CardItems = ({
 							<div className='title'>Price: &nbsp;</div>
 							{isEditAItem && EditAItem ? (
 								<div>
+									<select>
+										<option>USD</option>
+										<option>ARS</option>
+									</select>
 									<input
 										type='number'
 										name='price'
@@ -240,18 +259,35 @@ const CardItems = ({
 					)}
 
 					{products &&
-						(products.length === 0 ? (
+						(products.lengthts.length === 0 ? (
 							<div className='renglon'>
 								<div className='title'>No Products.</div>
 							</div>
-						) : products.length === 1 ? (
+						) : products &&
+						  EditAItem.products &&
+						  EditAItem.products.length === 1 ? (
 							<div className='renglon'>
 								<div className='title'>1 Product: &nbsp;</div>
 								<div className='products'>
 									{' '}
-									{products.map((product) => (
-										<div>{product.name}</div>
-									))}
+									{products &&
+										EditAItem.products &&
+										EditAItem.products.map((el) =>
+											isEditAItem ? (
+												<div className='div_delete_categorie'>
+													{el.name}
+													<button className='buttonDiv'>
+														<TiDeleteOutline
+															id={el.name}
+															onClick={handleDeleteProductsOnEdit}
+															className='button'
+														/>
+													</button>
+												</div>
+											) : (
+												<div>{el.name}</div>
+											)
+										)}
 								</div>
 							</div>
 						) : (
@@ -259,7 +295,10 @@ const CardItems = ({
 								{
 									<AccordionItem onClick={() => setAccStatus(!AccStatus)}>
 										<AccordionItemButton className='title2'>
-											{products.length} Products
+											{products &&
+												EditAItem.products &&
+												EditAItem.products.length}{' '}
+											Products
 											{AccStatus === false ? (
 												<MdKeyboardArrowDown
 													className='open'
@@ -273,9 +312,26 @@ const CardItems = ({
 											)}
 										</AccordionItemButton>
 										<div className='accordionItems'>
-											{products.map((product) => (
-												<AccordionItemPanel>{product.name}</AccordionItemPanel>
-											))}
+											{products &&
+												EditAItem.products &&
+												EditAItem.products.map((el) =>
+													isEditAItem ? (
+														<AccordionItemPanel>
+															<div className='div_delete_categorie'>
+																{el.name}
+																<button className='buttonDiv'>
+																	<TiDeleteOutline
+																		id={el.name}
+																		onClick={handleDeleteProductsOnEdit}
+																		className='button'
+																	/>
+																</button>
+															</div>
+														</AccordionItemPanel>
+													) : (
+														<AccordionItemPanel>{el.name}</AccordionItemPanel>
+													)
+												)}
 										</div>
 									</AccordionItem>
 								}
