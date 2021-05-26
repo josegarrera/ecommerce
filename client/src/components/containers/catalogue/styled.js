@@ -8,7 +8,6 @@ const Catalogue_Style = styled.div`
 	padding: 0rem 10%;
 
 	.filters {
-		border: 1px solid orange;
 		margin: 7rem 0rem;
 	}
 
@@ -16,6 +15,7 @@ const Catalogue_Style = styled.div`
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		width: 100%;
 
 		.sort__elements {
 			display: flex;

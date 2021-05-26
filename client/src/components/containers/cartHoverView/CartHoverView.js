@@ -13,6 +13,8 @@ const CartHoverView = () => {
 	const user = useSelector((state) => state.userId);
 	let delivery = 100;
 
+	console.log('estte es el cart product', cartProduct);
+
 	const [rendering, setRendering] = useState(true);
 
 	useEffect(() => {
