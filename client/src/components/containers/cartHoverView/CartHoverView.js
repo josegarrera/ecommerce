@@ -55,57 +55,61 @@ const CartHoverView = () => {
 				</div>
 			</div>
 
-			<div className='subtotal'>
+			{cartProduct.length > 0 ? (
 				<div>
-					<span>Subtotal ({cartProduct.length} items)</span>
-				</div>
-				<div>
-					{rendering ? (
-						<div className='divCurrency'>
-							<p className='h2__sbt'>AR$ {count$}</p>
-							<button
-								onClick={() => setRendering(!rendering)}
-								className='btn__sbt'
-							>
-								Pay in U$D
-							</button>
+					<div className='subtotal'>
+						<div>
+							<span>Subtotal ({cartProduct.length} items)</span>
 						</div>
-					) : (
-						<div className='divCurrency'>
-							<p className='h2__sbt'>U$D {count$}</p>
-							<button
-								onClick={() => setRendering(!rendering)}
-								className='btn__sbt'
-							>
-								Pay in AR$
-							</button>
+						<div>
+							{rendering ? (
+								<div className='divCurrency'>
+									<p className='h2__sbt'>AR$ {count$}</p>
+									<button
+										onClick={() => setRendering(!rendering)}
+										className='btn__sbt'
+									>
+										Pay in U$D
+									</button>
+								</div>
+							) : (
+								<div className='divCurrency'>
+									<p className='h2__sbt'>U$D {count$}</p>
+									<button
+										onClick={() => setRendering(!rendering)}
+										className='btn__sbt'
+									>
+										Pay in AR$
+									</button>
+								</div>
+							)}
 						</div>
-					)}
-				</div>
-			</div>
+					</div>
 
-			<div className='delivery'>
-				<div>
-					<span>Delivery charge</span>
-				</div>
-				<div>
-					<span>${delivery}</span>
-				</div>
-			</div>
+					<div className='delivery'>
+						<div>
+							<span>Delivery charge</span>
+						</div>
+						<div>
+							<span>${delivery}</span>
+						</div>
+					</div>
 
-			<div className='separator'></div>
+					<div className='separator'></div>
 
-			<div className='cartBottom'>
-				<div className='totalSpan'>
-					<span>Total</span>
+					<div className='cartBottom'>
+						<div className='totalSpan'>
+							<span>Total</span>
+						</div>
+						<div className='totalPrice'>
+							<span>{rendering ? <>AR$ {total}</> : <>U$D {total}</>}</span>
+						</div>
+					</div>
+					<Link to='/shipping'>
+						<div className='cartItemBtn'>Continue to checkout</div>
+					</Link>
 				</div>
-				<div className='totalPrice'>
-					<span>{rendering ? <>AR$ {total}</> : <>U$D {total}</>}</span>
-				</div>
-			</div>
-			<Link to='/shipping'>
-				<div className='cartItemBtn'>Continue to checkout</div>
-			</Link>
+			) : null}
 		</div>
 	);
 };

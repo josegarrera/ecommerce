@@ -20,7 +20,10 @@ const ProductList = ({products, loadSearch}) => {
 						/>
 					))
 				) : loadSearch === true ? (
-					<CardProduct loading={true} />
+					<img
+						className='notFound'
+						src='https://res.cloudinary.com/dlexbrcrv/image/upload/v1622048281/Proyects/notFound_bs1vct.svg'
+					/>
 				) : (
 					loader.map((e, i) => <CardProduct key={i} loading={true} />)
 				)}

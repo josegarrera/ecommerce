@@ -197,7 +197,6 @@ const ProductDetail = (id) => {
 									</div>
 								</div>
 							</div>
-
 							<div className='infoDivBottom'>
 								<div>{product.description && product.description}</div>
 
@@ -216,7 +215,9 @@ const ProductDetail = (id) => {
 									</div>
 								</div>
 							</div>
-							<button className='button'> Buy now</button>
+							<Link className='buttonLink' to='/shipping'>
+								<button className='button'>Buy now</button>
+							</Link>
 						</div>
 					</div>
 				</div>

@@ -236,13 +236,13 @@ const ProductDetailStyle = styled.div`
 				}
 			}
 
-			.button {
+			.buttonLink {
+				display: flex;
+				justify-content: center;
+				align-items: center;
 				background-color: #a1a3a6;
-				color: #ffffff;
-				border: none;
 				border-radius: 10px;
 				width: 90%;
-				font-size: 25px;
 				padding: 5px;
 
 				&:hover {
@@ -250,6 +250,16 @@ const ProductDetailStyle = styled.div`
 					background-color: #e7e7e7;
 					color: #a1a3a6;
 					transition: 0.5s;
+				}
+
+				.button {
+					border: none;
+					background: none;
+					font-size: 25px;
+					color: #ffffff;
+
+					&:hover {
+						cursor: pointer;
 				}
 			}
 		}
