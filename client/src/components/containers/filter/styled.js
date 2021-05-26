@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 const Filter_Style = styled.div`
 	.filter__options {
+		margin: 7rem 0rem;
 		width: 18rem;
 		min-height: 40rem;
 		border-radius: 1rem;

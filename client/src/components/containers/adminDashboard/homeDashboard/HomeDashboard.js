@@ -46,31 +46,33 @@ const HomeDashboard = () => {
 							</button>
 						))}
 					</div>
-					<div className='separator'></div>
-					<Link to='/home'>Back to Store!</Link>
 				</div>
 				<div className='bottomSidebar'>
-					<button className='iconDiv'>
-						{userId ? (
-							<BsPersonCheckFill className='icon' />
-						) : (
-							<Link to='/login'>
-								<BsPersonPlusFill className='icon' />
-							</Link>
-						)}
-					</button>
-					<div>
-						{userId ? (
-							<div className='login'>
-								<div className='userName'>Paveglio Bruno.</div>
-								<div className='signOut' onClick={eraseToken}>
-									Sign out.
+					<div className='userDiv'>
+						<button className='iconDiv'>
+							{userId ? (
+								<BsPersonCheckFill className='icon' />
+							) : (
+								<Link to='/login'>
+									<BsPersonPlusFill className='icon' />
+								</Link>
+							)}
+						</button>
+						<div>
+							{userId ? (
+								<div className='login'>
+									<div className='userName'>Paveglio Bruno.</div>
+									<div className='signOut' onClick={eraseToken}>
+										Sign out.
+									</div>
 								</div>
-							</div>
-						) : null}
+							) : null}
+						</div>
 					</div>
-					<div></div>
-					<div></div>
+					<div className='backStore'>
+						<div className='separator'></div>
+						<Link to='/home'>Back to Store!</Link>
+					</div>
 				</div>
 			</div>
 			<div className='content'>

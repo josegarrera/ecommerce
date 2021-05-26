@@ -16,6 +16,7 @@ import {FiBox} from 'react-icons/fi';
 function Index() {
 	const cartProduct = useSelector((state) => state.cartProducts);
 	const [payment, setPayment] = useState({paymentMethod: ''});
+	console.log('carttt product', cartProduct);
 
 	const onClickHandler = (e) => {
 		setPayment({paymentMethod: e});

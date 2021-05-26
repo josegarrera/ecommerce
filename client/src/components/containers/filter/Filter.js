@@ -65,9 +65,9 @@ const Filter = ({order}) => {
 		if (order.length) {
 			orderValue = order[0].order.includes('price') ? 'price' : 'name';
 			direction =
-				order[0].order === 'price: Low to High' || order[0].order === 'A-Z'
+				order[0].order === 'Low > High' || order[0].order === 'A > Z'
 					? 'asc'
-					: order[0].order === 'price: High to Low' || order[0].order === 'Z-A'
+					: order[0].order === 'High > Low' || order[0].order === 'Z > A'
 					? 'desc'
 					: '';
 		}
