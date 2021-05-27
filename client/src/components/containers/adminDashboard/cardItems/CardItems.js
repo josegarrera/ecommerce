@@ -45,7 +45,7 @@ const CardItems = ({
 		description,
 		categories,
 		brands,
-		/* variants, */
+		variants,
 		_id,
 		products,
 		/* specs, */
@@ -108,6 +108,12 @@ const CardItems = ({
 		setEditAItem({...EditAItem, categories: filter});
 	};
 
+	const handleDeleteVariantsOnEdit = ({target: {id}}) => {
+		let filter =
+			EditAItem.variants && EditAItem.variants.filter((el) => el.name !== id);
+		setEditAItem({...EditAItem, variants: filter});
+	};
+
 	const handleDeleteProductsOnEdit = ({target: {id}}) => {
 		let filter =
 			EditAItem.products && EditAItem.products.filter((el) => el.name !== id);
@@ -151,6 +157,21 @@ const CardItems = ({
 			sendEditItem.brands = EditAItem.brands.map((el) => el._id);
 			try {
 				await axios.put(`${URLS.URL_PRODUCTS}/${EditAItem._id}`, sendEditItem);
+				allProducts();
+			} catch (error) {
+				console.log(error.response.data.message);
+			}
+		}
+		if (options === 'Categories') {
+			let sendEditItem = {...EditAItem};
+			sendEditItem.products = EditAItem.products.map((el) => el._id);
+			//sendEditItem.brands = EditAItem.brands.map((el) => el._id);
+			console.log(sendEditItem);
+			try {
+				await axios.put(
+					`${URLS.URL_CATEGORIES}/${EditAItem._id}`,
+					sendEditItem
+				);
 				allProducts();
 			} catch (error) {
 				console.log(error.response.data.message);
@@ -257,38 +278,18 @@ const CardItems = ({
 							)}
 						</div>
 					)}
-
+					{products && isEditAItem && (
+						<DataList
+							items={allProductsDataList}
+							type='products'
+							handleDataList={handleProductsDataList}
+							placeholder='Add a Product'
+						/>
+					)}
 					{products &&
-						(products.lengthts.length === 0 ? (
+						(EditAItem.products && EditAItem.products.length === 0 ? (
 							<div className='renglon'>
 								<div className='title'>No Products.</div>
-							</div>
-						) : products &&
-						  EditAItem.products &&
-						  EditAItem.products.length === 1 ? (
-							<div className='renglon'>
-								<div className='title'>1 Product: &nbsp;</div>
-								<div className='products'>
-									{' '}
-									{products &&
-										EditAItem.products &&
-										EditAItem.products.map((el) =>
-											isEditAItem ? (
-												<div className='div_delete_categorie'>
-													{el.name}
-													<button className='buttonDiv'>
-														<TiDeleteOutline
-															id={el.name}
-															onClick={handleDeleteProductsOnEdit}
-															className='button'
-														/>
-													</button>
-												</div>
-											) : (
-												<div>{el.name}</div>
-											)
-										)}
-								</div>
 							</div>
 						) : (
 							<Accordion allowZeroExpanded>
@@ -314,9 +315,9 @@ const CardItems = ({
 										<div className='accordionItems'>
 											{products &&
 												EditAItem.products &&
-												EditAItem.products.map((el) =>
+												EditAItem.products.map((el, i) =>
 													isEditAItem ? (
-														<AccordionItemPanel>
+														<AccordionItemPanel key={i}>
 															<div className='div_delete_categorie'>
 																{el.name}
 																<button className='buttonDiv'>
@@ -329,7 +330,9 @@ const CardItems = ({
 															</div>
 														</AccordionItemPanel>
 													) : (
-														<AccordionItemPanel>{el.name}</AccordionItemPanel>
+														<AccordionItemPanel key={i}>
+															{el.name}
+														</AccordionItemPanel>
 													)
 												)}
 										</div>
@@ -354,31 +357,6 @@ const CardItems = ({
 										<div className='renglon'>
 											<div className='title'>No brands.</div>
 										</div>
-									) : brands &&
-									  EditAItem.brands &&
-									  EditAItem.brands.length === 1 ? (
-										<div className='renglon'>
-											<div className='title'>Brand: &nbsp;</div>
-											<div className='products'>
-												{EditAItem.brands &&
-													EditAItem.brands.map((el) =>
-														isEditAItem ? (
-															<div className='div_delete_categorie'>
-																{el.name}
-																<button className='buttonDiv'>
-																	<TiDeleteOutline
-																		id={el.name}
-																		onClick={handleDeleteBrandsOnEdit}
-																		className='button'
-																	/>
-																</button>
-															</div>
-														) : (
-															<div>{el.name}</div>
-														)
-													)}
-											</div>
-										</div>
 									) : (
 										<Accordion allowZeroExpanded>
 											{
@@ -387,7 +365,7 @@ const CardItems = ({
 														{brands &&
 															EditAItem.brands &&
 															EditAItem.brands.length}
-														Brands
+														&nbsp;Brands
 														{AccStatus === false ? (
 															<MdKeyboardArrowDown
 																className='open'
@@ -434,30 +412,6 @@ const CardItems = ({
 								EditAItem.categories.length === 0 ? (
 									<div className='renglon'>
 										<div className='title'>No categories.</div>
-									</div>
-								) : categories &&
-								  EditAItem.categories &&
-								  EditAItem.categories.length === 1 ? (
-									<div className='renglon'>
-										<div className='title'>Categorie: &nbsp;</div>
-										<div className='products'>
-											{EditAItem.categories.map((el) =>
-												isEditAItem ? (
-													<div className='div_delete_categorie'>
-														{el.name}
-														<button className='buttonDiv'>
-															<TiDeleteOutline
-																id={el.name}
-																onClick={handleDeleteOnEdit}
-																className='button'
-															/>
-														</button>
-													</div>
-												) : (
-													<div>{el.name}</div>
-												)
-											)}
-										</div>
 									</div>
 								) : (
 									<Accordion allowZeroExpanded>
@@ -508,7 +462,6 @@ const CardItems = ({
 										}
 									</Accordion>
 								)}
-
 								{description && (
 									<div className='renglon2'>
 										<div className='title'>Description: &nbsp;</div>

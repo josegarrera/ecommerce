@@ -98,7 +98,6 @@ const ListDashboard = ({Options, setOptions}) => {
 		}
 	};
 
-		console.log(allProductsDataList);
 
 	return (
 		<ListStyles>
