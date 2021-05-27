@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
 	Accordion,
 	AccordionItem,
@@ -9,29 +9,25 @@ import {
 import {TiDeleteOutline} from 'react-icons/ti';
 
 import {
-	MdDelete,
-	MdCancel,
-	MdEdit,
 	MdKeyboardArrowDown,
 	MdKeyboardArrowUp,
 } from 'react-icons/md';
 
 const AccordionDashboard = ({
-	setAccStatus,
-	products,
-	EditAItem,
-	AccStatus,
+	items,
 	isEditAItem,
-	handleDeleteProductsOnEdit,
+	handler,
+	Option,
 }) => {
+	const [AccStatus, setAccStatus] = useState(false);
+
 	return (
 		<div>
 			<Accordion allowZeroExpanded>
 				{
 					<AccordionItem onClick={() => setAccStatus(!AccStatus)}>
 						<AccordionItemButton className='title2'>
-							{products && EditAItem.products && EditAItem.products.length}{' '}
-							Products
+							{items && items.length} {Option}
 							{AccStatus === false ? (
 								<MdKeyboardArrowDown
 									className='open'
@@ -45,9 +41,8 @@ const AccordionDashboard = ({
 							)}
 						</AccordionItemButton>
 						<div className='accordionItems'>
-							{products &&
-								EditAItem.products &&
-								EditAItem.products.map((el) =>
+							{items &&
+								items.map((el) =>
 									isEditAItem ? (
 										<AccordionItemPanel>
 											<div className='div_delete_categorie'>
@@ -55,7 +50,7 @@ const AccordionDashboard = ({
 												<button className='buttonDiv'>
 													<TiDeleteOutline
 														id={el.name}
-														onClick={handleDeleteProductsOnEdit}
+														onClick={handler}
 														className='button'
 													/>
 												</button>

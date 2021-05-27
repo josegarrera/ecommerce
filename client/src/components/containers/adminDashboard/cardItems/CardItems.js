@@ -294,78 +294,13 @@ const CardItems = ({
 								<div className='title'>No Products.</div>
 							</div>
 						) : (
-							<Accordion allowZeroExpanded>
-								{
-									<AccordionItem onClick={() => setAccStatus(!AccStatus)}>
-										<AccordionItemButton className='title2'>
-											{products &&
-												EditAItem.products &&
-												EditAItem.products.length}{' '}
-											Products
-											{AccStatus === false ? (
-												<MdKeyboardArrowDown
-													className='open'
-													onClick={() => setAccStatus(!AccStatus)}
-												/>
-											) : (
-												<MdKeyboardArrowUp
-													className='open'
-													onClick={() => setAccStatus(!AccStatus)}
-												/>
-											)}
-										</AccordionItemButton>
-										<div className='accordionItems'>
-											{products &&
-												EditAItem.products &&
-												EditAItem.products.map((el, i) =>
-													isEditAItem ? (
-														<AccordionItemPanel key={i}>
-															<div className='div_delete_categorie'>
-																{el.name}
-																<button className='buttonDiv'>
-																	<TiDeleteOutline
-																		id={el.name}
-																		onClick={handleDeleteProductsOnEdit}
-																		className='button'
-																	/>
-																</button>
-															</div>
-														</AccordionItemPanel>
-													) : (
-														<AccordionItemPanel key={i}>
-															{el.name}
-														</AccordionItemPanel>
-													)
-												)}
-											</AccordionItemButton>
-											<div className='accordionItems'>
-												{products &&
-													EditAItem.products &&
-													EditAItem.products.map((el) =>
-														isEditAItem ? (
-															<AccordionItemPanel>
-																<div className='div_delete_categorie'>
-																	{el.name}
-																	<button className='buttonDiv'>
-																		<TiDeleteOutline
-																			id={el.name}
-																			onClick={handleDeleteProductsOnEdit}
-																			className='button'
-																		/>
-																	</button>
-																</div>
-															</AccordionItemPanel>
-														) : (
-															<AccordionItemPanel>{el.name}</AccordionItemPanel>
-														)
-													)}
-											</div>
-										</AccordionItem>
-									}
-								</Accordion>
-							))
+							<AccordionDashboard
+								items={EditAItem.products}
+								isEditAItem={isEditAItem}
+								handler={handleDeleteProductsOnEdit}
+								Option={'products'}
+							/>
 						))}
-
 					{description ? (
 						SeeMore ? (
 							<div>
@@ -383,47 +318,12 @@ const CardItems = ({
 											<div className='title'>No brands.</div>
 										</div>
 									) : (
-										<Accordion allowZeroExpanded>
-											{
-												<AccordionItem onClick={() => setAccStatus(!AccStatus)}>
-													<AccordionItemButton className='title2'>
-														{brands &&
-															EditAItem.brands &&
-															EditAItem.brands.length}
-														&nbsp;Brands
-														{AccStatus === false ? (
-															<MdKeyboardArrowDown
-																className='open'
-																onClick={() => setAccStatus(!AccStatus)}
-															/>
-														) : (
-															<MdKeyboardArrowUp
-																className='open'
-																onClick={() => setAccStatus(!AccStatus)}
-															/>
-														)}
-													</AccordionItemButton>
-													<div className='accordionItems'>
-														{brands &&
-															EditAItem.brands &&
-															EditAItem.brands.map((el) => (
-																<AccordionItemPanel>
-																	<div className='div_delete_categorie'>
-																		{el.name}
-																		<button className='buttonDiv'>
-																			<TiDeleteOutline
-																				id={el.name}
-																				onClick={handleDeleteBrandsOnEdit}
-																				className='button'
-																			/>
-																		</button>
-																	</div>
-																</AccordionItemPanel>
-															))}
-													</div>
-												</AccordionItem>
-											}
-										</Accordion>
+										<AccordionDashboard
+											items={EditAItem.brands}
+											isEditAItem={isEditAItem}
+											handler={handleDeleteBrandsOnEdit}
+											Option={'brands'}
+										/>
 									))}
 								{isEditAItem && (
 									<DataList
@@ -439,65 +339,12 @@ const CardItems = ({
 										<div className='title'>No categories.</div>
 									</div>
 								) : (
-									((
-										<AccordionDashboard
-											setAccStatus={setAccStatus}
-											products={products}
-											EditAItem={EditAItem}
-											AccStatus={AccStatus}
-											isEditAItem={isEditAItem}
-											handleDeleteProductsOnEdit={handleDeleteProductsOnEdit}
-										/>
-									),
-									(
-										<Accordion allowZeroExpanded>
-											{
-												<AccordionItem onClick={() => setAccStatus(!AccStatus)}>
-													<AccordionItemButton className='title2'>
-														{categories &&
-															EditAItem.categories &&
-															EditAItem.categories.length}{' '}
-														Categories
-														{AccStatus === false ? (
-															<MdKeyboardArrowDown
-																className='open'
-																onClick={() => setAccStatus(!AccStatus)}
-															/>
-														) : (
-															<MdKeyboardArrowUp
-																className='open'
-																onClick={() => setAccStatus(!AccStatus)}
-															/>
-														)}
-													</AccordionItemButton>
-													<div className='accordionItems'>
-														{categories &&
-															EditAItem.categories &&
-															EditAItem.categories.map((el) =>
-																isEditAItem ? (
-																	<AccordionItemPanel>
-																		<div className='div_delete_categorie'>
-																			{el.name}
-																			<button className='buttonDiv'>
-																				<TiDeleteOutline
-																					id={el.name}
-																					onClick={handleDeleteOnEdit}
-																					className='button'
-																				/>
-																			</button>
-																		</div>
-																	</AccordionItemPanel>
-																) : (
-																	<AccordionItemPanel>
-																		{el.name}
-																	</AccordionItemPanel>
-																)
-															)}
-													</div>
-												</AccordionItem>
-											}
-										</Accordion>
-									))
+									<AccordionDashboard
+										items={EditAItem.categories}
+										isEditAItem={isEditAItem}
+										handler={handleDeleteOnEdit}
+										Option={'categories'}
+									/>
 								)}
 								{description && (
 									<div className='renglon2'>
@@ -517,7 +364,6 @@ const CardItems = ({
 										)}
 									</div>
 								)}
-
 								<div className='renglon'>
 									<div onClick={() => setSeeMore(!SeeMore)} className='seeMore'>
 										Close!
