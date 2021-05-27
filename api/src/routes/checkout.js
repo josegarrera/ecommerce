@@ -5,7 +5,7 @@ const {
 	getOrderData,
 	getResultPayment,
 	getNotificationsMp,
-} = require('../controllers/mercadopago.js');
+} = require('../controllers/checkout.js');
 
 router.post('/', initiatePayment);
 router.post('/mp/notifications', getNotificationsMp);
