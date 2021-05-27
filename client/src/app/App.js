@@ -67,6 +67,7 @@ function App() {
 					<Route path='/products' component={NavBar} />
 
 					<Route exact path='/' component={Home} />
+					<Route exact path='/home' component={Home} />
 					<Route exact path='/login' component={FormLogging} />
 					<Route exact path='/signup' component={FormSignup} />
 					<Route exact path='/create' component={FormProductDashboard} />
