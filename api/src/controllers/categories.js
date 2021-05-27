@@ -69,6 +69,7 @@ async function updateACategory(req, res) {
 		const productsWithCategory = await Products.find({
 			categories: id,
 		});
+		
 		const productsToRemoveCategory = productsWithCategory
 			.map((prod) => prod._doc._id)
 			.filter((id) => !body.products.includes(String(id)));
