@@ -5,6 +5,9 @@ import "slick-carousel/slick/slick-theme.css";
 import MultiItemCarouselStyle from "./styled";
 import CardProduct from "../../presentationals/cardProduct/CardProduct";
 
+import { BiLeftArrowAlt } from "react-icons/bi";
+import { BiRightArrowAlt } from "react-icons/bi";
+
 function MultiItemCarousel({ items }) {
   const settings = {
     infinite: true,
@@ -41,11 +44,29 @@ function MultiItemCarousel({ items }) {
     ],
   };
 
+  const PreviusBtn = (props) => {
+    const { className, onClick } = props;
+    return (
+      <div className={className} onClick={onClick}>
+        <BiLeftArrowAlt />
+      </div>
+    );
+  };
+
+  const NextBtn = (props) => {
+    const { className, onClick } = props;
+    return (
+      <div className={className} onClick={onClick}>
+        <BiRightArrowAlt />
+      </div>
+    );
+  };
+
   console.log(items);
 
   return (
     <MultiItemCarouselStyle>
-      <Slider {...settings}>
+      <Slider {...settings} prevArrow={<PreviusBtn />} nextArrow={<NextBtn />}>
         {items
           ? items.map((e) => (
               <CardProduct
