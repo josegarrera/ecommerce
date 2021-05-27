@@ -10,12 +10,6 @@ import MultiItemCarousel from "../multiItemCarousel/multiItemCarousel";
 const Home = () => {
   const { products, pages } = useSelector((state) => state.products);
 
-  var limit20 = [];
-  if (products) {
-    limit20 = products.splice(0, 20);
-  }
-
-
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProducts());
@@ -26,9 +20,14 @@ const Home = () => {
     <HomeStyle>
       <Carousel />
 
-      <MultiItemCarousel items={limit20} />
+      <div className="product__row">
+        <h3 className="top__text">NEW RELEASES</h3>
+        <span>see more</span>
+      </div>
 
-      <MultiItemCarousel items={limit20} />
+      <MultiItemCarousel items={products} />
+
+      <MultiItemCarousel items={products} />
 
       {/* <div className="offers">
         <ProductList products={limit4} />
