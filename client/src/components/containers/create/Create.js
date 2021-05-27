@@ -12,7 +12,7 @@ const Create = ({options, setCreate, create, Items, allProducts}) => {
 		name: '',
 		periferic: false,
 		specs: [],
-		variants: ['stock', 'imageUrl'],
+		variants: ['color', 'stock', 'imageUrl', 'imageFile'],
 		products: [],
 	});
 
@@ -135,7 +135,7 @@ const Create = ({options, setCreate, create, Items, allProducts}) => {
 			name: '',
 			periferic: false,
 			specs: [],
-			variants: ['stock', 'imageUrl'],
+			variants: ['color', 'stock', 'imageUrl', 'imageFile'],
 			products: [],
 		});
 		allProducts();
