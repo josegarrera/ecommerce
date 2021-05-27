@@ -21,11 +21,18 @@ const Home = () => {
       <Carousel />
 
       <div className="product__row">
+        <br></br>
         <h3 className="top__text">NEW RELEASES</h3>
         <span>see more</span>
       </div>
 
       <MultiItemCarousel items={products} />
+
+      <div className="product__row">
+        <br></br>
+        <h3 className="top__text">ON SALE</h3>
+        <span>see more</span>
+      </div>
 
       <MultiItemCarousel items={products} />
 

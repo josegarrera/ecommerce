@@ -7,6 +7,7 @@ const Footer = styled.div`
   height: 28rem;
   padding: 6rem 12rem;
   background-color: #202020;
+  margin-top: 5rem;
 
   .footer {
     display: flex;
