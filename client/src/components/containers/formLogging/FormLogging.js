@@ -31,7 +31,7 @@ const FormLogging = () => {
 			.post(URLS.URL_LOGIN, input)
 			.then(function (response) {
 				let data = response.data;
-				console.log(data);
+
 				if (data.notLogin) {
 					const message = data.notLogin;
 					if (message && message.includes('User')) {
@@ -50,21 +50,18 @@ const FormLogging = () => {
 					});
 					window.localStorage.setItem('token', data.token);
 					window.localStorage.setItem('userId', data.user._id);
-					dispatch(loginUser({role: data.user.role})).then(() => {
-						data.user.role === 'admin'
-							? history.push('/admindashboard')
-							: history.push('/catalogue');
-					});
-					/* Swal.fire({
-            title: "Success!",
-            text: "Succesfully login",
-            icon: "success",
-            confirmButtonText: "Ok",
-          }).then(() => {
-            data.user.role === "admin"
-              ? history.push("/admindashboard")
-              : history.push("/catalogue");
-          }); */
+					dispatch(loginUser({role: data.user.role}));
+
+					if (data.user.role === 'admin') {
+						history.push('/admindashboard');
+					} else {
+						Swal.fire({
+							title: 'Success!',
+							text: 'Succesfully login',
+							icon: 'success',
+							confirmButtonText: 'Ok',
+						}).then(() => history.push('/catalogue'));
+					}
 				}
 			})
 			.catch(function (error) {

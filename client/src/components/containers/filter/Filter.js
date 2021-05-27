@@ -10,6 +10,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {MdDoNotDisturbAlt} from 'react-icons/md';
 import Dropdown from '../dropdown';
 import Filter_Style from './styled';
+import setterInput from '../../../utils/setterInput.js';
 
 const Filter = ({order}) => {
 	const dispatch = useDispatch();
@@ -43,13 +44,11 @@ const Filter = ({order}) => {
 			color: '',
 			stock: false,
 		},
-		priceMin: '',
-		priceMax: '',
+		priceMin: 1,
+		priceMax: 5000,
 		order: '',
 		direction: '',
 	});
-
-	// (name, category, variants, price, order, direction, limit)
 
 	useEffect(() => {
 		dispatch(getCategories());
@@ -63,7 +62,7 @@ const Filter = ({order}) => {
 		var orderValue = '';
 		var direction = '';
 		if (order.length) {
-			orderValue = order[0].order.includes('price') ? 'price' : 'name';
+			orderValue = order[0].order.includes('Low') ? 'price' : 'name';
 			direction =
 				order[0].order === 'Low > High' || order[0].order === 'A > Z'
 					? 'asc'
@@ -168,6 +167,7 @@ const Filter = ({order}) => {
 							name='priceMin'
 							min='1'
 							max={maxPriceValue}
+							value={input.priceMin}
 							onChange={(e) => onChangePrice(e)}
 						></input>
 						<label>From {input.priceMin} USD</label>
@@ -177,6 +177,7 @@ const Filter = ({order}) => {
 							name='priceMax'
 							min='1'
 							max={maxPriceValue}
+							value={input.priceMax}
 							onChange={(e) => onChangePrice(e)}
 						></input>
 						<label>To {input.priceMax} USD</label>
