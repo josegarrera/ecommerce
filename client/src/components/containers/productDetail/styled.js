@@ -4,6 +4,11 @@ const ProductDetailStyle = styled.div`
 	display: flex;
 	justify-content: center;
 
+	.detailLoader {
+		margin-top: 200px;
+		transform: scale(2);
+	}
+
 	a {
 		text-decoration: none;
 		color: #a1a3a6;
@@ -240,26 +245,19 @@ const ProductDetailStyle = styled.div`
 				display: flex;
 				justify-content: center;
 				align-items: center;
-				background-color: #a1a3a6;
+				color: #ffffff;
+				background-color: #ee362e;
 				border-radius: 10px;
 				width: 90%;
 				padding: 5px;
+				font-size: 25px;
 
 				&:hover {
 					cursor: pointer;
-					background-color: #e7e7e7;
-					color: #a1a3a6;
-					transition: 0.5s;
-				}
-
-				.button {
-					border: none;
-					background: none;
-					font-size: 25px;
-					color: #ffffff;
-
-					&:hover {
-						cursor: pointer;
+					border: 1px solid #ee362e;
+					color: #ee362e;
+					background-color: #ffffff;
+					transition: 0.2s;
 				}
 			}
 		}

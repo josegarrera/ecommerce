@@ -18,6 +18,7 @@ import {AiOutlineHeart, AiFillHeart} from 'react-icons/ai';
 import ProductDetailStyle from './styled';
 import {Link} from 'react-router-dom';
 import {store} from 'react-notifications-component';
+import DetailLoader from '../../../utils/detailLoader';
 
 const ProductDetail = (id) => {
 	const dispatch = useDispatch();
@@ -216,13 +217,13 @@ const ProductDetail = (id) => {
 								</div>
 							</div>
 							<Link className='buttonLink' to='/cart' onClick={handleAddCart}>
-								<button className='button'>Buy now</button>
+								<div>Buy now</div>
 							</Link>
 						</div>
 					</div>
 				</div>
 			) : (
-				<img src='https://tocchettonprop.com.ar/images/cargando.gif' />
+				<DetailLoader className='detailLoader' />
 			)}
 		</ProductDetailStyle>
 	);
