@@ -7,6 +7,7 @@ mercadopago.configure({
 });
 
 function initiatePayment(req, res) {
+	console.log(req.body);
 	/* {
   userId: '60a00272322a89771f81269c',
   shippingInfo: {
