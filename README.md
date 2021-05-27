@@ -34,6 +34,6 @@ Se implementaron metodologías ágiles SCRUM y control de versiones con Github.
 
 <code><a href="https://www.linkedin.com/in/pavegliobruno/" target="_blank"> <img src="https://res.cloudinary.com/dlexbrcrv/image/upload/v1621273442/Proyects/linkedin_1_wfivod.svg" alt="s" height="30"/></a> > Martocci Gregorio </code>
 
-<code><a href="https://www.linkedin.com/in/pavegliobruno/" target="_blank"> <img src="https://res.cloudinary.com/dlexbrcrv/image/upload/v1621273442/Proyects/linkedin_1_wfivod.svg" alt="s" height="30"/></a> > Alvarez Camila</code>
+<code><a href="https://www.linkedin.com/in/camila-alexandra-alvarez/" target="_blank"> <img src="https://res.cloudinary.com/dlexbrcrv/image/upload/v1621273442/Proyects/linkedin_1_wfivod.svg" alt="s" height="30"/></a> > Alvarez Camila</code>
 
 </p>
