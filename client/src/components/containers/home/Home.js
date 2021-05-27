@@ -4,6 +4,7 @@ import { getAllProducts, getProducts } from "../../../redux/actions";
 import Footer from "../footer/Footer";
 import ProductList from "../productsList/ProductList";
 import HomeStyle from "./styled";
+import Carousel from "../carousel";
 
 const Home = () => {
   const { products, pages } = useSelector((state) => state.products);
@@ -21,7 +22,8 @@ const Home = () => {
 
   return (
     <HomeStyle>
-      <div className="carrousel">Carrousel</div>
+      <Carousel/>
+
       <div className="offers">
         <ProductList products={limit4} />
       </div>
