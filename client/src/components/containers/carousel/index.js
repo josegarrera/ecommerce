@@ -4,6 +4,10 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import CarouselStyle from "./styled";
 
+import { MdKeyboardArrowLeft } from "react-icons/md";
+import { MdKeyboardArrowRight } from "react-icons/md";
+import { RiCheckboxBlankCircleLine } from "react-icons/ri";
+
 function Carousel() {
   const data = [
     { img: `/img/animations-e-commerce.png` },
@@ -21,11 +25,31 @@ function Carousel() {
     autoplaySpeed: 5000,
   };
 
-  console.log(data[0].img);
+  const PreviusBtn = (props) => {
+    const { className, onClick } = props;
+    return (
+      <div className={className} onClick={onClick}>
+        <MdKeyboardArrowLeft />
+      </div>
+    );
+  };
+
+  const NextBtn = (props) => {
+    const { className, onClick } = props;
+    return (
+      <div className={className} onClick={onClick}>
+        <MdKeyboardArrowRight d />
+      </div>
+    );
+  };
 
   return (
     <CarouselStyle>
-      <Slider {...settings}>
+      <Slider
+        {...settings}
+        prevArrow={<PreviusBtn />}
+        nextArrow={<NextBtn />}
+      >
         <div>
           <img className="slide__img" src={data[2].img} alt="" />
         </div>
