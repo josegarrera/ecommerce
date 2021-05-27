@@ -80,6 +80,10 @@ const DIV_CART = styled.div`
 		grid-template-columns: 50% 20% 20% 10%;
 		margin-bottom: 5px;
 	}
+	.dont__prd {
+		text-align: center;
+		margin: 80px 0 0 0;
+	}
 	.p_back_home {
 		position: absolute;
 		bottom: 60px;

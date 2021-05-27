@@ -9,6 +9,7 @@ import {
 	removeFavProduct,
 	addFavProductToDB,
 	removeFavProductToDB,
+	postLocalStorage,
 } from '../../../redux/actions/index';
 import {IoLogoWhatsapp, IoReturnDownBack} from 'react-icons/io5';
 import {BsLightning} from 'react-icons/bs';
@@ -38,6 +39,10 @@ const ProductDetail = (id) => {
 	const handleAddCart = () => {
 		//add to cart
 		dispatch(addCartProduct(product._id));
+		if (userId) {
+			dispatch(postLocalStorage({products: product._id, userId}));
+			window.localStorage.setItem('cart', JSON.stringify([]));
+		}
 	};
 
 	const handleAddFav = () => {
@@ -154,9 +159,6 @@ const ProductDetail = (id) => {
 										) : (
 											<AiOutlineHeart onClick={handleAddFav} className='fav' />
 										)}
-										<button className='btn__cart' onClick={handleAddCart}>
-											<FaShoppingCart />
-										</button>
 									</div>
 								</div>
 
@@ -213,7 +215,7 @@ const ProductDetail = (id) => {
 									</div>
 								</div>
 							</div>
-							<Link className='buttonLink' to='/shipping'>
+							<Link className='buttonLink' to='/cart' onClick={handleAddCart}>
 								<button className='button'>Buy now</button>
 							</Link>
 						</div>
