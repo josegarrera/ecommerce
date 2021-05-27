@@ -55,7 +55,9 @@ const Cart = () => {
 								<CardCartProducts key={i} product={e} />
 							))
 						) : (
-							<h1>No tienes Producto agregados al carrito</h1>
+							<h1 className='dont__prd'>
+								No tienes Producto agregados al carrito
+							</h1>
 						)}
 					</div>
 					<div>
@@ -73,7 +75,6 @@ const Cart = () => {
 						)}
 					</div>
 				</div>
-
 				<SumarryCart count={count$} payIn={payIn} />
 			</div>
 		</DIV_CART>
