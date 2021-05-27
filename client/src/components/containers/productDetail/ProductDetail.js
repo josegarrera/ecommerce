@@ -23,7 +23,7 @@ const ProductDetail = (id) => {
 	const [imageBig, setImageBig] = useState();
 	let history = useHistory();
 
-	const product = useSelector((store) => store.productDetail);
+	let product = useSelector((store) => store.productDetail);
 	const wishlist = useSelector((store) => store.wishlist);
 	const fav = wishlist.find(({product: {_id}}) => _id === product._id);
 	const userId = window.localStorage.getItem('userId');
@@ -54,11 +54,9 @@ const ProductDetail = (id) => {
 		dispatch(removeFavProductToDB({userId, productId: product._id}));
 	};
 
-	console.log(product);
-
-	if (product.name) {
-		return (
-			<ProductDetailStyle>
+	return (
+		<ProductDetailStyle>
+			{product.name ? (
 				<div className='all'>
 					<div className='topDiv'>
 						<div className='topDivLeft'>
@@ -221,11 +219,11 @@ const ProductDetail = (id) => {
 						</div>
 					</div>
 				</div>
-			</ProductDetailStyle>
-		);
-	} else {
-		return <div>loading...</div>;
-	}
+			) : (
+				<img src='https://tocchettonprop.com.ar/images/cargando.gif' />
+			)}
+		</ProductDetailStyle>
+	);
 };
 
 export default ProductDetail;

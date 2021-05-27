@@ -24,6 +24,8 @@ import {IoMdCheckmarkCircleOutline} from 'react-icons/io';
 
 import {TiDeleteOutline} from 'react-icons/ti';
 
+import AccordionDashboard from '../accordionDashboard/AccordionDashboard';
+
 const CardItems = ({
 	prop,
 	index,
@@ -335,10 +337,33 @@ const CardItems = ({
 														</AccordionItemPanel>
 													)
 												)}
-										</div>
-									</AccordionItem>
-								}
-							</Accordion>
+											</AccordionItemButton>
+											<div className='accordionItems'>
+												{products &&
+													EditAItem.products &&
+													EditAItem.products.map((el) =>
+														isEditAItem ? (
+															<AccordionItemPanel>
+																<div className='div_delete_categorie'>
+																	{el.name}
+																	<button className='buttonDiv'>
+																		<TiDeleteOutline
+																			id={el.name}
+																			onClick={handleDeleteProductsOnEdit}
+																			className='button'
+																		/>
+																	</button>
+																</div>
+															</AccordionItemPanel>
+														) : (
+															<AccordionItemPanel>{el.name}</AccordionItemPanel>
+														)
+													)}
+											</div>
+										</AccordionItem>
+									}
+								</Accordion>
+							))
 						))}
 
 					{description ? (
@@ -414,53 +439,65 @@ const CardItems = ({
 										<div className='title'>No categories.</div>
 									</div>
 								) : (
-									<Accordion allowZeroExpanded>
-										{
-											<AccordionItem onClick={() => setAccStatus(!AccStatus)}>
-												<AccordionItemButton className='title2'>
-													{categories &&
-														EditAItem.categories &&
-														EditAItem.categories.length}{' '}
-													Categories
-													{AccStatus === false ? (
-														<MdKeyboardArrowDown
-															className='open'
-															onClick={() => setAccStatus(!AccStatus)}
-														/>
-													) : (
-														<MdKeyboardArrowUp
-															className='open'
-															onClick={() => setAccStatus(!AccStatus)}
-														/>
-													)}
-												</AccordionItemButton>
-												<div className='accordionItems'>
-													{categories &&
-														EditAItem.categories &&
-														EditAItem.categories.map((el) =>
-															isEditAItem ? (
-																<AccordionItemPanel>
-																	<div className='div_delete_categorie'>
-																		{el.name}
-																		<button className='buttonDiv'>
-																			<TiDeleteOutline
-																				id={el.name}
-																				onClick={handleDeleteOnEdit}
-																				className='button'
-																			/>
-																		</button>
-																	</div>
-																</AccordionItemPanel>
-															) : (
-																<AccordionItemPanel>
-																	{el.name}
-																</AccordionItemPanel>
-															)
+									((
+										<AccordionDashboard
+											setAccStatus={setAccStatus}
+											products={products}
+											EditAItem={EditAItem}
+											AccStatus={AccStatus}
+											isEditAItem={isEditAItem}
+											handleDeleteProductsOnEdit={handleDeleteProductsOnEdit}
+										/>
+									),
+									(
+										<Accordion allowZeroExpanded>
+											{
+												<AccordionItem onClick={() => setAccStatus(!AccStatus)}>
+													<AccordionItemButton className='title2'>
+														{categories &&
+															EditAItem.categories &&
+															EditAItem.categories.length}{' '}
+														Categories
+														{AccStatus === false ? (
+															<MdKeyboardArrowDown
+																className='open'
+																onClick={() => setAccStatus(!AccStatus)}
+															/>
+														) : (
+															<MdKeyboardArrowUp
+																className='open'
+																onClick={() => setAccStatus(!AccStatus)}
+															/>
 														)}
-												</div>
-											</AccordionItem>
-										}
-									</Accordion>
+													</AccordionItemButton>
+													<div className='accordionItems'>
+														{categories &&
+															EditAItem.categories &&
+															EditAItem.categories.map((el) =>
+																isEditAItem ? (
+																	<AccordionItemPanel>
+																		<div className='div_delete_categorie'>
+																			{el.name}
+																			<button className='buttonDiv'>
+																				<TiDeleteOutline
+																					id={el.name}
+																					onClick={handleDeleteOnEdit}
+																					className='button'
+																				/>
+																			</button>
+																		</div>
+																	</AccordionItemPanel>
+																) : (
+																	<AccordionItemPanel>
+																		{el.name}
+																	</AccordionItemPanel>
+																)
+															)}
+													</div>
+												</AccordionItem>
+											}
+										</Accordion>
+									))
 								)}
 								{description && (
 									<div className='renglon2'>
