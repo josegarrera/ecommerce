@@ -63,13 +63,11 @@ function Carousel() {
 			>
 				{data &&
 					data.map((el) => (
-
 						<div className='div__img'>
 							<img className='slide__img' src={el.img} alt='' />
 						</div>
 					))}
-				</Slider>
-			)}
+			</Slider>
 		</CarouselStyle>
 	);
 }
