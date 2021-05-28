@@ -3,6 +3,9 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import CarouselStyle from './styled';
+import {MdKeyboardArrowLeft} from 'react-icons/md';
+import {MdKeyboardArrowRight} from 'react-icons/md';
+import {RiCheckboxBlankCircleLine} from 'react-icons/ri';
 
 function Carousel() {
 	const data = [
@@ -32,11 +35,35 @@ function Carousel() {
 		autoplaySpeed: 5000,
 	};
 
+	const PreviusBtn = (props) => {
+		const {className, onClick} = props;
+		return (
+			<div className={className} onClick={onClick}>
+				<MdKeyboardArrowLeft />
+			</div>
+		);
+	};
+
+	const NextBtn = (props) => {
+		const {className, onClick} = props;
+		return (
+			<div className={className} onClick={onClick}>
+				<MdKeyboardArrowRight d />
+			</div>
+		);
+	};
+
 	return (
 		<CarouselStyle>
-			{data && (
-				<Slider className='slider' {...settings}>
-					{data.map((el) => (
+			<Slider
+				className='slider'
+				{...settings}
+				prevArrow={<PreviusBtn />}
+				nextArrow={<NextBtn />}
+			>
+				{data &&
+					data.map((el) => (
+
 						<div className='div__img'>
 							<img className='slide__img' src={el.img} alt='' />
 						</div>
