@@ -20,23 +20,24 @@ const AccordionDashboard = ({
 }) => {
 	const [AccStatus, setAccStatus] = useState(false);
 
-
-
 	if (Option === 'variants') {
 		items = items.map((el, index) => (
 			<div key={index + '-variants'}>
-				{Object.entries(el).map((e, i) => (
-					<div key={i + '-variantss'}>
-						<label key={i + '-label'}>{e[0]}</label>
-						<input
-							key={i + '-input'}
-							name={e[0]}
-							id={e[0] + index}
-							onChange={handleInput}
-							value={EditAItem[index][e[0]]} // [{}{}]
-						></input>
-					</div>
-				))}
+				{Object.entries(el).map(
+					(e, i) =>
+						e[0] !== 'id' && (
+							<div key={i + '-variantss'}>
+								<label key={i + '-label'}>{e[0]}</label>
+								<input
+									key={i + '-input'}
+									name={e[0]}
+									id={e[0] + index}
+									onChange={handleInput}
+									value={EditAItem[index][e[0]]} // [{}{}]
+								></input>
+							</div>
+						)
+				)}
 				<br />
 			</div>
 		));

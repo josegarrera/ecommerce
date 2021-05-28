@@ -85,16 +85,17 @@ const CardItems = ({
 	};
 
 	const handleinputvariants = (e) => {
+		const index = Number(e.target.id[e.target.id.length - 1]);
+
+		let newArr = [...EditAItem.variants];
+		newArr[index][e.target.name] = e.target.value;
+
 		setEditAItem({
 			...EditAItem,
-			variants: [
-				...EditAItem.variants,
-				(EditAItem.variants[Number(e.target.id[e.target.id.length - 1])][
-					e.target.name
-				] = e.target.value),
-			],
+			variants: newArr,
 		});
 	};
+	console.log(EditAItem.variants, 'despues de setear');
 
 	/* 	 (EditAItem.variants[e.target.id][e.target.name] = e.target.value), */
 	//console.log('despues', EditAItem.variants[0]);
