@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/jsx-pascal-case */
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import {useSelector} from 'react-redux';
 import PaymentInformation_Style from './styled';
@@ -16,13 +16,10 @@ import {FiBox} from 'react-icons/fi';
 function Index() {
 	const cartProduct = useSelector((state) => state.cartProducts);
 	const [payment, setPayment] = useState({paymentMethod: ''});
-	console.log('carttt product', cartProduct);
 
 	const onClickHandler = (e) => {
 		setPayment({paymentMethod: e});
 	};
-
-	console.log(payment);
 
 	return (
 		<PaymentInformation_Style>
@@ -182,7 +179,11 @@ function Index() {
 					</div>
 
 					<div className='right__col'>
-						<SumaryCart placeOrder={true}></SumaryCart>
+						<SumaryCart
+							placeOrder={true}
+							paymentMethod={payment.paymentMethod}
+							cartProduct={cartProduct}
+						></SumaryCart>
 					</div>
 				</div>
 
