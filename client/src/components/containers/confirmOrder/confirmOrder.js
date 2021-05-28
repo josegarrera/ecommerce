@@ -182,7 +182,6 @@ function Index() {
 						<SumaryCart
 							placeOrder={true}
 							paymentMethod={payment.paymentMethod}
-							cartProduct={cartProduct}
 						></SumaryCart>
 					</div>
 				</div>

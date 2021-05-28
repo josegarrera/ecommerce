@@ -3,28 +3,21 @@ import {Link} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {confirmCheckout} from '../../../redux/actions';
 import {CardElement, useStripe, useElements} from '@stripe/react-stripe-js';
-import axios from 'axios';
 
 import {store} from 'react-notifications-component';
 
 const FORM_ID = 'payment-form';
 
-const SumarryCart = ({
-	payIn,
-	count,
-	placeOrder,
-	paymentMethod,
-}) => {
+const SumarryCart = ({payIn, count, placeOrder, paymentMethod}) => {
 	const preferenceId = useSelector((state) => state.paymentMethod);
 	const shippingInfo = useSelector((state) => state.shippingInfo);
-  const cartProduct = useSelector((state) => state.cartProducts);
+	const cartProduct = useSelector((state) => state.cartProducts);
 	const dispatch = useDispatch();
 	const userId = localStorage.userId;
 	const stripe = useStripe();
 	const elements = useElements();
 
 	const handleOrderSubmit = async (e) => {
-
 		e.preventDefault();
 		let idStripe;
 		if (paymentMethod === 'stripe') {
