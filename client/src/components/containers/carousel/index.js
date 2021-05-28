@@ -6,6 +6,10 @@ import CarouselStyle from './styled';
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
 
+import { MdKeyboardArrowLeft } from "react-icons/md";
+import { MdKeyboardArrowRight } from "react-icons/md";
+import { RiCheckboxBlankCircleLine } from "react-icons/ri";
+
 function Carousel() {
 	const data = [
 		/* {img: `/img/animations-e-commerce.png`},
@@ -52,7 +56,9 @@ function Carousel() {
     );
   };
 
-	return (
+
+ 	return (
+
 		<CarouselStyle>
 			<Slider className='slider' {...settings}  prevArrow={<PreviusBtn />}
         nextArrow={<NextBtn />}>
@@ -65,6 +71,7 @@ function Carousel() {
 			</Slider>
 		</CarouselStyle>
 	);
+
 }
 
 export default Carousel;
