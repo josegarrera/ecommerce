@@ -2,6 +2,7 @@ const {Brands, Products} = require('../models/index.js');
 
 function getAllBrands(req, res) {
 	Brands.find({}, 'name')
+		.populate('products', {_id: true, name: true})
 		.exec()
 		.then((data) => res.send({response: data, type: 'Ok', message: 'Success'}))
 		.catch((error) =>
