@@ -3,12 +3,9 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import CarouselStyle from './styled';
-import { MdKeyboardArrowLeft } from "react-icons/md";
-import { MdKeyboardArrowRight } from "react-icons/md";
-
-import { MdKeyboardArrowLeft } from "react-icons/md";
-import { MdKeyboardArrowRight } from "react-icons/md";
-import { RiCheckboxBlankCircleLine } from "react-icons/ri";
+import {MdKeyboardArrowLeft} from 'react-icons/md';
+import {MdKeyboardArrowRight} from 'react-icons/md';
+import {RiCheckboxBlankCircleLine} from 'react-icons/ri';
 
 function Carousel() {
 	const data = [
@@ -38,30 +35,32 @@ function Carousel() {
 		autoplaySpeed: 5000,
 	};
 
-  const PreviusBtn = (props) => {
-    const { className, onClick } = props;
-    return (
-      <div className={className} onClick={onClick}>
-        <MdKeyboardArrowLeft />
-      </div>
-    );
-  };
+	const PreviusBtn = (props) => {
+		const {className, onClick} = props;
+		return (
+			<div className={className} onClick={onClick}>
+				<MdKeyboardArrowLeft />
+			</div>
+		);
+	};
 
-  const NextBtn = (props) => {
-    const { className, onClick } = props;
-    return (
-      <div className={className} onClick={onClick}>
-        <MdKeyboardArrowRight d />
-      </div>
-    );
-  };
+	const NextBtn = (props) => {
+		const {className, onClick} = props;
+		return (
+			<div className={className} onClick={onClick}>
+				<MdKeyboardArrowRight d />
+			</div>
+		);
+	};
 
-
- 	return (
-
+	return (
 		<CarouselStyle>
-			<Slider className='slider' {...settings}  prevArrow={<PreviusBtn />}
-        nextArrow={<NextBtn />}>
+			<Slider
+				className='slider'
+				{...settings}
+				prevArrow={<PreviusBtn />}
+				nextArrow={<NextBtn />}
+			>
 				{data &&
 					data.map((el) => (
 						<div className='div__img'>
@@ -71,14 +70,6 @@ function Carousel() {
 			</Slider>
 		</CarouselStyle>
 	);
-
 }
 
 export default Carousel;
-
-
-
-
-
-
-
