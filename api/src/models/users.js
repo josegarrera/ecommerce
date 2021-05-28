@@ -45,6 +45,7 @@ const UsersSchema = new Schema({
 			ref: 'orders',
 		},
 	],
+	resetToken: String,
 });
 
 // hook to execute before save any new user
