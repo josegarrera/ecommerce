@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const CarouselStyle = styled.div`
 
@@ -27,6 +27,7 @@ const CarouselStyle = styled.div`
 			}
 		}
 	}
+
 
   .slick-dots {
     bottom: 2rem;
@@ -82,7 +83,6 @@ const CarouselStyle = styled.div`
   .slick-next::before {
     display: none;
   }
-
 `;
 
 export default CarouselStyle;

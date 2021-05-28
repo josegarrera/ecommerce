@@ -3,6 +3,8 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import CarouselStyle from './styled';
+import { MdKeyboardArrowLeft } from "react-icons/md";
+import { MdKeyboardArrowRight } from "react-icons/md";
 
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
@@ -54,9 +56,12 @@ function Carousel() {
     );
   };
 
+
  	return (
+
 		<CarouselStyle>
-			<Slider className='slider' {...settings}>
+			<Slider className='slider' {...settings}  prevArrow={<PreviusBtn />}
+        nextArrow={<NextBtn />}>
 				{data &&
 					data.map((el) => (
 						<div className='div__img'>
@@ -70,3 +75,10 @@ function Carousel() {
 }
 
 export default Carousel;
+
+
+
+
+
+
+
