@@ -6,7 +6,6 @@ const DivPag = styled.div`
 	justify-content: center;
 	width: 400px;
 	margin-bottom: 50px;
-	margin-top: -25px;
 
 	button {
 		display: flex;

@@ -10,7 +10,7 @@ export const StyledLoder = styled.div`
 `;
 
 const DivCrdProd = styled.div`
-	margin: 0px 30px 50px;
+	margin: 0rem 2.25rem 4.5rem 2.25rem;
 	display: flex;
 	flex-direction: column;
 	width: 224px;
@@ -20,9 +20,10 @@ const DivCrdProd = styled.div`
 	position: relative;
 	box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05),
 		0 15px 40px rgba(166, 173, 201, 0.2);
+
 	&:hover {
 		cursor: pointer;
-		transition: 0.3s;
+		transition: 0.4s;
 		box-shadow: 1px 1px 30px silver;
 	}
 	.cnt__image {
@@ -42,18 +43,19 @@ const DivCrdProd = styled.div`
 		padding: 1.5rem;
 		border-radius: 0 0 20px 20px;
 		border-top: 3px solid whitesmoke;
-	}
+
 
 	h5 {
-		font-weight: bold;
-		color: #525252;
-
-		width: 60%;
+		font-weight: 600;
+		font-size: 0.8rem;
+		color: #9e9e9e;
+		width: 80%;
 	}
 	h6 {
 		padding: 0;
-		color: #a9a9a9;
-		margin-top: 15px;
+		color: #616161;
+		font-size: 1rem;
+		margin-top: 10px;
 	}
 	.btn__fav {
 		display: flex;
@@ -62,17 +64,16 @@ const DivCrdProd = styled.div`
 		cursor: pointer;
 		border: none;
 		background-color: transparent;
-
 		position: absolute;
 		top: 30px;
 		right: 30px;
-		font-size: 22px;
+		font-size: 1.6rem;
 		color: #ee362e;
 
 		&:hover {
 			cursor: pointer;
 			transition: 0.3s;
-			transform: scale(1.1);
+			transform: scale(1.2);
 		}
 
 		&:active {
@@ -84,20 +85,28 @@ const DivCrdProd = styled.div`
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		height: 2.5rem;
+		width: 2.5rem;
+		border-radius: 2rem;
+		justify-content: center;
+		align-items: center;
 		cursor: pointer;
 		position: absolute;
 		color: #ffffff;
 		background-color: #ee362e;
 		border: none;
-		top: 96%;
-		right: 20px;
-		width: 29px;
-		height: 29px;
-		border-radius: 14.5px;
+		bottom: -1.25rem;
+		right: 1.5rem;
+
+		i {
+			height: 0.9rem;
+			font-size: 0.8rem;
+		}
+
 		&:hover {
 			cursor: pointer;
 			transition: 0.3s;
-			box-shadow: 1px 1px 30px silver;
+			transform: scale(1.1);
 		}
 		&:active {
 			transform: scale(0.9);

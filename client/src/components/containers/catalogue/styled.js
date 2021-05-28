@@ -8,7 +8,7 @@ const Catalogue_Style = styled.div`
 	padding: 0rem 10%;
 
 	.filters {
-		margin: 7rem 0rem;
+		margin: 8rem 0rem;
 	}
 
 	.productsPagination {

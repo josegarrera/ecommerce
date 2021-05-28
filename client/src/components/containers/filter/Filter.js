@@ -66,7 +66,7 @@ const Filter = ({order}) => {
 			direction =
 				order[0].order === 'Low > High' || order[0].order === 'A > Z'
 					? 'asc'
-					: order[0].order === 'High > Low' || order[0].order === 'Z A'
+					: order[0].order === 'High > Low' || order[0].order === 'Z > A'
 					? 'desc'
 					: '';
 		}
