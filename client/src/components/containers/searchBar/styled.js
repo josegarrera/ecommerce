@@ -6,7 +6,7 @@ const FormSearchBar = styled.div`
 	.searchBar {
 		border: 2px solid #e7e7e7;
 		border-radius: 10px;
-		height: 57px;
+		height: 50px;
 		width: 340px;
 		display: flex;
 		align-items: center;
@@ -39,7 +39,7 @@ const FormSearchBar = styled.div`
 			border: none;
 			background: none;
 			height: 54px;
-			width: 250px;
+			width: 90%;
 			font-size: 15px;
 			&:focus-within {
 				outline: none;
@@ -50,8 +50,8 @@ const FormSearchBar = styled.div`
 		}
 
 		.divLupa {
-			height: 40px;
-			width: 42px;
+			height: 36px;
+			width: 40px;
 			background-color: #ee362e;
 			border-radius: 100%;
 			display: flex;

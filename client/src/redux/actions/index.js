@@ -274,7 +274,7 @@ export const getOpenUserOrders = (userId, cart) => {
 export const getOrderDetail = (id) => {
 	//trae el detalle de 1 orden (id de la orden)
 	return async (dispatch) => {
-		const {data} = await axios.get(`${URLS.URL_ORDERS}/${id}`);
+		const {data} = await axios.get(`${URLS.URL_USER_ORDERS}/${id}`);
 		return dispatch({
 			type: ActionTypes.ORDER_DETAIL,
 			payload: data.response, // TIENE QUE SER UN {}
