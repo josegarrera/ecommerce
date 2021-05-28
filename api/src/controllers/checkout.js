@@ -1,6 +1,7 @@
 const mercadopago = require('mercadopago');
 const {Orders} = require('../models/index');
-const {PROD_ACCESS_TOKEN, STRIPE_SECRET} = process.env;
+const {PROD_ACCESS_TOKEN, STRIPE_SECRET, ETHEREAL_USER, ETHEREAL_PASSWORD} =
+	process.env;
 const Stripe = require('stripe');
 const stripe = new Stripe(STRIPE_SECRET);
 mercadopago.configure({
@@ -55,7 +56,8 @@ function initiatePayment(req, res) {
 					currency_id: item.product.price.currency,
 				};
 			});
-
+			const userEmail = order[0].users.email;
+			console.log(userEmail);
 			const amount = items.reduce((a, b) => {
 				return (a += b.unit_price * b.quantity);
 			}, 0);
@@ -68,6 +70,16 @@ function initiatePayment(req, res) {
 				const expirationDate = new Date(Date.now() + 210000000);
 				const preference = {
 					items: items,
+					payer: {
+						name: shippingInfo.firstName,
+						surname: shippingInfo.lastName,
+						email: userEmail,
+
+						identification: {
+							type: 'DNI',
+							number: shippingInfo.id,
+						},
+					},
 					purpose: 'wallet_purchase',
 					external_reference: `${order[0]._id}`,
 					notification_url: `${process.env.BACKEND_URL}/checkout/mp/notifications`,
@@ -89,14 +101,6 @@ function initiatePayment(req, res) {
 						description,
 						payment_method: idStripe,
 						statement_descriptor: 'Store E-commerce',
-						shipping: {
-							address: {
-								line1: 'Calle falsa',
-								city: 'Rosario',
-								state: 'Argentina',
-							},
-							name: 'Transporte',
-						},
 						confirm: true,
 					}),
 				]);
@@ -115,8 +119,13 @@ function initiatePayment(req, res) {
 			let transactionStatus = response[1].status;
 			let datePayment = new Date(Date.now());
 			let paymentStatus = 'acredited';
-			let transactionDetail = response[1].charges;
-			let amount = response[1].amount;
+			let transactionDetail = {
+				total_amount: response[1].charges.data[0].amount_captured,
+				net_income: payment.body.net_received_amount,
+				installments: payment.body.installments,
+				shipping_cost: payment.body.shipping_cost,
+				currency: payment.body.currency_id,
+			};
 			let netIncome = response[1].amount_received;
 			let shipping = response[1].shipping;
 			response[0].paymentId = paymentId;
@@ -138,7 +147,36 @@ function initiatePayment(req, res) {
 					message: 'Success',
 				});
 			});
-		})
+		});
+}
+
+function notifyUser(req, res) {
+	const {email} = req.body;
+	let transporter = nodemailer.createTransport({
+		host: 'smtp.ethereal.email',
+		puerto: 587,
+		auth: {
+			usuario: ETHEREAL_USER,
+			pase: ETHEREAL_PASSWORD,
+		},
+		secure: false,
+	});
+	let mailOptions = {
+		from: 'Sender',
+		to: email,
+		subject: 'Store notifications',
+		text: 'Your payment was accepted',
+	};
+
+	transporter
+		.sendMail(mailOptions)
+		.then((data) =>
+			res.send({
+				response: data,
+				type: 'Ok',
+				message: 'Success',
+			})
+		)
 		.catch((error) => {
 			console.log(error);
 			res
@@ -146,8 +184,6 @@ function initiatePayment(req, res) {
 				.send({response: '', type: 'Internal server error.', error: error});
 		});
 }
-
-function notifyUser(req, res) {}
 
 function getOrderData(req, res) {
 	const id = req.params.id;
@@ -220,9 +256,10 @@ function getNotificationsMp(req, res) {
 				datePayment = payment.body.date_approved;
 				paymentStatus = payment.body.status_detail;
 				transactionDetail = {
-					...payment.body.transaction_details,
+					total_amount: payment.body.total_paid_amount,
+					net_income: payment.body.net_received_amount,
 					installments: payment.body.installments,
-					shippingCost: payment.body.shipping_cost,
+					shipping_cost: payment.body.shipping_cost,
 					currency: payment.body.currency_id,
 				};
 				const orderId = payment.body.external_reference;
@@ -257,4 +294,5 @@ module.exports = {
 	getOrderData,
 	getResultPayment,
 	getNotificationsMp,
+	notifyUser,
 };

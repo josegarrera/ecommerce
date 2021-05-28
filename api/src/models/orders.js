@@ -33,7 +33,6 @@ const OrdersSchema = new Schema({
 	},
 
 	shipping: {},
-	amount: Number,
 	currency: {
 		type: String,
 		enum: {
