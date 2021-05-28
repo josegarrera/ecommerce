@@ -6,6 +6,7 @@ const stripe = new Stripe(STRIPE_SECRET);
 mercadopago.configure({
 	access_token: PROD_ACCESS_TOKEN,
 });
+const nodemailer = require('nodemailer');
 
 function initiatePayment(req, res) {
 	console.log(req.body);
@@ -145,6 +146,8 @@ function initiatePayment(req, res) {
 				.send({response: '', type: 'Internal server error.', error: error});
 		});
 }
+
+function notifyUser(req, res) {}
 
 function getOrderData(req, res) {
 	const id = req.params.id;
