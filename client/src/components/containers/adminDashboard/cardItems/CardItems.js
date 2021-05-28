@@ -1,28 +1,14 @@
 import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {getOrderDetail} from '../../../../redux/actions/index';
 import ProductDashboardStyle from './styled';
 import axios from 'axios';
 import {URLS} from '../../../../utils/constants';
 import {store} from 'react-notifications-component';
 import DataList from '../../dataList';
-
-import {
-	Accordion,
-	AccordionItem,
-	/* AccordionItemHeading, */
-	AccordionItemButton,
-	AccordionItemPanel,
-} from 'react-accessible-accordion';
-import {
-	MdDelete,
-	MdCancel,
-	MdEdit,
-	MdKeyboardArrowDown,
-	MdKeyboardArrowUp,
-} from 'react-icons/md';
+import {MdDelete, MdCancel, MdEdit} from 'react-icons/md';
 
 import {IoMdCheckmarkCircleOutline} from 'react-icons/io';
-
-import {TiDeleteOutline} from 'react-icons/ti';
 
 import AccordionDashboard from '../accordionDashboard/AccordionDashboard';
 
@@ -35,10 +21,13 @@ const CardItems = ({
 	allCategories,
 	allProductsDataList,
 }) => {
+	const dispatch = useDispatch();
+	let orderDetail = useSelector((store) => store.orderDetail);
+
+	console.log('orderrrr', orderDetail);
 	const [isEditAItem, setisEditAItem] = useState(false);
 	const [SeeMore, setSeeMore] = useState(false);
 	const [EditAItem, setEditAItem] = useState({});
-	const [AccStatus, setAccStatus] = useState(false);
 
 	const {
 		name,
@@ -231,6 +220,11 @@ const CardItems = ({
 		setisEditAItem(!isEditAItem);
 	};
 
+	const handleOrders = async (_id) => {
+		dispatch(getOrderDetail(_id));
+		setSeeMore(!SeeMore);
+	};
+
 	return (
 		<ProductDashboardStyle>
 			<div className='productAllInfo'>
@@ -358,7 +352,8 @@ const CardItems = ({
 							/>
 						))}
 
-					{description ? (
+					{options === 'Products' ? (
+
 						SeeMore ? (
 							<div>
 								{isEditAItem && (
@@ -445,6 +440,29 @@ const CardItems = ({
 							</div>
 						) : (
 							<div className='seeMore' onClick={() => setSeeMore(!SeeMore)}>
+								See more!
+							</div>
+						)
+					) : null}
+
+					{options === 'Orders' ? (
+						SeeMore ? (
+							<div>
+								<div className='renglon'>
+									<div className='title'>Email: &nbsp;</div>
+									<div>{orderDetail && orderDetail.users.email} </div>
+								</div>
+								<div className='renglon'>
+									<div className='title'>State: &nbsp;</div>
+									<div>{orderDetail && orderDetail.state} </div>
+								</div>
+
+								<div className='seeMore' onClick={() => setSeeMore(!SeeMore)}>
+									Close!
+								</div>
+							</div>
+						) : (
+							<div className='seeMore' onClick={() => handleOrders(_id)}>
 								See more!
 							</div>
 						)

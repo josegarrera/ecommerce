@@ -4,7 +4,7 @@ const DivNavBar = styled.div`
 	display: flex;
 	flex-direction: column;
 	position: relative;
-	height: 155px;
+	height: 135px;
 	background-color: #ffffff;
 
 	a {

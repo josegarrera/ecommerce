@@ -1,10 +1,11 @@
 /* eslint-disable react/jsx-pascal-case */
 import React, {useState, useEffect} from 'react';
+import GoogleLogin from 'react-google-login';
 import Signup_Style from './styled';
 import {Link, useHistory} from 'react-router-dom';
 import axios from 'axios';
 import {URLS} from '../../../utils/constants';
-
+import {FcGoogle} from 'react-icons/fc';
 import {AiFillLock} from 'react-icons/ai';
 import {FaEnvelope} from 'react-icons/fa';
 import {IoCloseSharp} from 'react-icons/io5';
@@ -14,7 +15,8 @@ const FormSignup = () => {
 	let history = useHistory();
 	const [input, setInput] = useState({
 		email: '',
-		password: '',
+		passwordStore: '',
+		passwordGoogle: '',
 	});
 
 	const [errors, setErrors] = useState({});
@@ -25,6 +27,48 @@ const FormSignup = () => {
 
 	const onSubmitHandler = async (e) => {
 		e.preventDefault();
+		axios
+			.post(URLS.URL_SIGNUP, input) // {email: "perro@gmail.com", password: "1234"}
+			.then(function (response) {
+				let data = response.data;
+				if (data.user === true) {
+					setErrors({
+						message: data.message,
+					});
+				} else {
+					setInput({
+						email: '',
+						passwordStore: '',
+						passwordGoogle: '',
+					});
+					Swal.fire({
+						title: 'Success!',
+						text: 'Succesfully registered',
+						icon: 'success',
+						confirmButtonText: 'Ok',
+					}).then(() => {
+						history.push('/login');
+					});
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	};
+
+	const onChangeHandler = (e) => {
+		setInput({
+			...input,
+			[e.target.name]: e.target.value,
+		});
+	};
+
+	const responseGoogle = (response) => {
+		setInput({
+			email: response.profileObj.email,
+			passwordStore: '',
+			passwordGoogle: response.profileObj.googleId,
+		});
 		axios
 			.post(URLS.URL_SIGNUP, input)
 			.then(function (response) {
@@ -51,13 +95,8 @@ const FormSignup = () => {
 			.catch(function (error) {
 				console.log(error);
 			});
-	};
 
-	const onChangeHandler = (e) => {
-		setInput({
-			...input,
-			[e.target.name]: e.target.value,
-		});
+		console.log(response);
 	};
 
 	return (
@@ -116,7 +155,26 @@ const FormSignup = () => {
 								<div>SIGN UP</div>
 							</button>
 						</form>
-
+						<div className='separador'></div>
+						<div className='googleDiv'>
+							<GoogleLogin
+								clientId='5491811175-59r3kvkuqolj3301kabjf1om68a2jcke.apps.googleusercontent.com'
+								render={(renderProps) => (
+									<button
+										className='googleButton'
+										onClick={renderProps.onClick}
+										disabled={renderProps.disabled}
+									>
+										<FcGoogle className='googleLogo' />
+										&nbsp; &nbsp; Sign up with Google.
+									</button>
+								)}
+								buttonText='Login'
+								onSuccess={responseGoogle}
+								onFailure={responseGoogle}
+								cookiePolicy={'single_host_origin'}
+							/>
+						</div>
 						<div className='rowBottom'>
 							<p className='signUpBottom'> Already registered? </p>
 							<Link to='/login'>
