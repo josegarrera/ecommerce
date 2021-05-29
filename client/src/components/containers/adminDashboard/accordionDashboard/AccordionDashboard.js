@@ -20,7 +20,7 @@ const AccordionDashboard = ({
 }) => {
 	const [AccStatus, setAccStatus] = useState(false);
 
-	if (Option === 'variants') {
+	if (isEditAItem && Option === 'variants') {
 		items = items.map((el, index) => (
 			<div key={index + '-variants'}>
 				{Object.entries(el).map(
@@ -41,9 +41,22 @@ const AccordionDashboard = ({
 				<br />
 			</div>
 		));
+	} else if (!isEditAItem && Option === 'variants') {
+		items = items.map((el, index) => (
+			<div key={index + '-variants'}>
+				{Object.entries(el).map(
+					(e, i) =>
+						e[0] !== 'id' && (
+							<div key={i + '-variantss'}>
+								{e[0]}:&nbsp;
+								{EditAItem[index][e[0]]}
+							</div>
+						)
+				)}
+				<br />
+			</div>
+		));
 	}
-
-	console.log(EditAItem && EditAItem);
 
 	return (
 		<div>
@@ -81,7 +94,9 @@ const AccordionDashboard = ({
 											</div>
 										</AccordionItemPanel>
 									) : (
-										<AccordionItemPanel>{el.name}</AccordionItemPanel>
+										<AccordionItemPanel>
+											{Option === 'variants' ? el : el.name}
+										</AccordionItemPanel>
 									)
 								)}
 						</div>
