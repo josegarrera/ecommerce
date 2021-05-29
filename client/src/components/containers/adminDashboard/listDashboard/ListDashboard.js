@@ -38,9 +38,6 @@ const ListDashboard = ({Options, setOptions}) => {
 		setFilter(Items); // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [Items]);
 
-
-
-
 	// useEffect(() => {
 	// 	if (typeof Items[0] === 'object') {
 	// 		let obj = clearObjectValues(_.cloneDeep(Items[0]));
@@ -82,7 +79,7 @@ const ListDashboard = ({Options, setOptions}) => {
 		}
 		if (Options === 'Orders') {
 			try {
-				let itemss = await axios.get(`${URLS.URL_USER_ORDERS}`);
+				let itemss = await axios.get(`${URLS.URL_USER_ORDERS}/all`);
 				setItems(itemss.data.response.reverse());
 			} catch (error) {
 				console.log(error);
@@ -97,7 +94,6 @@ const ListDashboard = ({Options, setOptions}) => {
 			}
 		}
 	};
-
 
 	return (
 		<ListStyles>

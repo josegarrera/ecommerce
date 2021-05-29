@@ -26,8 +26,6 @@ import {loadStripe} from '@stripe/stripe-js';
 
 /* Seteando el header del axios para todas las rutas*/
 import axios from 'axios';
-const token = window.localStorage.getItem('token');
-axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
 const {REACT_APP_STRIPE_PUBLIC_KEY} = process.env;
 const stripePromise = loadStripe(REACT_APP_STRIPE_PUBLIC_KEY);
@@ -35,6 +33,8 @@ const stripePromise = loadStripe(REACT_APP_STRIPE_PUBLIC_KEY);
 function App() {
 	const user = useSelector((state) => state.user);
 	const userId = window.localStorage.getItem('userId');
+	const token = window.localStorage.getItem('token');
+	axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
 	return (
 		<div className='App'>
