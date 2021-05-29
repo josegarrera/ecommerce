@@ -507,13 +507,18 @@ export const confirmCheckout = (body) => {
 	};
 };
 
-////////////////////////////////////////  CHECKOUT ACTIONS  ////////////////////////////////////////
-
 export const saveShippingInfo = (body) => {
 	// AGREGA INFO DE LA COMPRA
 	return {
 		type: ActionTypes.SET_SHIPPING_INFO,
 		payload: body,
+	};
+};
+
+export const emptyPaymentMethod = () => {
+	return {
+		type: ActionTypes.EMPTY_PAYMENT_METHOD,
+		payload: null,
 	};
 };
 

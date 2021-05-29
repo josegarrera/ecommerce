@@ -1,7 +1,11 @@
 import React, {useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
-import {confirmCheckout} from '../../../redux/actions';
+import {
+	confirmCheckout,
+	getOpenUserOrders,
+	emptyPaymentMethod,
+} from '../../../redux/actions';
 import {CardElement, useStripe, useElements} from '@stripe/react-stripe-js';
 
 import {store} from 'react-notifications-component';
@@ -50,8 +54,16 @@ const SumarryCart = ({payIn, count, placeOrder, paymentMethod}) => {
 			form && form.appendChild(script);
 			return () => {
 				//Elimina el script como nodo hijo del elemento form
-				form && form.removeChild(script);
+				if (form) {
+					form.removeChild(script);
+					dispatch(emptyPaymentMethod());
+				}
 			};
+		} else if (
+			preferenceId === 'completed' ||
+			(preferenceId === 'canceled' && userId)
+		) {
+			dispatch(getOpenUserOrders(userId, true));
 		}
 	}, [preferenceId]);
 

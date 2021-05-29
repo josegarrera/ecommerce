@@ -1,5 +1,5 @@
 const mercadopago = require('mercadopago');
-const {Orders} = require('../models/index');
+const {Orders, Currencies} = require('../models/index');
 const {PROD_ACCESS_TOKEN, STRIPE_SECRET, ETHEREAL_USER, ETHEREAL_PASSWORD} =
 	process.env;
 const Stripe = require('stripe');
@@ -10,20 +10,6 @@ mercadopago.configure({
 const nodemailer = require('nodemailer');
 
 function initiatePayment(req, res) {
-	console.log(req.body);
-	/* {
-  userId: '60a00272322a89771f81269c',
-  idStripe: "",
-  paymentMethod: "",
-  shippingInfo: {
-    firstName: '',
-    lastName: '',
-    zip_code: '',
-    street_name: '',
-    street_number: '',
-    id: ''
-  }
-} */
 	const {userId, shippingInfo, paymentMethod, idStripe} = req.body;
 	if (!userId) {
 		return res.status(400).send({
@@ -46,7 +32,7 @@ function initiatePayment(req, res) {
 				throw new Error('The user has no products in the cart');
 
 			order[0].state = 'processing';
-			order[0].paymentMethod = paymentMethod;
+			order[0].paymentMethod = paymentMethod || 'mercadopago';
 			const items = order[0].items.map((item) => {
 				return {
 					id: item.product._id,
@@ -57,7 +43,7 @@ function initiatePayment(req, res) {
 				};
 			});
 			const userEmail = order[0].users.email;
-			console.log(userEmail);
+
 			const amount = items.reduce((a, b) => {
 				return (a += b.unit_price * b.quantity);
 			}, 0);
@@ -66,21 +52,10 @@ function initiatePayment(req, res) {
 			}, '');
 			const shippingCost = 5; //order[0].shipping.cost ||
 
-			if (paymentMethod === 'mercadopago') {
+			if (!paymentMethod || paymentMethod === 'mercadopago') {
 				const expirationDate = new Date(Date.now() + 210000000);
 				const preference = {
 					items: items,
-					payer: {
-						name: shippingInfo.firstName,
-						surname: shippingInfo.lastName,
-						email: userEmail,
-
-						identification: {
-							type: 'DNI',
-							number: shippingInfo.id,
-						},
-					},
-					purpose: 'wallet_purchase',
 					external_reference: `${order[0]._id}`,
 					notification_url: `${process.env.BACKEND_URL}/checkout/mp/notifications`,
 					shipments: {
@@ -91,7 +66,10 @@ function initiatePayment(req, res) {
 					date_of_expiration: expirationDate.toISOString(),
 				};
 
-				return Promise.all([mercadopago.preferences.create(preference)]);
+				return Promise.all([
+					order[0].save(),
+					mercadopago.preferences.create(preference),
+				]);
 			} else {
 				return Promise.all([
 					order[0],
@@ -103,6 +81,7 @@ function initiatePayment(req, res) {
 						statement_descriptor: 'Store E-commerce',
 						confirm: true,
 					}),
+					Currencies.find().sort({month: -1, date: -1}).limit(1).exec(),
 				]);
 			}
 		})
@@ -114,30 +93,22 @@ function initiatePayment(req, res) {
 					type: 'Ok',
 					message: 'Success',
 				});
-
-			let paymentId = response[1].id;
-			let transactionStatus = response[1].status;
-			let datePayment = new Date(Date.now());
-			let paymentStatus = 'acredited';
+			const {USDEUR} = response[2][0].quotes;
 			let transactionDetail = {
-				total_amount: response[1].charges.data[0].amount_captured,
-				net_income: payment.body.net_received_amount,
-				installments: payment.body.installments,
-				shipping_cost: payment.body.shipping_cost,
-				currency: payment.body.currency_id,
+				paymentId: response[1].id,
+				transactionStatus: response[1].status,
+				datePayment: new Date(Date.now()),
+				paymentStatus: 'acredited',
+				total_amount: response[1].charges.data[0].amount_captured / 100,
+				net_income_aprox:
+					(response[1].charges.data[0].amount_captured / 100) * USDEUR -
+					((response[1].charges.data[0].amount_captured / 100) * USDEUR * 4) /
+						100,
+				currency: response[1].charges.data[0].currency,
 			};
-			let netIncome = response[1].amount_received;
-			let shipping = response[1].shipping;
-			response[0].paymentId = paymentId;
-			response[0].transactionStatus = transactionStatus;
-			response[0].paymentStatus = paymentStatus;
-			response[0].datePayment = datePayment;
 			response[0].transactionDetail = transactionDetail;
 			response[0].state =
-				transactionStatus === 'succeeded' ? 'completed' : 'canceled';
-			response[0].amount = amount / 100;
-			response[0].shipping = shipping;
-			response[0].netIncome = netIncome;
+				response[1].status === 'succeeded' ? 'completed' : 'canceled';
 
 			response[0].save((err, data) => {
 				if (err) throw new Error(err);
@@ -242,37 +213,29 @@ function getResultPayment(req, res) {
 function getNotificationsMp(req, res) {
 	const id = req.query.id || req.query['data.id'];
 	if (id) {
-		let paymentId;
-		let transactionStatus;
-		let datePayment;
-		let paymentStatus;
 		let transactionDetail;
 
 		mercadopago
 			.get(`/v1/payments/${id}`)
 			.then((payment) => {
-				paymentId = payment.body.id;
-				transactionStatus = payment.body.status;
-				datePayment = payment.body.date_approved;
-				paymentStatus = payment.body.status_detail;
 				transactionDetail = {
-					total_amount: payment.body.total_paid_amount,
-					net_income: payment.body.net_received_amount,
-					installments: payment.body.installments,
-					shipping_cost: payment.body.shipping_cost,
+					paymentId: payment.body.id,
+					transactionStatus: payment.body.status,
+					datePayment: payment.body.date_approved,
+					paymentStatus: 'acredited',
+					total_amount: payment.body.transaction_details.total_paid_amount,
+					net_income: payment.body.transaction_details.net_received_amount,
 					currency: payment.body.currency_id,
 				};
 				const orderId = payment.body.external_reference;
 				return Orders.find({_id: orderId}).exec();
 			})
 			.then((order) => {
-				order[0].paymentId = paymentId;
-				order[0].transactionStatus = transactionStatus;
-				order[0].paymentStatus = paymentStatus;
-				order[0].datePayment = datePayment;
 				order[0].transactionDetail = transactionDetail;
 				order[0].state =
-					transactionStatus === 'approved' ? 'completed' : 'canceled';
+					order[0].transactionDetail.transactionStatus === 'approved'
+						? 'completed'
+						: 'canceled';
 
 				return order[0].save();
 			})
