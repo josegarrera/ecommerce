@@ -7,6 +7,7 @@ async function verifyToken(req, res, next) {
 		const token = authHeader.split(' ')[1];
 		jwt.verify(token, 'top_secret', (err, user) => {
 			if (err) {
+				console.log(err);
 				return res.sendStatus(403);
 			}
 			req.user = user.user;
