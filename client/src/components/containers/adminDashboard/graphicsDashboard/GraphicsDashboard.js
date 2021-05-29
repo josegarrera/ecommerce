@@ -21,7 +21,6 @@ const GraphicsDashboard = ({setOptions}) => {
 
 	useEffect(() => {
 		allProducts();
-
 	}, []);
 
 	const allProducts = async () => {
@@ -32,12 +31,11 @@ const GraphicsDashboard = ({setOptions}) => {
 		let categoriess = await axios.get(`${URLS.URL_CATEGORIES}`);
 		setCategories(categoriess.data.response);
 		let userss = await axios.get(`${URLS.URL_USERS}`);
-
 		setUsers(userss.data.response);
-		let orderss = await axios.get(`${URLS.URL_USER_ORDERS}`);
-		setOrders(orderss.data.response);
 		let brandss = await axios.get(`${URLS.URL_BRANDS}`);
 		setBrands(brandss.data.response);
+		let orderss = await axios.get(`${URLS.URL_USER_ORDERS}`, BEARER(token));
+		setOrders(orderss.data.response);
 	};
 
 	return (

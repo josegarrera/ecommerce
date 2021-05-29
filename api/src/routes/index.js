@@ -64,14 +64,15 @@ router.get(
 		});
 	}
 );
-router.get('/allproducts', getAllProducts);
-router.use('/products', products);
-router.use('/categories', categories);
-router.use('/brands', brands);
-router.use('/orders', orders);
-router.use('/currencies', currencies);
-router.use('/users', users);
-router.use('/checkout', checkout);
-router.use('/favourites', favourites);
+
+router.get('/allproducts', getAllProducts); //no JWT
+router.use('/products', products); //SI JWT
+router.use('/categories', categories); //SI JWT
+router.use('/brands', brands); //SI JWT
+router.use('/orders', orders); //SI JWT
+router.use('/currencies', currencies); //?????
+router.use('/users', users); //SI JWT
+router.use('/checkout', checkout); //SI JWT | VERIFY IF EXISTS TOKEN
+router.use('/favourites', favourites); //SI JWT | VERIFY IF EXISTS TOKEN
 
 module.exports = router;

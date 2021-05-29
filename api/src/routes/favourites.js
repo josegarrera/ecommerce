@@ -6,8 +6,8 @@ const {
 	deleteFavourite,
 } = require('../controllers/favourites');
 
-router.get('/', getUserFavourites);
-router.post('/', addFavourite);
-router.delete('/', deleteFavourite);
+router.get('/', getUserFavourites); //SI JWT
+router.post('/', addFavourite); //SI JWT
+router.delete('/', deleteFavourite); //SI JWT
 
 module.exports = router;

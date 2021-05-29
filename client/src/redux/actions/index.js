@@ -125,31 +125,29 @@ export const cleanProductDetail = () => {
 
 export const addNewProduct = (body) => {
 	//agrega un producto
-	return function (dispatch) {
-		return fetch(URLS.URL_PRODUCTS, {
-			method: 'POST',
-			body: body,
-			headers: {
-				Accept: 'application/json',
-			},
-		})
-			.then((response) => response.json())
-			.then((json) => {
-				console.log(json);
-				dispatch({
-					type: ActionTypes.PRODUCT_CREATED,
-					payload: json.response, // TIENE QUE SER UN {}
-				});
-			})
-			.catch((err) =>
-				dispatch({
-					type: ActionTypes.EMPTY_PRODUCT_CREATED,
-					payload: {
-						error: err,
-						message: 'Internal server error',
-					},
-				})
-			);
+	return async function (dispatch) {
+		try {
+			const response = await fetch(URLS.URL_PRODUCTS, {
+				method: 'POST',
+				body: body,
+				headers: {
+					Accept: 'application/json',
+				},
+			});
+			const json = await response.json();
+			dispatch({
+				type: ActionTypes.PRODUCT_CREATED,
+				payload: json.response, // TIENE QUE SER UN {}
+			});
+		} catch (err) {
+			return dispatch({
+				type: ActionTypes.EMPTY_PRODUCT_CREATED,
+				payload: {
+					error: err,
+					message: 'Internal server error',
+				},
+			});
+		}
 	};
 };
 
