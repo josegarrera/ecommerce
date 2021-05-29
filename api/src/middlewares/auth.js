@@ -16,7 +16,10 @@ passport.use(
 			try {
 				const user = await Users.exists({email});
 				if (!user) {
-					const newUser = await Users.create({email, password});
+					const newUser = await Users.create({
+						email,
+						password,
+					});
 					const message = 'Signup successfull!';
 					return done(null, newUser, message);
 				} else {

@@ -221,7 +221,8 @@ const CardItems = ({
 		setisEditAItem(!isEditAItem);
 	};
 
-	const handleOrders = async (_id) => {
+	const handleOrders = (_id) => {
+		console.log('iddddddd', _id);
 		dispatch(getOrderDetail(_id));
 		setSeeMore(!SeeMore);
 	};
@@ -354,7 +355,6 @@ const CardItems = ({
 						))}
 
 					{options === 'Products' ? (
-
 						SeeMore ? (
 							<div>
 								{isEditAItem && (
@@ -450,13 +450,25 @@ const CardItems = ({
 						SeeMore ? (
 							<div>
 								<div className='renglon'>
-									<div className='title'>Email: &nbsp;</div>
-									<div>{orderDetail && orderDetail.users.email} </div>
+									<div className='title'>State: &nbsp;</div>
+									<div>{orderDetail.state && orderDetail.state} </div>
 								</div>
 								<div className='renglon'>
-									<div className='title'>State: &nbsp;</div>
-									<div>{orderDetail && orderDetail.state} </div>
+									<div className='title'>Email: &nbsp;</div>
+									<div>
+										{orderDetail.users.email && orderDetail.users.email}{' '}
+									</div>
 								</div>
+								{orderDetail.transactionDetail.total_paid_amount ? (
+									<div className='renglon'>
+										<div className='title'>Order price: &nbsp;</div>
+										<div>
+											{orderDetail.currency && orderDetail.currency}{' '}
+											{orderDetail.transactionDetail.total_paid_amount &&
+												orderDetail.transactionDetail.total_paid_amount}
+										</div>
+									</div>
+								) : null}
 
 								<div className='seeMore' onClick={() => setSeeMore(!SeeMore)}>
 									Close!
