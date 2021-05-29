@@ -19,20 +19,24 @@ import ProductDetailStyle from './styled';
 import {Link} from 'react-router-dom';
 import {store} from 'react-notifications-component';
 import DetailLoader from '../../../utils/detailLoader';
+import Reviews from '../reviews';
 
 const ProductDetail = (id) => {
 	const dispatch = useDispatch();
 	const [imageBig, setImageBig] = useState();
 	let history = useHistory();
-
 	let product = useSelector((store) => store.productDetail);
 	const wishlist = useSelector((store) => store.wishlist);
 	const fav = wishlist.find(({product: {_id}}) => _id === product._id);
 	const userId = window.localStorage.getItem('userId');
+	const [updateReview, setUpdateReview] = useState(false);
 
 	useEffect(() => {
 		dispatch(getProductDetail(id));
-	}, []); // eslint-disable-line react-hooks/exhaustive-deps
+	}, [updateReview]); // eslint-disable-line react-hooks/exhaustive-deps
+
+	console.log('acaaaaaaaaaaaaaaa', product);
+
 	useEffect(() => {
 		return dispatch(cleanProductDetail());
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -225,6 +229,16 @@ const ProductDetail = (id) => {
 			) : (
 				<DetailLoader className='detailLoader' />
 			)}
+			<div className='div_comments'>
+				{product._id && (
+					<Reviews
+						id={product._id}
+						setUpdateReview={setUpdateReview}
+						updateReview={updateReview}
+						allReviews={product.reviews}
+					/>
+				)}
+			</div>
 		</ProductDetailStyle>
 	);
 };

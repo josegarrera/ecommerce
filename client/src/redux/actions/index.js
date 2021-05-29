@@ -321,6 +321,8 @@ export const getCategories = () => {
   };
 }; */
 
+
+
 export const addCartProduct = (id) => {
 	// trae el cart de un usuario del servidor.
 	return async (dispatch) => {
@@ -530,3 +532,5 @@ export const setPayIn = () => {
 		type: ActionTypes.SET_PAY_IN,
 	};
 };
+
+////////////////////////////////////////  REVIEW  ///////////////////////////////////////
