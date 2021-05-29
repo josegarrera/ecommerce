@@ -1,28 +1,14 @@
 import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {getOrderDetail} from '../../../../redux/actions/index';
 import ProductDashboardStyle from './styled';
 import axios from 'axios';
 import {URLS} from '../../../../utils/constants';
-
+import {store} from 'react-notifications-component';
 import DataList from '../../dataList';
-
-import {
-	Accordion,
-	AccordionItem,
-	/* AccordionItemHeading, */
-	AccordionItemButton,
-	AccordionItemPanel,
-} from 'react-accessible-accordion';
-import {
-	MdDelete,
-	MdCancel,
-	MdEdit,
-	MdKeyboardArrowDown,
-	MdKeyboardArrowUp,
-} from 'react-icons/md';
+import {MdDelete, MdCancel, MdEdit} from 'react-icons/md';
 
 import {IoMdCheckmarkCircleOutline} from 'react-icons/io';
-
-import {TiDeleteOutline} from 'react-icons/ti';
 
 import AccordionDashboard from '../accordionDashboard/AccordionDashboard';
 
@@ -35,10 +21,13 @@ const CardItems = ({
 	allCategories,
 	allProductsDataList,
 }) => {
+	const dispatch = useDispatch();
+	let orderDetail = useSelector((store) => store.orderDetail);
+
+	console.log('orderrrr', orderDetail);
 	const [isEditAItem, setisEditAItem] = useState(false);
 	const [SeeMore, setSeeMore] = useState(false);
 	const [EditAItem, setEditAItem] = useState({});
-	const [AccStatus, setAccStatus] = useState(false);
 
 	const {
 		name,
@@ -93,8 +82,23 @@ const CardItems = ({
 					price: {...EditAItem.price, value: e.target.value},
 			  })
 			: setEditAItem({...EditAItem, [e.target.name]: e.target.value});
-		//		value={EditAItem.brands[0].name}
 	};
+
+	const handleinputvariants = (e) => {
+		const index = Number(e.target.id[e.target.id.length - 1]);
+
+		let newArr = [...EditAItem.variants];
+		newArr[index][e.target.name] = e.target.value;
+
+		setEditAItem({
+			...EditAItem,
+			variants: newArr,
+		});
+	};
+	console.log(EditAItem.variants, 'despues de setear');
+
+	/* 	 (EditAItem.variants[e.target.id][e.target.name] = e.target.value), */
+	//console.log('despues', EditAItem.variants[0]);
 
 	const handleEditButton = () => {
 		isEditAItem && setEditAItem({...prop});
@@ -110,11 +114,11 @@ const CardItems = ({
 		setEditAItem({...EditAItem, categories: filter});
 	};
 
-	const handleDeleteVariantsOnEdit = ({target: {id}}) => {
+	/* 	const handleDeleteVariantsOnEdit = ({target: {id}}) => {
 		let filter =
 			EditAItem.variants && EditAItem.variants.filter((el) => el.name !== id);
 		setEditAItem({...EditAItem, variants: filter});
-	};
+	}; */
 
 	const handleDeleteProductsOnEdit = ({target: {id}}) => {
 		let filter =
@@ -130,7 +134,6 @@ const CardItems = ({
 	};
 
 	const handleDeleteBrandsOnEdit = ({target: {id}}) => {
-		console.log(id);
 		let filter =
 			EditAItem.brands && EditAItem.brands.filter((el) => el.name !== id);
 		setEditAItem({...EditAItem, brands: filter});
@@ -152,6 +155,22 @@ const CardItems = ({
 		});
 	};
 
+	const modifiedNotification = () => {
+		store.addNotification({
+			title: 'Modified item',
+			message: 'The item was modified.',
+			type: 'success',
+			insert: 'top',
+			container: 'bottom-right',
+			animationIn: ['animate__animated', 'animate__fadeIn'],
+			animationOut: ['animate__animated', 'animate__fadeOut'],
+			dismiss: {
+				duration: 3000,
+				onScreen: true,
+			},
+		});
+	};
+
 	const handleUpdateButton = async () => {
 		if (options === 'Products') {
 			let sendEditItem = {...EditAItem};
@@ -160,26 +179,51 @@ const CardItems = ({
 			try {
 				await axios.put(`${URLS.URL_PRODUCTS}/${EditAItem._id}`, sendEditItem);
 				allProducts();
+				modifiedNotification();
 			} catch (error) {
 				console.log(error.response.data.message);
 			}
-		}
-		if (options === 'Categories') {
+		} else if (options === 'Categories') {
 			let sendEditItem = {...EditAItem};
 			sendEditItem.products = EditAItem.products.map((el) => el._id);
-			//sendEditItem.brands = EditAItem.brands.map((el) => el._id);
-			console.log(sendEditItem);
 			try {
 				await axios.put(
 					`${URLS.URL_CATEGORIES}/${EditAItem._id}`,
 					sendEditItem
 				);
 				allProducts();
+				modifiedNotification();
+			} catch (error) {
+				console.log(error.response.data.message);
+			}
+		} else if (options === 'Users') {
+			let sendEditItem = {...EditAItem};
+			try {
+				await axios.put(`${URLS.URL_USERS}/${EditAItem._id}`, sendEditItem);
+				allProducts();
+				modifiedNotification();
+			} catch (error) {
+				console.log(error.response.data.message);
+			}
+		} else if (options === 'Brands') {
+			let sendEditItem = {...EditAItem};
+			sendEditItem.products = EditAItem.products.map((el) => el._id);
+			console.log(sendEditItem);
+			try {
+				await axios.put(`${URLS.URL_BRANDS}/${EditAItem._id}`, sendEditItem);
+				allProducts();
+				modifiedNotification();
 			} catch (error) {
 				console.log(error.response.data.message);
 			}
 		}
+
 		setisEditAItem(!isEditAItem);
+	};
+
+	const handleOrders = async (_id) => {
+		dispatch(getOrderDetail(_id));
+		setSeeMore(!SeeMore);
 	};
 
 	return (
@@ -224,7 +268,10 @@ const CardItems = ({
 							<div className='title'>Role: &nbsp;</div>
 							{isEditAItem ? (
 								<div>
-									<input value={role} />
+									<select name='role' onChange={handleInput}>
+										<option name='Admin'>admin</option>
+										<option name='Client'>client</option>
+									</select>
 								</div>
 							) : (
 								<div className='role'>{role}</div>
@@ -238,7 +285,11 @@ const CardItems = ({
 							</div>
 							{isEditAItem ? (
 								<div>
-									<input value={email} />
+									<input
+										name='email'
+										onChange={handleInput}
+										value={EditAItem && EditAItem.email}
+									/>
 								</div>
 							) : (
 								<div className='email'>{email}</div>
@@ -301,7 +352,9 @@ const CardItems = ({
 								Option={'products'}
 							/>
 						))}
-					{description ? (
+
+					{options === 'Products' ? (
+
 						SeeMore ? (
 							<div>
 								{isEditAItem && (
@@ -323,6 +376,22 @@ const CardItems = ({
 											isEditAItem={isEditAItem}
 											handler={handleDeleteBrandsOnEdit}
 											Option={'brands'}
+										/>
+									))}
+								{variants &&
+									EditAItem.variants &&
+									(EditAItem.variants.length === 0 ? (
+										<div className='renglon'>
+											<div className='title'>No Variants.</div>
+										</div>
+									) : (
+										<AccordionDashboard
+											items={EditAItem.variants}
+											isEditAItem={isEditAItem}
+											handler={handleDeleteBrandsOnEdit}
+											Option={'variants'}
+											handleInput={handleinputvariants}
+											EditAItem={EditAItem.variants}
 										/>
 									))}
 								{isEditAItem && (
@@ -376,6 +445,29 @@ const CardItems = ({
 							</div>
 						)
 					) : null}
+
+					{options === 'Orders' ? (
+						SeeMore ? (
+							<div>
+								<div className='renglon'>
+									<div className='title'>Email: &nbsp;</div>
+									<div>{orderDetail && orderDetail.users.email} </div>
+								</div>
+								<div className='renglon'>
+									<div className='title'>State: &nbsp;</div>
+									<div>{orderDetail && orderDetail.state} </div>
+								</div>
+
+								<div className='seeMore' onClick={() => setSeeMore(!SeeMore)}>
+									Close!
+								</div>
+							</div>
+						) : (
+							<div className='seeMore' onClick={() => handleOrders(_id)}>
+								See more!
+							</div>
+						)
+					) : null}
 				</div>
 			</div>
 			<div className='buttons'>
@@ -388,7 +480,7 @@ const CardItems = ({
 					{isEditAItem ? (
 						<MdCancel className='button' />
 					) : (
-						<MdEdit className='button' />
+						options !== 'Orders' && <MdEdit className='button' />
 					)}
 				</button>
 				<button className='buttonDiv' onClick={deleteById}>

@@ -31,9 +31,8 @@ const OrdersSchema = new Schema({
 		},
 		default: 'created',
 	},
-	subTotal: Number,
-	shipping: Number,
-	total: Number,
+
+	shipping: {},
 	currency: {
 		type: String,
 		enum: {
@@ -43,6 +42,7 @@ const OrdersSchema = new Schema({
 		default: 'USD',
 	},
 	paymentId: String, // Información del pago procesado
+	paymentMethod: String,
 	transactionStatus: String,
 	paymentStatus: String,
 	datePayment: String,

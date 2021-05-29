@@ -92,26 +92,26 @@ const NavBar = () => {
 			</div>
 			<div className='bottomNav'>
 				<Link className='bottomLinks' to='/home'>
-					home
+					Home
 				</Link>
 				<Link className='bottomLinks' to='/catalogue'>
-					catalogue
+					Catalogue
 				</Link>
 				{user.role === 'admin' ? (
 					<Link className='bottomLinks' to='/create'>
-						create
+						Create
 					</Link>
 				) : null}
 
 				<select className='select bottomLink'>
-					<option>all categories</option>
+					<option>All categories</option>
 				</select>
 
 				<Link className='bottomLinks' to='/about'>
-					about
+					About
 				</Link>
 				<Link className='bottomLinks' to='/contact'>
-					contact
+					Contact
 				</Link>
 			</div>
 		</DivNavBar>

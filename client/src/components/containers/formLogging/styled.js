@@ -130,6 +130,41 @@ const Login_Style = styled.div`
 			font-size: 1rem;
 			font-weight: 600;
 		}
+		.separadorDiv{
+			display: flex;
+			justify-content: center;
+		.separador {
+							border-top: 1px solid #bdbdbd;
+							margin-top: 5%;
+							width: 70%;
+						}
+		}
+		
+				.googleDiv {
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					border: 1px solid #bdbdbd;
+					border-radius: 2rem;
+					color: #bdbdbd;
+					width: 100%;
+					cursor: pointer;
+					font-size: 1rem;
+					font-weight: 600;
+					margin-top: 5%;
+
+					.googleButton {
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						padding: 0.8rem;
+						height: 100%;
+						width: 100%;
+
+						.googleLogo {
+							font-size: 1.2rem;
+						}
+					}
 	}
 `;
 
