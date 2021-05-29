@@ -10,13 +10,15 @@ const {
 	changeLot,
 	deleteOrder,
 } = require('../controllers/orders');
+const {verifyToken, isAdmin} = require('../middlewares/authJwt');
 
-router.post('/', addProduct);
-router.delete('/', deleteProduct);
-router.delete('/:id', deleteOrder);
-router.put('/', changeLot);
-router.get('/', getUserOrder, getAllUserOrders);
-router.get('/', getAllOrders);
-router.get('/:id', getOrderById);
+router.post('/', addProduct); //NO JWT
+router.delete('/', deleteProduct); //NO JWT
+router.delete('/:id', [verifyToken, isAdmin], deleteOrder); //SI JWT
+router.put('/', changeLot); //NO JWT
+router.get('/', getUserOrder); //NO JWT
+router.get('/user', getAllUserOrders); //NO JWT
+router.get('/all', [verifyToken, isAdmin], getAllOrders); //SI JWT
+router.get('/:id', getOrderById); //??????
 
 module.exports = router;

@@ -20,10 +20,17 @@ import 'react-notifications-component/dist/theme.css';
 import Favourites from '../components/containers/favourites/Favourites';
 import FormCategorie from '../components/containers/formCategories/FormCategories';
 import FormProductDashboard from '../components/containers/adminDashboard/addProductDashboard/index.js';
+
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
 const {REACT_APP_STRIPE_PUBLIC_KEY} = process.env;
 const stripePromise = loadStripe(REACT_APP_STRIPE_PUBLIC_KEY);
+
+/* Seteando el header del axios para todas las rutas*/
+import axios from 'axios';
+const token = window.localStorage.getItem('token');
+axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
 
 function App() {
 	const user = useSelector((state) => state.user);

@@ -2,8 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import ProductDashboardStyle from './styled.js';
 import DataListInput from 'react-datalist-input';
-import axios from 'axios';
-import {URLS} from '../../../../utils/constants';
 import {
 	addNewProduct,
 	getCategories,
