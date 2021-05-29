@@ -34,7 +34,7 @@ const GraphicsDashboard = ({setOptions}) => {
 		setUsers(userss.data.response);
 		let brandss = await axios.get(`${URLS.URL_BRANDS}`);
 		setBrands(brandss.data.response);
-		let orderss = await axios.get(`${URLS.URL_USER_ORDERS}`, BEARER(token));
+		let orderss = await axios.get(`${URLS.URL_USER_ORDERS}`);
 		setOrders(orderss.data.response);
 	};
 

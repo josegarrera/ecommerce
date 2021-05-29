@@ -23,14 +23,14 @@ import FormProductDashboard from '../components/containers/adminDashboard/addPro
 
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
-const {REACT_APP_STRIPE_PUBLIC_KEY} = process.env;
-const stripePromise = loadStripe(REACT_APP_STRIPE_PUBLIC_KEY);
 
 /* Seteando el header del axios para todas las rutas*/
 import axios from 'axios';
 const token = window.localStorage.getItem('token');
 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
+const {REACT_APP_STRIPE_PUBLIC_KEY} = process.env;
+const stripePromise = loadStripe(REACT_APP_STRIPE_PUBLIC_KEY);
 
 function App() {
 	const user = useSelector((state) => state.user);
@@ -80,7 +80,7 @@ function App() {
 							/>
 							<Route path='/products' component={NavBar} />
 							<Route exact path='/' component={Home} />
-              <Route exact path='/home' component={Home} />
+							<Route exact path='/home' component={Home} />
 							<Route exact path='/login' component={FormLogging} />
 							<Route exact path='/signup' component={FormSignup} />
 							<Route exact path='/create' component={FormProductDashboard} />
@@ -105,7 +105,6 @@ function App() {
 					</React.Fragment>
 				</Elements>
 			)}
-
 		</div>
 	);
 }
