@@ -216,6 +216,11 @@ const r = (state = initialState, {type, payload}) => {
 				...state,
 				paymentMethod: payload,
 			};
+		case ActionTypes.EMPTY_PAYMENT_METHOD:
+			return {
+				...state,
+				paymentMethod: payload,
+			};
 
 		///////////////  SHIPPING  ///////////////
 
