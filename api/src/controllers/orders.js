@@ -26,11 +26,6 @@ async function getUserOrder(req, res) {
 				error: 'user does not exist',
 			});
 		}
-		res.status(400).send({
-			response: '',
-			type: 'Bad request',
-			message: 'User does not have orders',
-		});
 	} catch (error) {
 		res
 			.status(500)
