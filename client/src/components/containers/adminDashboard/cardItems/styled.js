@@ -44,6 +44,18 @@ const ProductDashboardStyle = styled.div`
 
 			.renglon {
 				display: flex;
+
+				.created {
+					color: orange;
+				}
+
+				.complete {
+					color: limegreen;
+				}
+
+				.cancelled {
+					color: red;
+				}
 			}
 			.renglon2 {
 				display: flex;

@@ -21,13 +21,13 @@ const CardItems = ({
 	allCategories,
 	allProductsDataList,
 }) => {
-	const dispatch = useDispatch();
-	let orderDetail = useSelector((store) => store.orderDetail);
+	//const dispatch = useDispatch();
+	//let orderDetail = useSelector((store) => store.orderDetail);
 
-	console.log('orderrrr', orderDetail);
 	const [isEditAItem, setisEditAItem] = useState(false);
 	const [SeeMore, setSeeMore] = useState(false);
 	const [EditAItem, setEditAItem] = useState({});
+	const [OrderDetail, setOrderDetail] = useState({});
 
 	const {
 		name,
@@ -95,7 +95,7 @@ const CardItems = ({
 			variants: newArr,
 		});
 	};
-	console.log(EditAItem.variants, 'despues de setear');
+	/* console.log(EditAItem.variants, 'despues de setear'); */
 
 	/* 	 (EditAItem.variants[e.target.id][e.target.name] = e.target.value), */
 	//console.log('despues', EditAItem.variants[0]);
@@ -221,9 +221,10 @@ const CardItems = ({
 		setisEditAItem(!isEditAItem);
 	};
 
-	const handleOrders = (_id) => {
-		console.log('iddddddd', _id);
-		dispatch(getOrderDetail(_id));
+	const handleOrders = async (_id) => {
+		let orderDetail = await axios.get(`${URLS.URL_USER_ORDERS}/${_id}`);
+		setOrderDetail(orderDetail.data.response);
+		console.log('orderrrrr detail', OrderDetail);
 		setSeeMore(!SeeMore);
 	};
 
@@ -451,21 +452,61 @@ const CardItems = ({
 							<div>
 								<div className='renglon'>
 									<div className='title'>State: &nbsp;</div>
-									<div>{orderDetail.state && orderDetail.state} </div>
+									{OrderDetail && OrderDetail.state === 'created' ? (
+										<div className='created'>
+											{' '}
+											{OrderDetail.state.charAt(0).toUpperCase() +
+												OrderDetail.state.slice(1)}
+											{'.'}
+										</div>
+									) : null}
+									{OrderDetail && OrderDetail.state === 'completed' ? (
+										<div className='complete'>
+											{' '}
+											{OrderDetail.state.charAt(0).toUpperCase() +
+												OrderDetail.state.slice(1)}
+											{'.'}
+										</div>
+									) : null}
+									{OrderDetail && OrderDetail.state === 'cancelled' ? (
+										<div className='cancelled'>
+											{' '}
+											{OrderDetail.state.charAt(0).toUpperCase() +
+												OrderDetail.state.slice(1)}
+											{'.'}
+										</div>
+									) : null}
 								</div>
-								<div className='renglon'>
-									<div className='title'>Email: &nbsp;</div>
-									<div>
-										{orderDetail.users.email && orderDetail.users.email}{' '}
-									</div>
-								</div>
-								{orderDetail.transactionDetail.total_paid_amount ? (
+								{OrderDetail.users ? (
 									<div className='renglon'>
-										<div className='title'>Order price: &nbsp;</div>
+										<div className='title'>Email: &nbsp;</div>
+										<div>{OrderDetail.users.email} </div>
+									</div>
+								) : null}
+								{OrderDetail.paymentMethod ? (
+									<div className='renglon'>
+										<div className='title'>Pay with: &nbsp;</div>
 										<div>
-											{orderDetail.currency && orderDetail.currency}{' '}
-											{orderDetail.transactionDetail.total_paid_amount &&
-												orderDetail.transactionDetail.total_paid_amount}
+											{OrderDetail.paymentMethod.charAt(0).toUpperCase() +
+												OrderDetail.paymentMethod.slice(1)}
+											{'.'}
+										</div>
+									</div>
+								) : null}
+								{OrderDetail.transactionDetail ? (
+									<div className='renglon'>
+										<div className='title'>Price: &nbsp;</div>
+										<div>
+											{OrderDetail.currency}{' '}
+											{OrderDetail.transactionDetail.total_amount}
+										</div>
+									</div>
+								) : null}
+								{OrderDetail.transactionDetail ? (
+									<div className='renglon'>
+										<div className='title'>Date payment: &nbsp;</div>
+										<div>
+											{OrderDetail.transactionDetail.datePayment.slice(0, 10)}
 										</div>
 									</div>
 								) : null}
