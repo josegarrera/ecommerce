@@ -17,6 +17,9 @@ const AccordionDashboard = ({
 	Option,
 	EditAItem,
 	handleInput,
+	paymentDetail,
+	paymentMethod,
+	paymentCurrency,
 }) => {
 	const [AccStatus, setAccStatus] = useState(false);
 
@@ -61,10 +64,10 @@ const AccordionDashboard = ({
 	return (
 		<div>
 			<Accordion allowZeroExpanded>
-				{
+				{Option ? (
 					<AccordionItem onClick={() => setAccStatus(!AccStatus)}>
 						<AccordionItemButton className='title2'>
-							{items && items.length} {Option}
+							{items && items.length} {Option} {'pero'}
 							{AccStatus === false ? (
 								<MdKeyboardArrowDown
 									className='open'
@@ -101,7 +104,80 @@ const AccordionDashboard = ({
 								)}
 						</div>
 					</AccordionItem>
-				}
+				) : null}
+
+				{paymentDetail ? (
+					<AccordionItem onClick={() => setAccStatus(!AccStatus)}>
+						<AccordionItemButton className='title2'>
+							{'Payment Detail'}
+							{AccStatus === false ? (
+								<MdKeyboardArrowDown
+									className='open'
+									onClick={() => setAccStatus(!AccStatus)}
+								/>
+							) : (
+								<MdKeyboardArrowUp
+									className='open'
+									onClick={() => setAccStatus(!AccStatus)}
+								/>
+							)}
+						</AccordionItemButton>
+						<div className='accordionItems'>
+							<AccordionItemPanel>
+								{paymentDetail ? (
+									<>
+										<div className='div_delete_categorie'>
+											<div className='title'>Pay with: &nbsp;</div>
+											<div>
+												{paymentMethod.charAt(0).toUpperCase() +
+													paymentMethod.slice(1)}
+												{'.'}
+											</div>
+										</div>
+										{/* <div className='div_delete_categorie'>
+											<div className='title'>Transaction status: &nbsp;</div>
+											<div>
+												{paymentDetail.transactionStatus
+													.charAt(0)
+													.toUpperCase() +
+													paymentDetail.transactionStatus.slice(1)}
+												{'.'}
+											</div>
+										</div> */}
+										<div className='div_delete_categorie'>
+											<div className='title'>Payment status: &nbsp;</div>
+											<div>
+												{paymentDetail.paymentStatus.charAt(0).toUpperCase() +
+													paymentDetail.paymentStatus.slice(1)}
+												{'.'}
+											</div>
+										</div>
+										<div className='div_delete_categorie'>
+											<div className='title'>Payment date: &nbsp;</div>
+											<div>{paymentDetail.datePayment}</div>
+										</div>
+										<div className='div_delete_categorie'>
+											<div className='title'>Payment ID: &nbsp;</div>
+											<div>{paymentDetail.paymentId}</div>
+										</div>
+										<div className='div_delete_categorie'>
+											<div className='title'>Total amount: &nbsp;</div>
+											<div>
+												{paymentCurrency} {paymentDetail.total_amount}
+											</div>
+										</div>
+										<div className='div_delete_categorie'>
+											<div className='title'>Net Income: &nbsp;</div>
+											<div>
+												{paymentCurrency} {paymentDetail.net_income}
+											</div>
+										</div>
+									</>
+								) : null}
+							</AccordionItemPanel>
+						</div>
+					</AccordionItem>
+				) : null}
 			</Accordion>
 		</div>
 	);

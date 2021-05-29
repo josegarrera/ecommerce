@@ -16,7 +16,6 @@ const NavBar = () => {
 	const favsProduct = useSelector((state) => state.wishlist);
 	let userId = window.localStorage.getItem('userId');
 	const user = useSelector((state) => state.user);
-	console.log('este es el userrr', user);
 	const eraseToken = () => {
 		window.localStorage.clear();
 		window.location.reload();

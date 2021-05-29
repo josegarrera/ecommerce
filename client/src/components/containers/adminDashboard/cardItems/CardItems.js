@@ -450,6 +450,13 @@ const CardItems = ({
 					{options === 'Orders' ? (
 						SeeMore ? (
 							<div>
+								{OrderDetail.users ? (
+									<div className='renglon'>
+										<div className='title'>Email: &nbsp;</div>
+										<div>{OrderDetail.users.email} </div>
+									</div>
+								) : null}
+
 								<div className='renglon'>
 									<div className='title'>State: &nbsp;</div>
 									{OrderDetail && OrderDetail.state === 'created' ? (
@@ -477,40 +484,11 @@ const CardItems = ({
 										</div>
 									) : null}
 								</div>
-								{OrderDetail.users ? (
-									<div className='renglon'>
-										<div className='title'>Email: &nbsp;</div>
-										<div>{OrderDetail.users.email} </div>
-									</div>
-								) : null}
-								{OrderDetail.paymentMethod ? (
-									<div className='renglon'>
-										<div className='title'>Pay with: &nbsp;</div>
-										<div>
-											{OrderDetail.paymentMethod.charAt(0).toUpperCase() +
-												OrderDetail.paymentMethod.slice(1)}
-											{'.'}
-										</div>
-									</div>
-								) : null}
-								{OrderDetail.transactionDetail ? (
-									<div className='renglon'>
-										<div className='title'>Price: &nbsp;</div>
-										<div>
-											{OrderDetail.currency}{' '}
-											{OrderDetail.transactionDetail.total_amount}
-										</div>
-									</div>
-								) : null}
-								{OrderDetail.transactionDetail ? (
-									<div className='renglon'>
-										<div className='title'>Date payment: &nbsp;</div>
-										<div>
-											{OrderDetail.transactionDetail.datePayment.slice(0, 10)}
-										</div>
-									</div>
-								) : null}
-
+								<AccordionDashboard
+									paymentDetail={OrderDetail.transactionDetail}
+									paymentMethod={OrderDetail.paymentMethod}
+									paymentCurrency={OrderDetail.currency}
+								/>
 								<div className='seeMore' onClick={() => setSeeMore(!SeeMore)}>
 									Close!
 								</div>

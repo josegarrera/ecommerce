@@ -80,9 +80,13 @@ const FormLogging = () => {
 
 	const responseGoogle = async (response) => {
 		let inputGoogle = {
+			firstName: response.profileObj.familyName,
+			lastName: response.profileObj.givenName,
+			profileImage: response.profileObj.imageUrl,
 			email: response.profileObj.email,
 			password: response.profileObj.googleId,
 		};
+
 		let users = await axios.get(URLS.URL_USERS);
 
 		if (users.data.response.find((el) => el.email === inputGoogle.email)) {
@@ -91,7 +95,6 @@ const FormLogging = () => {
 			window.localStorage.setItem('userId', userLogIn.data.user._id);
 			dispatch(loginUser({role: userLogIn.data.user.role}));
 			if (userLogIn.data.user.role === 'admin') {
-				console.log('userLogIn.data', userLogIn.data);
 				history.push('/admindashboard');
 			} else {
 				history.push('/catalogue');
@@ -110,9 +113,6 @@ const FormLogging = () => {
 				history.push('/catalogue');
 			}
 		}
-
-		console.log('inpuuttt', input);
-		console.log('Respuesta de google', response);
 	};
 
 	return (
