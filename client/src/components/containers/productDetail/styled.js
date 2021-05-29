@@ -3,6 +3,25 @@ import styled from 'styled-components';
 const ProductDetailStyle = styled.div`
 	display: flex;
 	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+
+	.div_comments {
+		padding: 2rem 0 1rem 0;
+		display: flex;
+		flex-flow: column;
+		align-items: center;
+		width: 50%;
+		margin: 3vh;
+		border-radius: 15px;
+		color: #a1a3a6;
+		background-color: #ffffff;
+		.span_no_review {
+			color: black;
+			padding: 1rem 0 2rem 0;
+			font-size: 1.5rem;
+		}
+	}
 
 	.detailLoader {
 		margin-top: 200px;
