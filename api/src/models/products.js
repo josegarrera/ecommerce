@@ -25,6 +25,7 @@ const ProductsSchema = new Schema({
 	],
 	specs: {},
 	variants: [{}],
+	reviews: [],
 });
 
 ProductsSchema.plugin(findOrCreate);

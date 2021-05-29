@@ -4,6 +4,7 @@ const {
 	getProductsDetail,
 	updateProduct,
 	deleteProduct,
+	addReview,
 } = require('../controllers/products.js');
 
 const {verifyToken, isAdmin} = require('../middlewares/authJwt');
@@ -22,6 +23,7 @@ router.post(
 ); //SI JWT
 router.get('/', getProducts); //no JWT ✔✔
 router.get('/:id', getProductsDetail); //no JWT ✔✔
+router.put('/reviews/:id', addReview); //no JWT ✔✔
 router.put('/:id', [verifyToken, isAdmin], updateProduct); //SI JWT
 router.delete('/:id', [verifyToken, isAdmin], deleteProduct); //SI JWT
 module.exports = router;
