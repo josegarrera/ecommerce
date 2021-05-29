@@ -39,11 +39,7 @@ const SumarryCart = ({payIn, count, placeOrder, paymentMethod}) => {
 	};
 
 	useEffect(() => {
-		if (
-			preferenceId &&
-			preferenceId !== 'completed' &&
-			preferenceId !== 'canceled'
-		) {
+		if (preferenceId && preferenceId !== 'processing') {
 			// con el preferenceId en mano, inyectamos el script de mercadoPago
 			const script = document.createElement('script');
 			script.type = 'text/javascript';
@@ -59,10 +55,7 @@ const SumarryCart = ({payIn, count, placeOrder, paymentMethod}) => {
 					dispatch(emptyPaymentMethod());
 				}
 			};
-		} else if (
-			preferenceId === 'completed' ||
-			(preferenceId === 'canceled' && userId)
-		) {
+		} else if (preferenceId === 'processing' && userId) {
 			dispatch(getOpenUserOrders(userId, true));
 		}
 	}, [preferenceId]);

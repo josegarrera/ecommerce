@@ -1,13 +1,46 @@
 const mercadopago = require('mercadopago');
 const {Orders, Currencies} = require('../models/index');
-const {PROD_ACCESS_TOKEN, STRIPE_SECRET, ETHEREAL_USER, ETHEREAL_PASSWORD} =
-	process.env;
+const {PROD_ACCESS_TOKEN, STRIPE_SECRET} = process.env;
 const Stripe = require('stripe');
 const stripe = new Stripe(STRIPE_SECRET);
 mercadopago.configure({
 	access_token: PROD_ACCESS_TOKEN,
 });
-const nodemailer = require('nodemailer');
+const transporter = require('../middlewares/notifications.js');
+const axios = require('axios');
+
+const sendEmails = (order) => {
+	const amount = order[0].items.reduce((a, b) => {
+		return (a += b.product.price.value * b.lot);
+	}, 0);
+	const description = order[0].items.reduce((a, b) => {
+		return (a +=
+			b.lot +
+			' ' +
+			b.product.name +
+			' ' +
+			b.product.price.value +
+			' ' +
+			b.product.price.currency +
+			'- ');
+	}, '');
+	return axios.post(`${process.env.BACKEND_URL}/checkout/send-notifications`, {
+		email: order[0].users.email,
+		subject: 'Store notifications',
+		text: 'Transaction result.',
+		html: `<div>
+				  <h3>Order detail</h3>
+				  <p>Thank you for choosing our store. This was the result of the operation. If your payment was successful, you will soon receive an email with the shipping details. Otherwise, you can try again. We are at your disposal.</p>
+				  <ul>
+				  <li type="circle">Payment Id: ${order[0].transactionDetail.paymentId}</li>
+				  <li type="circle">Payment status: ${order[0].transactionDetail.paymentStatus}</li>
+				  <li type="circle">Products: ${description}</li>
+				  <li type="circle">Total amount: ${amount}</li>
+				   <li type="circle">Currency: ${order[0].currency}</li>
+				  </ul>
+			      </div>`,
+	});
+};
 
 function initiatePayment(req, res) {
 	const {userId, shippingInfo, paymentMethod, idStripe} = req.body;
@@ -20,7 +53,7 @@ function initiatePayment(req, res) {
 	}
 	Orders.find({
 		users: userId,
-		state: {$in: ['created', 'processing']},
+		state: 'created',
 	})
 		.populate('users', {email: 1, _id: 1})
 		.populate('items.product', {_id: 1, price: 1, name: 1})
@@ -33,6 +66,7 @@ function initiatePayment(req, res) {
 
 			order[0].state = 'processing';
 			order[0].paymentMethod = paymentMethod || 'mercadopago';
+			order[0].shipping = shippingInfo;
 			const items = order[0].items.map((item) => {
 				return {
 					id: item.product._id,
@@ -42,7 +76,6 @@ function initiatePayment(req, res) {
 					currency_id: item.product.price.currency,
 				};
 			});
-			const userEmail = order[0].users.email;
 
 			const amount = items.reduce((a, b) => {
 				return (a += b.unit_price * b.quantity);
@@ -96,47 +129,43 @@ function initiatePayment(req, res) {
 			const {USDEUR} = response[2][0].quotes;
 			let transactionDetail = {
 				paymentId: response[1].id,
-				transactionStatus: response[1].status,
-				datePayment: new Date(Date.now()),
-				paymentStatus: 'acredited',
+				datePayment: new Date(Date.now()).toDateString(),
+				paymentStatus: response[1].status,
 				total_amount: response[1].charges.data[0].amount_captured / 100,
-				net_income_aprox:
+				net_income:
 					(response[1].charges.data[0].amount_captured / 100) * USDEUR -
 					((response[1].charges.data[0].amount_captured / 100) * USDEUR * 4) /
 						100,
-				currency: response[1].charges.data[0].currency,
+				currency: 'EUR',
 			};
 			response[0].transactionDetail = transactionDetail;
-			response[0].state =
-				response[1].status === 'succeeded' ? 'completed' : 'canceled';
 
-			response[0].save((err, data) => {
-				if (err) throw new Error(err);
+			return Promise.all([response[0].save(), sendEmails(response)]);
+		})
+		.then((data) => {
+			if (data) {
 				res.send({
-					response: data.state,
+					response: data[0].state,
 					type: 'Ok',
 					message: 'Success',
 				});
-			});
+			}
+		})
+		.catch((error) => {
+			res
+				.status(500)
+				.send({response: '', type: 'Internal server error.', error: error});
 		});
 }
 
 function notifyUser(req, res) {
-	const {email} = req.body;
-	let transporter = nodemailer.createTransport({
-		host: 'smtp.ethereal.email',
-		puerto: 587,
-		auth: {
-			usuario: ETHEREAL_USER,
-			pase: ETHEREAL_PASSWORD,
-		},
-		secure: false,
-	});
+	const {email, subject, text, html} = req.body;
 	let mailOptions = {
-		from: 'Sender',
+		from: 'Store Henry Ecommerce',
 		to: email,
-		subject: 'Store notifications',
-		text: 'Your payment was accepted',
+		subject: subject,
+		text: text,
+		html: html,
 	};
 
 	transporter
@@ -149,7 +178,6 @@ function notifyUser(req, res) {
 			})
 		)
 		.catch((error) => {
-			console.log(error);
 			res
 				.status(500)
 				.send({response: '', type: 'Internal server error.', error: error});
@@ -211,7 +239,13 @@ function getResultPayment(req, res) {
 }
 
 function getNotificationsMp(req, res) {
-	const id = req.query.id || req.query['data.id'];
+	if (req.query.id)
+		return res.send({
+			response: 'Success',
+			type: 'Ok',
+			message: 'The payment has already been registered',
+		});
+	const id = req.query['data.id'];
 	if (id) {
 		let transactionDetail;
 
@@ -220,27 +254,25 @@ function getNotificationsMp(req, res) {
 			.then((payment) => {
 				transactionDetail = {
 					paymentId: payment.body.id,
-					transactionStatus: payment.body.status,
-					datePayment: payment.body.date_approved,
-					paymentStatus: 'acredited',
+					datePayment: new Date(payment.body.date_approved).toDateString(),
+					paymentStatus: payment.body.status,
 					total_amount: payment.body.transaction_details.total_paid_amount,
 					net_income: payment.body.transaction_details.net_received_amount,
 					currency: payment.body.currency_id,
 				};
 				const orderId = payment.body.external_reference;
-				return Orders.find({_id: orderId}).exec();
+				return Orders.find({_id: orderId})
+					.populate('users', {email: 1, _id: 1})
+					.populate('items.product', {_id: 1, price: 1, name: 1})
+					.exec();
 			})
 			.then((order) => {
 				order[0].transactionDetail = transactionDetail;
-				order[0].state =
-					order[0].transactionDetail.transactionStatus === 'approved'
-						? 'completed'
-						: 'canceled';
 
-				return order[0].save();
+				return Promise.all([order[0].save(), sendEmails(order)]);
 			})
-			.then((orderSaved) => {
-				return res.send({response: orderSaved, type: 'Ok', message: 'Success'});
+			.then((data) => {
+				return res.send({response: data[0], type: 'Ok', message: 'Success'});
 			})
 			.catch((error) => {
 				res
