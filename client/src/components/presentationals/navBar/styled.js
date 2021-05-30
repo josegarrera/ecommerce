@@ -49,6 +49,7 @@ const DivNavBar = styled.div`
 				display: flex;
 				align-items: center;
 				justify-content: space-around;
+				align-content: center;
 				background-color: #f8f9f9;
 				height: 45px;
 				width: 45px;
@@ -61,6 +62,18 @@ const DivNavBar = styled.div`
 
 				.iconLogin {
 					color: #ee362e;
+				}
+				.imageDiv {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					.image {
+						height: 90%;
+						width: 90%;
+						border-radius: 100%;
+
+						object-fit: contain;
+					}
 				}
 
 				/* &:hover {
