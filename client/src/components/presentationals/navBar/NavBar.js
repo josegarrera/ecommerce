@@ -15,6 +15,9 @@ const NavBar = () => {
 	const cartProduct = useSelector((state) => state.cartProducts);
 	const favsProduct = useSelector((state) => state.wishlist);
 	let userId = window.localStorage.getItem('userId');
+	let firstName = window.localStorage.getItem('firstName');
+	let lastName = window.localStorage.getItem('lastName');
+	let profileImage = window.localStorage.getItem('profileImage');
 	const user = useSelector((state) => state.user);
 	const eraseToken = () => {
 		window.localStorage.clear();
@@ -35,8 +38,12 @@ const NavBar = () => {
 				<div className='topRight'>
 					<div className='iconDiv login'>
 						{userId ? (
-							<div>
-								<BsPersonCheckFill className='icon iconLogin' />
+							<div className='imageDiv'>
+								{profileImage !== 'undefined' ? (
+									<img className='image' src={profileImage} alt='no' />
+								) : (
+									<BsPersonCheckFill className='icon iconLogin' />
+								)}
 								<div className='loginHoverCart'>
 									{user.role === 'admin' ? (
 										<Link to='/adminDashboard'>

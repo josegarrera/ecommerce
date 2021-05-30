@@ -26,9 +26,9 @@ const AboutUs = () => {
 			fullName: 'Facundo Cordoba',
 			image:
 				'https://media-exp1.licdn.com/dms/image/C4E03AQEpO8N-PGdoKA/profile-displayphoto-shrink_800_800/0/1619619418159?e=1628121600&v=beta&t=itqZomDH36Ltyba19sSwhKNPoJh4SrAB5l1HDVhtqBk',
-			linkedin: '',
-			github: '',
-			cv: '',
+			linkedin: 'https://www.linkedin.com/in/facundocordobaperez/',
+			github: 'https://github.com/Facundo2210',
+			cv: 'https://res.cloudinary.com/facu/image/upload/v1621971466/Github/Facundo_Nicolas_Cordoba_Perez_nn02qy.jpg',
 		},
 		{
 			fullName: 'José Garrera',

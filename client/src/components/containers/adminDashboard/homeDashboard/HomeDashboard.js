@@ -10,6 +10,9 @@ import FormProductDashboard from '../addProductDashboard/index';
 const HomeDashboard = () => {
 	const [Options, setOptions] = useState('Home');
 	let userId = window.localStorage.getItem('userId');
+	let firstName = window.localStorage.getItem('firstName');
+	let lastName = window.localStorage.getItem('lastName');
+	let profileImage = window.localStorage.getItem('profileImage');
 
 	const eraseToken = () => {
 		window.localStorage.clear();
@@ -51,7 +54,11 @@ const HomeDashboard = () => {
 					<div className='userDiv'>
 						<button className='iconDiv'>
 							{userId ? (
-								<BsPersonCheckFill className='icon' />
+								profileImage !== 'undefined' ? (
+									<img className='image' src={profileImage} alt='no' />
+								) : (
+									<BsPersonCheckFill className='icon' />
+								)
 							) : (
 								<Link to='/login'>
 									<BsPersonPlusFill className='icon' />
@@ -61,7 +68,13 @@ const HomeDashboard = () => {
 						<div>
 							{userId ? (
 								<div className='login'>
-									<div className='userName'>Paveglio Bruno.</div>
+									{firstName !== 'undefined' && lastName !== 'undefined' ? (
+										<div className='userName'>
+											{firstName} {lastName}
+										</div>
+									) : (
+										<div className='userName'>No Name</div>
+									)}
 									<div className='signOut' onClick={eraseToken}>
 										Sign out.
 									</div>

@@ -88,7 +88,11 @@ export const StyledContainer = styled.div`
 						transform: scale(0.9);
 						transition: 0.1s;
 					}
-
+					.image {
+						width: 100%;
+						height: 100%;
+						border-radius: 100%;
+					}
 					.icon {
 						font-size: 30px;
 						color: #58585a;
