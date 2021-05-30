@@ -75,6 +75,7 @@ function App() {
 										'/confirmation',
 										'/about',
 										'/contact',
+										'/resetPassword',
 									].includes(location.pathname) ? (
 										<NavBar />
 									) : null
