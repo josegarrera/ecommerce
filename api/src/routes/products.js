@@ -23,7 +23,7 @@ router.post(
 ); //SI JWT
 router.get('/', getProducts); //no JWT ✔✔
 router.get('/:id', getProductsDetail); //no JWT ✔✔
-router.put('/reviews/:id', addReview); //no JWT ✔✔
+router.put('/reviews/:id', [verifyToken], addReview); //SI verify JWT ✔✔
 router.put('/:id', [verifyToken, isAdmin], updateProduct); //SI JWT
 router.delete('/:id', [verifyToken, isAdmin], deleteProduct); //SI JWT
 module.exports = router;

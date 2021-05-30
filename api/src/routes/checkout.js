@@ -8,12 +8,12 @@ const {
 	notifyUser,
 } = require('../controllers/checkout.js');
 
+const {verifyToken} = require('../middlewares/authJwt');
 
-router.post('/', initiatePayment);
-router.post('/mp/notifications', getNotificationsMp);
-router.get('/mp/payments/', getResultPayment);
-router.get('/mp/payments/:id', getOrderData);
-router.post('/send-notifications', notifyUser);
-
+router.post('/', [verifyToken], initiatePayment);
+router.post('/mp/notifications', [verifyToken], getNotificationsMp);
+router.get('/mp/payments/', [verifyToken], getResultPayment);
+router.get('/mp/payments/:id', [verifyToken], getOrderData);
+router.post('/send-notifications', [verifyToken], notifyUser);
 
 module.exports = router;
