@@ -237,6 +237,27 @@ function getProducts(req, res) {
 				.send({response: '', type: 'Internal Server Error', message: error})
 		);
 }
+async function addReview(req, res) {
+	const {body} = req;
+	if (!body)
+		return res.status(400).send({
+			response: '',
+			type: 'Bad request.',
+			message: 'The fields are empty.',
+		});
+
+	try {
+		const updatedReview = await Products.findByIdAndUpdate(
+			{_id: req.params.id},
+			{$push: {reviews: body}},
+			{new: true}
+		);
+		return res.send(updatedReview);
+	} catch (error) {
+		console.log(error);
+		return res.send(error);
+	}
+}
 
 async function updateProduct(req, res) {
 	const {body} = req;
@@ -375,4 +396,5 @@ module.exports = {
 	updateProduct,
 	deleteProduct,
 	getAllProducts,
+	addReview,
 };

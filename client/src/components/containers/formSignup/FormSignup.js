@@ -4,7 +4,6 @@ import Signup_Style from './styled';
 import {Link, useHistory} from 'react-router-dom';
 import axios from 'axios';
 import {URLS} from '../../../utils/constants';
-
 import {AiFillLock} from 'react-icons/ai';
 import {FaEnvelope} from 'react-icons/fa';
 import {IoCloseSharp} from 'react-icons/io5';
@@ -23,10 +22,10 @@ const FormSignup = () => {
 		setErrors({});
 	}, [input]);
 
-	const onSubmitHandler = async (e) => {
+	const onSubmitHandler = (e) => {
 		e.preventDefault();
 		axios
-			.post(URLS.URL_SIGNUP, input)
+			.post(URLS.URL_SIGNUP, input) // {email: "perro@gmail.com", password: "1234"}
 			.then(function (response) {
 				let data = response.data;
 				if (data.user === true) {
@@ -59,6 +58,50 @@ const FormSignup = () => {
 			[e.target.name]: e.target.value,
 		});
 	};
+
+	/* const responseGoogle = async (response) => {
+		let inputGoogle = {
+			email: response.profileObj.email,
+			password: response.profileObj.googleId,
+		};
+		let users = await axios.get(URLS.URL_USERS);
+		console.log('input', inputGoogle);
+
+		console.log('esta es la response', users.data.response);
+		if (users.data.response.find((el) => el.email === input.email)) {
+			let userLogIn = await axios.post(URLS.URL_LOGIN, inputGoogle);
+			window.localStorage.setItem('token', userLogIn.data.token);
+			window.localStorage.setItem('userId', userLogIn.data.user._id);
+			dispatch(loginUser({role: userLogIn.data.user.role}));
+			if (userLogIn.data.user.role === 'admin') {
+				console.log('userLogIn.data', userLogIn.data);
+				history.push('/admindashboard');
+			} else {
+				history.push('/catalogue');
+			}
+		} else {
+			await axios.post(URLS.URL_SIGNUP, inputGoogle);
+			let userLogIn = await axios.post(URLS.URL_LOGIN, inputGoogle);
+
+			window.localStorage.setItem('token', userLogIn.data.token);
+			window.localStorage.setItem('userId', userLogIn.data.user._id);
+
+			dispatch(loginUser({role: userLogIn.data.user.role}));
+			if (userLogIn.data.user.role === 'admin') {
+				history.push('/admindashboard');
+			} else {
+				Swal.fire({
+					title: 'Success!',
+					text: 'Succesfully login',
+					icon: 'success',
+					confirmButtonText: 'Ok',
+				}).then(() => history.push('/catalogue'));
+			}
+		}
+
+		console.log('inpuuttt', input);
+		console.log('Respuesta de google', response);
+	}; */
 
 	return (
 		<Signup_Style>
@@ -116,7 +159,26 @@ const FormSignup = () => {
 								<div>SIGN UP</div>
 							</button>
 						</form>
-
+						{/* <div className='separador'></div>
+						<div className='googleDiv'>
+							<GoogleLogin
+								clientId='5491811175-59r3kvkuqolj3301kabjf1om68a2jcke.apps.googleusercontent.com'
+								render={(renderProps) => (
+									<button
+										className='googleButton'
+										onClick={renderProps.onClick}
+										disabled={renderProps.disabled}
+									>
+										<FcGoogle className='googleLogo' />
+										&nbsp; &nbsp; Sign up with Google.
+									</button>
+								)}
+								buttonText='Login'
+								onSuccess={responseGoogle}
+								onFailure={responseGoogle}
+								cookiePolicy={'single_host_origin'}
+							/>
+						</div> */}
 						<div className='rowBottom'>
 							<p className='signUpBottom'> Already registered? </p>
 							<Link to='/login'>

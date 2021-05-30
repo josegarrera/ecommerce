@@ -8,8 +8,9 @@ const {Router} = require('express');
 const router = Router();
 
 // router.get('/', [verifyToken, isAdmin], getAllUsers); // to use when we'll authenticate
-router.get('/', getAllUsers);
-router.put('/:id', updateUser);
-router.delete('/:id', deleteUser);
+
+router.get('/', getAllUsers); //SI JWT
+router.put('/:id', [verifyToken, isAdmin], updateUser); //SI JWT
+router.delete('/:id', [verifyToken, isAdmin], deleteUser); //SI JWT
 
 module.exports = router;

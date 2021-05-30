@@ -67,14 +67,14 @@ const SearchBar = ({
 			/>
 			{options && options !== 'Orders' ? (
 				<button className='form__button' onClick={handleClick}>
-					Add {options.toLowerCase().slice(0, options.length - 1)}
+					Add {options && options.toLowerCase().slice(0, options.length - 1)}
 				</button>
 			) : (
 				<button
 					className='form__button form__button__hidden'
 					onClick={handleClick}
 				>
-					Add {options.toLowerCase().slice(0, options.length - 1)}
+					Add {options && options.toLowerCase().slice(0, options.length - 1)}
 				</button>
 			)}
 		</SearchStyles>

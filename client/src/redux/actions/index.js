@@ -125,31 +125,29 @@ export const cleanProductDetail = () => {
 
 export const addNewProduct = (body) => {
 	//agrega un producto
-	return function (dispatch) {
-		return fetch(URLS.URL_PRODUCTS, {
-			method: 'POST',
-			body: body,
-			headers: {
-				Accept: 'application/json',
-			},
-		})
-			.then((response) => response.json())
-			.then((json) => {
-				console.log(json);
-				dispatch({
-					type: ActionTypes.PRODUCT_CREATED,
-					payload: json.response, // TIENE QUE SER UN {}
-				});
-			})
-			.catch((err) =>
-				dispatch({
-					type: ActionTypes.EMPTY_PRODUCT_CREATED,
-					payload: {
-						error: err,
-						message: 'Internal server error',
-					},
-				})
-			);
+	return async function (dispatch) {
+		try {
+			const response = await fetch(URLS.URL_PRODUCTS, {
+				method: 'POST',
+				body: body,
+				headers: {
+					Accept: 'application/json',
+				},
+			});
+			const json = await response.json();
+			dispatch({
+				type: ActionTypes.PRODUCT_CREATED,
+				payload: json.response, // TIENE QUE SER UN {}
+			});
+		} catch (err) {
+			return dispatch({
+				type: ActionTypes.EMPTY_PRODUCT_CREATED,
+				payload: {
+					error: err,
+					message: 'Internal server error',
+				},
+			});
+		}
 	};
 };
 
@@ -274,7 +272,7 @@ export const getOpenUserOrders = (userId, cart) => {
 export const getOrderDetail = (id) => {
 	//trae el detalle de 1 orden (id de la orden)
 	return async (dispatch) => {
-		const {data} = await axios.get(`${URLS.URL_ORDERS}/${id}`);
+		const {data} = await axios.get(`${URLS.URL_USER_ORDERS}/${id}`);
 		return dispatch({
 			type: ActionTypes.ORDER_DETAIL,
 			payload: data.response, // TIENE QUE SER UN {}
@@ -322,6 +320,8 @@ export const getCategories = () => {
     });
   };
 }; */
+
+
 
 export const addCartProduct = (id) => {
 	// trae el cart de un usuario del servidor.
@@ -509,13 +509,18 @@ export const confirmCheckout = (body) => {
 	};
 };
 
-////////////////////////////////////////  CHECKOUT ACTIONS  ////////////////////////////////////////
-
 export const saveShippingInfo = (body) => {
 	// AGREGA INFO DE LA COMPRA
 	return {
 		type: ActionTypes.SET_SHIPPING_INFO,
 		payload: body,
+	};
+};
+
+export const emptyPaymentMethod = () => {
+	return {
+		type: ActionTypes.EMPTY_PAYMENT_METHOD,
+		payload: null,
 	};
 };
 
@@ -527,3 +532,5 @@ export const setPayIn = () => {
 		type: ActionTypes.SET_PAY_IN,
 	};
 };
+
+////////////////////////////////////////  REVIEW  ///////////////////////////////////////

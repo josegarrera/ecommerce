@@ -1,34 +1,30 @@
 const mongoose = require('mongoose');
-const {Orders, Products, Users} = require('../models/index');
+const {Orders, Users} = require('../models/index');
 
-async function getUserOrder(req, res, next) {
-	const {userId, cart} = req.query;
+async function getUserOrder(req, res) {
+	const {userId} = req.query;
 	try {
-		if (cart) {
-			let userExists = await Users.exists({_id: userId});
-			if (userExists) {
-				let orderExist = await Orders.exists({users: userId, state: 'created'});
-				if (!orderExist) {
-					let order = await new Orders({users: userId, items: []});
-					order.save();
-				}
-				let order = await Orders.findOne({users: userId, state: 'created'})
-					.populate('users', {email: 1, _id: 1})
-					.populate({
-						path: 'items.product',
-						populate: {path: 'brands', select: 'name'},
-					})
-					.exec();
-				return res.send({response: order, type: 'Ok', message: 'Success'});
-			} else {
-				res.status(400).send({
-					response: '',
-					type: 'Bad request',
-					error: 'user does not exist',
-				});
+		let userExists = await Users.exists({_id: userId});
+		if (userExists) {
+			let orderExist = await Orders.exists({users: userId, state: 'created'});
+			if (!orderExist) {
+				let order = await new Orders({users: userId, items: []});
+				order.save();
 			}
+			let order = await Orders.findOne({users: userId, state: 'created'})
+				.populate('users', {email: 1, _id: 1})
+				.populate({
+					path: 'items.product',
+					populate: {path: 'brands', select: 'name'},
+				})
+				.exec();
+			return res.send({response: order, type: 'Ok', message: 'Success'});
 		} else {
-			next();
+			res.status(400).send({
+				response: '',
+				type: 'Bad request',
+				error: 'user does not exist',
+			});
 		}
 	} catch (error) {
 		res

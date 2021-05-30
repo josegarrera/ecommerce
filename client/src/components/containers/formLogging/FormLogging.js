@@ -1,6 +1,8 @@
 /* eslint-disable react/jsx-pascal-case */
 import React, {useState, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
+import GoogleLogin from 'react-google-login';
+import {FcGoogle} from 'react-icons/fc';
 import Login_Style from './styled';
 import {Link, useHistory} from 'react-router-dom';
 import axios from 'axios';
@@ -76,6 +78,43 @@ const FormLogging = () => {
 		});
 	};
 
+	const responseGoogle = async (response) => {
+		let inputGoogle = {
+			firstName: response.profileObj.familyName,
+			lastName: response.profileObj.givenName,
+			profileImage: response.profileObj.imageUrl,
+			email: response.profileObj.email,
+			password: response.profileObj.googleId,
+		};
+
+		let users = await axios.get(URLS.URL_USERS);
+
+		if (users.data.response.find((el) => el.email === inputGoogle.email)) {
+			let userLogIn = await axios.post(URLS.URL_LOGIN, inputGoogle);
+			window.localStorage.setItem('token', userLogIn.data.token);
+			window.localStorage.setItem('userId', userLogIn.data.user._id);
+			dispatch(loginUser({role: userLogIn.data.user.role}));
+			if (userLogIn.data.user.role === 'admin') {
+				history.push('/admindashboard');
+			} else {
+				history.push('/catalogue');
+			}
+		} else {
+			await axios.post(URLS.URL_SIGNUP, inputGoogle);
+			let userLogIn = await axios.post(URLS.URL_LOGIN, inputGoogle);
+
+			window.localStorage.setItem('token', userLogIn.data.token);
+			window.localStorage.setItem('userId', userLogIn.data.user._id);
+
+			dispatch(loginUser({role: userLogIn.data.user.role}));
+			if (userLogIn.data.user.role === 'admin') {
+				history.push('/admindashboard');
+			} else {
+				history.push('/catalogue');
+			}
+		}
+	};
+
 	return (
 		<Login_Style>
 			<div className='loginContainer'>
@@ -137,7 +176,28 @@ const FormLogging = () => {
 								<div>SIGN IN</div>
 							</button>
 						</form>
-
+						<div className='separadorDiv'>
+							<div className='separador'></div>
+						</div>
+						<div className='googleDiv'>
+							<GoogleLogin
+								clientId='5491811175-59r3kvkuqolj3301kabjf1om68a2jcke.apps.googleusercontent.com'
+								render={(renderProps) => (
+									<button
+										className='googleButton'
+										onClick={renderProps.onClick}
+										disabled={renderProps.disabled}
+									>
+										<FcGoogle className='googleLogo' />
+										&nbsp; &nbsp; Sign up with Google.
+									</button>
+								)}
+								buttonText='Login'
+								onSuccess={responseGoogle}
+								onFailure={responseGoogle}
+								cookiePolicy={'single_host_origin'}
+							/>
+						</div>
 						<div className='rowBottom'>
 							<p className='signUpBottom'> Don't have an account? </p>
 							<Link to='/signup'>

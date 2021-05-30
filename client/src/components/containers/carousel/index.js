@@ -5,9 +5,6 @@ import 'slick-carousel/slick/slick-theme.css';
 import CarouselStyle from './styled';
 import {MdKeyboardArrowLeft} from 'react-icons/md';
 import {MdKeyboardArrowRight} from 'react-icons/md';
-
-// import { MdKeyboardArrowLeft } from "react-icons/md";
-// import { MdKeyboardArrowRight } from "react-icons/md";
 import {RiCheckboxBlankCircleLine} from 'react-icons/ri';
 
 function Carousel() {
@@ -21,7 +18,7 @@ function Carousel() {
 			img: `https://res.cloudinary.com/dlexbrcrv/image/upload/v1622136785/Proyects/E-commerce/Carrousel_1_xnmp84.jpg`,
 		},
 		{
-			img: `https://res.cloudinary.com/dlexbrcrv/image/upload/v1622137640/Proyects/E-commerce/Carrousel_2_b7rcxx.jpg`,
+			img: `https://res.cloudinary.com/dlexbrcrv/image/upload/v1622139850/Proyects/E-commerce/Carrousel_vczfne.jpg`,
 		},
 		{
 			img: `https://res.cloudinary.com/dlexbrcrv/image/upload/v1622136785/Proyects/E-commerce/Carrousel_1_xnmp84.jpg`,

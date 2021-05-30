@@ -1,7 +1,11 @@
 import React, {useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
-import {confirmCheckout} from '../../../redux/actions';
+import {
+	confirmCheckout,
+	getOpenUserOrders,
+	emptyPaymentMethod,
+} from '../../../redux/actions';
 import {CardElement, useStripe, useElements} from '@stripe/react-stripe-js';
 
 import {store} from 'react-notifications-component';
@@ -35,11 +39,7 @@ const SumarryCart = ({payIn, count, placeOrder, paymentMethod}) => {
 	};
 
 	useEffect(() => {
-		if (
-			preferenceId &&
-			preferenceId !== 'completed' &&
-			preferenceId !== 'canceled'
-		) {
+		if (preferenceId && preferenceId !== 'processing') {
 			// con el preferenceId en mano, inyectamos el script de mercadoPago
 			const script = document.createElement('script');
 			script.type = 'text/javascript';
@@ -50,8 +50,13 @@ const SumarryCart = ({payIn, count, placeOrder, paymentMethod}) => {
 			form && form.appendChild(script);
 			return () => {
 				//Elimina el script como nodo hijo del elemento form
-				form && form.removeChild(script);
+				if (form) {
+					form.removeChild(script);
+					dispatch(emptyPaymentMethod());
+				}
 			};
+		} else if (preferenceId === 'processing' && userId) {
+			dispatch(getOpenUserOrders(userId, true));
 		}
 	}, [preferenceId]);
 
