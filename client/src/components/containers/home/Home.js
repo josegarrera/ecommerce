@@ -8,7 +8,7 @@ import Carousel from '../carousel';
 import MultiItemCarousel from '../multiItemCarousel/multiItemCarousel';
 
 const Home = () => {
-	const {products, pages} = useSelector((state) => state.products);
+	const {products} = useSelector((state) => state.products);
 
 	const dispatch = useDispatch();
 	useEffect(() => {
