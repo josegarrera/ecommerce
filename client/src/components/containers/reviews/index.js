@@ -25,7 +25,9 @@ const Reviews = ({id, setUpdateReview, updateReview, allReviews}) => {
 	return (
 		<React.Fragment id='comments'>
 			{allReviews && allReviews.length < 1 && (
-				<span className='span_no_review'>There are no reviews, be the first!</span>
+				<span className='span_no_review'>
+					There are no reviews, be the first!
+				</span>
 			)}
 
 			<CommentsBlock
@@ -38,6 +40,13 @@ const Reviews = ({id, setUpdateReview, updateReview, allReviews}) => {
 					btn: (base) => ({
 						...base,
 						color: 'white',
+						background: 'red',
+
+						'&:hover': {
+							color: 'red',
+							background: 'white',
+							border: '1px solid red',
+						},
 					}),
 					// Reset styles of textarea and use new styles
 				}}
@@ -48,7 +57,7 @@ const Reviews = ({id, setUpdateReview, updateReview, allReviews}) => {
 							avatarUrl: '#comments',
 							authorId: userId,
 							createdAt: `${new Date()}`,
-							fullName: 'Name',
+							fullName: userId,
 							text,
 						});
 					}

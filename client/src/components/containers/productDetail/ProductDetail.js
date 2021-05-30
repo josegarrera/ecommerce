@@ -35,8 +35,6 @@ const ProductDetail = (id) => {
 		dispatch(getProductDetail(id));
 	}, [updateReview]); // eslint-disable-line react-hooks/exhaustive-deps
 
-	console.log('acaaaaaaaaaaaaaaa', product);
-
 	useEffect(() => {
 		return dispatch(cleanProductDetail());
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
