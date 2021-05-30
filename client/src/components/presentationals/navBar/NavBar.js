@@ -107,7 +107,7 @@ const NavBar = () => {
 				</select>
 
 				<Link className='bottomLinks' to='/about'>
-					About
+					About us
 				</Link>
 				<Link className='bottomLinks' to='/contact'>
 					Contact

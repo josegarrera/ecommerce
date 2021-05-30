@@ -224,7 +224,6 @@ const CardItems = ({
 	const handleOrders = async (_id) => {
 		let orderDetail = await axios.get(`${URLS.URL_USER_ORDERS}/${_id}`);
 		setOrderDetail(orderDetail.data.response);
-		console.log('orderrrrr detail', OrderDetail);
 		setSeeMore(!SeeMore);
 	};
 

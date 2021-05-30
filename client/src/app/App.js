@@ -15,6 +15,7 @@ import FomrCategories from '../components/containers/formCategories/FormCategori
 import HomeDashboard from '../components/containers/adminDashboard/homeDashboard/HomeDashboard';
 import ShippingAddress from '../components/containers/shippingAddress/shippingAddress';
 import ConfirmOrder from '../components/containers/confirmOrder/confirmOrder';
+import AboutUs from '../components/presentationals/aboutUs/AboutUs';
 import ReactNotification from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 import Favourites from '../components/containers/favourites/Favourites';
@@ -86,6 +87,7 @@ function App() {
 							<Route exact path='/create' component={FormProductDashboard} />
 							<Route exact path='/categorie' component={FormCategorie} />
 							<Route exact path='/catalogue' component={Catalogue} />
+							<Route exact path='/about' component={AboutUs} />
 							<Route exact path='/cart' component={Cart} />
 							<Route exact path='/favorites' component={Favourites} />
 							<Route
