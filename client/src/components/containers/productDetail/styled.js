@@ -266,16 +266,22 @@ const ProductDetailStyle = styled.div`
 	}
 
 	.div_comments {
-		padding: 2rem 0 1rem 0;
+		padding: 2rem 0 3rem 0;
 		display: flex;
 		flex-flow: column;
 		align-items: center;
 		width: 50%;
 		width: 1300px;
-		margin: 3vh;
+		margin: 3rem;
 		border-radius: 15px;
 		color: #a1a3a6;
 		background-color: #ffffff;
+
+		.review_title {
+			color: #ee362c;
+			margin: 0 0 5rem 5rem;
+			align-self: flex-start;
+		}
 		.span_no_review {
 			border: 1px solid orange;
 			color: black;
