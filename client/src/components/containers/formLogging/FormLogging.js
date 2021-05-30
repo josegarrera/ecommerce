@@ -130,7 +130,9 @@ const FormLogging = () => {
 								></input>
 							</div>
 							<div>{errors.password ? errors.password : null}</div>
-							<span className='forgotSpan'> Forgot password?</span>
+							<Link to='/resetPassword'>
+								<span className='forgotSpan'> Forgot password?</span>
+							</Link>
 							<button type='submit' className='signInBtnBottom'>
 								<div>SIGN IN</div>
 							</button>

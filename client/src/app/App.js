@@ -20,6 +20,7 @@ import 'react-notifications-component/dist/theme.css';
 import Favourites from '../components/containers/favourites/Favourites';
 import FormCategorie from '../components/containers/formCategories/FormCategories';
 import FormProductDashboard from '../components/containers/adminDashboard/addProductDashboard/index.js';
+import Reset from '../components/containers/reset/Reset';
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
 const {REACT_APP_STRIPE_PUBLIC_KEY} = process.env;
@@ -59,6 +60,7 @@ function App() {
 										'/home',
 										'/signup',
 										'/login',
+										'/forgot',
 										'/catalogue',
 										'/cart',
 										'/favorites',
@@ -73,7 +75,7 @@ function App() {
 							/>
 							<Route path='/products' component={NavBar} />
 							<Route exact path='/' component={Home} />
-              <Route exact path='/home' component={Home} />
+							<Route exact path='/home' component={Home} />
 							<Route exact path='/login' component={FormLogging} />
 							<Route exact path='/signup' component={FormSignup} />
 							<Route exact path='/create' component={FormProductDashboard} />
@@ -93,12 +95,13 @@ function App() {
 							/>
 							<Route path='/shipping' component={ShippingAddress}></Route>
 							<Route path='/confirmation' component={ConfirmOrder}></Route>
+							<Route path='/resetPassword' component={Reset} />
+
 							{/* 			</> */}
 						</GridLayout>
 					</React.Fragment>
 				</Elements>
 			)}
-
 		</div>
 	);
 }

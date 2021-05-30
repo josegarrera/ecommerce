@@ -24,12 +24,9 @@ async function forgotPassword(req, res) {
 	try {
 		let user = await Users.findOne({email});
 
-		if (!user) return res.status(400).send({message: 'user not found'});
-		let token = jwt.sign({userId: user._id, email: user.email}, 'top_secret', {
-			expiresIn: '10m',
-		});
-		verificationLink = `${FRONTEND_URL}/new-password/${token}`;
-		user.resetToken = token;
+		if (!user) return res.status(404).send({message: 'user not found'});
+		let resetCode = Math.random().toString().slice(2, 7);
+		user.resetToken = resetCode;
 		await user.save();
 		await transporter.sendMail({
 			from: '"Forgot password" <something>', // sender address
@@ -37,12 +34,11 @@ async function forgotPassword(req, res) {
 			subject: 'Forgot password', // Subject line
 			html: `
             <h1>>Forgot password? don´t worry!</h1>
-                    <b>Follow the link</b>
-                    <a href="${verificationLink}">${verificationLink}</a>
+                    <b>reset code ${user.resetToken}</b>
                     `, // html body
 		});
 
-		res.send({type: 'OK', message: 'check your email'});
+		res.send({ok: true, type: 'OK', message: 'check your email'});
 	} catch (error) {
 		res
 			.status(500)
@@ -51,18 +47,33 @@ async function forgotPassword(req, res) {
 }
 
 async function createNewPassword(req, res) {
-	const {newPassword} = req.body;
-	const resetToken = req.headers.reset;
-
-	if (!(resetToken && newPassword))
-		return res.send({message: 'all fields are required'});
+	const {email, step, password, resetCode} = req.body;
+	console.log(req.body);
+	console.log('backend');
 
 	try {
-		let jwtPayload = jwt.verify(resetToken, 'top_secret');
-		let user = await Users.findOne({resetToken});
-		user.password = newPassword;
-		await user.save();
-		res.send({message: 'password changed'});
+		let user = await Users.findOne({email});
+		var match = user.resetToken === resetCode;
+
+		switch (step) {
+			case '1':
+				if (match) {
+					return res.status(200).send({message: 'code accepted', ok: true});
+				} else {
+					return res.status(400).send({message: 'code denied'});
+				}
+			case '2':
+				if (match) {
+					if (!password) return res.status(400).json({message: 'Bad request'});
+					user.password = password;
+					await user.save();
+					return res.send({message: 'Password changed successfully', ok: true});
+				} else {
+					return res.status(400).send({message: 'Bad request'});
+				}
+			default:
+				return res.status(400).send({message: 'bad request'});
+		}
 	} catch (error) {
 		res
 			.status(500)
