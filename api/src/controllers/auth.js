@@ -1,25 +1,10 @@
 const mongoose = require('mongoose');
 const {Users} = require('../models/index');
-const jwt = require('jsonwebtoken');
-const nodemailer = require('nodemailer');
+const transporter = require('../middlewares/notifications');
 const {FRONTEND_URL} = process.env;
-
-let transporter = nodemailer.createTransport({
-	host: 'smtp.gmail.com',
-	port: 465,
-	secure: true, // true for 465, false for other ports
-	auth: {
-		user: 'pedrocontreras182@gmail.com', // generated ethereal user
-		pass: 'zejltgojoaidttvb', // generated ethereal password
-	},
-});
-transporter.verify().then(() => {
-	console.log('a ver si funca');
-});
 
 async function forgotPassword(req, res) {
 	const {email} = req.body;
-	let verificationLink;
 	if (!email) return res.status(401).send({message: 'email is required'});
 	try {
 		let user = await Users.findOne({email});
@@ -34,7 +19,7 @@ async function forgotPassword(req, res) {
 			subject: 'Forgot password', // Subject line
 			html: `
             <h1>>Forgot password? don´t worry!</h1>
-                    <b>reset code ${user.resetToken}</b>
+                    <b>Reset code: ${user.resetToken}</b>
                     `, // html body
 		});
 
@@ -48,8 +33,6 @@ async function forgotPassword(req, res) {
 
 async function createNewPassword(req, res) {
 	const {email, step, password, resetCode} = req.body;
-	console.log(req.body);
-	console.log('backend');
 
 	try {
 		let user = await Users.findOne({email});
