@@ -20,7 +20,7 @@ import 'react-notifications-component/dist/theme.css';
 import Favourites from '../components/containers/favourites/Favourites';
 import FormCategorie from '../components/containers/formCategories/FormCategories';
 import FormProductDashboard from '../components/containers/adminDashboard/addProductDashboard/index.js';
-
+import Reset from '../components/containers/reset/Reset';
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
 
@@ -66,6 +66,7 @@ function App() {
 										'/home',
 										'/signup',
 										'/login',
+										'/forgot',
 										'/catalogue',
 										'/cart',
 										'/favorites',
@@ -100,6 +101,8 @@ function App() {
 							/>
 							<Route path='/shipping' component={ShippingAddress}></Route>
 							<Route path='/confirmation' component={ConfirmOrder}></Route>
+							<Route path='/resetPassword' component={Reset} />
+
 							{/* 			</> */}
 						</GridLayout>
 					</React.Fragment>
