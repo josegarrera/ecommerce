@@ -1,7 +1,7 @@
 export default {
 	en: {
 		description: {
-			1: 'Enter your email and we will send you a code to reset your password',
+			1: "Enter an email and we'll send you a code to reset your password",
 			2: 'Enter the code that we have sent to your email in order to reset your password',
 			3: 'Enter your new password',
 		},
