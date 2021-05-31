@@ -1,55 +1,33 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import {StyledContainer} from './styles';
-import ListDashboard from '../listDashboard/ListDashboard';
-import GraphicsDashboard from '../graphicsDashboard/GraphicsDashboard';
+import ListDashboard from '../listDashboardUser/ListDashboardUser';
 import {IoIosArrowForward} from 'react-icons/io';
 import {BsPersonPlusFill, BsPersonCheckFill} from 'react-icons/bs';
-import FormProductDashboard from '../addProductDashboard/index';
+import Cart from '../../cart/Cart';
+import Favourites from '../../favourites/Favourites';
+import Profile from '../userProfile/Profile';
 
-const HomeDashboard = () => {
+const HomeUserDashboard = () => {
 	const [Options, setOptions] = useState('Home');
 	let userId = window.localStorage.getItem('userId');
 	let firstName = window.localStorage.getItem('firstName');
 	let lastName = window.localStorage.getItem('lastName');
 	let profileImage = window.localStorage.getItem('profileImage');
 
-	const eraseToken = () => {
-		window.localStorage.clear();
-		window.location.reload();
-	};
-
 	const handleOnClick = (e) => {
 		setOptions(e.target.name);
 	};
 	const arrayButtons = [
-		{name: 'Products'},
-		{name: 'Categories'},
-		{name: 'Users'},
-		{name: 'Orders'},
-		{name: 'Brands'},
+		{name: 'My profile'},
+		{name: 'My orders'},
+		{name: 'My favourites'},
+		{name: 'My cart'},
 	];
 
 	return (
 		<StyledContainer>
 			<div className='sidebar'>
-				<div>
-					<div className='dashboard'>{'Admin Dashboard'}</div>
-					<button className='brand' name={'Home'} onClick={handleOnClick}>
-						{'<Store! />'}
-					</button>
-					<div className='options'>
-						{arrayButtons.map((el) => (
-							<button className='option' name={el.name} onClick={handleOnClick}>
-								{Options === el.name ? (
-									<IoIosArrowForward className='arrow' />
-								) : null}
-								&nbsp;
-								{el.name}
-							</button>
-						))}
-					</div>
-				</div>
 				<div className='bottomSidebar'>
 					<div className='userDiv'>
 						<button className='iconDiv'>
@@ -75,30 +53,37 @@ const HomeDashboard = () => {
 									) : (
 										<div className='userName'>No Name</div>
 									)}
-									<div className='signOut' onClick={eraseToken}>
-										Sign out.
-									</div>
+									<div className='myProfile'>Dato extra</div>
 								</div>
 							) : null}
 						</div>
 					</div>
-					<div className='backStore'>
-						<div className='separator'></div>
-						<Link to='/home'>Back to Store!</Link>
+				</div>
+				<div>
+					<div className='options'>
+						{arrayButtons.map((el) => (
+							<button className='option' name={el.name} onClick={handleOnClick}>
+								{Options === el.name ? (
+									<IoIosArrowForward className='arrow' />
+								) : null}
+								&nbsp;
+								{el.name}
+							</button>
+						))}
 					</div>
 				</div>
 			</div>
 			<div className='content'>
-				{Options === 'Home' ? (
-					<GraphicsDashboard setOptions={setOptions} />
-				) : Options === 'createProduct' ? (
-					<FormProductDashboard />
-				) : (
-					<ListDashboard Options={Options} setOptions={setOptions} />
-				)}
+				{Options === 'My cart' ? (
+					<Cart />
+				) : Options === 'My favourites' ? (
+					<Favourites />
+				) : Options === 'My profile' ? (
+					<Profile />
+				) : null}
 			</div>
 		</StyledContainer>
 	);
 };
 
-export default HomeDashboard;
+export default HomeUserDashboard;

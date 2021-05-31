@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
 	width: 100%;
-	height: 100vh;
+	height: 85vh;
 	display: grid;
 	grid-template-columns: 300px 1fr;
 	grid-template-areas: 'sidebar content content';
@@ -11,8 +11,7 @@ export const StyledContainer = styled.div`
 		grid-area: sidebar;
 		display: flex;
 		flex-direction: column;
-		justify-content: space-between;
-		background-color: #2d3f4e;
+		background-color: #2a9d8f;
 		box-shadow: 1px 0px 10px gray;
 		padding: 20px;
 
@@ -30,7 +29,7 @@ export const StyledContainer = styled.div`
 			position: absolute;
 			left: 90px;
 			top: 73px;
-			color: #f8f9f9;
+			color: #2a9d8f;
 			font-size: 9px;
 		}
 
@@ -45,7 +44,7 @@ export const StyledContainer = styled.div`
 				align-items: center;
 				background: none;
 				border: none;
-				color: #f8f9f9;
+				color: white;
 				font-size: 20px;
 				margin: 5px 0px;
 
@@ -104,6 +103,7 @@ export const StyledContainer = styled.div`
 
 					.userName {
 						font-size: 18px;
+						color: white;
 					}
 
 					.signOut {
@@ -121,8 +121,13 @@ export const StyledContainer = styled.div`
 				flex-direction: column;
 				width: 100%;
 				margin-top: 20px;
+
+				.backstore {
+					color: #58585a;
+				}
 				.separator {
-					border-top: 2px solid #f8f9f9;
+					border-top: 2px solid;
+					color: #58585a;
 				}
 			}
 		}
@@ -130,6 +135,9 @@ export const StyledContainer = styled.div`
 
 	.content {
 		grid-area: content;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 		padding: 0px 50px;
 	}
 `;

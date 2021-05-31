@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import CommentsBlock from 'simple-react-comments';
 import axios from 'axios';
 import {URLS} from '../../../utils/constants';
@@ -6,6 +6,28 @@ import {URLS} from '../../../utils/constants';
 const Reviews = ({id, setUpdateReview, updateReview, allReviews}) => {
 	const userId = localStorage.getItem('userId');
 	//const [Review, setAllReview] = useState([]);
+
+	/* STYLES */
+
+	const STYLE_BTN = {
+		color: 'white',
+		background: '#118ab2',
+		border: '1px solid transparent',
+	};
+	const STYLE_COMMENT = {
+		paddingBottom: '1.5rem',
+		borderBottom: '1px solid rgba(0,0,0,0.1)',
+		width: '65rem',
+		color: 'rgba(0,0,0,0.7)',
+		fontSize: '50px',
+	};
+	const HOVER_BTN = {
+		color: '#118ab2',
+		background: 'white',
+		border: '1px solid #118ab2',
+		boxShadow: '0px 0px 10px',
+	};
+	/* STYLES */
 
 	const handleOnSumbit = async (review) => {
 		try {
@@ -24,8 +46,11 @@ const Reviews = ({id, setUpdateReview, updateReview, allReviews}) => {
 
 	return (
 		<React.Fragment id='comments'>
+			<h1 className='review_title'>Reviews</h1>
 			{allReviews && allReviews.length < 1 && (
-				<span className='span_no_review'>There are no reviews, be the first!</span>
+				<span className='span_no_review'>
+					There are no reviews, be the first!
+				</span>
 			)}
 
 			<CommentsBlock
@@ -37,9 +62,29 @@ const Reviews = ({id, setUpdateReview, updateReview, allReviews}) => {
 					// Use base styles of btn and override background to red
 					btn: (base) => ({
 						...base,
-						color: 'white',
+						...STYLE_BTN,
+						'&:hover': HOVER_BTN,
 					}),
 					// Reset styles of textarea and use new styles
+					comment: (base) => ({
+						...base,
+						...STYLE_COMMENT,
+						a: {
+							marginLeft: '-1.5rem',
+							padding: '0',
+						},
+					}),
+					textarea: (base) => ({
+						...base,
+						border: '1px solid transparent',
+						fontSize: '1.2rem',
+						'&::placeholder': {
+							fontSize: '1.2rem',
+						},
+						'&:focus-within': {
+							border: '1px solid #64dfdf',
+						},
+					}),
 				}}
 				onSubmit={(text) => {
 					if (text.length > 0) {
@@ -48,7 +93,7 @@ const Reviews = ({id, setUpdateReview, updateReview, allReviews}) => {
 							avatarUrl: '#comments',
 							authorId: userId,
 							createdAt: `${new Date()}`,
-							fullName: 'Name',
+							fullName: 'Usuario n° ' + userId,
 							text,
 						});
 					}

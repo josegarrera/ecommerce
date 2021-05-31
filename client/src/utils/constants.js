@@ -51,4 +51,6 @@ export const URLS = {
 	URL_SIGNUP: `${process.env.REACT_APP_BACKEND_URL}/signup`,
 	URL_LOGIN: `${process.env.REACT_APP_BACKEND_URL}/login`,
 	URL_USERS: `${process.env.REACT_APP_BACKEND_URL}/users`,
+	URL_AUTH: `${process.env.REACT_APP_BACKEND_URL}/auth`,
+	URL_NEWS_LETTER: `${process.env.REACT_APP_BACKEND_URL}/newsLetter`,
 };

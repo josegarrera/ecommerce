@@ -1,20 +1,16 @@
 import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {getOrderDetail} from '../../../../redux/actions/index';
 import ProductDashboardStyle from './styled';
-import {TiDeleteOutline} from 'react-icons/ti';
-import {IoMdCheckmarkCircleOutline} from 'react-icons/io';
-import {Carousel} from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import axios from 'axios';
 import {URLS} from '../../../../utils/constants';
 import {store} from 'react-notifications-component';
 import DataList from '../../dataList';
 import {MdDelete, MdCancel, MdEdit} from 'react-icons/md';
-import AccordionDashboard from '../accordionDashboard/AccordionDashboard';
-import {
-	handleInputFile,
-	handleDeleteImage,
-	handleInputVariants,
-} from './utils.js';
+
+import {IoMdCheckmarkCircleOutline} from 'react-icons/io';
+
+//import AccordionDashboard from '../accordionDashboard/AccordionDashboard';
 
 const CardItems = ({
 	prop,
@@ -30,12 +26,13 @@ const CardItems = ({
 
 	const [isEditAItem, setisEditAItem] = useState(false);
 	const [SeeMore, setSeeMore] = useState(false);
-	const [EditAItem, setEditAItem] = useState({...prop});
+	const [EditAItem, setEditAItem] = useState({});
 	const [OrderDetail, setOrderDetail] = useState({});
 
 	const {
 		name,
 		price,
+		imageUrl,
 		description,
 		categories,
 		brands,
@@ -72,8 +69,11 @@ const CardItems = ({
 	};
 	useEffect(() => {
 		return () => setEditAItem({});
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+	useEffect(() => {
+		setEditAItem({...prop});
+	}, [prop]);
 
 	const handleInput = (e) => {
 		e.target.name === 'price'
@@ -84,10 +84,27 @@ const CardItems = ({
 			: setEditAItem({...EditAItem, [e.target.name]: e.target.value});
 	};
 
+	const handleinputvariants = (e) => {
+		const index = Number(e.target.id[e.target.id.length - 1]);
+
+		let newArr = [...EditAItem.variants];
+		newArr[index][e.target.name] = e.target.value;
+
+		setEditAItem({
+			...EditAItem,
+			variants: newArr,
+		});
+	};
+	/* console.log(EditAItem.variants, 'despues de setear'); */
+
+	/* 	 (EditAItem.variants[e.target.id][e.target.name] = e.target.value), */
+	//console.log('despues', EditAItem.variants[0]);
+
 	const handleEditButton = () => {
 		isEditAItem && setEditAItem({...prop});
 		SeeMore === false ? setSeeMore(true) : setSeeMore(true);
 		setisEditAItem(!isEditAItem);
+		console.log(EditAItem);
 	};
 
 	const handleDeleteOnEdit = ({target: {id}}) => {
@@ -120,13 +137,6 @@ const CardItems = ({
 		let filter =
 			EditAItem.brands && EditAItem.brands.filter((el) => el.name !== id);
 		setEditAItem({...EditAItem, brands: filter});
-	};
-
-	const handleDeleteVariantsOnEdit = ({target: {id}}) => {
-		console.log(id, 'el id');
-		let filter =
-			EditAItem.variants && EditAItem.variants.filter((el) => el.id !== id);
-		setEditAItem({...EditAItem, variants: filter});
 	};
 
 	const handleCategoriesDataList = (e) => {
@@ -166,20 +176,8 @@ const CardItems = ({
 			let sendEditItem = {...EditAItem};
 			sendEditItem.categories = EditAItem.categories.map((el) => el._id);
 			sendEditItem.brands = EditAItem.brands.map((el) => el._id);
-			const variantsFiles = EditAItem.variants.map(
-				(variant) => variant.imageFile
-			);
-			let formData = new FormData();
-			for (let i = 0; i < EditAItem.files.length; i++) {
-				formData.append('images', EditAItem.files[i]);
-			}
-			for (let i = 0; i < variantsFiles.length; i++) {
-				variantsFiles[i].file &&
-					formData.append('images', variantsFiles[i].file);
-			}
-			formData.append('info', JSON.stringify(sendEditItem));
 			try {
-				await axios.put(`${URLS.URL_PRODUCTS}/${EditAItem._id}`, formData);
+				await axios.put(`${URLS.URL_PRODUCTS}/${EditAItem._id}`, sendEditItem);
 				allProducts();
 				modifiedNotification();
 			} catch (error) {
@@ -229,66 +227,18 @@ const CardItems = ({
 		setSeeMore(!SeeMore);
 	};
 
-	return (
-		<ProductDashboardStyle>
+	return {
+		/* <ProductDashboardStyle>
 			<div className='productAllInfo'>
-				{EditAItem.imageUrl ? (
+				{imageUrl ? (
 					<div className='imageDiv'>
-						<Carousel className='imageSlider' showStatus>
-							{EditAItem.imageUrl &&
-								EditAItem.imageUrl.map((el) => (
-									<div key={el + 'div'} className='sliderDiv'>
-										<img
-											key={el + 'img'}
-											className='sliderImg'
-											src={el}
-											alt='imagen de producto'
-										/>
-
-										{isEditAItem && EditAItem ? (
-											<button className='buttonDiv'>
-												<TiDeleteOutline
-													key={el + 'btn'}
-													id={el}
-													onClick={(e) => handleDeleteImage(e, setEditAItem)}
-													className='buttonDeleteImg'
-												/>
-											</button>
-										) : (
-											<></>
-										)}
-									</div>
-								))}
-						</Carousel>
-						{isEditAItem && EditAItem ? (
-							<div className='imageDiv'>
-								<label for='file-upload' className='labelFile'>
-									<input
-										id='file-upload'
-										className='inputFile'
-										name='imageUrl'
-										type='file'
-										accept='image/*'
-										multiple
-										onChange={(e) => handleInputFile(e, setEditAItem)}
-										value={EditAItem && EditAItem.fileValue}
-									/>{' '}
-									Add img
-								</label>
-								<label>
-									{EditAItem.filesData ? EditAItem.filesData.length : 0} Files
-								</label>
-							</div>
-						) : (
-							<></>
-						)}
+						<img className='image' src={imageUrl[0]} alt='imagen de producto' />
 					</div>
 				) : (
 					<div className='imageDiv'>
 						<div className='index'>{index}</div>
 					</div>
 				)}
-
 				<div className='productInfo'>
 					{_id && (
 						<div className='renglon'>
@@ -360,7 +310,7 @@ const CardItems = ({
 										type='number'
 										name='price'
 										onChange={handleInput}
-										value={EditAItem.price && EditAItem.price.value}
+										value={EditAItem.price.value}
 									/>
 								</div>
 							) : (
@@ -438,11 +388,10 @@ const CardItems = ({
 										<AccordionDashboard
 											items={EditAItem.variants}
 											isEditAItem={isEditAItem}
-											handler={handleDeleteVariantsOnEdit}
+											handler={handleDeleteBrandsOnEdit}
 											Option={'variants'}
-											handleInput={handleInputVariants}
+											handleInput={handleinputvariants}
 											EditAItem={EditAItem.variants}
-											setEditAItem={setEditAItem}
 										/>
 									))}
 								{isEditAItem && (
@@ -506,34 +455,43 @@ const CardItems = ({
 										<div>{OrderDetail.users.email} </div>
 									</div>
 								) : null}
-
-								<div className='renglon'>
-									<div className='title'>State: &nbsp;</div>
-									{OrderDetail && OrderDetail.state === 'created' ? (
-										<div className='created'>
-											{' '}
-											{OrderDetail.state.charAt(0).toUpperCase() +
-												OrderDetail.state.slice(1)}
-											{'.'}
-										</div>
-									) : null}
-									{OrderDetail && OrderDetail.state === 'completed' ? (
-										<div className='complete'>
-											{' '}
-											{OrderDetail.state.charAt(0).toUpperCase() +
-												OrderDetail.state.slice(1)}
-											{'.'}
-										</div>
-									) : null}
-									{OrderDetail && OrderDetail.state === 'cancelled' ? (
-										<div className='cancelled'>
-											{' '}
-											{OrderDetail.state.charAt(0).toUpperCase() +
-												OrderDetail.state.slice(1)}
-											{'.'}
-										</div>
-									) : null}
-								</div>
+								{OrderDetail.state.length > 0 ? (
+									<div className='renglon'>
+										<div className='title'>State: &nbsp;</div>
+										{OrderDetail && OrderDetail.state === 'created' ? (
+											<div className='created'>
+												{' '}
+												{OrderDetail.state.charAt(0).toUpperCase() +
+													OrderDetail.state.slice(1)}
+												{'.'}
+											</div>
+										) : null}
+										{OrderDetail && OrderDetail.state === 'processing' ? (
+											<div className='processing'>
+												{' '}
+												{OrderDetail.state.charAt(0).toUpperCase() +
+													OrderDetail.state.slice(1)}
+												{'.'}
+											</div>
+										) : null}
+										{OrderDetail && OrderDetail.state === 'completed' ? (
+											<div className='complete'>
+												{' '}
+												{OrderDetail.state.charAt(0).toUpperCase() +
+													OrderDetail.state.slice(1)}
+												{'.'}
+											</div>
+										) : null}
+										{OrderDetail && OrderDetail.state === 'cancelled' ? (
+											<div className='cancelled'>
+												{' '}
+												{OrderDetail.state.charAt(0).toUpperCase() +
+													OrderDetail.state.slice(1)}
+												{'.'}
+											</div>
+										) : null}
+									</div>
+								) : null}
 								<AccordionDashboard
 									paymentDetail={OrderDetail.transactionDetail}
 									paymentMethod={OrderDetail.paymentMethod}
@@ -568,8 +526,8 @@ const CardItems = ({
 					<MdDelete className='button' />
 				</button>
 			</div>
-		</ProductDashboardStyle>
-	);
+		</ProductDashboardStyle> */
+	};
 };
 
 export default CardItems;

@@ -15,12 +15,14 @@ import FomrCategories from '../components/containers/formCategories/FormCategori
 import HomeDashboard from '../components/containers/adminDashboard/homeDashboard/HomeDashboard';
 import ShippingAddress from '../components/containers/shippingAddress/shippingAddress';
 import ConfirmOrder from '../components/containers/confirmOrder/confirmOrder';
+import AboutUs from '../components/presentationals/aboutUs/AboutUs';
 import ReactNotification from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 import Favourites from '../components/containers/favourites/Favourites';
+import UserDashboard from '../components/containers/userDashboard/homeUserDashboard/HomeUserDashboard';
 import FormCategorie from '../components/containers/formCategories/FormCategories';
 import FormProductDashboard from '../components/containers/adminDashboard/addProductDashboard/index.js';
-
+import Reset from '../components/containers/reset/Reset';
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
 
@@ -66,6 +68,7 @@ function App() {
 										'/home',
 										'/signup',
 										'/login',
+										'/forgot',
 										'/catalogue',
 										'/cart',
 										'/favorites',
@@ -73,6 +76,8 @@ function App() {
 										'/confirmation',
 										'/about',
 										'/contact',
+										'/resetPassword',
+										'/userDashboard',
 									].includes(location.pathname) ? (
 										<NavBar />
 									) : null
@@ -86,6 +91,7 @@ function App() {
 							<Route exact path='/create' component={FormProductDashboard} />
 							<Route exact path='/categorie' component={FormCategorie} />
 							<Route exact path='/catalogue' component={Catalogue} />
+							<Route exact path='/about' component={AboutUs} />
 							<Route exact path='/cart' component={Cart} />
 							<Route exact path='/favorites' component={Favourites} />
 							<Route
@@ -100,7 +106,8 @@ function App() {
 							/>
 							<Route path='/shipping' component={ShippingAddress}></Route>
 							<Route path='/confirmation' component={ConfirmOrder}></Route>
-							{/* 			</> */}
+							<Route path='/resetPassword' component={Reset} />
+							<Route path='/userDashboard' component={UserDashboard} />
 						</GridLayout>
 					</React.Fragment>
 				</Elements>

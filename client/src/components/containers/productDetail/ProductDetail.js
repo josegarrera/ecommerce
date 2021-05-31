@@ -12,14 +12,15 @@ import {
 	postLocalStorage,
 } from '../../../redux/actions/index';
 import {IoLogoWhatsapp, IoReturnDownBack} from 'react-icons/io5';
-import {BsLightning} from 'react-icons/bs';
-import {FaShoppingCart} from 'react-icons/fa';
+import {BsLightning} from 'react-icons/bs'; /* 
+import {FaShoppingCart} from 'react-icons/fa'; */
 import {AiOutlineHeart, AiFillHeart} from 'react-icons/ai';
 import ProductDetailStyle from './styled';
 import {Link} from 'react-router-dom';
 import {store} from 'react-notifications-component';
 import DetailLoader from '../../../utils/detailLoader';
 import Reviews from '../reviews';
+import Footer from '../footer/Footer';
 
 const ProductDetail = (id) => {
 	const dispatch = useDispatch();
@@ -34,8 +35,6 @@ const ProductDetail = (id) => {
 	useEffect(() => {
 		dispatch(getProductDetail(id));
 	}, [updateReview]); // eslint-disable-line react-hooks/exhaustive-deps
-
-	console.log('acaaaaaaaaaaaaaaa', product);
 
 	useEffect(() => {
 		return dispatch(cleanProductDetail());
@@ -239,6 +238,7 @@ const ProductDetail = (id) => {
 					/>
 				)}
 			</div>
+			<Footer />
 		</ProductDetailStyle>
 	);
 };
