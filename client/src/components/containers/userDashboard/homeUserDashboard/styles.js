@@ -135,6 +135,9 @@ export const StyledContainer = styled.div`
 
 	.content {
 		grid-area: content;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 		padding: 0px 50px;
 	}
 `;
