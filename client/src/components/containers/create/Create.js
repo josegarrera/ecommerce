@@ -146,7 +146,6 @@ const Create = ({options, setCreate, create, Items, allProducts}) => {
 			const resp = await axios.post(URLS.URL_SIGNUP, inputUser);
 			if (resp.data.message === 'Signup successfull!') {
 				const id = resp.data.user._id;
-				console.log(id);
 				await axios.put(`${URLS.URL_USERS}/${id}`, inputUser);
 				window.alert('New user successfully created');
 			}
