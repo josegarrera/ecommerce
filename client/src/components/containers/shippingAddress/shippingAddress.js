@@ -5,7 +5,8 @@ import CheckoutSteps from "../checkoutSteps/checkoutSteps";
 import { Link, useHistory } from "react-router-dom";
 import { saveShippingInfo } from "../../../redux/actions";
 import { useDispatch } from "react-redux";
-import Input from "./Input/Input";
+import Input from "./input/Input";
+import Toast from "./toast";
 
 function Index() {
   const dispatch = useDispatch();
@@ -72,6 +73,8 @@ function Index() {
         <div className="row__top">
           <h1 className="form__title">Shipping Address</h1>
         </div>
+
+        {false && <Toast />}
 
         <form type="submit" className="product__form">
           <div className="form__wrapper">

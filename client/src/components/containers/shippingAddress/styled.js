@@ -67,7 +67,7 @@ const ShippingAddress_Style = styled.div`
 
   .form__element {
     display: flex;
-    margin: 2rem 2.5rem;
+    margin: 2.3rem 0;
     flex-direction: column;
   }
 
@@ -106,6 +106,7 @@ const ShippingAddress_Style = styled.div`
     color: #757575;
     font-weight: 600;
   }
+
 `;
 
 export default ShippingAddress_Style;

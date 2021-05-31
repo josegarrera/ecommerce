@@ -150,7 +150,7 @@ const InputStyle = styled.div`
   }
 
   .label {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     margin-bottom: 0.5rem;
     font-weight: 500;
   }
