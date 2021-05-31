@@ -166,24 +166,40 @@ const CardItems = ({
 			let sendEditItem = {...EditAItem};
 			sendEditItem.categories = EditAItem.categories.map((el) => el._id);
 			sendEditItem.brands = EditAItem.brands.map((el) => el._id);
-			const variantsFiles = EditAItem.variants.map(
-				(variant) => variant.imageFile
-			);
+			const variantsFiles = EditAItem.variants
+				.map((variant) => variant.imageFile && variant.imageFile.file)
+				.filter((item) => item);
+			const files = EditAItem.files ? EditAItem.files : [];
 			let formData = new FormData();
-			for (let i = 0; i < EditAItem.files.length; i++) {
+			for (let i = 0; i < files.length; i++) {
 				formData.append('images', EditAItem.files[i]);
 			}
 			for (let i = 0; i < variantsFiles.length; i++) {
-				variantsFiles[i].file &&
-					formData.append('images', variantsFiles[i].file);
+				formData.append('images', variantsFiles[i]);
 			}
 			formData.append('info', JSON.stringify(sendEditItem));
 			try {
 				await axios.put(`${URLS.URL_PRODUCTS}/${EditAItem._id}`, formData);
+				let arrVariants = [...EditAItem.variants];
+				arrVariants.map((item) => {
+					return {
+						...item,
+						fileData: {},
+						file: {},
+						fileValue: '',
+					};
+				});
+				setEditAItem({
+					...EditAItem,
+					variants: arrVariants,
+					filesData: [],
+					files: [],
+					fileValue: '',
+				});
 				allProducts();
 				modifiedNotification();
 			} catch (error) {
-				console.log(error.response.data.message);
+				console.log(error);
 			}
 		} else if (options === 'Categories') {
 			let sendEditItem = {...EditAItem};
