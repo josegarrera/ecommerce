@@ -1,15 +1,26 @@
 import styled from "styled-components";
 
 const FormProductStyle = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 25;
   width: 100%;
-  margin: 10px 0px;
-  padding: 3rem;
-  background-color: #ffffff;
-  border-radius: 10px;
-  color: #58585a;
-  box-shadow: 1px 1px 30px silver;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2);
+
+  .form__container {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0px;
+    padding: 3rem;
+    background-color: #ffffff;
+    border-radius: 10px;
+    color: #58585a;
+  }
 
   .form__button_green {
     display: flex;
@@ -217,6 +228,7 @@ const FormProductStyle = styled.div`
     background-color: #ffffff;
     color: #616161;
     font-weight: 600;
+    cursor: pointer;
   }
 
   .select-style {

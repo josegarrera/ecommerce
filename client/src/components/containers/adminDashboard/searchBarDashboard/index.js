@@ -1,51 +1,58 @@
-import React from 'react';
-import {useHistory} from 'react-router-dom';
-import SearchStyles from './styled';
+import React from "react";
+import { useHistory } from "react-router-dom";
+import FormProductDashboard from "../addProductDashboard";
+import SearchStyles from "./styled";
 
 /* let props = ['email', 'role', 'name', '_id', 'price.value', 'user']; */
 
 const SearchBar = ({
-	Items,
-	setFilter,
-	setCreate,
-	create,
-	options,
-	setOptions,
+  Items,
+  setFilter,
+  setCreate,
+  create,
+  options,
+  setOptions,
+  showModal,
+  setShowModal,
 }) => {
-	let history = useHistory();
+  let history = useHistory();
 
-	const handleOnChangue = (e) => {
-		let arrayFilter =
-			Items &&
-			Items.filter(
-				(el) =>
-					(el.email &&
-						el.email.toLowerCase().includes(e.target.value.toLowerCase())) ||
-					(el.role &&
-						el.role.toLowerCase().includes(e.target.value.toLowerCase())) ||
-					(el.users && el.users.includes(e.target.value)) ||
-					(el.name &&
-						el.name.toLowerCase().includes(e.target.value.toLowerCase())) ||
-					(el._id && el._id.includes(e.target.value)) ||
-					(el.price && el.price.value.toString().includes(e.target.value))
-			);
+  const handleOnChangue = (e) => {
+    let arrayFilter =
+      Items &&
+      Items.filter(
+        (el) =>
+          (el.email &&
+            el.email.toLowerCase().includes(e.target.value.toLowerCase())) ||
+          (el.role &&
+            el.role.toLowerCase().includes(e.target.value.toLowerCase())) ||
+          (el.users && el.users.includes(e.target.value)) ||
+          (el.name &&
+            el.name.toLowerCase().includes(e.target.value.toLowerCase())) ||
+          (el._id && el._id.includes(e.target.value)) ||
+          (el.price && el.price.value.toString().includes(e.target.value))
+      );
 
-		setFilter(arrayFilter);
-	};
+    setFilter(arrayFilter);
+  };
 
-	const handleClick = () => {
-		if (options === 'Products') setOptions('createProduct');
+  const handleClick = () => {
+    if (options === "Products") {
+      setOptions("createProduct");
+      console.log("hola");
+      setShowModal((prev) => !prev);
+    }
 
-		if (
-			options === 'Users' ||
-			options === 'Categories' ||
-			options === 'Orders' ||
-			options === 'Brands'
-		)
-			setCreate(!create);
-	};
+    if (
+      options === "Users" ||
+      options === "Categories" ||
+      options === "Orders" ||
+      options === "Brands"
+    )
+      setCreate(!create);
+  };
 
-	/* 
+  /* 
 				Items.filter(
 					(el) =>
 						(el.email &&
@@ -57,28 +64,30 @@ const SearchBar = ({
 						(el.price && el.price.value.toString().includes(e.target.value))
 				); */
 
-	return (
-		<SearchStyles>
-			<input
-				className='searchInput'
-				type='text'
-				placeHolder='   Search by name, price, id, categorie, role, email, etc'
-				onChange={handleOnChangue}
-			/>
-			{options && options !== 'Orders' ? (
-				<button className='form__button' onClick={handleClick}>
-					Add {options && options.toLowerCase().slice(0, options.length - 1)}
-				</button>
-			) : (
-				<button
-					className='form__button form__button__hidden'
-					onClick={handleClick}
-				>
-					Add {options && options.toLowerCase().slice(0, options.length - 1)}
-				</button>
-			)}
-		</SearchStyles>
-	);
+  return (
+    <SearchStyles>
+      <input
+        className="searchInput"
+        type="text"
+        placeHolder="   Search by name, price, id, categorie, role, email, etc"
+        onChange={handleOnChangue}
+      />
+      {options && options !== "Orders" ? (
+        <button className="form__button" onClick={handleClick}>
+          Add {options && options.toLowerCase().slice(0, options.length - 1)}
+        </button>
+      ) : (
+        <button
+          className="form__button form__button__hidden"
+          onClick={handleClick}
+        >
+          Add {options && options.toLowerCase().slice(0, options.length - 1)}
+        </button>
+      )}
+
+      <FormProductDashboard showModal={showModal} setShowModal={setShowModal} />
+    </SearchStyles>
+  );
 };
 
 export default SearchBar;
