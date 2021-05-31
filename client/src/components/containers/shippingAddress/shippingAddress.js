@@ -1,142 +1,172 @@
 /* eslint-disable react/jsx-pascal-case */
-import React, {useState} from 'react';
-import ShippingAddress_Style from './styled';
-import CheckoutSteps from '../checkoutSteps/checkoutSteps';
-import {Link, useHistory} from 'react-router-dom';
-import {saveShippingInfo} from '../../../redux/actions';
-import {useDispatch} from 'react-redux';
+import React, { useState } from "react";
+import ShippingAddress_Style from "./styled";
+import CheckoutSteps from "../checkoutSteps/checkoutSteps";
+import { Link, useHistory } from "react-router-dom";
+import { saveShippingInfo } from "../../../redux/actions";
+import { useDispatch } from "react-redux";
+import Input from "./Input/Input";
 
 function Index() {
-	const dispatch = useDispatch();
-	const history = useHistory();
-	const [shippingInfo, setShippingInfo] = useState({
-		firstName: '',
-		lastName: '',
-		zip_code: '',
-		street_name: '',
-		street_number: '',
-		id: '',
-	});
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const [shippingInfo, setShippingInfo] = useState({
+    firstName: { value: "", validated: "" },
+    lastName: { value: "", validated: "" },
+    zip_code: { value: "", validated: "" },
+    street_name: { value: "", validated: "" },
+    street_number: { value: "", validated: "" },
+    id: { value: "", validated: "" },
+  });
 
-	const onSubmitHandler = (e) => {
-		e.preventDefault();
+  const expressions = {
+    firstName: /^[a-zA-ZÀ-ÿ\s]{6,15}$/, // Letras y espacios, pueden llevar acentos.
+    lastName: /^[a-zA-ZÀ-ÿ\s]{6,15}$/, // Letras y espacios, pueden llevar acentos.
+    types: /^[a-zA-ZÀ-ÿ\s]{6,15}$/, // Letras y espacios, pueden llevar acentos.
+    zip_code: /^.{1,5}$/, // 4 a 12 digitos.
+    street_name: /^.{1,5}$/, // 4 a 12 digitos.
+    street_number: /^.{1,5}$/, // 4 a 12 digitos.
+    id: /^.{1,5}$/, // 4 a 12 digitos.
+  };
 
-		dispatch(saveShippingInfo(shippingInfo));
-		history.push('/confirmation');
-	};
+  const onChangeHandler = (e) => {
+    setShippingInfo({
+      ...shippingInfo,
+      [e.target.name]: {
+        ...shippingInfo[e.target.name],
+        value: e.target.value,
+      },
+    });
+  };
 
-	const onChangeHandler = (e) => {
-		setShippingInfo({
-			...shippingInfo,
-			[e.target.name]: e.target.value,
-		});
-	};
+  const validate = (e) => {
+    if (expressions[e.target.name].test(shippingInfo[e.target.name].value)) {
+      console.log("input correcto");
+      setShippingInfo({
+        ...shippingInfo,
+        [e.target.name]: { ...shippingInfo[e.target.name], validated: "true" },
+      });
+    } else {
+      console.log("input incorrecto");
+      setShippingInfo({
+        ...shippingInfo,
+        [e.target.name]: { ...shippingInfo[e.target.name], validated: "false" },
+      });
+    }
+  };
 
-	// shippingInfo && console.log(shippingInfo);
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
 
-	return (
-		<ShippingAddress_Style>
-			<div>
-				<CheckoutSteps step1 step2></CheckoutSteps>
+    dispatch(saveShippingInfo(shippingInfo));
+    history.push("/confirmation");
+  };
 
-				<div className='row__top'>
-					<h1 className='form__title'>Shipping Address</h1>
-				</div>
+  // shippingInfo && console.log(shippingInfo);
 
-				<form type='submit' className='product__form'>
-					<div className='form__wrapper'>
-						<div className='form__column'>
-							<div className='form__element'>
-								<label className='form__label'>First Name</label>
-								<input
-									className='form__input'
-									type='text'
-									id='firstName'
-									value={shippingInfo.firstName}
-									name='firstName'
-									onChange={(e) => onChangeHandler(e)}
-								></input>
-							</div>
+  return (
+    <ShippingAddress_Style>
+      <div>
+        <CheckoutSteps step1 step2></CheckoutSteps>
 
-							<div className='form__element'>
-								<label className='form__label'>Last Name</label>
-								<input
-									className='form__input'
-									type='text'
-									id='lastName'
-									value={shippingInfo.lastName}
-									name='lastName'
-									onChange={(e) => onChangeHandler(e)}
-								></input>
-							</div>
+        <div className="row__top">
+          <h1 className="form__title">Shipping Address</h1>
+        </div>
 
-							<div className='form__element'>
-								<label className='form__label'>Zip Code</label>
-								<input
-									className='form__input'
-									type='number'
-									id='zipCode'
-									value={shippingInfo.zip_code}
-									name='zip_code'
-									onChange={(e) => onChangeHandler(e)}
-								></input>
-							</div>
+        <form type="submit" className="product__form">
+          <div className="form__wrapper">
+            <div className="form__column">
+              <div className="form__element">
+                <Input
+                  name="firstName"
+                  title="First name"
+                  type="text"
+                  input={shippingInfo}
+                  onChangeHandler={onChangeHandler}
+                  validate={validate}
+                  error="Must be between 6 to 15 characters"
+                ></Input>
+              </div>
 
-							<div className='form__element'>
-								<label className='form__label'>Street Name</label>
-								<input
-									className='form__input'
-									id='street_name'
-									type='text'
-									value={shippingInfo.street_name}
-									name='street_name'
-									onChange={(e) => onChangeHandler(e)}
-								></input>
-							</div>
+              <div className="form__element">
+                <Input
+                  name="lastName"
+                  title="Last name"
+                  type="text"
+                  input={shippingInfo}
+                  onChangeHandler={onChangeHandler}
+                  validate={validate}
+                  error="Must be between 6 to 15 characters"
+                ></Input>
+              </div>
 
-							<div className='form__element'>
-								<label className='form__label'>Street Number</label>
-								<input
-									className='form__input'
-									id='street_number'
-									type='number'
-									value={shippingInfo.street_number}
-									name='street_number'
-									onChange={(e) => onChangeHandler(e)}
-								></input>
-							</div>
+              <div className="form__element">
+                <Input
+                  name="zip_code"
+                  title="Zip Code"
+                  type="number"
+                  input={shippingInfo}
+                  onChangeHandler={onChangeHandler}
+                  validate={validate}
+                  error="Must be between 6 to 15 characters"
+                ></Input>
+              </div>
 
-							<div className='form__element'>
-								<label className='form__label'>ID</label>
-								<input
-									className='form__input'
-									id='id'
-									type='number'
-									value={shippingInfo.id}
-									name='id'
-									onChange={(e) => onChangeHandler(e)}
-								></input>
-							</div>
+              <div className="form__element">
+                <Input
+                  name="street_name"
+                  title="Street Name"
+                  type="number"
+                  input={shippingInfo}
+                  onChangeHandler={onChangeHandler}
+                  validate={validate}
+                  error="Must be between 6 to 15 characters"
+                ></Input>
+              </div>
 
-							<div className='row__bot'>
-								<Link to='/cart'>
-									<button className='form__button'>Back</button>
-								</Link>
-								<Link to='/confirmation'>
-									<button
-										onClick={(e) => onSubmitHandler(e)}
-										className='form__button'
-									>
-										Continue
-									</button>
-								</Link>
-							</div>
-						</div>
-					</div>
-				</form>
-			</div>
-		</ShippingAddress_Style>
-	);
+              <div className="form__element">
+                <Input
+                  name="street_number"
+                  title="Street Number"
+                  type="number"
+                  input={shippingInfo}
+                  onChangeHandler={onChangeHandler}
+                  validate={validate}
+                  error="Must be between 6 to 15 characters"
+                ></Input>
+              </div>
+
+              <div className="form__element">
+                <Input
+                  name="id"
+                  title="ID"
+                  type="number"
+                  input={shippingInfo}
+                  onChangeHandler={onChangeHandler}
+                  validate={validate}
+                  error="Must be between 6 to 15 characters"
+                ></Input>
+              </div>
+
+              <div className="row__bot">
+                <Link to="/cart">
+                  <button className="form__button">Back</button>
+                </Link>
+                <Link to="/confirmation">
+                  <button
+                    onClick={(e) => onSubmitHandler(e)}
+                    className="form__button"
+                  >
+                    Continue
+                  </button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </ShippingAddress_Style>
+  );
 }
 
 export default Index;
