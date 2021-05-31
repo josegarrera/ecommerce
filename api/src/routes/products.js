@@ -18,12 +18,17 @@ const upload = require('../middlewares/uploads.js');
 router.post(
 	'/',
 	[verifyToken, isAdmin],
-	upload.array('images', 12),
+	upload.array('images', 10),
 	createProduct
 ); //SI JWT
 router.get('/', getProducts); //no JWT ✔✔
 router.get('/:id', getProductsDetail); //no JWT ✔✔
 router.put('/reviews/:id', addReview); //no JWT ✔✔
-router.put('/:id', [verifyToken, isAdmin], updateProduct); //SI JWT
+router.put(
+	'/:id',
+	[verifyToken, isAdmin],
+	upload.array('images', 10),
+	updateProduct
+); //SI JWT
 router.delete('/:id', [verifyToken, isAdmin], deleteProduct); //SI JWT
 module.exports = router;

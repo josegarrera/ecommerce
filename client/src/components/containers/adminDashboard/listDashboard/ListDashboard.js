@@ -120,7 +120,7 @@ const ListDashboard = ({Options, setOptions}) => {
 						{Filter &&
 							Filter.map((el, index) => (
 								<CardItems
-									prop={el}
+									prop={{...el}}
 									index={index}
 									options={Options}
 									allProducts={allProducts}
