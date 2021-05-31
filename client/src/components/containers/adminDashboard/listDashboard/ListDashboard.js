@@ -18,6 +18,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 const ListDashboard = ({ Options, setOptions }) => {
   const [Items, setItems] = useState([]);
+  const [showModal, setShowModal] = useState(false);
   const [Filter, setFilter] = useState([]);
   const [create, setCreate] = useState(false);
   /* const [control, setControl] = useState(0); */
@@ -109,6 +110,8 @@ const ListDashboard = ({ Options, setOptions }) => {
           create={create}
           options={Options}
           setOptions={setOptions}
+          showModal={showModal}
+          setShowModal={setShowModal}
         />
       )}
       {Options === "Products" ? (
