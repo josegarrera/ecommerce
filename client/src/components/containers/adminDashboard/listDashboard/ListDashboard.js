@@ -118,134 +118,135 @@ const ListDashboard = ({ Options, setOptions }) => {
         <>
           {/* {create ? <Create options={Options} /> : null} */}
 
-          <InfiniteScroll
-            className="listProduct"
-            dataLength={Filter.length}
-            loader={<h4>Loading...</h4>}
-            height={700}
-          >
-            {Filter &&
-              Filter.map((el, index) => (
-                <CardItems
-                  prop={el}
-                  index={index}
-                  options={Options}
-                  allProducts={allProducts}
-                  allBrands={allBrands}
-                  allCategories={allCategories}
-                />
-              ))}
-          </InfiniteScroll>
-        </>
-      ) : null}
-      {Options === "Categories" ? (
-        <>
-          {create ? (
-            <Create
-              options={Options}
-              setCreate={setCreate}
-              create={create}
-              Items={Items}
-              allProducts={allProducts}
-            />
-          ) : null}
-          <InfiniteScroll
-            className="listProduct"
-            dataLength={Filter.length}
-            loader={<h4>Loading...</h4>}
-            height={600}
-          >
-            {Filter &&
-              Filter.map((el, index) => (
-                <CardItems
-                  prop={el}
-                  index={index}
-                  options={Options}
-                  allProducts={allProducts}
-                  allProductsDataList={allProductsDataList}
-                />
-              ))}
-          </InfiniteScroll>
-        </>
-      ) : null}
-      {Options === "Users" ? (
-        <>
-          {create ? (
-            <Create
-              options={Options}
-              setCreate={setCreate}
-              create={create}
-              Items={Items}
-              allProducts={allProducts}
-            />
-          ) : null}
-          <InfiniteScroll
-            className="listProduct"
-            dataLength={Filter.length}
-            loader={<h4>Loading...</h4>}
-            height={600}
-          >
-            {Filter &&
-              Filter.map((el, index) => (
-                <CardItems
-                  prop={el}
-                  index={index}
-                  options={Options}
-                  allProducts={allProducts}
-                />
-              ))}
-          </InfiniteScroll>
-        </>
-      ) : null}
-      {Options === "Orders" ? (
-        <InfiniteScroll
-          className="listProduct"
-          dataLength={Filter.length}
-          loader={<h4>Loading...</h4>}
-          height={600}
-        >
-          {Filter &&
-            Filter.map((el, index) => (
-              <CardItems
-                prop={el}
-                index={index}
-                options={Options}
-                allProducts={allProducts}
-              />
-            ))}
-        </InfiniteScroll>
-      ) : null}
-      {Options === "Brands" ? (
-        <>
-          {create ? (
-            <Create
-              options={Options}
-              setCreate={setCreate}
-              create={create}
-              Items={Items}
-              allProducts={allProducts}
-            />
-          ) : null}
-          <InfiniteScroll
-            className="listProduct"
-            dataLength={Filter.length}
-            loader={<h4>Loading...</h4>}
-            height={600}
-          >
-            {Filter &&
-              Filter.map((el, index) => (
-                <CardItems
-                  prop={el}
-                  index={index}
-                  options={Options}
-                  allProducts={allProducts}
-                />
-              ))}
-          </InfiniteScroll>
-        </>
-      ) : null}
-    </ListStyles>
-  );
+					<InfiniteScroll
+						className='listProduct'
+						dataLength={Filter.length}
+						loader={<h4>Loading...</h4>}
+						height={700}
+					>
+						{Filter &&
+							Filter.map((el, index) => (
+								<CardItems
+									prop={{...el}}
+									index={index}
+									options={Options}
+									allProducts={allProducts}
+									allBrands={allBrands}
+									allCategories={allCategories}
+								/>
+							))}
+					</InfiniteScroll>
+				</>
+			) : null}
+			{Options === 'Categories' ? (
+				<>
+					{create ? (
+						<Create
+							options={Options}
+							setCreate={setCreate}
+							create={create}
+							Items={Items}
+							allProducts={allProducts}
+						/>
+					) : null}
+					<InfiniteScroll
+						className='listProduct'
+						dataLength={Filter.length}
+						loader={<h4>Loading...</h4>}
+						height={600}
+					>
+						{Filter &&
+							Filter.map((el, index) => (
+								<CardItems
+									prop={el}
+									index={index}
+									options={Options}
+									allProducts={allProducts}
+									allProductsDataList={allProductsDataList}
+								/>
+							))}
+					</InfiniteScroll>
+				</>
+			) : null}
+			{Options === 'Users' ? (
+				<>
+					{create ? (
+						<Create
+							options={Options}
+							setCreate={setCreate}
+							create={create}
+							Items={Items}
+							allProducts={allProducts}
+						/>
+					) : null}
+					<InfiniteScroll
+						className='listProduct'
+						dataLength={Filter.length}
+						loader={<h4>Loading...</h4>}
+						height={600}
+					>
+						{Filter &&
+							Filter.map((el, index) => (
+								<CardItems
+									prop={el}
+									index={index}
+									options={Options}
+									allProducts={allProducts}
+								/>
+							))}
+					</InfiniteScroll>
+				</>
+			) : null}
+			{Options === 'Orders' ? (
+				<InfiniteScroll
+					className='listProduct'
+					dataLength={Filter.length}
+					loader={<h4>Loading...</h4>}
+					height={600}
+				>
+					{Filter &&
+						Filter.map((el, index) => (
+							<CardItems
+								prop={el}
+								index={index}
+								options={Options}
+								allProducts={allProducts}
+							/>
+						))}
+				</InfiniteScroll>
+			) : null}
+			{Options === 'Brands' ? (
+				<>
+					{create ? (
+						<Create
+							options={Options}
+							setCreate={setCreate}
+							create={create}
+							Items={Items}
+							allProducts={allProducts}
+						/>
+					) : null}
+					<InfiniteScroll
+						className='listProduct'
+						dataLength={Filter.length}
+						loader={<h4>Loading...</h4>}
+						height={600}
+					>
+						{Filter &&
+							Filter.map((el, index) => (
+								<CardItems
+									prop={el}
+									index={index}
+									options={Options}
+									allProducts={allProducts}
+								/>
+							))}
+					</InfiniteScroll>
+				</>
+			) : null}
+		</ListStyles>
+	);
+
 };
 
 export default ListDashboard;

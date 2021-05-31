@@ -261,22 +261,47 @@ async function addReview(req, res) {
 
 async function updateProduct(req, res) {
 	const {body} = req;
-	console.log(body);
 	if (!body)
 		return res.status(400).send({
 			response: '',
 			type: 'Bad request.',
 			message: 'The fields are empty.',
 		});
+	const files = req.files;
+	const info = JSON.parse(req.body.info);
 	const product = {};
-	for (const key in body) {
-		if (body[key]) product[key] = body[key];
+	for (const key in info) {
+		if (info[key]) product[key] = info[key];
 	}
 	try {
-		const updatedProduct = await Products.findByIdAndUpdate(
-			{_id: req.params.id},
-			product
-		);
+		if (files.length) {
+			const filesUpdates = await Promise.all(
+				files.map((file) =>
+					bucket.upload(file.path, {
+						destination: files.filename,
+					})
+				)
+			);
+
+			const filesUrl = filesUpdates.map(
+				(file) => STORAGE_BASEURL + file[0].name
+			);
+			console.log(filesUrl, 'url files');
+
+			filesUrl.forEach((url) => {
+				let i = product.variants.findIndex((variant) =>
+					url.includes(variant.imageFile)
+				);
+				if (i > -1) {
+					product.variants[i].imageUrl = [...product.variants[i].imageUrl, url];
+				} else {
+					product.imageUrl.push(url);
+				}
+			});
+		}
+		console.log(product.imageUrl, 'desp de files');
+
+		await Products.findByIdAndUpdate({_id: req.params.id}, product);
 		if (product.categories) {
 			product.categories.length &&
 				(await Promise.all(
