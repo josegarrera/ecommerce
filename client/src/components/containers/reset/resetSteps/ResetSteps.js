@@ -67,13 +67,13 @@ const ResetSteps = ({handleSubmit, step, languaje, loading, buttonRef}) => {
 									className='emailInput'
 									type={handleInputType()}
 									value={input}
-									placeholder='Enter email'
+									placeholder={`enter ${s.label[step]}`}
 									onChange={(e) => handleInputChange(e)}
 								/>
 							</div>
 							<p>{s.description[step]}</p>
 							<button ref={buttonRef} type='submit' className='signUpBtnBottom'>
-								{loading ? <i></i> : s.button[step]}
+								{loading ? null : s.button[step]}
 							</button>
 						</form>
 					</div>
