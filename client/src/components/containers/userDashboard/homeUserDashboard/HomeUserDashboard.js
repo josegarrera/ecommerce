@@ -6,6 +6,8 @@ import ListDashboard from '../listDashboardUser/ListDashboardUser';
 import {IoIosArrowForward} from 'react-icons/io';
 import {BsPersonPlusFill, BsPersonCheckFill} from 'react-icons/bs';
 //import FormProductDashboard from '../addProductDashboard/index';
+import Cart from '../../cart/Cart';
+import Favourites from '../../favourites/Favourites';
 
 const HomeUserDashboard = () => {
 	const [Options, setOptions] = useState('Home');
@@ -22,7 +24,12 @@ const HomeUserDashboard = () => {
 	const handleOnClick = (e) => {
 		setOptions(e.target.name);
 	};
-	const arrayButtons = [{name: 'My profile'}, {name: 'My orders'}];
+	const arrayButtons = [
+		{name: 'My profile'},
+		{name: 'My orders'},
+		{name: 'My favourites'},
+		{name: 'My cart'},
+	];
 
 	return (
 		<StyledContainer>
@@ -52,25 +59,13 @@ const HomeUserDashboard = () => {
 									) : (
 										<div className='userName'>No Name</div>
 									)}
-									<div className='signOut' onClick={eraseToken}>
-										Sign out.
-									</div>
+									<div className='myProfile'>Dato extra</div>
 								</div>
 							) : null}
 						</div>
 					</div>
-					{/* <div className='backStore'>
-						<Link className='backstore' to='/home'>
-						<div className='separator'></div>
-							Back to Store!
-						</Link>
-					</div> */}
 				</div>
 				<div>
-					{/* <div className='dashboard'>{'User Dashboard'}</div>
-					<button className='brand' name={'Home'} onClick={handleOnClick}>
-						{'<Store! />'}
-					</button> */}
 					<div className='options'>
 						{arrayButtons.map((el) => (
 							<button className='option' name={el.name} onClick={handleOnClick}>
@@ -84,15 +79,13 @@ const HomeUserDashboard = () => {
 					</div>
 				</div>
 			</div>
-			{/* <div className='content'>
-				{Options === 'Home' ? (
-					<GraphicsDashboard setOptions={setOptions} />
-				) : Options === 'createProduct' ? (
-					<FormProductDashboard />
-				) : (
-					<ListDashboard Options={Options} setOptions={setOptions} />
-				)}
-			</div> */}
+			<div className='content'>
+				{Options === 'My cart' ? (
+					<Cart />
+				) : Options === 'My favourites' ? (
+					<Favourites />
+				) : null}
+			</div>
 		</StyledContainer>
 	);
 };
