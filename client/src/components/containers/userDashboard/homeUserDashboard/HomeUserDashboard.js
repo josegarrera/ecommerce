@@ -2,12 +2,11 @@ import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import {StyledContainer} from './styles';
 import ListDashboard from '../listDashboardUser/ListDashboardUser';
-//import GraphicsDashboard from '../graphicsDashboard/GraphicsDashboard';
 import {IoIosArrowForward} from 'react-icons/io';
 import {BsPersonPlusFill, BsPersonCheckFill} from 'react-icons/bs';
-//import FormProductDashboard from '../addProductDashboard/index';
 import Cart from '../../cart/Cart';
 import Favourites from '../../favourites/Favourites';
+import Profile from '../userProfile/Profile';
 
 const HomeUserDashboard = () => {
 	const [Options, setOptions] = useState('Home');
@@ -15,11 +14,6 @@ const HomeUserDashboard = () => {
 	let firstName = window.localStorage.getItem('firstName');
 	let lastName = window.localStorage.getItem('lastName');
 	let profileImage = window.localStorage.getItem('profileImage');
-
-	const eraseToken = () => {
-		window.localStorage.clear();
-		window.location.reload();
-	};
 
 	const handleOnClick = (e) => {
 		setOptions(e.target.name);
@@ -84,6 +78,8 @@ const HomeUserDashboard = () => {
 					<Cart />
 				) : Options === 'My favourites' ? (
 					<Favourites />
+				) : Options === 'My profile' ? (
+					<Profile />
 				) : null}
 			</div>
 		</StyledContainer>
