@@ -67,7 +67,7 @@ const AccordionDashboard = ({
 				{Option ? (
 					<AccordionItem onClick={() => setAccStatus(!AccStatus)}>
 						<AccordionItemButton className='title2'>
-							{items && items.length} {Option} {'pero'}
+							{items && items.length} {Option} {''}
 							{AccStatus === false ? (
 								<MdKeyboardArrowDown
 									className='open'

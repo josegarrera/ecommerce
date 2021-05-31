@@ -11,7 +11,6 @@ export const StyledContainer = styled.div`
 		grid-area: sidebar;
 		display: flex;
 		flex-direction: column;
-		justify-content: space-between;
 		background-color: #2a9d8f;
 		box-shadow: 1px 0px 10px gray;
 		padding: 20px;
