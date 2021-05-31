@@ -28,7 +28,7 @@ const FormProductStyle = styled.div`
     background: #f5f5f5;
     width: 100%;
     border: 1px solid #eeeeee;
-    padding: 0.8rem 1rem;
+    padding: 0.5rem 1rem;
     border-radius: 0.6rem 0 0 0.6rem;
     color: #757575;
     font-size: 1rem;
