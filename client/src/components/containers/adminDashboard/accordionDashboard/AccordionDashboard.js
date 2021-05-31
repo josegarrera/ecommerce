@@ -116,7 +116,8 @@ const AccordionDashboard = ({
 			<div key={index + '-variants'}>
 				{Object.entries(el).map(
 					(e, i) =>
-						e[0] !== 'id' && (
+						e[0] !== 'id' &&
+						e[0] !== 'imageFile' && (
 							<div key={i + '-variantss'}>
 								{e[0]}:&nbsp;
 								{EditAItem[index][e[0]]}

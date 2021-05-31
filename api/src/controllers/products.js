@@ -42,6 +42,8 @@ async function getProductsDetail(req, res) {
 async function createProduct(req, res) {
 	const info = JSON.parse(req.body.info);
 	const files = req.files;
+	console.log(info);
+	console.log(files);
 	const {
 		name,
 		description,
@@ -286,7 +288,6 @@ async function updateProduct(req, res) {
 			const filesUrl = filesUpdates.map(
 				(file) => STORAGE_BASEURL + file[0].name
 			);
-			console.log(filesUrl, 'url files');
 
 			filesUrl.forEach((url) => {
 				let i = product.variants.findIndex((variant) =>
@@ -299,7 +300,8 @@ async function updateProduct(req, res) {
 				}
 			});
 		}
-		console.log(product.imageUrl, 'desp de files');
+
+		product.variants.map((variant) => delete variant.imageFile);
 
 		await Products.findByIdAndUpdate({_id: req.params.id}, product);
 		if (product.categories) {

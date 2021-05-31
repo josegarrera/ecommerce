@@ -89,11 +89,11 @@ const ProductDashboardStyle = styled.div`
 			}
 		}
 		.imageSlider:hover {
-			transform: scale(1.5, 1.5);
+			transform: scale(1.2, 1.2);
 		}
 
 		.labelFile {
-			margin-top: 10px;
+			margin-top: 50px;
 			border: 2px solid gray;
 			border-radius: 10%;
 		}
