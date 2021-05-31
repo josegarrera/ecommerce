@@ -2,6 +2,8 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import FormProductDashboard from "../addProductDashboard";
 import SearchStyles from "./styled";
+import { FaSearch } from "react-icons/fa";
+import { IoMdAddCircle } from "react-icons/io";
 
 /* let props = ['email', 'role', 'name', '_id', 'price.value', 'user']; */
 
@@ -66,15 +68,27 @@ const SearchBar = ({
 
   return (
     <SearchStyles>
-      <input
-        className="searchInput"
-        type="text"
-        placeHolder="   Search by name, price, id, categorie, role, email, etc"
-        onChange={handleOnChangue}
-      />
+      <div className="search__bar">
+        <input
+          className="searchInput"
+          type="text"
+          placeHolder="   Search by name, price, id, categorie, role, email, etc"
+          onChange={handleOnChangue}
+        />
+        <i className="search__icon">
+          <FaSearch />
+        </i>
+      </div>
       {options && options !== "Orders" ? (
         <button className="form__button" onClick={handleClick}>
-          Add {options && options.toLowerCase().slice(0, options.length - 1)}
+          <div>
+            <i className="add__icon">
+              <IoMdAddCircle />
+            </i>
+          </div>
+          <div>
+            Add {options && options.toLowerCase().slice(0, options.length - 1)}
+          </div>
         </button>
       ) : (
         <button
