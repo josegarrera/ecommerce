@@ -2,10 +2,19 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import DropdownStyle from "./styled";
 import { RiCloseFill } from "react-icons/ri";
+import { useSelector } from "react-redux";
 
 <RiCloseFill className="icon" />;
 
 function Dropdown({ handleClick }) {
+  let userId = window.localStorage.getItem("userId");
+  const user = useSelector((state) => state.user);
+
+  const eraseToken = () => {
+    window.localStorage.clear();
+    window.location.reload();
+  };
+
   return (
     <>
       <DropdownStyle>
@@ -37,6 +46,40 @@ function Dropdown({ handleClick }) {
             <Link className="dropdown-link" to="/contact">
               Contact
             </Link>
+
+            {userId ? (
+              //           {/* {profileImage !== "undefined" ? (
+              //   <img className="image" src={profileImage} alt="no" />
+              // ) : (
+              //   <BsPersonCheckFill className="icon iconLogin" />
+              // )} */}
+
+              //   {/* {user.role === "admin" ? (
+              //     <Link to="/adminDashboard">
+              //       <div className="buttonLoginHover">Dashboard</div>
+              //     </Link>
+              //   ) : null} */}
+
+              <Link to="/catalogue">
+                <div className="login" onClick={eraseToken}>
+                  Sign Out
+                </div>
+              </Link>
+            ) : (
+              <div>
+                <Link to="/login">
+                  <div className="dropdown-button">
+                    <div className="sign-in"> Sign in </div>
+                  </div>
+                </Link>
+                <div className="sign-up">
+                  Don't have an account?
+                  <Link className="signup-link" to="/signup">
+                    Sign up
+                  </Link>
+                </div>
+              </div>
+            )}
           </div>
         </ul>
       </DropdownStyle>

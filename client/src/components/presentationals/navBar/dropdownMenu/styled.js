@@ -9,6 +9,7 @@ const DropdownStyle = styled.div`
   width: 100%;
   height: 100%;
   z-index: 100;
+  transition: all 0.5s ease;
 
   .dropdown-menu {
     display: flex;
@@ -23,10 +24,6 @@ const DropdownStyle = styled.div`
     list-style: none;
     text-align: start;
 
-    &hover {
-      background: #5cabff;
-    }
-
     .close-icon {
       cursor: pointer;
       position: absolute;
@@ -36,12 +33,50 @@ const DropdownStyle = styled.div`
       right: 1rem;
       z-index: 100;
     }
+    &:hover {
+      color: #bdbdbd;
+    }
 
     .dropdown-link {
-      font-size: 2rem;
-      margin: 5rem 0;
+      font-size: 1.3rem;
+      margin: 4rem 0;
       color: #ffffff;
       cursor: pointer;
+    }
+    &:hover {
+      color: #bdbdbd;
+    }
+
+    .dropdown-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 5rem;
+      width: 100%;
+      color: #fff;
+      z-index: 100;
+      background: white;
+      border-radius: 0.3rem;
+    }
+
+    .sign-in {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #212121;
+    }
+
+    .sign-up {
+      display: flex;
+      width: max-content;
+      margin: 1.5rem 0;
+      font-size: 1rem;
+      color: #fff;
+    }
+
+    .signup-link {
+      color: #fff;
+      margin: 0 1rem;
+      font-weight: 600;
     }
 
     &hover {

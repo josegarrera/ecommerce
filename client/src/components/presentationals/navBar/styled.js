@@ -58,6 +58,7 @@ const DivNavBar = styled.div`
 
         .iconDiv {
           margin: 0 1rem;
+          background-color: unset;
         }
 
         .MuiBadge-anchorOriginTopRightRectangle {
@@ -120,6 +121,10 @@ const DivNavBar = styled.div`
 
         &:hover .loginHoverCart {
           display: block;
+        }
+        
+        @media screen and (max-width: 992px) {
+          display: none;
         }
       }
 
