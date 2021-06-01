@@ -11,6 +11,7 @@ const users = require('./users.js');
 const checkout = require('./checkout.js');
 const favourites = require('./favourites.js');
 const auth = require('./auth.js');
+const newsLetter = require('./newsLetter');
 const {getAllProducts} = require('../controllers/products.js');
 
 // authentication
@@ -66,17 +67,16 @@ router.get(
 	}
 );
 
-
 router.get('/allproducts', getAllProducts); //no JWT
 router.use('/auth', auth);
-router.use('/products', products);//SI JWT
-router.use('/categories', categories);//SI JWT
-router.use('/brands', brands);//SI JWT
-router.use('/orders', orders);//SI JWT
+router.use('/products', products); //SI JWT
+router.use('/categories', categories); //SI JWT
+router.use('/brands', brands); //SI JWT
+router.use('/orders', orders); //SI JWT
 router.use('/currencies', currencies); //?????
-router.use('/users', users);//SI JWT
-router.use('/checkout', checkout);//SI JWT | VERIFY IF EXISTS TOKEN
-router.use('/favourites', favourites);//SI JWT | VERIFY IF EXISTS TOKEN
-
+router.use('/users', users); //SI JWT
+router.use('/checkout', checkout); //SI JWT | VERIFY IF EXISTS TOKEN
+router.use('/favourites', favourites); //SI JWT | VERIFY IF EXISTS TOKEN
+router.use('/newsLetter', newsLetter);
 
 module.exports = router;

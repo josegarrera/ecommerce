@@ -15,9 +15,9 @@ Se implementaron metodologías ágiles SCRUM y control de versiones con Github.
 
 ## Tecnologías Utilizadas:
 
-- React
+- React Js
 - Redux
-- Express
+- Node Js - Express Js
 - Mongo - Mongoosee
 - Styled-Components
 

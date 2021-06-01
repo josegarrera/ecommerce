@@ -9,6 +9,7 @@ import FormProductDashboard from '../addProductDashboard/index';
 
 const HomeDashboard = () => {
 	const [Options, setOptions] = useState('Home');
+	const [showModal, setShowModal] = useState(false);
 	let userId = window.localStorage.getItem('userId');
 	let firstName = window.localStorage.getItem('firstName');
 	let lastName = window.localStorage.getItem('lastName');
@@ -34,13 +35,25 @@ const HomeDashboard = () => {
 		<StyledContainer>
 			<div className='sidebar'>
 				<div>
-					<div className='dashboard'>{'Admin Dashboard'}</div>
-					<button className='brand' name={'Home'} onClick={handleOnClick}>
+					<div key='home-div-1' className='dashboard'>
+						{'Admin Dashboard'}
+					</div>
+					<button
+						key='home-btn-0'
+						className='brand'
+						name={'Home'}
+						onClick={handleOnClick}
+					>
 						{'<Store! />'}
 					</button>
-					<div className='options'>
+					<div key='home-div-2' className='options'>
 						{arrayButtons.map((el) => (
-							<button className='option' name={el.name} onClick={handleOnClick}>
+							<button
+								key={'home-btn-' + el.name}
+								className='option'
+								name={el.name}
+								onClick={handleOnClick}
+							>
 								{Options === el.name ? (
 									<IoIosArrowForward className='arrow' />
 								) : null}
@@ -51,8 +64,8 @@ const HomeDashboard = () => {
 					</div>
 				</div>
 				<div className='bottomSidebar'>
-					<div className='userDiv'>
-						<button className='iconDiv'>
+					<div key='home-div-3' className='userDiv'>
+						<button key='home-btn-2' className='iconDiv'>
 							{userId ? (
 								profileImage !== 'undefined' ? (
 									<img className='image' src={profileImage} alt='no' />
@@ -67,32 +80,38 @@ const HomeDashboard = () => {
 						</button>
 						<div>
 							{userId ? (
-								<div className='login'>
+								<div key='home-div-4' className='login'>
 									{firstName !== 'undefined' && lastName !== 'undefined' ? (
-										<div className='userName'>
+										<div key='home-div-5' className='userName'>
 											{firstName} {lastName}
 										</div>
 									) : (
 										<div className='userName'>No Name</div>
 									)}
-									<div className='signOut' onClick={eraseToken}>
+									<div
+										key='home-div-6'
+										className='signOut'
+										onClick={eraseToken}
+									>
 										Sign out.
 									</div>
 								</div>
 							) : null}
 						</div>
 					</div>
-					<div className='backStore'>
+					<div key='home-div-7' className='backStore'>
 						<div className='separator'></div>
 						<Link to='/home'>Back to Store!</Link>
 					</div>
 				</div>
 			</div>
-			<div className='content'>
+			<div key='home-div-8' className='content'>
 				{Options === 'Home' ? (
 					<GraphicsDashboard setOptions={setOptions} />
 				) : Options === 'createProduct' ? (
-					<FormProductDashboard />
+					<>
+						<ListDashboard Options={'Products'} setOptions={setOptions} />
+					</>
 				) : (
 					<ListDashboard Options={Options} setOptions={setOptions} />
 				)}

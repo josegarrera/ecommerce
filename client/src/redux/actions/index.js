@@ -321,8 +321,6 @@ export const getCategories = () => {
   };
 }; */
 
-
-
 export const addCartProduct = (id) => {
 	// trae el cart de un usuario del servidor.
 	return async (dispatch) => {
@@ -370,9 +368,16 @@ export const changeLot = (body) => {
 	return async (dispatch) => {
 		const {data} = await axios.put(URLS.URL_USER_ORDERS, body);
 		return dispatch({
-			type: 'CHANGE_LOT',
+			type: ActionTypes.CHANGE_LOT,
 			payload: data.response.items,
 		});
+	};
+};
+
+export const changeLotLocal = (payload) => {
+	return {
+		type: ActionTypes.CHANGE_LOT_LOCAL,
+		payload,
 	};
 };
 

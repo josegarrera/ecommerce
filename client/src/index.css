@@ -10,6 +10,13 @@
 	outline: none;
 }
 
+:root {
+  --primary-color: #58abf6;
+  --border: #007aff;
+  --error: #e94040;
+  --success: #00c469;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
 	-webkit-appearance: none;

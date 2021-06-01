@@ -2,22 +2,18 @@ import axios from 'axios';
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {URLS} from '../../../../utils/constants';
-import CardItems from '../cardItems/CardItems';
+import CardItems from '../cardItemsUser/CardItemsUser';
 import Create from '../../create/Create';
-import SearchBarDashboard from '../searchBarDashboard';
+//import SearchBarDashboard from '../searchBarDashboard';
 import ListStyles from './styled';
 /* import {clearObjectValues} from '../../../../utils/clearObjetcValues'; */
 import {getCategories, getBrands, getProducts} from '../../../../redux/actions';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-import {AiFillPlusCircle} from 'react-icons/ai';
-
-
 /* var _ = require('lodash'); */
 
 const ListDashboard = ({Options, setOptions}) => {
 	const [Items, setItems] = useState([]);
-	const [showModal, setShowModal] = useState(false);
 	const [Filter, setFilter] = useState([]);
 	const [create, setCreate] = useState(false);
 	/* const [control, setControl] = useState(0); */
@@ -39,9 +35,7 @@ const ListDashboard = ({Options, setOptions}) => {
 	}, []);
 
 	useEffect(() => {
-
-		setFilter(Items);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+		setFilter(Items); // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [Items]);
 
 	// useEffect(() => {
@@ -103,18 +97,17 @@ const ListDashboard = ({Options, setOptions}) => {
 
 	return (
 		<ListStyles>
-			{Items && (
-				<SearchBarDashboard
+			{Items &&
+				{
+					/* <SearchBarDashboard
 					Items={Items}
 					setFilter={setFilter}
 					setCreate={setCreate}
 					create={create}
 					options={Options}
 					setOptions={setOptions}
-					showModal={showModal}
-					setShowModal={setShowModal}
-				/>
-			)}
+				/> */
+				}}
 			{Options === 'Products' ? (
 				<>
 					{/* {create ? <Create options={Options} /> : null} */}
@@ -123,15 +116,12 @@ const ListDashboard = ({Options, setOptions}) => {
 						className='listProduct'
 						dataLength={Filter.length}
 						loader={<h4>Loading...</h4>}
-						height={'85vh'}
-
+						height={700}
 					>
 						{Filter &&
 							Filter.map((el, index) => (
 								<CardItems
-
-									prop={{...el}}
-									key={el._id}
+									prop={el}
 									index={index}
 									options={Options}
 									allProducts={allProducts}
@@ -157,13 +147,12 @@ const ListDashboard = ({Options, setOptions}) => {
 						className='listProduct'
 						dataLength={Filter.length}
 						loader={<h4>Loading...</h4>}
-						height={'85vh'}
+						height={600}
 					>
 						{Filter &&
 							Filter.map((el, index) => (
 								<CardItems
 									prop={el}
-									key={el._id}
 									index={index}
 									options={Options}
 									allProducts={allProducts}
@@ -188,14 +177,12 @@ const ListDashboard = ({Options, setOptions}) => {
 						className='listProduct'
 						dataLength={Filter.length}
 						loader={<h4>Loading...</h4>}
-						height={'85vh'}
-
+						height={600}
 					>
 						{Filter &&
 							Filter.map((el, index) => (
 								<CardItems
 									prop={el}
-									key={el._id}
 									index={index}
 									options={Options}
 									allProducts={allProducts}
@@ -209,13 +196,12 @@ const ListDashboard = ({Options, setOptions}) => {
 					className='listProduct'
 					dataLength={Filter.length}
 					loader={<h4>Loading...</h4>}
-					height={'85vh'}
+					height={600}
 				>
 					{Filter &&
 						Filter.map((el, index) => (
 							<CardItems
 								prop={el}
-								key={el._id}
 								index={index}
 								options={Options}
 								allProducts={allProducts}
@@ -238,13 +224,12 @@ const ListDashboard = ({Options, setOptions}) => {
 						className='listProduct'
 						dataLength={Filter.length}
 						loader={<h4>Loading...</h4>}
-						height={'85vh'}
+						height={600}
 					>
 						{Filter &&
 							Filter.map((el, index) => (
 								<CardItems
 									prop={el}
-									key={el._id}
 									index={index}
 									options={Options}
 									allProducts={allProducts}

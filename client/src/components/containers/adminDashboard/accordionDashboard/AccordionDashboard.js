@@ -5,10 +5,10 @@ import {
 	AccordionItemButton,
 	AccordionItemPanel,
 } from 'react-accessible-accordion';
-
 import {TiDeleteOutline} from 'react-icons/ti';
-
 import {MdKeyboardArrowDown, MdKeyboardArrowUp} from 'react-icons/md';
+import {Carousel} from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 const AccordionDashboard = ({
 	items,
@@ -20,24 +20,94 @@ const AccordionDashboard = ({
 	paymentDetail,
 	paymentMethod,
 	paymentCurrency,
+	setEditAItem,
 }) => {
 	const [AccStatus, setAccStatus] = useState(false);
 
 	if (isEditAItem && Option === 'variants') {
 		items = items.map((el, index) => (
-			<div key={index + '-variants'}>
+			<div key={index + '-variants'} id='variantsAccordionContainer'>
 				{Object.entries(el).map(
 					(e, i) =>
 						e[0] !== 'id' && (
-							<div key={i + '-variantss'}>
-								<label key={i + '-label'}>{e[0]}</label>
-								<input
-									key={i + '-input'}
-									name={e[0]}
-									id={e[0] + index}
-									onChange={handleInput}
-									value={EditAItem[index][e[0]]} // [{}{}]
-								></input>
+							<div key={i + '-variants-1'}>
+								{e[0] === 'imageUrl' ? (
+									<div key={i + '-variants-2'} id='imagesVariantsContainer'>
+										<div key={i + '-variants-3'}>
+											<label
+												for={index + 'file-upload-variants'}
+												key={index + 'label-variants'}
+												className='labelVariantsFile'
+											>
+												<input
+													id={index + 'file-upload-variants'}
+													key={index + 'input-file-variants'}
+													className='inputFileVariants'
+													name='imageFile'
+													type='file'
+													accept='image/*'
+													onChange={(e) =>
+														handleInput(e, EditAItem, setEditAItem)
+													}
+													value={
+														EditAItem[index].imageFile &&
+														EditAItem[index].imageFile.fileValue
+													}
+												/>{' '}
+												Add img
+											</label>
+											{EditAItem[index].imageFile && (
+												<label key={i + '-label-imageFile'}>
+													{EditAItem[index].imageFile.fileValue
+														? '1 file selected'
+														: ''}
+												</label>
+											)}
+										</div>
+										<Carousel className='imageSlider' showStatus>
+											{e[1].map((url, i) => (
+												<div key={url + 'div'} className='variantSliderDiv'>
+													<img
+														key={url + '-img'}
+														className='variantImg'
+														src={url}
+														alt='imagen de producto'
+													/>
+													<button
+														key={i + '-btn-variants'}
+														className='buttonDiv'
+													>
+														<TiDeleteOutline
+															key={url + 'btnDelete'}
+															id={String(index + url)}
+															onClick={(e) =>
+																handleInput(e, EditAItem, setEditAItem)
+															}
+															className='button'
+														/>
+													</button>
+												</div>
+											))}
+										</Carousel>
+									</div>
+								) : (
+									e[0] !== 'imageFile' && (
+										<div key={i + '-variants-4'}>
+											<label key={i + '-label' + e[0]}>{e[0]}</label>
+											<input
+												key={i + '-input' + e[0]}
+												name={e[0]}
+												className='variantInput'
+												type={e[0] === 'stock' ? 'number' : 'text'}
+												id={e[0] + index}
+												onChange={(e) =>
+													handleInput(e, EditAItem, setEditAItem)
+												}
+												value={EditAItem[index][e[0]]}
+											></input>
+										</div>
+									)
+								)}
 							</div>
 						)
 				)}
@@ -46,10 +116,11 @@ const AccordionDashboard = ({
 		));
 	} else if (!isEditAItem && Option === 'variants') {
 		items = items.map((el, index) => (
-			<div key={index + '-variants'}>
+			<div key={index + '-variants-5'}>
 				{Object.entries(el).map(
 					(e, i) =>
-						e[0] !== 'id' && (
+						e[0] !== 'id' &&
+						e[0] !== 'imageFile' && (
 							<div key={i + '-variantss'}>
 								{e[0]}:&nbsp;
 								{EditAItem[index][e[0]]}
@@ -67,7 +138,7 @@ const AccordionDashboard = ({
 				{Option ? (
 					<AccordionItem onClick={() => setAccStatus(!AccStatus)}>
 						<AccordionItemButton className='title2'>
-							{items && items.length} {Option} {'pero'}
+							{items && items.length} {Option} {''}
 							{AccStatus === false ? (
 								<MdKeyboardArrowDown
 									className='open'
@@ -82,14 +153,21 @@ const AccordionDashboard = ({
 						</AccordionItemButton>
 						<div className='accordionItems'>
 							{items &&
-								items.map((el) =>
+								items.map((el, index) =>
 									isEditAItem ? (
-										<AccordionItemPanel>
-											<div className='div_delete_categorie'>
+										<AccordionItemPanel key={index + '-accordion-panel'}>
+											<div
+												key={index + '-accordion-div'}
+												className='div_delete_categorie'
+											>
 												{Option === 'variants' ? el : el.name}
-												<button className='buttonDiv'>
+												<button
+													key={index + '-accordion-btn'}
+													className='buttonDiv'
+												>
 													<TiDeleteOutline
-														id={el.name}
+														key={index + '-accordion-ti'}
+														id={el.name || String(EditAItem[index].id)}
 														onClick={handler}
 														className='button'
 													/>

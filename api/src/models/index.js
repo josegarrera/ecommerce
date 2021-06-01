@@ -5,6 +5,7 @@ const Currencies = require('../models/currencies.js');
 const Orders = require('../models/orders.js');
 const Users = require('../models/users.js');
 const Favourites = require('../models/favourites.js');
+const NewsLetter = require('./newsLetter');
 
 module.exports = {
 	Products,
@@ -14,4 +15,5 @@ module.exports = {
 	Orders,
 	Users,
 	Favourites,
+	NewsLetter,
 };

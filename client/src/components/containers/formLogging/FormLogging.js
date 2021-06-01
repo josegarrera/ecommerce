@@ -33,7 +33,6 @@ const FormLogging = () => {
 			.post(URLS.URL_LOGIN, input)
 			.then(function (response) {
 				let data = response.data;
-				console.log('y acaaaa', data);
 				if (data.notLogin) {
 					const message = data.notLogin;
 					if (message && message.includes('User')) {
@@ -51,10 +50,20 @@ const FormLogging = () => {
 						password: '',
 					});
 					window.localStorage.setItem('token', data.token);
-					window.localStorage.setItem('userId', data.user._id);
+					console.log('adresssss', data.user);
+					window.localStorage.setItem(
+						'address',
+						JSON.stringify(data.user.address)
+					);
+					window.localStorage.setItem('email', data.user.email);
 					window.localStorage.setItem('firstName', data.user.firstName);
+					window.localStorage.setItem(
+						'identification',
+						data.user.identification
+					);
 					window.localStorage.setItem('lastName', data.user.lastName);
 					window.localStorage.setItem('profileImage', data.user.profileImage);
+					window.localStorage.setItem('userId', data.user._id);
 					dispatch(loginUser({role: data.user.role}));
 
 					if (data.user.role === 'admin') {
@@ -94,14 +103,25 @@ const FormLogging = () => {
 
 		if (users.data.response.find((el) => el.email === inputGoogle.email)) {
 			let userLogIn = await axios.post(URLS.URL_LOGIN, inputGoogle);
+
 			window.localStorage.setItem('token', userLogIn.data.token);
-			window.localStorage.setItem('userId', userLogIn.data.user._id);
+			window.localStorage.setItem(
+				'address',
+				JSON.stringify(userLogIn.data.user.address)
+			);
+			window.localStorage.setItem('email', userLogIn.data.user.email);
 			window.localStorage.setItem('firstName', userLogIn.data.user.firstName);
+			window.localStorage.setItem(
+				'identification',
+				userLogIn.data.user.identification
+			);
 			window.localStorage.setItem('lastName', userLogIn.data.user.lastName);
 			window.localStorage.setItem(
 				'profileImage',
 				userLogIn.data.user.profileImage
 			);
+			window.localStorage.setItem('userId', userLogIn.data.user._id);
+
 			dispatch(loginUser({role: userLogIn.data.user.role}));
 			if (userLogIn.data.user.role === 'admin') {
 				history.push('/admindashboard');
@@ -113,13 +133,22 @@ const FormLogging = () => {
 			let userLogIn = await axios.post(URLS.URL_LOGIN, inputGoogle);
 
 			window.localStorage.setItem('token', userLogIn.data.token);
-			window.localStorage.setItem('userId', userLogIn.data.user._id);
+			window.localStorage.setItem(
+				'address',
+				JSON.stringify(userLogIn.data.user.address)
+			);
+			window.localStorage.setItem('email', userLogIn.data.user.email);
 			window.localStorage.setItem('firstName', userLogIn.data.user.firstName);
+			window.localStorage.setItem(
+				'identification',
+				userLogIn.data.user.identification
+			);
 			window.localStorage.setItem('lastName', userLogIn.data.user.lastName);
 			window.localStorage.setItem(
 				'profileImage',
 				userLogIn.data.user.profileImage
 			);
+			window.localStorage.setItem('userId', userLogIn.data.user._id);
 
 			dispatch(loginUser({role: userLogIn.data.user.role}));
 			if (userLogIn.data.user.role === 'admin') {
