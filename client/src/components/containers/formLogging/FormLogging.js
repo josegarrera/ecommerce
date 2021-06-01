@@ -50,7 +50,11 @@ const FormLogging = () => {
 						password: '',
 					});
 					window.localStorage.setItem('token', data.token);
-					window.localStorage.setItem('address', data.user.address);
+					console.log('adresssss', data.user);
+					window.localStorage.setItem(
+						'address',
+						JSON.stringify(data.user.address)
+					);
 					window.localStorage.setItem('email', data.user.email);
 					window.localStorage.setItem('firstName', data.user.firstName);
 					window.localStorage.setItem(
@@ -101,7 +105,10 @@ const FormLogging = () => {
 			let userLogIn = await axios.post(URLS.URL_LOGIN, inputGoogle);
 
 			window.localStorage.setItem('token', userLogIn.data.token);
-			window.localStorage.setItem('address', userLogIn.data.user.address);
+			window.localStorage.setItem(
+				'address',
+				JSON.stringify(userLogIn.data.user.address)
+			);
 			window.localStorage.setItem('email', userLogIn.data.user.email);
 			window.localStorage.setItem('firstName', userLogIn.data.user.firstName);
 			window.localStorage.setItem(
@@ -126,7 +133,10 @@ const FormLogging = () => {
 			let userLogIn = await axios.post(URLS.URL_LOGIN, inputGoogle);
 
 			window.localStorage.setItem('token', userLogIn.data.token);
-			window.localStorage.setItem('address', userLogIn.data.user.address);
+			window.localStorage.setItem(
+				'address',
+				JSON.stringify(userLogIn.data.user.address)
+			);
 			window.localStorage.setItem('email', userLogIn.data.user.email);
 			window.localStorage.setItem('firstName', userLogIn.data.user.firstName);
 			window.localStorage.setItem(
