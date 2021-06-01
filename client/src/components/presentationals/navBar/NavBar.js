@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { IoCart, IoHeart } from "react-icons/io5";
@@ -8,18 +8,26 @@ import DivNavBar from "./styled";
 import { BsPersonCheckFill, BsPersonPlusFill } from "react-icons/bs";
 import { Badge } from "@material-ui/core";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { RiCloseFill } from "react-icons/ri";
 
 import CartHoverView from "../../containers/cartHoverView/CartHoverView";
 import FavoritesHoverView from "../../containers/favoritesHoverView/FavoritesHoverView";
+import Dropdown from "./dropdownMenu/index.js";
 
 const NavBar = () => {
   const cartProduct = useSelector((state) => state.cartProducts);
   const favsProduct = useSelector((state) => state.wishlist);
+  const [click, setClick] = useState(false);
   let userId = window.localStorage.getItem("userId");
   let firstName = window.localStorage.getItem("firstName");
   let lastName = window.localStorage.getItem("lastName");
   let profileImage = window.localStorage.getItem("profileImage");
   const user = useSelector((state) => state.user);
+
+  const handleClick = () => {
+    setClick(!click);
+  };
+
   const eraseToken = () => {
     window.localStorage.clear();
     window.location.reload();
@@ -162,13 +170,14 @@ const NavBar = () => {
               <CartHoverView className="cartHoverView" />
             </div>
           </Badge>
-          <Badge color="secondary">
+          <Badge color="secondary" onClick={handleClick}>
             <div className="iconDiv responsive-menu">
-              <Link to="/cart">
+              <Link>
                 <GiHamburgerMenu className="icon" />
               </Link>
             </div>
           </Badge>
+          {click && <Dropdown handleClick={handleClick} />}
         </div>
       </div>
       <div className="bottomNav">
