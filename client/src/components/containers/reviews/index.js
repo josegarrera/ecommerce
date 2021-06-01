@@ -17,9 +17,10 @@ const Reviews = ({id, setUpdateReview, updateReview, allReviews}) => {
 	const STYLE_COMMENT = {
 		paddingBottom: '1.5rem',
 		borderBottom: '1px solid rgba(0,0,0,0.1)',
-		width: '65rem',
+		width: '50vw',
 		color: 'rgba(0,0,0,0.7)',
 		fontSize: '50px',
+		overflow: 'hidden',
 	};
 	const HOVER_BTN = {
 		color: '#118ab2',
@@ -45,7 +46,7 @@ const Reviews = ({id, setUpdateReview, updateReview, allReviews}) => {
 		});
 
 	return (
-		<React.Fragment id='comments'>
+		<div className='div_fragment' id='comments'>
 			<h1 className='review_title'>Reviews</h1>
 			{allReviews && allReviews.length < 1 && (
 				<span className='span_no_review'>
@@ -70,7 +71,7 @@ const Reviews = ({id, setUpdateReview, updateReview, allReviews}) => {
 						...base,
 						...STYLE_COMMENT,
 						a: {
-							marginLeft: '-1.5rem',
+							marginLeft: '-1.3rem',
 							padding: '0',
 						},
 					}),
@@ -99,7 +100,7 @@ const Reviews = ({id, setUpdateReview, updateReview, allReviews}) => {
 					}
 				}}
 			/>
-		</React.Fragment>
+		</div>
 	);
 };
 

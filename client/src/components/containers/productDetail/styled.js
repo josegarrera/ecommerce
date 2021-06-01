@@ -20,7 +20,7 @@ const ProductDetailStyle = styled.div`
 		display: flex;
 		flex-flow: column;
 		align-items: center;
-		width: 1300px;
+		width: 85vw;
 		margin: 3vh;
 		border-radius: 15px;
 		color: #a1a3a6;
@@ -38,7 +38,7 @@ const ProductDetailStyle = styled.div`
 		justify-content: space-between;
 		padding-left: 20px;
 		padding-right: 20px;
-		font-size: 16px;
+		font-size: 1rem;
 
 		.topDivLeft {
 			display: flex;
@@ -47,7 +47,7 @@ const ProductDetailStyle = styled.div`
 				border: none;
 				background: none;
 				color: #a1a3a6;
-				font-size: 16px;
+				font-size: 1rem;
 				&:hover {
 					cursor: pointer;
 				}
@@ -60,20 +60,18 @@ const ProductDetailStyle = styled.div`
 
 	.centerDiv {
 		display: flex;
-
+		width: 80vw;
 		.imagesBox {
 			display: flex;
 			flex-direction: column;
-
-			padding: 5px;
-
+			padding: 0.5rem;
 			.imageBox {
 				display: flex;
 				justify-content: center;
 				border: 1px solid #e7e7e7;
 				border-radius: 5px;
-				width: 70px;
-				height: 70px;
+				width: 5rem;
+				height: 5rem;
 				padding: 5px;
 				margin: 5px;
 
@@ -93,8 +91,9 @@ const ProductDetailStyle = styled.div`
 		.imageBigDiv {
 			display: flex;
 			justify-content: center;
-			height: 700px;
-			width: 700px;
+			margin: auto;
+			height: 40rem;
+			width: 40rem;
 			padding: 10px;
 
 			.imageBig {
@@ -113,7 +112,7 @@ const ProductDetailStyle = styled.div`
 			border-radius: 25px;
 			margin: 10px;
 			padding: 20px;
-			width: 450px;
+			max-width: 40%;
 
 			.infoDivTop {
 				display: flex;
@@ -129,7 +128,7 @@ const ProductDetailStyle = styled.div`
 
 					.name {
 						color: #a1a3a6;
-						font-size: 25px;
+						font-size: 1.5rem;
 					}
 
 					.btns {
@@ -138,7 +137,7 @@ const ProductDetailStyle = styled.div`
 						justify-content: space-around;
 
 						.fav {
-							font-size: 25px;
+							font-size: 1.5rem;
 							color: #ee362e;
 
 							&:hover {
@@ -178,13 +177,13 @@ const ProductDetailStyle = styled.div`
 
 				.price {
 					color: #a1a3a6;
-					font-size: 35px;
+					font-size: 1.9rem;
 					font-weight: 500;
 				}
 
 				.cuotas {
 					color: #00a650;
-					font-size: 20px;
+					font-size: 1.2rem;
 				}
 			}
 
@@ -192,7 +191,8 @@ const ProductDetailStyle = styled.div`
 				display: flex;
 				flex-direction: column;
 				justify-content: center;
-				height: 25%;
+				min-height: 14rem;
+				height: fit-content;
 				width: 100%;
 
 				.misce {
@@ -200,10 +200,9 @@ const ProductDetailStyle = styled.div`
 					align-items: center;
 					color: #00a650;
 					margin-bottom: 10px;
-
+					height: 100px;
 					.shipping {
 						color: #00a650;
-						margin-right: 10px;
 					}
 				}
 
@@ -225,8 +224,9 @@ const ProductDetailStyle = styled.div`
 				display: flex;
 				flex-direction: column;
 				justify-content: space-around;
-				height: 35%;
-
+				.description {
+					margin: 0.6rem 0;
+				}
 				.stockDiv {
 					display: flex;
 
@@ -252,7 +252,8 @@ const ProductDetailStyle = styled.div`
 				border-radius: 10px;
 				width: 90%;
 				padding: 5px;
-				font-size: 25px;
+				font-size: 1.5rem;
+				margin-top: 0.8rem;
 
 				&:hover {
 					cursor: pointer;
@@ -270,23 +271,117 @@ const ProductDetailStyle = styled.div`
 		display: flex;
 		flex-flow: column;
 		align-items: center;
-		width: 50%;
-		width: 1300px;
+		width: 85vw;
 		margin: 3rem;
 		border-radius: 15px;
 		color: #a1a3a6;
 		background-color: #ffffff;
 
+		.div_fragment {
+			width: 60vw;
+		}
 		.review_title {
 			color: #ee362c;
 			margin: 0 0 5rem 5rem;
 			align-self: flex-start;
 		}
 		.span_no_review {
-			border: 1px solid orange;
 			color: black;
 			padding: 1rem 0 2rem 0;
 			font-size: 1.5rem;
+		}
+	}
+
+	/* Fin del ESTADO GENERAL */
+
+	/* 1127 a 1441 */
+	@media (max-width: 901px) and(max-width: 1441px) {
+		width: 90vw;
+		margin: auto;
+		font-size: 1rem;
+		.infoDiv {
+			min-width: 85%;
+		}
+		.all {
+			width: 100%;
+			overflow: hidden;
+			.imagesBox {
+				flex-direction: row;
+			}
+			.centerDiv {
+				width: 100%;
+				flex-direction: column;
+				align-items: center;
+				.imageBigDiv {
+					width: 50%;
+					height: 50%;
+				}
+				.infoDiv {
+					width: 85%;
+				}
+			}
+		}
+		.div_comments {
+			width: 65vw;
+			.review_title {
+				margin: 0 0 1rem 0;
+			}
+		}
+	}
+
+	@media (min-width: 720px) and (max-width: 900px) {
+		width: 90vw;
+		.div_comments {
+			width: 90vw;
+		}
+		/* --------- */
+		margin: auto;
+		font-size: 1rem;
+		.infoDiv {
+			min-width: 85%;
+		}
+		.all {
+			width: 100%;
+			.imagesBox {
+				flex-direction: row;
+			}
+			.centerDiv {
+				width: 100%;
+				flex-direction: column;
+				align-items: center;
+				.imageBigDiv {
+					width: 50%;
+					height: 50%;
+				}
+			}
+		}
+	}
+
+	@media (min-width: 1px) and (max-width: 719px) {
+		width: 90vw;
+		.div_comments {
+			width: 90vw;
+		}
+		/* --------- */
+		margin: auto;
+		font-size: 1rem;
+		.infoDiv {
+			min-width: 85%;
+		}
+		.all {
+			width: 100%;
+			.imagesBox {
+				flex-direction: row;
+			}
+			.centerDiv {
+				width: 100%;
+				flex-direction: column;
+				align-items: center;
+				.imageBigDiv {
+					width: 50%;
+					height: 50%;
+				}
+			}
 		}
 	}
 `;

@@ -28,6 +28,7 @@ const ProductDetail = (id) => {
 	let history = useHistory();
 	let product = useSelector((store) => store.productDetail);
 	const wishlist = useSelector((store) => store.wishlist);
+	console.log('aca esta la wish', wishlist);
 	const fav = wishlist.find(({product: {_id}}) => _id === product._id);
 	const userId = window.localStorage.getItem('userId');
 	const [updateReview, setUpdateReview] = useState(false);
@@ -202,7 +203,9 @@ const ProductDetail = (id) => {
 								</div>
 							</div>
 							<div className='infoDivBottom'>
-								<div>{product.description && product.description}</div>
+								<div className='description'>
+									{product.description && product.description}
+								</div>
 
 								<div className='stockDiv'>
 									{'Stock: '}
@@ -238,7 +241,6 @@ const ProductDetail = (id) => {
 					/>
 				)}
 			</div>
-			<Footer />
 		</ProductDetailStyle>
 	);
 };

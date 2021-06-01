@@ -9,7 +9,9 @@ import ListStyles from './styled';
 /* import {clearObjectValues} from '../../../../utils/clearObjetcValues'; */
 import {getCategories, getBrands, getProducts} from '../../../../redux/actions';
 import InfiniteScroll from 'react-infinite-scroll-component';
+
 import {AiFillPlusCircle} from 'react-icons/ai';
+
 
 /* var _ = require('lodash'); */
 
@@ -37,6 +39,7 @@ const ListDashboard = ({Options, setOptions}) => {
 	}, []);
 
 	useEffect(() => {
+
 		setFilter(Items);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [Items]);
@@ -120,11 +123,13 @@ const ListDashboard = ({Options, setOptions}) => {
 						className='listProduct'
 						dataLength={Filter.length}
 						loader={<h4>Loading...</h4>}
-						height={700}
+						height={'85vh'}
+
 					>
 						{Filter &&
 							Filter.map((el, index) => (
 								<CardItems
+
 									prop={{...el}}
 									key={el._id}
 									index={index}
@@ -152,7 +157,7 @@ const ListDashboard = ({Options, setOptions}) => {
 						className='listProduct'
 						dataLength={Filter.length}
 						loader={<h4>Loading...</h4>}
-						height={600}
+						height={'85vh'}
 					>
 						{Filter &&
 							Filter.map((el, index) => (
@@ -183,7 +188,8 @@ const ListDashboard = ({Options, setOptions}) => {
 						className='listProduct'
 						dataLength={Filter.length}
 						loader={<h4>Loading...</h4>}
-						height={600}
+						height={'85vh'}
+
 					>
 						{Filter &&
 							Filter.map((el, index) => (
@@ -203,7 +209,7 @@ const ListDashboard = ({Options, setOptions}) => {
 					className='listProduct'
 					dataLength={Filter.length}
 					loader={<h4>Loading...</h4>}
-					height={600}
+					height={'85vh'}
 				>
 					{Filter &&
 						Filter.map((el, index) => (
@@ -232,7 +238,7 @@ const ListDashboard = ({Options, setOptions}) => {
 						className='listProduct'
 						dataLength={Filter.length}
 						loader={<h4>Loading...</h4>}
-						height={600}
+						height={'85vh'}
 					>
 						{Filter &&
 							Filter.map((el, index) => (
