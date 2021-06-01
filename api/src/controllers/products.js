@@ -27,6 +27,7 @@ async function getProductsDetail(req, res) {
 		Products.findById(id)
 			.populate('categories', {name: true})
 			.populate('brands', {name: true})
+			.populate('combo')
 			.exec()
 			.then((data) =>
 				res.send({response: data, type: 'Ok', message: 'Success'})
