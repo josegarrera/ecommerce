@@ -90,6 +90,14 @@ export const addItemListSelected = (
 			),
 		});
 	}
+	if (e.target.name === 'combo' && itemSelected) {
+		setProduct({
+			...product,
+			[e.target.name]: removeRepeats(
+				product[e.target.name].concat(itemSelected)
+			),
+		});
+	}
 	if (e.target.name === 'brands' && itemSelected.key) {
 		setProduct({
 			...product,
@@ -357,6 +365,7 @@ export const handleSubmit = (
 		imageUrl: product.imagesUrl,
 		brands: product.brands.map((item) => item.key),
 		categories: product.categories.map((item) => item.key),
+		combo: product.combo.map((item) => item.key),
 		variants: product.allVariants,
 		specs: product.specs,
 	};

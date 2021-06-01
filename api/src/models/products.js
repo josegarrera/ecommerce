@@ -26,6 +26,12 @@ const ProductsSchema = new Schema({
 	specs: {},
 	variants: [{}],
 	reviews: [],
+	combo: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'products',
+		},
+	],
 });
 
 ProductsSchema.plugin(findOrCreate);

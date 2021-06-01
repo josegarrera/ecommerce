@@ -175,8 +175,6 @@ const Create = ({options, setCreate, create, Items, allProducts}) => {
 		allProducts();
 	};
 
-	console.log('hola');
-
 	return (
 		<CreateStyle>
 			{options === 'Categories' ? (
