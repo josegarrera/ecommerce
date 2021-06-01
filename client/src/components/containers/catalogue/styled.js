@@ -5,9 +5,11 @@ const Catalogue_Style = styled.div`
 	align-items: center;
 	align-items: stretch;
 	background-color: #f8f8f8;
-	padding: 0rem 10%;
+	padding: 0rem 5%;
+	border: 1px solid red;
 
 	.filters {
+		border: 1px solid red;
 		margin: 8rem 0rem;
 	}
 
@@ -21,7 +23,7 @@ const Catalogue_Style = styled.div`
 			display: flex;
 			justify-content: flex-end;
 			align-items: flex-end;
-			height: 7rem;
+			height: 4rem;
 			width: 100%;
 			padding-right: 5rem;
 		}

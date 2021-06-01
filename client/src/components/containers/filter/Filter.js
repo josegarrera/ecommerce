@@ -170,7 +170,6 @@ const Filter = ({order}) => {
 							value={input.priceMin}
 							onChange={(e) => onChangePrice(e)}
 						></input>
-						<label>From {input.priceMin} USD</label>
 						<input
 							className='range__price'
 							type='range'
@@ -180,7 +179,9 @@ const Filter = ({order}) => {
 							value={input.priceMax}
 							onChange={(e) => onChangePrice(e)}
 						></input>
-						<label>To {input.priceMax} USD</label>
+						<label>
+							From {input.priceMin} to {input.priceMax} USD
+						</label>
 						<div className='row'></div>
 					</div>
 
