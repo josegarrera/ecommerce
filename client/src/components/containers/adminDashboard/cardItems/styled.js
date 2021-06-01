@@ -119,6 +119,9 @@ const ProductDashboardStyle = styled.div`
 				.cancelled {
 					color: red;
 				}
+				.processing {
+					color: #5c90ff;
+				}
 			}
 			.renglon2 {
 				display: flex;

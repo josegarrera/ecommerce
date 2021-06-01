@@ -373,16 +373,16 @@ export const handleSubmit = (
 	}
 	formData.append('info', JSON.stringify(obj));
 	dispatch(addNewProduct(formData));
-	setProduct(
-		setterInputs({
+	setProduct({
+		...setterInputs({
 			...product,
-			currency: 'USD',
 			files: [],
 			images: [],
 			allVariantsFiles: [],
 			filesValues: '',
-		})
-	);
+		}),
+		currency: 'USD',
+	});
 	setErrors({});
 	setStatus({
 		init: false,

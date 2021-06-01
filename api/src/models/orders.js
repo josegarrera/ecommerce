@@ -27,7 +27,7 @@ const OrdersSchema = new Schema({
 	state: {
 		type: String,
 		enum: {
-			values: ['created', 'processing', 'completed', 'canceled'],
+			values: ['created', 'processing', 'dispatched', 'completed', 'canceled'],
 		},
 		default: 'created',
 	},

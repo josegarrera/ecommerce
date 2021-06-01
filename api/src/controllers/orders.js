@@ -56,8 +56,6 @@ async function getAllUserOrders(req, res, next) {
 					message: 'User does not exist',
 				});
 			}
-		} else {
-			next();
 		}
 	} catch (error) {
 		res
@@ -216,7 +214,12 @@ async function changeLot(req, res) {
 }
 
 function getAllOrders(req, res) {
+	const sort =
+		req.query.status !== 'undefined'
+			? {state: req.query.status}
+			: {state: 'processing'};
 	Orders.find({})
+		.sort(sort)
 		.exec()
 		.then((data) => res.send({response: data, type: 'Ok', message: 'Success'}))
 		.catch((error) =>

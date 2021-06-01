@@ -5,7 +5,6 @@ import ListDashboard from '../listDashboard/ListDashboard';
 import GraphicsDashboard from '../graphicsDashboard/GraphicsDashboard';
 import {IoIosArrowForward} from 'react-icons/io';
 import {BsPersonPlusFill, BsPersonCheckFill} from 'react-icons/bs';
-import FormProductDashboard from '../addProductDashboard/index';
 
 const HomeDashboard = () => {
 	const [Options, setOptions] = useState('Home');
@@ -26,9 +25,9 @@ const HomeDashboard = () => {
 	const arrayButtons = [
 		{name: 'Products'},
 		{name: 'Categories'},
+		{name: 'Brands'},
 		{name: 'Users'},
 		{name: 'Orders'},
-		{name: 'Brands'},
 	];
 
 	return (
