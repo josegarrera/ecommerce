@@ -121,10 +121,14 @@ const ProductDetailStyle = styled.div`
 				height: 30%;
 				width: 100%;
 
-				.comboTitle {
-					display: inline;
-					color: #ee362e;
-					font-weight: 600;
+				.comboDiv {
+					border: 1px solid red;
+					background-color: #ee362e;
+					color: #fff;
+					border-radius: 10px;
+					width: fit-content;
+					padding: 0rem 0.2rem;
+					font-size: 0.7rem;
 				}
 				.title {
 					display: flex;
