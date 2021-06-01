@@ -9,11 +9,12 @@ import Favourites from '../../favourites/Favourites';
 import Profile from '../userProfile/Profile';
 
 const HomeUserDashboard = () => {
-	const [Options, setOptions] = useState('Home');
+	const [Options, setOptions] = useState('My profile');
 	let userId = window.localStorage.getItem('userId');
 	let firstName = window.localStorage.getItem('firstName');
 	let lastName = window.localStorage.getItem('lastName');
 	let profileImage = window.localStorage.getItem('profileImage');
+	let email = window.localStorage.getItem('email');
 
 	const handleOnClick = (e) => {
 		setOptions(e.target.name);
