@@ -6,6 +6,7 @@ import { Link, useHistory } from "react-router-dom";
 import { saveShippingInfo } from "../../../redux/actions";
 import { useDispatch } from "react-redux";
 import Input from "./Input/Input";
+import Toast from "./Toast/index";
 
 function Index() {
   const dispatch = useDispatch();
@@ -18,15 +19,15 @@ function Index() {
     street_number: { value: "", validated: "" },
     id: { value: "", validated: "" },
   });
+  const [validForm, changeValidForm] = useState(null);
 
   const expressions = {
-    firstName: /^[a-zA-ZÀ-ÿ\s]{6,15}$/, // Letras y espacios, pueden llevar acentos.
-    lastName: /^[a-zA-ZÀ-ÿ\s]{6,15}$/, // Letras y espacios, pueden llevar acentos.
-    types: /^[a-zA-ZÀ-ÿ\s]{6,15}$/, // Letras y espacios, pueden llevar acentos.
-    zip_code: /^.{1,5}$/, // 4 a 12 digitos.
-    street_name: /^.{1,5}$/, // 4 a 12 digitos.
-    street_number: /^.{1,5}$/, // 4 a 12 digitos.
-    id: /^.{1,5}$/, // 4 a 12 digitos.
+    firstName: /^[a-zA-ZÀ-ÿ\s]{5,50}$/, // Letras y espacios, pueden llevar acentos.
+    lastName: /^[a-zA-ZÀ-ÿ\s]{5,50}$/, // Letras y espacios, pueden llevar acentos.
+    zip_code: /^.{1,10}$/, // 4 a 12 digitos.
+    street_name: /^.{1,10}$/, // 4 a 12 digitos.
+    street_number: /^.{1,10}$/, // 4 a 12 digitos.
+    id: /^.{1,10}$/, // 4 a 12 digitos.
   };
 
   const onChangeHandler = (e) => {
@@ -58,8 +59,27 @@ function Index() {
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
-    dispatch(saveShippingInfo(shippingInfo));
-    history.push("/confirmation");
+    if (
+      shippingInfo.firstName.validated === "true" &&
+      shippingInfo.lastName.validated === "true" &&
+      shippingInfo.zip_code.validated === "true" &&
+      shippingInfo.street_name.validated === "true" &&
+      shippingInfo.street_number.validated === "true" &&
+      shippingInfo.id.validated === "true"
+    ) {
+      const shippingData = {
+        firstName: shippingInfo.firstName.value,
+        lastName: shippingInfo.lastName.value,
+        zip_code: shippingInfo.zip_code.value,
+        street_name: shippingInfo.street_name.value,
+        street_number: shippingInfo.street_number.value,
+        id: shippingInfo.id.value,
+      };
+      dispatch(saveShippingInfo(shippingData));
+      history.push("/confirmation");
+    } else {
+      changeValidForm(false);
+    }
   };
 
   // shippingInfo && console.log(shippingInfo);
@@ -73,6 +93,8 @@ function Index() {
           <h1 className="form__title">Shipping Address</h1>
         </div>
 
+        {validForm === false ? <Toast /> : ""}
+
         <form type="submit" className="product__form">
           <div className="form__wrapper">
             <div className="form__column">
@@ -84,7 +106,7 @@ function Index() {
                   input={shippingInfo}
                   onChangeHandler={onChangeHandler}
                   validate={validate}
-                  error="Must be between 6 to 15 characters"
+                  error="At least 5 characters"
                 ></Input>
               </div>
 
@@ -96,7 +118,7 @@ function Index() {
                   input={shippingInfo}
                   onChangeHandler={onChangeHandler}
                   validate={validate}
-                  error="Must be between 6 to 15 characters"
+                  error="At least 5 characters"
                 ></Input>
               </div>
 
@@ -108,7 +130,7 @@ function Index() {
                   input={shippingInfo}
                   onChangeHandler={onChangeHandler}
                   validate={validate}
-                  error="Must be between 6 to 15 characters"
+                  error="from 1 to 10 digits"
                 ></Input>
               </div>
 
@@ -116,11 +138,11 @@ function Index() {
                 <Input
                   name="street_name"
                   title="Street Name"
-                  type="number"
+                  type="text"
                   input={shippingInfo}
                   onChangeHandler={onChangeHandler}
                   validate={validate}
-                  error="Must be between 6 to 15 characters"
+                  error="At least 5 characters"
                 ></Input>
               </div>
 
@@ -132,7 +154,7 @@ function Index() {
                   input={shippingInfo}
                   onChangeHandler={onChangeHandler}
                   validate={validate}
-                  error="Must be between 6 to 15 characters"
+                  error="from 1 to 10 digits"
                 ></Input>
               </div>
 
@@ -144,7 +166,7 @@ function Index() {
                   input={shippingInfo}
                   onChangeHandler={onChangeHandler}
                   validate={validate}
-                  error="Must be between 6 to 15 characters"
+                  error="from 1 to 10 digits"
                 ></Input>
               </div>
 
