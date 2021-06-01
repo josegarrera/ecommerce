@@ -9,13 +9,14 @@ const ProductList = ({products, loadSearch}) => {
 		<PRODUCTS_LIST_STYLE>
 			<div className='cards__container'>
 				{products ? (
-					products.map(({product: {name, price, imageUrl, _id}}) => (
+					products.map(({product: {name, price, imageUrl, _id, combo}}) => (
 						<CardProduct
 							key={_id}
 							name={name}
 							price={price}
 							imageUrl={imageUrl}
 							_id={_id}
+							combo={combo}
 							loading={false}
 						/>
 					))
