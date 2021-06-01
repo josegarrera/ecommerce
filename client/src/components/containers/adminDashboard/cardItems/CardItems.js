@@ -42,7 +42,7 @@ const CardItems = ({
 		variants,
 		_id,
 		products,
-		/* specs, */
+		combo,
 		role,
 		email,
 		users,
@@ -238,6 +238,8 @@ const CardItems = ({
 		setSeeMore(!SeeMore);
 	};
 
+	console.log('AQUI',EditAItem.combo && EditAItem.combo);
+
 	return (
 		<ProductDashboardStyle>
 			<div className='productAllInfo'>
@@ -425,6 +427,14 @@ const CardItems = ({
 										items={allBrands}
 										handleDataList={handleBrandsDataList}
 										placeholder='Add a Brand'
+									/>
+								)}
+								{combo && EditAItem.combo.length > 0 && (
+									<AccordionDashboard
+										items={EditAItem.combo}
+										isEditAItem={false}
+										handler={handleDeleteBrandsOnEdit}
+										Option={'combo'}
 									/>
 								)}
 								{brands &&

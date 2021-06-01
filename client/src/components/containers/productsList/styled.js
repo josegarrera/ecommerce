@@ -8,7 +8,6 @@ const Products_List_Style = styled.div`
 		display: flex;
 		justify-content: center;
 		align-content: flex-start;
-		padding: 0rem 1rem;
 		flex-wrap: wrap;
 
 		.notFound {

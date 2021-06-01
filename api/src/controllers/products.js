@@ -27,6 +27,7 @@ async function getProductsDetail(req, res) {
 		Products.findById(id)
 			.populate('categories', {name: true})
 			.populate('brands', {name: true})
+			.populate('combo')
 			.exec()
 			.then((data) =>
 				res.send({response: data, type: 'Ok', message: 'Success'})
@@ -134,6 +135,7 @@ function getAllProducts(req, res) {
 	Products.find()
 		.populate('categories', {name: 1})
 		.populate('brands', {name: 1})
+		.populate('combo')
 		.exec()
 		.then((data) => {
 			if (!data.length)
@@ -194,6 +196,7 @@ function getProducts(req, res) {
 		Products.find(name)
 			.populate('categories', {name: 1})
 			.populate('brands', {name: 1})
+			.populate('combo', {name: 1})
 			.sort(order)
 			.exec(),
 		Currencies.find().sort({month: -1}).limit(1).exec(),

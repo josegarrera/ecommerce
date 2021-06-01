@@ -1,4 +1,9 @@
 import React, {useEffect, useState} from 'react';
+
+import axios from 'axios';
+
+import {URLS} from '../../../utils/constants';
+
 import {useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -12,23 +17,22 @@ import {
 	postLocalStorage,
 } from '../../../redux/actions/index';
 import {IoLogoWhatsapp, IoReturnDownBack} from 'react-icons/io5';
-import {BsLightning} from 'react-icons/bs'; /* 
-import {FaShoppingCart} from 'react-icons/fa'; */
+import {BsLightning} from 'react-icons/bs';
 import {AiOutlineHeart, AiFillHeart} from 'react-icons/ai';
 import ProductDetailStyle from './styled';
 import {Link} from 'react-router-dom';
 import {store} from 'react-notifications-component';
 import DetailLoader from '../../../utils/detailLoader';
 import Reviews from '../reviews';
-import Footer from '../footer/Footer';
+import CardProduct from '../../presentationals/cardProduct/CardProduct';
 
 const ProductDetail = (id) => {
 	const dispatch = useDispatch();
 	const [imageBig, setImageBig] = useState();
 	let history = useHistory();
 	let product = useSelector((store) => store.productDetail);
+	console.log('eeste es el product', product);
 	const wishlist = useSelector((store) => store.wishlist);
-	console.log('aca esta la wish', wishlist);
 	const fav = wishlist.find(({product: {_id}}) => _id === product._id);
 	const userId = window.localStorage.getItem('userId');
 	const [updateReview, setUpdateReview] = useState(false);
@@ -128,6 +132,9 @@ const ProductDetail = (id) => {
 						</div>
 						<div className='infoDiv'>
 							<div className='infoDivTop'>
+								{product.combo.length > 0 ? (
+									<div className='comboDiv'>Combo</div>
+								) : null}
 								<div className='title'>
 									<div className='name'>{product.name && product.name}</div>
 									<div className='btns'>
@@ -231,6 +238,27 @@ const ProductDetail = (id) => {
 			) : (
 				<DetailLoader className='detailLoader' />
 			)}
+			{product.combo && product.combo.length > 0 ? (
+				<div className='comboProducts'>
+					<div className='title_cnt'>
+						<h5>Products in this combo</h5>
+					</div>
+					<div className='productList'>
+						{product &&
+							product.combo.map((product) => (
+								<CardProduct
+									key={product._id}
+									name={product.name}
+									price={product.price}
+									imageUrl={product.imageUrl}
+									_id={product._id}
+									combo={product.combo}
+									loading={false}
+								/>
+							))}
+					</div>
+				</div>
+			) : null}
 			<div className='div_comments'>
 				{product._id && (
 					<Reviews

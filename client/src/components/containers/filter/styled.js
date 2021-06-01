@@ -2,10 +2,10 @@ import styled from 'styled-components';
 
 const Filter_Style = styled.div`
 	.filter__options {
-		margin: 7rem 0rem;
-		width: 18rem;
-		min-height: 40rem;
+		margin: 4rem 0rem;
+		width: 12rem;
 		border-radius: 1rem;
+		font-size: 0.7rem;
 		background-color: #ffffff;
 		border: 1px solid #e0e0e0;
 		box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05),
@@ -13,10 +13,10 @@ const Filter_Style = styled.div`
 	}
 
 	.filter__title {
-		padding: 1.3rem;
+		padding: 1rem;
 		font-weight: bold;
 		color: #616161;
-		font-size: 0.9rem;
+		font-size: 0.7rem;
 	}
 
 	.separator {
@@ -27,9 +27,8 @@ const Filter_Style = styled.div`
 	.filter__section {
 		display: flex;
 		flex-direction: column;
-		padding: 1rem;
-		margin: 0.5rem;
-		height: 100%;
+		padding: 0.5rem;
+		margin: 0.3rem;
 	}
 
 	.filter__section__title {
@@ -45,7 +44,7 @@ const Filter_Style = styled.div`
 	}
 
 	.filter__section__icon {
-		font-size: 1.5rem;
+		font-size: 0.7rem;
 		color: #a1a3a6;
 	}
 
@@ -56,14 +55,14 @@ const Filter_Style = styled.div`
 
 	.filter__option__item {
 		color: #a3a3a3;
-		font-size: 0.8rem;
+		font-size: 0.7rem;
 		font-weight: 600;
-		margin-top: 1rem;
+		margin-top: 0.5rem;
 		margin-bottom: 1rem;
 	}
 
 	.range__price {
-		margin-top: 1.5rem;
+		margin-top: 0.5rem;
 	}
 
 	.price__input {
@@ -71,7 +70,7 @@ const Filter_Style = styled.div`
 		margin: 0.5rem;
 		color: #757575;
 		border-radius: 5rem;
-		font-size: 1rem;
+		font-size: 0.7rem;
 		font-weight: 600;
 		background-color: #ffffff;
 		border: 1.5px solid #e0e0e0;
@@ -111,8 +110,6 @@ const Filter_Style = styled.div`
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		align-items: center;
-		padding: 1rem 0;
 
 		ul {
 			display: flex;
@@ -125,7 +122,7 @@ const Filter_Style = styled.div`
 
 		ul li {
 			display: flex;
-			font-size: 1.8rem;
+			font-size: 0.7rem;
 			border-radius: 50%;
 			margin: 0.5rem;
 			cursor: pointer;
@@ -147,14 +144,14 @@ const Filter_Style = styled.div`
 				background: none;
 
 				.color__btn2 {
-					width: 1.8rem;
-					height: 1.8rem;
+					width: 1rem;
+					height: 1rem;
 				}
 			}
 		}
 		.color__btn {
-			width: 1.8rem;
-			height: 1.8rem;
+			width: 1rem;
+			height: 1rem;
 			border-radius: 50%;
 			box-shadow: inset 0 10px 15px rgba(255, 255, 255, 0.35),
 				inset 0 -10px 15px rgba(0, 0, 0, 0.05),

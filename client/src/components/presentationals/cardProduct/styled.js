@@ -26,6 +26,20 @@ const DivCrdProd = styled.div`
 		transition: 0.4s;
 		box-shadow: 1px 1px 30px silver;
 	}
+
+	.comboDiv {
+		position: absolute;
+		top: 256px;
+		left: 10px;
+		border: 1px solid red;
+		background-color: #ee362e;
+		color: #fff;
+		border-radius: 10px;
+		width: fit-content;
+		padding: 0rem 0.2rem;
+		font-size: 0.8rem;
+	}
+
 	.cnt__image {
 		display: flex;
 		justify-content: center;
@@ -43,7 +57,7 @@ const DivCrdProd = styled.div`
 		padding: 1.5rem;
 		border-radius: 0 0 20px 20px;
 		border-top: 3px solid whitesmoke;
-
+	}
 
 	h5 {
 		font-weight: 600;
