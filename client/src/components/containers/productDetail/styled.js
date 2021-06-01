@@ -118,10 +118,14 @@ const ProductDetailStyle = styled.div`
 				display: flex;
 				flex-direction: column;
 				align-items: left;
-				/* justify-content: space-evenly; */
 				height: 30%;
 				width: 100%;
 
+				.comboTitle {
+					display: inline;
+					color: #ee362e;
+					font-weight: 600;
+				}
 				.title {
 					display: flex;
 					justify-content: space-between;
@@ -263,6 +267,32 @@ const ProductDetailStyle = styled.div`
 					transition: 0.2s;
 				}
 			}
+		}
+	}
+
+	.comboProducts {
+		display: flex;
+		flex-flow: column;
+		width: 85vw;
+		margin: 3vh;
+		border-radius: 15px;
+		color: #a1a3a6;
+		background-color: #ffffff;
+		padding: 3rem 3rem 0rem 3rem;
+
+		.title_cnt {
+			color: #ee362c;
+			border-bottom: 3px solid rgba(0, 0, 0, 0.1);
+			margin-bottom: 1rem;
+			h5 {
+				color: #8f8f8f;
+			}
+		}
+
+		.productList {
+			display: flex;
+			justify-content: center;
+			padding: 1rem 0rem 0rem 0rem;
 		}
 	}
 
