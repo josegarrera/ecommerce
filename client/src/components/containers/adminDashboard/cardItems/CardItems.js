@@ -238,7 +238,7 @@ const CardItems = ({
 		setSeeMore(!SeeMore);
 	};
 
-	console.log(EditAItem.combo && EditAItem.combo);
+	console.log('AQUI',EditAItem.combo && EditAItem.combo);
 
 	return (
 		<ProductDashboardStyle>

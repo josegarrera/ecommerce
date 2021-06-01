@@ -123,7 +123,7 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 	}, [productCreated]); /* eslint-disable react/jsx-pascal-case */
 
 
-  console.log(product);
+
 
 	return (
 		<>
