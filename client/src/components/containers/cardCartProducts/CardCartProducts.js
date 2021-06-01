@@ -6,6 +6,7 @@ import {
 	removeCartProduct,
 	updateCardProduct,
 	changeLot,
+	changeLotLocal,
 } from '../../../redux/actions/index.js';
 import DivCard from './styled';
 
@@ -28,9 +29,10 @@ const CardCartProducts = (props) => {
 		//deberia filtrar desde el localStorage
 		dispatch(updateCardProduct(props.product.product._id));
 	};
-	const handleChangeLot = (e) => {
+	const handleChangeLot = (num) => {
+		dispatch(changeLotLocal({...data, num}));
 		if (userId) {
-			dispatch(changeLot({...data, num: e}));
+			dispatch(changeLot({...data, num}));
 		}
 	};
 
