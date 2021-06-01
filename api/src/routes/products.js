@@ -15,12 +15,7 @@ const router = Router();
 
 const upload = require('../middlewares/uploads.js');
 
-router.post(
-	'/',
-	[verifyToken, isAdmin],
-	upload.array('images', 10),
-	createProduct
-); //SI JWT
+router.post('/', upload.array('images', 10), createProduct); //SI JWT
 router.get('/', getProducts); //no JWT ✔✔
 router.get('/:id', getProductsDetail); //no JWT ✔✔
 router.put('/reviews/:id', [verifyToken], addReview); //SI verify JWT ✔✔

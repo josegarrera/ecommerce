@@ -53,6 +53,7 @@ async function createProduct(req, res) {
 		categories,
 		brands,
 		specs,
+		combo,
 	} = info;
 	if (Object.values(info).length < Object.keys(info).length)
 		return res.status(400).send({
@@ -84,6 +85,7 @@ async function createProduct(req, res) {
 			brands,
 			variants,
 			specs,
+			combo,
 		});
 		await categories.map((el) =>
 			Categories.findByIdAndUpdate(
