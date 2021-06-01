@@ -30,10 +30,10 @@ const AccordionDashboard = ({
 				{Object.entries(el).map(
 					(e, i) =>
 						e[0] !== 'id' && (
-							<div key={i + '-variantss'}>
+							<div key={i + '-variants-1'}>
 								{e[0] === 'imageUrl' ? (
-									<div id='imagesVariantsContainer'>
-										<div>
+									<div key={i + '-variants-2'} id='imagesVariantsContainer'>
+										<div key={i + '-variants-3'}>
 											<label
 												for={index + 'file-upload-variants'}
 												key={index + 'label-variants'}
@@ -73,7 +73,10 @@ const AccordionDashboard = ({
 														src={url}
 														alt='imagen de producto'
 													/>
-													<button className='buttonDiv'>
+													<button
+														key={i + '-btn-variants'}
+														className='buttonDiv'
+													>
 														<TiDeleteOutline
 															key={url + 'btnDelete'}
 															id={String(index + url)}
@@ -89,7 +92,7 @@ const AccordionDashboard = ({
 									</div>
 								) : (
 									e[0] !== 'imageFile' && (
-										<div>
+										<div key={i + '-variants-4'}>
 											<label key={i + '-label' + e[0]}>{e[0]}</label>
 											<input
 												key={i + '-input' + e[0]}
@@ -113,7 +116,7 @@ const AccordionDashboard = ({
 		));
 	} else if (!isEditAItem && Option === 'variants') {
 		items = items.map((el, index) => (
-			<div key={index + '-variants'}>
+			<div key={index + '-variants-5'}>
 				{Object.entries(el).map(
 					(e, i) =>
 						e[0] !== 'id' &&
@@ -152,11 +155,18 @@ const AccordionDashboard = ({
 							{items &&
 								items.map((el, index) =>
 									isEditAItem ? (
-										<AccordionItemPanel>
-											<div className='div_delete_categorie'>
+										<AccordionItemPanel key={index + '-accordion-panel'}>
+											<div
+												key={index + '-accordion-div'}
+												className='div_delete_categorie'
+											>
 												{Option === 'variants' ? el : el.name}
-												<button className='buttonDiv'>
+												<button
+													key={index + '-accordion-btn'}
+													className='buttonDiv'
+												>
 													<TiDeleteOutline
+														key={index + '-accordion-ti'}
 														id={el.name || String(EditAItem[index].id)}
 														onClick={handler}
 														className='button'
