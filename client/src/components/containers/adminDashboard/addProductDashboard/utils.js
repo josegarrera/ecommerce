@@ -277,23 +277,26 @@ export const handleClickVariants = (
 	for (const key in product.variant) {
 		if (key !== 'file' && key !== 'fileInput') {
 			if (key === 'imageFile') {
-				variantFinal.imageFile = product.variant.imageFile.name || '';
+				variantFinal.imageFile =
+					product.variant.imageFile.length + ' files selected' ||
+					'No selected files';
 			} else variantFinal[key] = product.variant[key];
 		}
 	}
 
+	const files = [...product.variant.file];
 	setProduct({
 		...product,
 		allVariants: [...product.allVariants, variantFinal],
 		allVariantsFiles: [
 			...product.allVariantsFiles,
-			{id: variantIdGenerator, file: product.variant.file},
+			{id: variantIdGenerator, file: files},
 		],
 		variant: setterInputs({
 			...product.variant,
-			file: '',
+			file: [],
 			fileInput: '',
-			imageFile: '',
+			imageFile: [],
 		}),
 	});
 };
@@ -368,7 +371,6 @@ export const handleSubmit = (
 			value: product.priceValue,
 			currency: product.currency,
 		},
-		imageUrl: product.imagesUrl,
 		brands: product.brands.map((item) => item.key),
 		categories: product.categories.map((item) => item.key),
 		combo: product.combo.map((item) => item.key),
@@ -376,25 +378,18 @@ export const handleSubmit = (
 		specs: product.specs,
 	};
 
-	const variantsFiles = product.allVariantsFiles.filter(
-		(variant) => variant.file
-	);
 	let formData = new FormData();
-	for (let i = 0; i < product.files.length; i++) {
-		formData.append('images', product.files[i]);
-	}
-	for (let i = 0; i < variantsFiles.length; i++) {
-		formData.append('images', variantsFiles[i].file);
-	}
+	product.allVariantsFiles.forEach((variant) => {
+		for (let i = 0; i < variant.file.length; i++) {
+			formData.append('images', variant.file[i]);
+		}
+	});
 	formData.append('info', JSON.stringify(obj));
 	dispatch(addNewProduct(formData));
 	setProduct({
 		...setterInputs({
 			...product,
-			files: [],
-			images: [],
 			allVariantsFiles: [],
-			filesValues: '',
 		}),
 		currency: 'USD',
 	});

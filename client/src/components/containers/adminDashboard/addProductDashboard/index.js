@@ -480,14 +480,19 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 															{' '}
 															X{' '}
 														</button>
-														{Object.keys(item).map((key) => (
-															<div>
-																<label key={item.id + '-label'}>{key}: </label>
-																<span key={item.id + '-span'} name={key}>
-																	{product.allVariants[i][key]}
-																</span>
-															</div>
-														))}
+														{Object.keys(item).map(
+															(key) =>
+																key !== 'id' && (
+																	<div>
+																		<label key={item.id + '-label'}>
+																			{key}:{' '}
+																		</label>
+																		<span key={item.id + '-span'} name={key}>
+																			{product.allVariants[i][key]}
+																		</span>
+																	</div>
+																)
+														)}
 													</div>
 												))
 											) : (

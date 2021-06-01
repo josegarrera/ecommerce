@@ -37,7 +37,7 @@ export default function validate(product, allProducts) {
 		return errors;
 	}
 	if (!product.variant.stock) {
-		errors.variants = 'You must add at least one variant.';
+		errors.variants = 'Add basic product features.';
 		return errors;
 	}
 
@@ -46,7 +46,8 @@ export default function validate(product, allProducts) {
 			errors.variants = 'You must add the stock of the variant.';
 			return errors;
 		}
-		if (!product.variant.imageUrl && !product.variant.imageFile.name) {
+
+		if (!product.variant.imageUrl && !product.variant.imageFile.length) {
 			errors.variants = 'You must add an image of the variant.';
 			return errors;
 		} else if (
@@ -57,12 +58,14 @@ export default function validate(product, allProducts) {
 		) {
 			errors.variants = 'Invalid URL.';
 			return errors;
-		} else if (
-			product.variant.imageFile.name &&
-			(!/image\/jpeg|png/.test(product.variant.imageFile.type) ||
-				product.variant.imageFile.size > 5242880)
-		) {
-			errors.variants = 'Only .png and .jpeg images, smaller than 5.24 MB.';
+		} else if (product.variant.imageFile.length) {
+			const filesFilter = product.variant.imageFile.map(
+				(file) => !/image\/jpeg|png/.test(file.type) || file.size > 5242880
+			);
+			if (filesFilter.includes(true)) {
+				errors.variants = 'Only .png and .jpeg images, smaller than 5.24 MB.';
+				return errors;
+			}
 		}
 	}
 
