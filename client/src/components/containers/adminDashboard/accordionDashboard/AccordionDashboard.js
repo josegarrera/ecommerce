@@ -212,16 +212,6 @@ const AccordionDashboard = ({
 												{'.'}
 											</div>
 										</div>
-										{/* <div className='div_delete_categorie'>
-											<div className='title'>Transaction status: &nbsp;</div>
-											<div>
-												{paymentDetail.transactionStatus
-													.charAt(0)
-													.toUpperCase() +
-													paymentDetail.transactionStatus.slice(1)}
-												{'.'}
-											</div>
-										</div> */}
 										<div className='div_delete_categorie'>
 											<div className='title'>Payment status: &nbsp;</div>
 											<div>

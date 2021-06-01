@@ -97,12 +97,6 @@ const CardItems = ({
 		setEditAItem({...EditAItem, categories: filter});
 	};
 
-	/* 	const handleDeleteVariantsOnEdit = ({target: {id}}) => {
-		let filter =
-			EditAItem.variants && EditAItem.variants.filter((el) => el.name !== id);
-		setEditAItem({...EditAItem, variants: filter});
-	}; */
-
 	const handleDeleteProductsOnEdit = ({target: {id}}) => {
 		let filter =
 			EditAItem.products && EditAItem.products.filter((el) => el.name !== id);
@@ -123,7 +117,6 @@ const CardItems = ({
 	};
 
 	const handleDeleteVariantsOnEdit = ({target: {id}}) => {
-		console.log(id, 'el id');
 		let filter =
 			EditAItem.variants && EditAItem.variants.filter((el) => el.id !== id);
 		setEditAItem({...EditAItem, variants: filter});
@@ -306,6 +299,16 @@ const CardItems = ({
 				)}
 
 				<div className='productInfo'>
+					{options === 'Orders' && !SeeMore ? (
+						<div className='renglon'>
+							<label className={EditAItem.state}>
+								{EditAItem.state && EditAItem.state.toUpperCase()}
+							</label>
+						</div>
+					) : (
+						<></>
+					)}
+
 					{_id && (
 						<div className='renglon'>
 							<div className='title'>Id: &nbsp;</div>
@@ -389,13 +392,7 @@ const CardItems = ({
 					{users && (
 						<div className='renglon'>
 							<div className='title'>User: &nbsp;</div>
-							{isEditAItem ? (
-								<div>
-									<input value={users} />
-								</div>
-							) : (
-								<div className='users'>{users}</div>
-							)}
+							<div className='users'>{users}</div>
 						</div>
 					)}
 					{products && isEditAItem && (
@@ -525,30 +522,23 @@ const CardItems = ({
 
 								<div className='renglon'>
 									<div className='title'>State: &nbsp;</div>
-									{OrderDetail && OrderDetail.state === 'created' ? (
-										<div className='created'>
+									{!isEditAItem && OrderDetail ? (
+										<div className={OrderDetail.state}>
 											{' '}
 											{OrderDetail.state.charAt(0).toUpperCase() +
 												OrderDetail.state.slice(1)}
 											{'.'}
 										</div>
-									) : null}
-									{OrderDetail && OrderDetail.state === 'completed' ? (
-										<div className='complete'>
-											{' '}
-											{OrderDetail.state.charAt(0).toUpperCase() +
-												OrderDetail.state.slice(1)}
-											{'.'}
+									) : (
+										<div>
+											<input
+												name='state'
+												type='text'
+												value={EditAItem.state}
+												onChange={handleInput}
+											/>
 										</div>
-									) : null}
-									{OrderDetail && OrderDetail.state === 'cancelled' ? (
-										<div className='cancelled'>
-											{' '}
-											{OrderDetail.state.charAt(0).toUpperCase() +
-												OrderDetail.state.slice(1)}
-											{'.'}
-										</div>
-									) : null}
+									)}
 								</div>
 								<AccordionDashboard
 									paymentDetail={OrderDetail.transactionDetail}
@@ -577,7 +567,7 @@ const CardItems = ({
 					{isEditAItem ? (
 						<MdCancel className='button' />
 					) : (
-						options !== 'Orders' && <MdEdit className='button' />
+						<MdEdit className='button' />
 					)}
 				</button>
 				<button className='buttonDiv' onClick={deleteById}>
