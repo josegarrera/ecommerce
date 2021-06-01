@@ -238,10 +238,10 @@ const ProductDetail = (id) => {
 			) : (
 				<DetailLoader className='detailLoader' />
 			)}
-			{product && product.combo ? (
+			{product.combo && product.combo.length > 0 ? (
 				<div className='comboProducts'>
 					<div className='title_cnt'>
-						<h1>Products in this combo</h1>
+						<h5>Products in this combo</h5>
 					</div>
 					<div className='productList'>
 						{product &&

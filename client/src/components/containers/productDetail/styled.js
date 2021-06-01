@@ -20,7 +20,7 @@ const ProductDetailStyle = styled.div`
 		display: flex;
 		flex-flow: column;
 		align-items: center;
-		width: 85vw;
+		width: 70vw;
 		margin: 3vh;
 		border-radius: 15px;
 		color: #a1a3a6;
@@ -38,7 +38,7 @@ const ProductDetailStyle = styled.div`
 		justify-content: space-between;
 		padding-left: 20px;
 		padding-right: 20px;
-		font-size: 1rem;
+		font-size: 0.8rem;
 
 		.topDivLeft {
 			display: flex;
@@ -47,7 +47,7 @@ const ProductDetailStyle = styled.div`
 				border: none;
 				background: none;
 				color: #a1a3a6;
-				font-size: 1rem;
+				font-size: 0.8rem;
 				&:hover {
 					cursor: pointer;
 				}
@@ -60,7 +60,8 @@ const ProductDetailStyle = styled.div`
 
 	.centerDiv {
 		display: flex;
-		width: 80vw;
+		justify-content: space-evenly;
+		width: 100%;
 		.imagesBox {
 			display: flex;
 			flex-direction: column;
@@ -70,8 +71,8 @@ const ProductDetailStyle = styled.div`
 				justify-content: center;
 				border: 1px solid #e7e7e7;
 				border-radius: 5px;
-				width: 5rem;
-				height: 5rem;
+				width: 4rem;
+				height: 4rem;
 				padding: 5px;
 				margin: 5px;
 
@@ -91,9 +92,8 @@ const ProductDetailStyle = styled.div`
 		.imageBigDiv {
 			display: flex;
 			justify-content: center;
-			margin: auto;
-			height: 40rem;
-			width: 40rem;
+			height: 20rem;
+			width: 20rem;
 			padding: 10px;
 
 			.imageBig {
@@ -122,7 +122,6 @@ const ProductDetailStyle = styled.div`
 				width: 100%;
 
 				.comboDiv {
-					border: 1px solid red;
 					background-color: #ee362e;
 					color: #fff;
 					border-radius: 10px;
@@ -136,7 +135,7 @@ const ProductDetailStyle = styled.div`
 
 					.name {
 						color: #a1a3a6;
-						font-size: 1.5rem;
+						font-size: 1rem;
 					}
 
 					.btns {
@@ -145,7 +144,7 @@ const ProductDetailStyle = styled.div`
 						justify-content: space-around;
 
 						.fav {
-							font-size: 1.5rem;
+							font-size: 1rem;
 							color: #ee362e;
 
 							&:hover {
@@ -185,13 +184,13 @@ const ProductDetailStyle = styled.div`
 
 				.price {
 					color: #a1a3a6;
-					font-size: 1.9rem;
+					font-size: 1.2rem;
 					font-weight: 500;
 				}
 
 				.cuotas {
 					color: #00a650;
-					font-size: 1.2rem;
+					font-size: 0.9rem;
 				}
 			}
 
@@ -199,16 +198,15 @@ const ProductDetailStyle = styled.div`
 				display: flex;
 				flex-direction: column;
 				justify-content: center;
-				min-height: 14rem;
 				height: fit-content;
+				margin: 0.8rem 0;
 				width: 100%;
+				font-size: 0.8rem;
 
 				.misce {
 					display: flex;
 					align-items: center;
 					color: #00a650;
-					margin-bottom: 10px;
-					height: 100px;
 					.shipping {
 						color: #00a650;
 					}
@@ -232,6 +230,7 @@ const ProductDetailStyle = styled.div`
 				display: flex;
 				flex-direction: column;
 				justify-content: space-around;
+				font-size: 0.8rem;
 				.description {
 					margin: 0.6rem 0;
 				}
@@ -260,7 +259,7 @@ const ProductDetailStyle = styled.div`
 				border-radius: 10px;
 				width: 90%;
 				padding: 5px;
-				font-size: 1.5rem;
+				font-size: 1.3rem;
 				margin-top: 0.8rem;
 
 				&:hover {
@@ -277,19 +276,19 @@ const ProductDetailStyle = styled.div`
 	.comboProducts {
 		display: flex;
 		flex-flow: column;
-		width: 85vw;
+		width: 70vw;
 		margin: 3vh;
 		border-radius: 15px;
 		color: #a1a3a6;
 		background-color: #ffffff;
-		padding: 3rem 3rem 0rem 3rem;
+		padding: 1rem 1rem 0rem 1rem;
 
 		.title_cnt {
 			color: #ee362c;
 			border-bottom: 3px solid rgba(0, 0, 0, 0.1);
 			margin-bottom: 1rem;
 			h5 {
-				color: #8f8f8f;
+				font-size: 1.5rem;
 			}
 		}
 
@@ -301,28 +300,27 @@ const ProductDetailStyle = styled.div`
 	}
 
 	.div_comments {
-		padding: 2rem 0 3rem 0;
+		padding: 2rem;
 		display: flex;
 		flex-flow: column;
 		align-items: center;
-		width: 85vw;
+		width: 70vw;
 		margin: 3rem;
 		border-radius: 15px;
 		color: #a1a3a6;
 		background-color: #ffffff;
 
 		.div_fragment {
-			width: 60vw;
+			width: 100%;
 		}
 		.review_title {
 			color: #ee362c;
-			margin: 0 0 5rem 5rem;
 			align-self: flex-start;
+			border-bottom: 3px solid rgba(0, 0, 0, 0.1);
 		}
 		.span_no_review {
 			color: black;
-			padding: 1rem 0 2rem 0;
-			font-size: 1.5rem;
+			font-size: 1 rem;
 		}
 	}
 
@@ -393,6 +391,10 @@ const ProductDetailStyle = styled.div`
 
 	@media (min-width: 1px) and (max-width: 719px) {
 		width: 90vw;
+
+		.comboProducts {
+			width: 90vw;
+		}
 		.div_comments {
 			width: 90vw;
 		}
