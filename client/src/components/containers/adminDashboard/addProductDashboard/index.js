@@ -57,19 +57,16 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 		currency: 'USD',
 		brands: [],
 		categories: [],
-		images: [],
-		imageUrlInput: '',
-		imagesUrl: [],
-		specs: {},
-		specsItems: [],
 		variantItems: [],
 		variant: {
-			imageFile: {},
+			imageFile: [],
 			fileInput: '',
-			file: '',
+			file: [],
 		},
 		allVariants: [],
 		allVariantsFiles: [],
+		specsItems: [],
+		specs: {},
 		combo: [],
 	});
 	const [errors, setErrors] = useState({});
@@ -121,8 +118,6 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 			});
 		}
 	}, [productCreated]); /* eslint-disable react/jsx-pascal-case */
-
-
 
 
 	return (
@@ -243,89 +238,7 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 										{errors.priceValue && (
 											<p className='danger'>{errors.priceValue}</p>
 										)}
-										<div className='renglon2'>
-											<div className='title'>Image files &nbsp;</div>
 
-											<input
-												id='input-file'
-												className='form_input img-input'
-												type='file'
-												accept='image/*'
-												multiple
-												name='image'
-												value={product.filesValues}
-												onChange={(e) =>
-													handleInputFile(
-														e,
-														product,
-														allProducts,
-														setProduct,
-														setErrors
-													)
-												}
-											/>
-										</div>
-										{errors.files && <p className='danger'>{errors.files}</p>}
-										<div className='renglon2'>
-											<div className='title'>Image url &nbsp;</div>
-
-											<div className='input-container'>
-												<input
-													type='text'
-													className='form_input'
-													name='imageUrlInput'
-													value={product.imageUrlInput}
-													onChange={(e) =>
-														changeInput(
-															e,
-															product,
-															setProduct,
-															setStatus,
-															setErrors,
-															allProducts
-														)
-													}
-												></input>
-												<button
-													type='button'
-													className='btnFormProduct'
-													name='imagesUrl'
-													onClick={(e) =>
-														addItemListSelected(
-															e,
-															product,
-															setProduct,
-															product.imageUrlInput,
-															undefined,
-															setErrors,
-															allProducts
-														)
-													}
-												>
-													Add
-												</button>
-											</div>
-										</div>
-										{errors.images && <p className='danger'>{errors.images}</p>}
-										{errors.url && <p className='danger'>{errors.url}</p>}
-										{product.imagesUrl &&
-											product.imagesUrl.map((image) => (
-												<div>
-													<label> {image.slice(0, 40)}...</label>
-													<button
-														id={image}
-														name='imagesUrl'
-														type='button'
-														className='btnFormProduct'
-														onClick={(e) => handleDeleteLabels(e, setProduct)}
-													>
-														X
-													</button>
-												</div>
-											))}
-									</div>
-
-									<div className='right'>
 										<div className='renglon2'>
 											<div className='title'>Brands &nbsp;</div>
 
@@ -456,6 +369,9 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 												))
 											)}
 										</div>
+									</div>
+
+									<div className='right'>
 										<div className='renglon2'>
 											<div className='title'>Variants &nbsp;</div>
 
@@ -491,6 +407,7 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 																					? 'file'
 																					: 'text'
 																			}
+																			multiple
 																			name={variant}
 																			value={
 																				variant === 'imageFile'
@@ -540,14 +457,8 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 														)}
 													</div>
 
-													{errors.variantImage && (
-														<p className='danger'>{errors.variantImage}</p>
-													)}
-													{errors.variant && (
-														<p className='danger'>{errors.variant}</p>
-													)}
-													{errors.variantStock && (
-														<p className='danger'>{errors.variantStock}</p>
+													{errors.variants && (
+														<p className='danger'>{errors.variants}</p>
 													)}
 												</AccordionItem>
 											</Accordion>
@@ -568,14 +479,19 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 															{' '}
 															X{' '}
 														</button>
-														{Object.keys(item).map((key) => (
-															<div>
-																<label key={item.id + '-label'}>{key}: </label>
-																<span key={item.id + '-span'} name={key}>
-																	{product.allVariants[i][key]}
-																</span>
-															</div>
-														))}
+														{Object.keys(item).map(
+															(key) =>
+																key !== 'id' && (
+																	<div>
+																		<label key={item.id + '-label'}>
+																			{key}:{' '}
+																		</label>
+																		<span key={item.id + '-span'} name={key}>
+																			{product.allVariants[i][key]}
+																		</span>
+																	</div>
+																)
+														)}
 													</div>
 												))
 											) : (

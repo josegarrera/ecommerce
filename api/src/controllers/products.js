@@ -43,6 +43,7 @@ async function getProductsDetail(req, res) {
 async function createProduct(req, res) {
 	const info = JSON.parse(req.body.info);
 	const files = req.files;
+	console.log(files);
 	const {
 		name,
 		description,
@@ -60,14 +61,15 @@ async function createProduct(req, res) {
 			type: 'Bad request.',
 			message: 'The fields are empty.',
 		});
-	variants.forEach((variant) => {
+	console.log(variants);
+	/* variants.forEach((variant) => {
 		variant.imageUrl = variant.imageUrl ? [variant.imageUrl] : [];
 		let i = files.findIndex((file) => file.originalname === variant.imageFile);
 		if (i > -1) variant.imageFile = files[i].filename;
-	});
+	}); */
 
 	try {
-		const checkExists = await Products.exists({name});
+		/* const checkExists = await Products.exists({name});
 		if (checkExists)
 			return res.status(400).send({
 				response: '',
@@ -120,8 +122,8 @@ async function createProduct(req, res) {
 			});
 		}
 		product.variants.map((variant) => delete variant.imageFile);
-		await product.save();
-		res.send({response: product, type: 'Ok', message: 'Success'});
+		await product.save(); */
+		res.send({response: info, type: 'Ok', message: 'Success'});
 	} catch (error) {
 		res
 			.status(500)
