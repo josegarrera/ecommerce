@@ -52,7 +52,6 @@ function Index() {
                     </span>
                     <span className="shipping__Address">
                       {shippingInfo.street_number} {shippingInfo.street_name}
-                      (between Jones & Leavenworth St), San Francisco
                     </span>
                   </div>
                 )}
