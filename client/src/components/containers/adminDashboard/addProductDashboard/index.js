@@ -122,8 +122,7 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 		}
 	}, [productCreated]); /* eslint-disable react/jsx-pascal-case */
 
-
-  console.log(product);
+	console.log(product);
 
 	return (
 		<>
@@ -243,89 +242,7 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 										{errors.priceValue && (
 											<p className='danger'>{errors.priceValue}</p>
 										)}
-										<div className='renglon2'>
-											<div className='title'>Image files &nbsp;</div>
 
-											<input
-												id='input-file'
-												className='form_input img-input'
-												type='file'
-												accept='image/*'
-												multiple
-												name='image'
-												value={product.filesValues}
-												onChange={(e) =>
-													handleInputFile(
-														e,
-														product,
-														allProducts,
-														setProduct,
-														setErrors
-													)
-												}
-											/>
-										</div>
-										{errors.files && <p className='danger'>{errors.files}</p>}
-										<div className='renglon2'>
-											<div className='title'>Image url &nbsp;</div>
-
-											<div className='input-container'>
-												<input
-													type='text'
-													className='form_input'
-													name='imageUrlInput'
-													value={product.imageUrlInput}
-													onChange={(e) =>
-														changeInput(
-															e,
-															product,
-															setProduct,
-															setStatus,
-															setErrors,
-															allProducts
-														)
-													}
-												></input>
-												<button
-													type='button'
-													className='btnFormProduct'
-													name='imagesUrl'
-													onClick={(e) =>
-														addItemListSelected(
-															e,
-															product,
-															setProduct,
-															product.imageUrlInput,
-															undefined,
-															setErrors,
-															allProducts
-														)
-													}
-												>
-													Add
-												</button>
-											</div>
-										</div>
-										{errors.images && <p className='danger'>{errors.images}</p>}
-										{errors.url && <p className='danger'>{errors.url}</p>}
-										{product.imagesUrl &&
-											product.imagesUrl.map((image) => (
-												<div>
-													<label> {image.slice(0, 40)}...</label>
-													<button
-														id={image}
-														name='imagesUrl'
-														type='button'
-														className='btnFormProduct'
-														onClick={(e) => handleDeleteLabels(e, setProduct)}
-													>
-														X
-													</button>
-												</div>
-											))}
-									</div>
-
-									<div className='right'>
 										<div className='renglon2'>
 											<div className='title'>Brands &nbsp;</div>
 
@@ -456,6 +373,9 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 												))
 											)}
 										</div>
+									</div>
+
+									<div className='right'>
 										<div className='renglon2'>
 											<div className='title'>Variants &nbsp;</div>
 
