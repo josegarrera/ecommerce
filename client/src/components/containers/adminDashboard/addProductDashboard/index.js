@@ -57,19 +57,16 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 		currency: 'USD',
 		brands: [],
 		categories: [],
-		images: [],
-		imageUrlInput: '',
-		imagesUrl: [],
-		specs: {},
-		specsItems: [],
 		variantItems: [],
 		variant: {
-			imageFile: {},
+			imageFile: [],
 			fileInput: '',
-			file: '',
+			file: [],
 		},
 		allVariants: [],
 		allVariantsFiles: [],
+		specsItems: [],
+		specs: {},
 		combo: [],
 	});
 	const [errors, setErrors] = useState({});
@@ -411,6 +408,7 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 																					? 'file'
 																					: 'text'
 																			}
+																			multiple
 																			name={variant}
 																			value={
 																				variant === 'imageFile'
@@ -460,14 +458,8 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 														)}
 													</div>
 
-													{errors.variantImage && (
-														<p className='danger'>{errors.variantImage}</p>
-													)}
-													{errors.variant && (
-														<p className='danger'>{errors.variant}</p>
-													)}
-													{errors.variantStock && (
-														<p className='danger'>{errors.variantStock}</p>
+													{errors.variants && (
+														<p className='danger'>{errors.variants}</p>
 													)}
 												</AccordionItem>
 											</Accordion>

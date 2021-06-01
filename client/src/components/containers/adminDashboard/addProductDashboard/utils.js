@@ -198,18 +198,24 @@ export const changeInputVariant = (
 	allProducts
 ) => {
 	if (e.target.name === 'imageFile') {
-		if (e.target.files[0]) {
-			const file = {
-				name: e.target.files[0].name,
-				size: e.target.files[0].size,
-				type: e.target.files[0].type,
-			};
+		if (e.target.files.length) {
+			const files = e.target.files;
+			let filesData = [];
+			for (let i = 0; i < files.length; i++) {
+				const fileItems = {
+					name: files[i].name,
+					size: files[i].size,
+					type: files[i].type,
+				};
+				filesData.push(fileItems);
+			}
+
 			setProduct({
 				...product,
 				variant: {
 					...product.variant,
-					[e.target.name]: file,
-					file: e.target.files[0],
+					[e.target.name]: filesData,
+					file: files,
 					fileInput: e.target.value,
 				},
 			});
@@ -217,7 +223,7 @@ export const changeInputVariant = (
 				validate(
 					{
 						...product,
-						variant: {...product.variant, [e.target.name]: file},
+						variant: {...product.variant, [e.target.name]: filesData},
 					},
 					allProducts
 				)
@@ -227,7 +233,7 @@ export const changeInputVariant = (
 				...product,
 				variant: {
 					...product.variant,
-					[e.target.name]: {},
+					[e.target.name]: [],
 					file: [],
 					fileInput: '',
 				},
@@ -236,7 +242,7 @@ export const changeInputVariant = (
 				validate(
 					{
 						...product,
-						variant: {...product.variant, [e.target.name]: {}},
+						variant: {...product.variant, [e.target.name]: []},
 					},
 					allProducts
 				)
