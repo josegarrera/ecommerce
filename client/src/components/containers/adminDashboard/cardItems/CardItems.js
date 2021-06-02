@@ -238,8 +238,6 @@ const CardItems = ({
 		setSeeMore(!SeeMore);
 	};
 
-	console.log('AQUI',EditAItem.combo && EditAItem.combo);
-
 	return (
 		<ProductDashboardStyle>
 			<div className='productAllInfo'>

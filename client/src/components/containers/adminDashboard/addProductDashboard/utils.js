@@ -284,7 +284,7 @@ export const handleClickVariants = (
 		}
 	}
 
-	const files = [...product.variant.file];
+	const files = product.variant.file ? [...product.variant.file] : [];
 	setProduct({
 		...product,
 		allVariants: [...product.allVariants, variantFinal],
@@ -374,14 +374,17 @@ export const handleSubmit = (
 		brands: product.brands.map((item) => item.key),
 		categories: product.categories.map((item) => item.key),
 		combo: product.combo.map((item) => item.key),
-		variants: product.allVariants,
+		variants: product.allVariants.map((item) => {
+			return {...item, imageFile: []};
+		}),
 		specs: product.specs,
 	};
 
 	let formData = new FormData();
-	product.allVariantsFiles.forEach((variant) => {
+	product.allVariantsFiles.forEach((variant, index) => {
 		for (let i = 0; i < variant.file.length; i++) {
 			formData.append('images', variant.file[i]);
+			obj.variants[index].imageFile.push(variant.file[i].name);
 		}
 	});
 	formData.append('info', JSON.stringify(obj));
