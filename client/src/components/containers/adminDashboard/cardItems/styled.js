@@ -46,9 +46,38 @@ const ProductDashboardStyle = styled.div`
 			flex-direction: column;
 			justify-content: center;
 			align-items: center;
-			width: 140px;
-			height: 200px;
+			width: 5rem;
+			height: 5rem;
 			border-radius: 5px;
+
+			.imageSlider {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				align-content: center;
+				width: 5rem;
+				height: 5rem;
+				object-fit: contain;
+				transition: transform 0.2s;
+
+				.sliderDiv {
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					justify-content: center;
+					width: 5rem;
+					height: 5rem;
+
+					.sliderImg {
+						max-width: 90%;
+						max-height: 90%;
+						object-fit: contain;
+					}
+				}
+			}
+			.imageSlider:hover {
+				transform: scale(1.08);
+			}
 
 			.image {
 				max-width: 100%;
@@ -63,33 +92,6 @@ const ProductDashboardStyle = styled.div`
 		.inputFile {
 			width: 100%;
 			display: none;
-		}
-
-		.imageSlider {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			align-content: center;
-			width: 100%;
-			height: 100%;
-			object-fit: contain;
-			transition: transform 0.2s;
-
-			.sliderDiv {
-				display: flex;
-				flex-direction: column;
-				height: 70%;
-
-				.sliderImg {
-					margin: auto auto;
-					max-width: 100%;
-					max-height: 100%;
-					object-fit: contain;
-				}
-			}
-		}
-		.imageSlider:hover {
-			transform: scale(1.2, 1.2);
 		}
 
 		.labelFile {
@@ -107,7 +109,7 @@ const ProductDashboardStyle = styled.div`
 
 			.renglon {
 				display: flex;
-
+				font-size: 0.7rem;
 				.created {
 					color: orange;
 				}
@@ -126,6 +128,7 @@ const ProductDashboardStyle = styled.div`
 			.renglon2 {
 				display: flex;
 				align-items: flex-start;
+				font-size: 0.7rem;
 			}
 
 			.title {
@@ -138,6 +141,7 @@ const ProductDashboardStyle = styled.div`
 				display: flex;
 				align-items: center;
 				font-weight: 600;
+				font-size: 0.7rem;
 
 				&:hover {
 					cursor: pointer;
@@ -145,7 +149,7 @@ const ProductDashboardStyle = styled.div`
 
 				.open {
 					margin-left: 5px;
-					font-size: 16px;
+					font-size: 0.7rem;
 
 					&:active {
 						transform: scale(0.9);
@@ -155,7 +159,7 @@ const ProductDashboardStyle = styled.div`
 
 			.accordionItems {
 				margin-left: 20px;
-				font-size: 14px;
+				font-size: 0.7rem;
 			}
 
 			.description {
@@ -164,7 +168,7 @@ const ProductDashboardStyle = styled.div`
 
 			.seeMore {
 				color: gray;
-				font-size: 13px;
+				font-size: 0.6rem;
 				font-weight: 600;
 
 				&:hover {
