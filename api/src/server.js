@@ -13,7 +13,7 @@ server.use(express.urlencoded({extended: true}));
 server.use(morgan('dev'));
 server.use(
 	cors({
-		origin: FRONTEND_URL,
+		origin: '*',
 		credentials: true,
 		methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
 		allowedHeaders: [

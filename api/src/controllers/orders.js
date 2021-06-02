@@ -35,11 +35,13 @@ async function getUserOrder(req, res) {
 
 async function getAllUserOrders(req, res, next) {
 	const {userId} = req.query;
+
+
 	try {
 		if (userId) {
 			let userExists = await Users.exists({_id: userId});
 			if (userExists) {
-				let orders = await Orders.find({users: userId, state: 0});
+				let orders = await Orders.find({users: userId}).populate('items.product').exec()
 				if (orders.length) {
 					return res.send({response: orders, type: 'Ok', message: 'Success'});
 				} else {

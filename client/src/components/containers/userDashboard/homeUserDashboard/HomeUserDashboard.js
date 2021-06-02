@@ -7,6 +7,7 @@ import {BsPersonPlusFill, BsPersonCheckFill} from 'react-icons/bs';
 import Cart from '../../cart/Cart';
 import Favourites from '../../favourites/Favourites';
 import Profile from '../userProfile/Profile';
+import UserOrder from '../userOrders';
 
 const HomeUserDashboard = () => {
 	const [Options, setOptions] = useState('My profile');
@@ -81,6 +82,8 @@ const HomeUserDashboard = () => {
 					<Favourites />
 				) : Options === 'My profile' ? (
 					<Profile />
+				) : Options === 'My orders' ? (
+					<UserOrder/>
 				) : null}
 			</div>
 		</StyledContainer>

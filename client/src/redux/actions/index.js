@@ -509,7 +509,7 @@ export const confirmCheckout = (body) => {
 				payload: data.response, //
 			});
 		} catch (err) {
-			console.log(err);
+			console.log(err.response.data);
 		}
 	};
 };

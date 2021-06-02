@@ -2,12 +2,22 @@ import styled from 'styled-components';
 
 const ProductDashboardStyle = styled.div`
 	display: flex;
-	width: 95%;
+	width: 70vw;
 	margin: 10px 0px;
 	padding: 10px 10px;
 	background-color: #ffffff;
 	border-radius: 10px;
 	color: #58585a;
+
+	a {
+		color: #58585a;
+	}
+
+	.link {
+		&:hover {
+			transform: translateY(-0.2rem);
+		}
+	}
 
 	.productAllInfo {
 		display: flex;
