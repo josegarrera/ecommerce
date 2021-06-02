@@ -67,11 +67,11 @@ p.danger {
   font-size: 12px;
 }
 
-@media (max-width: 2400px) {
+/* @media (max-width: 2400px) {
   html {
     font-size: 22px;
   }
-}
+} */
 
 @media (max-width: 1441px) {
   html {
