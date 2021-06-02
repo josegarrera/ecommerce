@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const {Orders, Users} = require('../models/index');
+const axios = require('axios');
 
 async function getUserOrder(req, res) {
 	const {userId} = req.query;
@@ -36,12 +37,13 @@ async function getUserOrder(req, res) {
 async function getAllUserOrders(req, res, next) {
 	const {userId} = req.query;
 
-
 	try {
 		if (userId) {
 			let userExists = await Users.exists({_id: userId});
 			if (userExists) {
-				let orders = await Orders.find({users: userId}).populate('items.product').exec()
+				let orders = await Orders.find({users: userId})
+					.populate('items.product')
+					.exec();
 				if (orders.length) {
 					return res.send({response: orders, type: 'Ok', message: 'Success'});
 				} else {
@@ -283,24 +285,58 @@ function deleteOrder(req, res) {
 		}
 	});
 }
+
+const sendEmails = (order) => {
+	const text =
+		order.state === 'dispatched'
+			? 'Your order has been dispatched! We invite you to comment about the product or your experience in our store. As always, we are at your disposal. Enjoy it!'
+			: order.state === 'completed'
+			? 'Your order has been delivered to the address you specified.  We invite you to comment about the product or your experience in our store. As always, we are at your disposal. Enjoy it!'
+			: "We're sorry, but your order has been canceled. It is likely that there was an unusual problem. If your payment was credited, you will receive a full refund within 48 hours. For more details, contact us, we are at your disposal.";
+	return axios.post(`${process.env.BACKEND_URL}/checkout/send-notifications`, {
+		email: order.email.email,
+		subject: 'Store notifications',
+		text: 'Order status.',
+		html: `<div>
+				  <h3>Order detail</h3>
+				  <p>${text}</p>
+				  <ul>
+				  <li type="circle">Payment Id: ${
+						order.transactionDetail && order.transactionDetail.paymentId
+					}</li>
+				  <li type="circle">Payment status: ${
+						order.transactionDetail && order.transactionDetail.paymentStatus
+					}</li>
+				  </ul>
+			      </div>`,
+	});
+};
+
 function updateOrder(req, res) {
 	const {id} = req.params;
-	const body = req.body;
+	const body = req.body.data;
+	const email = req.user;
+
 	if (!id || !body)
 		return res.status(400).send({
 			response: '',
 			type: 'Bad Request',
 			message: 'No ID in params',
 		});
-	Orders.findByIdAndUpdate(id, body)
-		.then((data) => res.send({response: data, type: 'Ok', message: 'Success'}))
-		.catch((err) =>
+	Promise.all([
+		Orders.findByIdAndUpdate(id, {state: body.state}),
+		sendEmails({...body, email}),
+	])
+		.then((data) => {
+			res.send({response: data[0], type: 'Ok', message: 'Success'});
+		})
+		.catch((err) => {
 			res.status(500).send({
 				response: '',
 				type: 'Internal server error.',
 				message: err,
-			})
-		);
+			});
+		});
 }
 
 module.exports = {

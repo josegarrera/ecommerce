@@ -1,4 +1,4 @@
-const {Users} = require('../models/index.js');
+const {Users, Orders} = require('../models/index.js');
 
 function deleteUser(req, res) {
 	const userId = req.params.id;
@@ -9,18 +9,16 @@ function deleteUser(req, res) {
 			message: 'No ID in params',
 		});
 	}
-	// Falta eliminar la order activa del usuario
-	Users.findByIdAndRemove(userId, function (err, doc) {
-		if (err) {
-			res.status(500).send({
-				response: '',
-				type: 'Internal server error.',
-				message: err,
-			});
-		} else {
-			res.send({response: doc, type: 'Ok', message: 'Success'});
-		}
-	});
+	Promise.all([
+		Users.findByIdAndRemove(userId),
+		Orders.findOneAndRemove({users: userId}),
+	])
+		.then((data) => res.send({response: data, type: 'Ok', message: 'Success'}))
+		.catch((err) =>
+			res
+				.status(500)
+				.send({response: '', type: 'Internal server error.', message: err})
+		);
 }
 
 function getAllUsers(req, res) {
@@ -37,8 +35,6 @@ function getAllUsers(req, res) {
 function updateUser(req, res) {
 	const {id} = req.params;
 	const user = req.body; // por body se puede enviar email, role
-
-	//Falta contemplar si actualiza la orden
 	Users.findOne({_id: id})
 		.then((doc) => Users.updateOne({_id: doc._id}, user))
 		.then(() => Users.findOne({_id: id}))
