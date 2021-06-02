@@ -219,7 +219,7 @@ const FormProductStyle = styled.div`
     display: flex;
     align-self: flex-end;
     margin: 0 1rem;
-    padding: 0.65rem 3rem;
+    padding: 0.5rem 3rem;
     border-radius: 0.3rem;
     font-size: 0.8rem;
     background-color: #549cf8;
