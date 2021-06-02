@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Route, Redirect} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import GridLayout from '../utils/GridLayout';
@@ -10,7 +10,6 @@ import ProductDetail from '../components/containers/productDetail/ProductDetail'
 import Cart from '../components/containers/cart/Cart.js';
 import FormLogging from '../components/containers/formLogging/FormLogging';
 import FormSignup from '../components/containers/formSignup/FormSignup';
-import FomrCategories from '../components/containers/formCategories/FormCategories';
 import HomeDashboard from '../components/containers/adminDashboard/homeDashboard/HomeDashboard';
 import ShippingAddress from '../components/containers/shippingAddress/shippingAddress';
 import ConfirmOrder from '../components/containers/confirmOrder/confirmOrder';
@@ -25,7 +24,7 @@ import Reset from '../components/containers/reset/Reset';
 import Contact from '../components/containers/contact/index';
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
-
+import GlobalStyles from '../utils/GlobalStyles';
 
 /* Seteando el header del axios para todas las rutas*/
 import axios from 'axios';
@@ -45,7 +44,7 @@ function App() {
 				<Elements stripe={stripePromise}>
 					<React.Fragment>
 						<GridLayout>
-							{/* <GlobalStyles /> */}
+							<GlobalStyles />
 							<ReactNotification />
 
 							<Route path='/'>
