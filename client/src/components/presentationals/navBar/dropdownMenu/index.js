@@ -60,9 +60,9 @@ function Dropdown({ handleClick }) {
               //     </Link>
               //   ) : null} */}
 
-              <Link to="/catalogue">
-                <div className="login" onClick={eraseToken}>
-                  Sign Out
+              <Link>
+                <div className="dropdown-button" onClick={eraseToken}>
+                  <div className="sign-in"> Sign Out </div>
                 </div>
               </Link>
             ) : (

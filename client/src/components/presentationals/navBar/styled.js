@@ -51,7 +51,6 @@ const DivNavBar = styled.div`
 
     #topRightResponsive {
       display: none;
-      margin-right: 2.5rem;
 
       @media screen and (max-width: 992px) {
         display: flex;
@@ -122,7 +121,7 @@ const DivNavBar = styled.div`
         &:hover .loginHoverCart {
           display: block;
         }
-        
+
         @media screen and (max-width: 992px) {
           display: none;
         }
@@ -368,15 +367,22 @@ const DivNavBar = styled.div`
   }
 
   .bottomNav {
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    height: 25%;
     padding: 0px 10%;
-    font-weight: 600;
-    color: #bdbdbd;
 
-    .bottomLinks {
+    .bottomNavLinks {
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+
+      font-weight: 600;
+      color: #bdbdbd;
+
+      @media screen and (max-width: 992px) {
+        display: none;
+      }
+    }
+
+    .bottomLink {
       font-size: 16px;
       font-weight: 600;
       color: #bdbdbd;
@@ -399,15 +405,12 @@ const DivNavBar = styled.div`
       font-weight: 600;
       color: #bdbdbd;
     }
-
-    @media screen and (max-width: 992px) {
-      display: none;
-    }
   }
+  @media (max-width: 992px) {
+    height: 12rem;
 
-  @media screen and (max-width: 992px) {
-    .searchBar {
-      display: none;
+    .topNav {
+      height: 7rem;
     }
   }
 `;
