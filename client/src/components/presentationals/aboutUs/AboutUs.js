@@ -42,9 +42,9 @@ const AboutUs = () => {
 			fullName: 'Pedro Contreras',
 			image:
 				'https://media-exp1.licdn.com/dms/image/C4D03AQGuCYMpdbcOFg/profile-displayphoto-shrink_800_800/0/1621346044376?e=1628121600&v=beta&t=rF195tbbzrjEkn5PjYJvSwGK4y8oGI8MNhmy-49GOW4',
-			linkedin: '',
-			github: '',
-			cv: '',
+			linkedin: 'https://www.linkedin.com/in/pedrocontreras-js/',
+			github: 'https://github.com/pedro030',
+			cv: 'https://drive.google.com/file/d/13PsUVdphif23kDXlNvQYb6cSBYMgqCSs/view',
 		},
 		{
 			fullName: 'Camila Álvarez',
