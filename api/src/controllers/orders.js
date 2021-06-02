@@ -283,6 +283,25 @@ function deleteOrder(req, res) {
 		}
 	});
 }
+function updateOrder(req, res) {
+	const {id} = req.params;
+	const body = req.body;
+	if (!id || !body)
+		return res.status(400).send({
+			response: '',
+			type: 'Bad Request',
+			message: 'No ID in params',
+		});
+	Orders.findByIdAndUpdate(id, body)
+		.then((data) => res.send({response: data, type: 'Ok', message: 'Success'}))
+		.catch((err) =>
+			res.status(500).send({
+				response: '',
+				type: 'Internal server error.',
+				message: err,
+			})
+		);
+}
 
 module.exports = {
 	getUserOrder,
@@ -293,4 +312,5 @@ module.exports = {
 	deleteProduct,
 	changeLot,
 	deleteOrder,
+	updateOrder,
 };

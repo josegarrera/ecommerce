@@ -227,6 +227,19 @@ const CardItems = ({
 			} catch (error) {
 				console.log(error.response.data.message);
 			}
+		} else if (options === 'Orders') {
+			let sendEditItem = {...EditAItem};
+			try {
+				await axios.put(
+					`${URLS.URL_USER_ORDERS}/${EditAItem._id}`,
+					sendEditItem
+				);
+				allProducts();
+				modifiedNotification();
+				setSeeMore(!SeeMore);
+			} catch (error) {
+				console.log(error.response.data.message);
+			}
 		}
 
 		setisEditAItem(!isEditAItem);
@@ -533,18 +546,28 @@ const CardItems = ({
 									{!isEditAItem && OrderDetail ? (
 										<div className={OrderDetail.state}>
 											{' '}
-											{OrderDetail.state.charAt(0).toUpperCase() +
-												OrderDetail.state.slice(1)}
+											{OrderDetail.state &&
+												OrderDetail.state.charAt(0).toUpperCase() +
+													OrderDetail.state.slice(1)}
 											{'.'}
 										</div>
 									) : (
 										<div>
-											<input
+											<select
+												className='select-style'
+												onClick={handleInput}
 												name='state'
-												type='text'
-												value={EditAItem.state}
-												onChange={handleInput}
-											/>
+											>
+												<option className='option-style' value='dispatched'>
+													Dispatched
+												</option>
+												<option className='option-style' value='completed'>
+													Completed
+												</option>
+												<option className='option-style' value='canceled'>
+													Canceled
+												</option>
+											</select>
 										</div>
 									)}
 								</div>
