@@ -24,6 +24,7 @@ import UserDashboard from "../components/containers/userDashboard/homeUserDashbo
 import FormCategorie from "../components/containers/formCategories/FormCategories";
 import FormProductDashboard from "../components/containers/adminDashboard/addProductDashboard/index.js";
 import Reset from "../components/containers/reset/Reset";
+import Contact from "../components/containers/contact/index";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 
@@ -107,8 +108,9 @@ function App() {
               />
               <Route path="/shipping" component={ShippingAddress}></Route>
               <Route path="/confirmation" component={ConfirmOrder}></Route>
+              <Route path="/confirmation" component={ConfirmOrder}></Route>
               <Route path="/resetPassword" component={Reset} />
-              <Route path="/userDashboard" component={UserDashboard} />
+              <Route path="/contact" component={Contact} />
             </GridLayout>
           </React.Fragment>
         </Elements>
