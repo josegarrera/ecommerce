@@ -33,6 +33,7 @@ const FormLogging = () => {
 			.post(URLS.URL_LOGIN, input)
 			.then(function (response) {
 				let data = response.data;
+
 				if (data.notLogin) {
 					const message = data.notLogin;
 					if (message && message.includes('User')) {
@@ -50,7 +51,6 @@ const FormLogging = () => {
 						password: '',
 					});
 					window.localStorage.setItem('token', data.token);
-					console.log('adresssss', data.user);
 					window.localStorage.setItem(
 						'address',
 						JSON.stringify(data.user.address)
@@ -64,6 +64,7 @@ const FormLogging = () => {
 					window.localStorage.setItem('lastName', data.user.lastName);
 					window.localStorage.setItem('profileImage', data.user.profileImage);
 					window.localStorage.setItem('userId', data.user._id);
+					window.localStorage.setItem('role', data.user.role);
 					dispatch(loginUser({role: data.user.role}));
 
 					if (data.user.role === 'admin') {
@@ -102,8 +103,8 @@ const FormLogging = () => {
 		let users = await axios.get(URLS.URL_USERS);
 
 		if (users.data.response.find((el) => el.email === inputGoogle.email)) {
+			console.log('entre 1');
 			let userLogIn = await axios.post(URLS.URL_LOGIN, inputGoogle);
-
 			window.localStorage.setItem('token', userLogIn.data.token);
 			window.localStorage.setItem(
 				'address',
@@ -121,6 +122,7 @@ const FormLogging = () => {
 				userLogIn.data.user.profileImage
 			);
 			window.localStorage.setItem('userId', userLogIn.data.user._id);
+			window.localStorage.setItem('role', userLogIn.data.user.role);
 
 			dispatch(loginUser({role: userLogIn.data.user.role}));
 			if (userLogIn.data.user.role === 'admin') {
@@ -129,8 +131,10 @@ const FormLogging = () => {
 				history.push('/catalogue');
 			}
 		} else {
+			console.log('entre 2');
 			await axios.post(URLS.URL_SIGNUP, inputGoogle);
 			let userLogIn = await axios.post(URLS.URL_LOGIN, inputGoogle);
+			console.log('signuopp', userLogIn);
 
 			window.localStorage.setItem('token', userLogIn.data.token);
 			window.localStorage.setItem(
@@ -149,6 +153,7 @@ const FormLogging = () => {
 				userLogIn.data.user.profileImage
 			);
 			window.localStorage.setItem('userId', userLogIn.data.user._id);
+			window.localStorage.setItem('role', userLogIn.data.user.role);
 
 			dispatch(loginUser({role: userLogIn.data.user.role}));
 			if (userLogIn.data.user.role === 'admin') {
