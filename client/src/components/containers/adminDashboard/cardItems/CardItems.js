@@ -228,12 +228,13 @@ const CardItems = ({
 				console.log(error.response.data.message);
 			}
 		} else if (options === 'Orders') {
-			let sendEditItem = {...EditAItem};
+			let orderDetail = await axios.get(`${URLS.URL_USER_ORDERS}/${_id}`);
+
+			let user = orderDetail.data.response.users.email;
+
+			let sendEditItem = {user, data: {...EditAItem}};
 			try {
-				await axios.put(
-					`${URLS.URL_USER_ORDERS}/${EditAItem._id}`,
-					sendEditItem
-				);
+				await axios.put(`${URLS.URL_USER_ORDERS}/${_id}`, sendEditItem);
 				allProducts();
 				modifiedNotification();
 				setSeeMore(!SeeMore);
@@ -351,7 +352,7 @@ const CardItems = ({
 							<div className='title'>Role: &nbsp;</div>
 							{isEditAItem ? (
 								<div>
-									<select name='role' onChange={handleInput}>
+									<select name='role' onClick={handleInput}>
 										<option name='Admin'>admin</option>
 										<option name='Client'>client</option>
 									</select>
@@ -384,7 +385,7 @@ const CardItems = ({
 							<div className='title'>Price: &nbsp;</div>
 							{isEditAItem && EditAItem ? (
 								<div>
-									<select>
+									<select name='price.currency' onClick={handleInput}>
 										<option>USD</option>
 										<option>ARS</option>
 									</select>
@@ -440,7 +441,7 @@ const CardItems = ({
 										placeholder='Add a Brand'
 									/>
 								)}
-								{combo && EditAItem.combo.length > 0 && (
+								{combo && EditAItem.combo && EditAItem.combo.length && (
 									<AccordionDashboard
 										items={EditAItem.combo}
 										isEditAItem={false}

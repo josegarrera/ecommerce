@@ -167,16 +167,15 @@ function notifyUser(req, res) {
 		text: text,
 		html: html,
 	};
-
 	transporter
 		.sendMail(mailOptions)
-		.then((data) =>
+		.then((data) => {
 			res.send({
 				response: data,
 				type: 'Ok',
 				message: 'Success',
-			})
-		)
+			});
+		})
 		.catch((error) => {
 			res
 				.status(500)
