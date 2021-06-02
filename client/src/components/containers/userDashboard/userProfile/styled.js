@@ -18,6 +18,9 @@ export const ProfileStyled = styled.div`
 		display: flex;
 		margin-top: 20px;
 		.imgDiv {
+			display: flex;
+			justify-content: center;
+			align-items: center;
 			width: 150px;
 			height: 150px;
 			border-radius: 100%;
@@ -26,6 +29,12 @@ export const ProfileStyled = styled.div`
 				height: 100%;
 				border-radius: 100%;
 				object-fit: contain;
+			}
+			.iconProfile {
+				width: 70%;
+				height: 70%;
+				object-fit: contain;
+				color: #58585a;
 			}
 		}
 
