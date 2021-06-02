@@ -6,14 +6,9 @@ import CardItems from '../cardItems/CardItems';
 import Create from '../../create/Create';
 import SearchBarDashboard from '../searchBarDashboard';
 import ListStyles from './styled';
-/* import {clearObjectValues} from '../../../../utils/clearObjetcValues'; */
 import {getCategories, getBrands, getProducts} from '../../../../redux/actions';
 import InfiniteScroll from 'react-infinite-scroll-component';
-
 import {AiFillPlusCircle} from 'react-icons/ai';
-
-
-/* var _ = require('lodash'); */
 
 const ListDashboard = ({Options, setOptions}) => {
 	const [Items, setItems] = useState([]);
@@ -39,22 +34,9 @@ const ListDashboard = ({Options, setOptions}) => {
 	}, []);
 
 	useEffect(() => {
-
 		setFilter(Items);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [Items]);
-
-	// useEffect(() => {
-	// 	if (typeof Items[0] === 'object') {
-	// 		let obj = clearObjectValues(_.cloneDeep(Items[0]));
-	// 		console.log(obj);
-	// 		if (create) {
-	// 			setItems([obj].concat([...Items]));
-	// 		} else {
-	// 			setItems(Items.slice(1));
-	// 		}
-	// 	}
-	// }, [create]);
 
 	const allProducts = async () => {
 		if (Options === 'Products') {
@@ -117,19 +99,15 @@ const ListDashboard = ({Options, setOptions}) => {
 			)}
 			{Options === 'Products' ? (
 				<>
-					{/* {create ? <Create options={Options} /> : null} */}
-
 					<InfiniteScroll
 						className='listProduct'
 						dataLength={Filter.length}
 						loader={<h4>Loading...</h4>}
 						height={'85vh'}
-
 					>
 						{Filter &&
 							Filter.map((el, index) => (
 								<CardItems
-
 									prop={{...el}}
 									key={el._id}
 									index={index}
@@ -189,7 +167,6 @@ const ListDashboard = ({Options, setOptions}) => {
 						dataLength={Filter.length}
 						loader={<h4>Loading...</h4>}
 						height={'85vh'}
-
 					>
 						{Filter &&
 							Filter.map((el, index) => (

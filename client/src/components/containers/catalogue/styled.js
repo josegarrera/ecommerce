@@ -6,10 +6,8 @@ const Catalogue_Style = styled.div`
 	align-items: stretch;
 	background-color: #f8f8f8;
 	padding: 0rem 5%;
-	border: 1px solid red;
 
 	.filters {
-		border: 1px solid red;
 		margin: 8rem 0rem;
 	}
 
