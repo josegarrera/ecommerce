@@ -1,6 +1,11 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {getAllProducts, getProducts} from '../../../redux/actions';
+import {
+	getAllProducts,
+	getProducts,
+	postLocalStorage,
+	getWishListOfDB,
+} from '../../../redux/actions';
 import Footer from '../footer/Footer';
 import ProductList from '../productsList/ProductList';
 import HomeStyle from './styled';
@@ -9,6 +14,16 @@ import MultiItemCarousel from '../multiItemCarousel/multiItemCarousel';
 
 const Home = () => {
 	const {products} = useSelector((state) => state.products);
+	const cartProduct = useSelector((state) => state.cartProducts);
+
+	useEffect(() => {
+		const user = window.localStorage.getItem('userId');
+		if (user) {
+			dispatch(postLocalStorage({products: cartProduct, userId: user}));
+			window.localStorage.setItem('cart', JSON.stringify([]));
+			dispatch(getWishListOfDB(user));
+		} // eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const dispatch = useDispatch();
 	useEffect(() => {

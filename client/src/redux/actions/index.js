@@ -440,6 +440,7 @@ export const getWishListOfDB = (id) => {
 		const {
 			data: {response},
 		} = await axios.get(`${URLS.URL_FAVORITES}?userId=${id}`);
+		console.log(response);
 		return dispatch({
 			type: ActionTypes.SET_WISH_LIST,
 			payload: response, // TIENE QUE SER UN {}

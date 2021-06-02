@@ -30,7 +30,11 @@ const r = (state = initialState, {type, payload}) => {
 		case ActionTypes.CHANGE_LOT_LOCAL:
 			let newCart = [...state.cartProducts];
 			let modif = newCart.find((e) => e.product._id === payload.productId);
-			modif.lot += payload.num;
+			modif.lot =
+				modif.lot + payload.num <= modif.product.variants[0].stock &&
+				modif.lot + payload.num > 0
+					? modif.lot + payload.num
+					: modif.lot;
 			return {
 				...state,
 				cartProducts: newCart,
@@ -196,6 +200,11 @@ const r = (state = initialState, {type, payload}) => {
 			};
 
 		///////////////  WISHLIST  ///////////////
+		case ActionTypes.SET_WISH_LIST:
+			return {
+				...state,
+				wishlist: payload,
+			};
 
 		case ActionTypes.ADD_FAV_PRODUCT:
 			const found = state.allProducts.find(
