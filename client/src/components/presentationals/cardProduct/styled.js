@@ -117,6 +117,9 @@ const DivCrdProd = styled.div`
 			font-size: 0.8rem;
 		}
 
+
+		
+
 		&:hover {
 			cursor: pointer;
 			transition: 0.3s;
