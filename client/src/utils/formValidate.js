@@ -36,12 +36,12 @@ export default function validate(product, allProducts) {
 		errors.categories = 'You must add at least one brand.';
 		return errors;
 	}
-	if (!product.variant.stock) {
+	if (!product.variant.stock && !product.allVariants.length) {
 		errors.variants = 'Add basic product features.';
 		return errors;
 	}
 
-	if (Object.keys(product.variant).length) {
+	if (Object.values(product.variant).filter((el) => el).length > 2) {
 		if (!product.variant.stock) {
 			errors.variants = 'You must add the stock of the variant.';
 			return errors;
@@ -58,7 +58,7 @@ export default function validate(product, allProducts) {
 		) {
 			errors.variants = 'Invalid URL.';
 			return errors;
-		} else if (product.variant.imageFile.length) {
+		} else if (product.variant.imageFile && product.variant.imageFile.length) {
 			const filesFilter = product.variant.imageFile.map(
 				(file) => !/image\/jpeg|png/.test(file.type) || file.size > 5242880
 			);

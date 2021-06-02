@@ -43,7 +43,6 @@ async function getProductsDetail(req, res) {
 async function createProduct(req, res) {
 	const info = JSON.parse(req.body.info);
 	const files = req.files;
-	console.log(files);
 	const {
 		name,
 		description,
@@ -61,15 +60,15 @@ async function createProduct(req, res) {
 			type: 'Bad request.',
 			message: 'The fields are empty.',
 		});
-	console.log(variants);
-	/* variants.forEach((variant) => {
+	variants.forEach((variant) => {
 		variant.imageUrl = variant.imageUrl ? [variant.imageUrl] : [];
-		let i = files.findIndex((file) => file.originalname === variant.imageFile);
-		if (i > -1) variant.imageFile = files[i].filename;
-	}); */
-
+		variant.imageFile.forEach((fileName, index) => {
+			let i = files.findIndex((file) => file.originalname === fileName);
+			if (i > -1) variant.imageFile[index] = files[i].filename;
+		});
+	});
 	try {
-		/* const checkExists = await Products.exists({name});
+		const checkExists = await Products.exists({name});
 		if (checkExists)
 			return res.status(400).send({
 				response: '',
@@ -88,15 +87,7 @@ async function createProduct(req, res) {
 			specs,
 			combo,
 		});
-		await categories.map((el) =>
-			Categories.findByIdAndUpdate(
-				{_id: el},
-				{$addToSet: {products: product._id}}
-			)
-		);
-		await brands.map((el) =>
-			Brands.findByIdAndUpdate({_id: el}, {$addToSet: {products: product._id}})
-		);
+
 		if (files.length) {
 			const filesUpdates = await Promise.all(
 				files.map((file) =>
@@ -112,18 +103,35 @@ async function createProduct(req, res) {
 
 			filesUrl.forEach((url) => {
 				let i = product.variants.findIndex((variant) =>
-					url.includes(variant.imageFile)
+					variant.imageFile.some((fileName) => url.includes(fileName))
 				);
-				if (i > -1) {
-					product.variants[i].imageUrl = [...product.variants[i].imageUrl, url];
-				} else {
-					product.imageUrl.push(url);
-				}
+				if (i > -1) product.variants[i].imageUrl.push(url);
+				if (i === 0) product.imageUrl.push(url);
 			});
+		} else {
+			product.imageUrl.push(product.variants[0].imageUrl[0]);
 		}
 		product.variants.map((variant) => delete variant.imageFile);
-		await product.save(); */
-		res.send({response: info, type: 'Ok', message: 'Success'});
+		await product.save();
+
+		await Promise.all(
+			categories.map((el) =>
+				Categories.findByIdAndUpdate(
+					{_id: el},
+					{$addToSet: {products: product._id}}
+				)
+			)
+		);
+		await Promise.all(
+			brands.map((el) =>
+				Brands.findByIdAndUpdate(
+					{_id: el},
+					{$addToSet: {products: product._id}}
+				)
+			)
+		);
+
+		res.send({response: product, type: 'Ok', message: 'Success'});
 	} catch (error) {
 		res
 			.status(500)
