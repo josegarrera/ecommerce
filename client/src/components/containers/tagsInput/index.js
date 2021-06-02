@@ -50,7 +50,7 @@ const TagsInput = ({tags, setTags, setErrors}) => {
 							></input>
 						</div>
 						<button onClick={(e) => clickHandler(e)}>
-							<div class='submit__tag'>Add URL</div>
+							<div className='submit__tag'>Add URL</div>
 						</button>
 					</div>
 				</ul>

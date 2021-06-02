@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import {StyledContainer} from './styles';
-import ListDashboard from '../listDashboardUser/ListDashboardUser';
 import {IoIosArrowForward} from 'react-icons/io';
 import {BsPersonPlusFill, BsPersonCheckFill} from 'react-icons/bs';
 import Cart from '../../cart/Cart';
@@ -15,7 +14,7 @@ const HomeUserDashboard = () => {
 	let firstName = window.localStorage.getItem('firstName');
 	let lastName = window.localStorage.getItem('lastName');
 	let profileImage = window.localStorage.getItem('profileImage');
-	let email = window.localStorage.getItem('email');
+
 
 	const handleOnClick = (e) => {
 		setOptions(e.target.name);

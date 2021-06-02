@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/jsx-pascal-case */
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import { useSelector } from "react-redux";
 import PaymentInformation_Style from "./styled";

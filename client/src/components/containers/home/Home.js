@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {getAllProducts, getProducts} from '../../../redux/actions';
 import Footer from '../footer/Footer';
-import ProductList from '../productsList/ProductList';
 import HomeStyle from './styled';
 import Carousel from '../carousel';
 import MultiItemCarousel from '../multiItemCarousel/multiItemCarousel';

@@ -24,7 +24,7 @@ const ProductList = ({products, loadSearch}) => {
 					<img
 						className='notFound'
 						src='https://res.cloudinary.com/dlexbrcrv/image/upload/v1622048281/Proyects/notFound_bs1vct.svg'
-					/>
+					alt ='loading'/>
 				) : (
 					loader.map((e, i) => <CardProduct key={i} loading={true} />)
 				)}

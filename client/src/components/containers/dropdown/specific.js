@@ -16,9 +16,6 @@ function Dropdown({
 	options,
 	setProduct,
 	product,
-	allProducts,
-	variantsProduct,
-	setErrors,
 }) {
 	const [open, setOpen] = useState(false);
 	const toggle = () => setOpen(!open);

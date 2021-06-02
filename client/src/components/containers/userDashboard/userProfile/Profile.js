@@ -13,7 +13,7 @@ const Profile = () => {
 			<h1 className='title__prof'>Profile</h1>
 			<div className='data'>
 				<div className='imgDiv'>
-					<img className='img' src={profileImage && profileImage} />
+					<img className='img' src={profileImage && profileImage} alt='profile' />
 				</div>
 				<div className='userData'>
 					<div className='renglon'>

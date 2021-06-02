@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
 import GridLayout from "../utils/GridLayout";
@@ -12,7 +12,7 @@ import ProductDetail from "../components/containers/productDetail/ProductDetail"
 import Cart from "../components/containers/cart/Cart.js";
 import FormLogging from "../components/containers/formLogging/FormLogging";
 import FormSignup from "../components/containers/formSignup/FormSignup";
-import FomrCategories from "../components/containers/formCategories/FormCategories";
+
 import HomeDashboard from "../components/containers/adminDashboard/homeDashboard/HomeDashboard";
 import ShippingAddress from "../components/containers/shippingAddress/shippingAddress";
 import ConfirmOrder from "../components/containers/confirmOrder/confirmOrder";
@@ -20,7 +20,6 @@ import AboutUs from "../components/presentationals/aboutUs/AboutUs";
 import ReactNotification from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
 import Favourites from "../components/containers/favourites/Favourites";
-import UserDashboard from "../components/containers/userDashboard/homeUserDashboard/HomeUserDashboard";
 import FormCategorie from "../components/containers/formCategories/FormCategories";
 import FormProductDashboard from "../components/containers/adminDashboard/addProductDashboard/index.js";
 import Reset from "../components/containers/reset/Reset";

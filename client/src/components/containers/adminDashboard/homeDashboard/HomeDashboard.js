@@ -8,7 +8,6 @@ import {BsPersonPlusFill, BsPersonCheckFill} from 'react-icons/bs';
 
 const HomeDashboard = () => {
 	const [Options, setOptions] = useState('Home');
-	const [showModal, setShowModal] = useState(false);
 	let userId = window.localStorage.getItem('userId');
 	let firstName = window.localStorage.getItem('firstName');
 	let lastName = window.localStorage.getItem('lastName');
