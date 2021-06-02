@@ -78,14 +78,14 @@ function Contact() {
 
           <div class="post__comment__box">
             <div class="input__group row reverse">
-              <input className="comment__input" placeholder="Nombre*" />
-              <input className="comment__input" placeholder="Apellido*" />
-              <input className="comment__input" placeholder="Concepto**" />
+              <input className="comment__input" placeholder="Name*" />
+              <input className="comment__input" placeholder="Lastname*" />
+              <input className="comment__input" placeholder="Concept**" />
             </div>
 
             <textarea
               className="comment__text__area"
-              placeholder="Mensaje*"
+              placeholder="Message*"
             ></textarea>
 
             <div class="comment__button">
