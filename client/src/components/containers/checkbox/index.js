@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-pascal-case */
 import React, { useState } from "react";
 import Checkbox_Style from "./styled";
-import { RiCheckboxBlankCircleFill} from "react-icons/ri";
 
 
 const Checkbox = ({ color }) => {

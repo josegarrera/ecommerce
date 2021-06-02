@@ -2,8 +2,6 @@ import React, {useEffect} from 'react';
 import {Route, Redirect} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import GridLayout from '../utils/GridLayout';
-//import {GlobalStyles} from './GlobalStyles';
-
 import NavBar from '../components/presentationals/navBar/NavBar.js';
 import Home from '../components/containers/home/Home.js';
 import Catalogue from '../components/containers/catalogue/Catalogue';
@@ -27,6 +25,7 @@ import Reset from '../components/containers/reset/Reset';
 import Contact from '../components/containers/contact/index';
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
+
 
 /* Seteando el header del axios para todas las rutas*/
 import axios from 'axios';

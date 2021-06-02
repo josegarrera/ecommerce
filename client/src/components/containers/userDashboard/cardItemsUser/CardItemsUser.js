@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import ProductDashboardStyle from './styled';
 import AccordionDashboard from '../../adminDashboard/accordionDashboard/AccordionDashboard';
 import {Link} from 'react-router-dom';
@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom';
 //import AccordionDashboard from '../accordionDashboard/AccordionDashboard';
 
 const CardItems = ({el}) => {
-	const [SeeMore, setSeeMore] = useState(false);
+
 
 	console.log(el);
 	return (

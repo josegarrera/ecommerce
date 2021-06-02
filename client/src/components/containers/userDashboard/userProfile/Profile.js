@@ -15,7 +15,7 @@ const Profile = () => {
 			<div className='data'>
 				<div className='imgDiv'>
 					{profileImage !== 'undefined' ? (
-						<img className='img' src={profileImage && profileImage} />
+						<img className='img' src={profileImage && profileImage} alt='profile' />
 					) : (
 						<BsPersonCheckFill className='iconProfile' />
 					)}

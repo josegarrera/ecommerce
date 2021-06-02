@@ -8,7 +8,7 @@ import SearchBarDashboard from '../searchBarDashboard';
 import ListStyles from './styled';
 import {getCategories, getBrands, getProducts} from '../../../../redux/actions';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import {AiFillPlusCircle} from 'react-icons/ai';
+
 
 const ListDashboard = ({Options, setOptions}) => {
 	const [Items, setItems] = useState([]);

@@ -15,19 +15,12 @@ import {
 	AccordionItemButton,
 	AccordionItemPanel,
 } from 'react-accessible-accordion';
-import {
-	MdDelete,
-	MdCancel,
-	MdEdit,
-	MdKeyboardArrowDown,
-	MdKeyboardArrowUp,
-} from 'react-icons/md';
+import {MdKeyboardArrowDown, MdKeyboardArrowUp} from 'react-icons/md';
 import {
 	changeInput,
 	handleSearch,
 	handleDataList,
 	addItemListSelected,
-	handleInputFile,
 	changeInputVariant,
 	handleClickVariants,
 	handleVariantDelete,
@@ -117,8 +110,7 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 				completed: false,
 			});
 		}
-	}, [productCreated]); /* eslint-disable react/jsx-pascal-case */
-
+	}, [productCreated]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
 		<>
@@ -142,7 +134,7 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 							<div className='productAllInfo'>
 								<div className='top-row'>
 									<h3 className='top-title'>Create New Product</h3>
-									<i class='close-icon' onClick={closeModal}>
+									<i className='close-icon' onClick={closeModal}>
 										<RiCloseFill />
 									</i>
 								</div>

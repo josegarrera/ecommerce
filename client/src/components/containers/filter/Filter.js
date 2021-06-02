@@ -10,7 +10,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {MdDoNotDisturbAlt} from 'react-icons/md';
 import Dropdown from '../dropdown';
 import Filter_Style from './styled';
-import setterInput from '../../../utils/setterInput.js';
+
 
 const Filter = ({order}) => {
 	const dispatch = useDispatch();

@@ -1,9 +1,4 @@
 import React, {useEffect, useState} from 'react';
-
-import axios from 'axios';
-
-import {URLS} from '../../../utils/constants';
-
 import {useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -31,7 +26,6 @@ const ProductDetail = (id) => {
 	const [imageBig, setImageBig] = useState();
 	let history = useHistory();
 	let product = useSelector((store) => store.productDetail);
-	console.log('eeste es el product', product);
 	const wishlist = useSelector((store) => store.wishlist);
 	const fav = wishlist.find(({product: {_id}}) => _id === product._id);
 	const userId = window.localStorage.getItem('userId');
@@ -229,7 +223,7 @@ const ProductDetail = (id) => {
 									</div>
 								</div>
 							</div>
-							<Link className='buttonLink' to='/cart' onClick={handleAddCart}>
+							<Link to='/cart' className='buttonLink'  onClick={handleAddCart}>
 								<div>Buy now</div>
 							</Link>
 						</div>

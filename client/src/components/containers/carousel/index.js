@@ -5,7 +5,6 @@ import 'slick-carousel/slick/slick-theme.css';
 import CarouselStyle from './styled';
 import {MdKeyboardArrowLeft} from 'react-icons/md';
 import {MdKeyboardArrowRight} from 'react-icons/md';
-import {RiCheckboxBlankCircleLine} from 'react-icons/ri';
 
 function Carousel() {
 	const data = [
