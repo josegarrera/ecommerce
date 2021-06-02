@@ -112,7 +112,7 @@ const ProductDashboardStyle = styled.div`
 					color: orange;
 				}
 
-				.complete {
+				.completed {
 					color: limegreen;
 				}
 
@@ -121,6 +121,9 @@ const ProductDashboardStyle = styled.div`
 				}
 				.processing {
 					color: #5c90ff;
+				}
+				.dispatched {
+					color: #45b39d;
 				}
 			}
 			.renglon2 {
