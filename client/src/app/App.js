@@ -24,7 +24,7 @@ import Reset from '../components/containers/reset/Reset';
 import Contact from '../components/containers/contact/index';
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
-import GlobalStyles from '../utils/GlobalStyles';
+//import GlobalStyles from '../utils/GlobalStyles';
 
 /* Seteando el header del axios para todas las rutas*/
 import axios from 'axios';
@@ -44,7 +44,7 @@ function App() {
 				<Elements stripe={stripePromise}>
 					<React.Fragment>
 						<GridLayout>
-							<GlobalStyles />
+						{/* 	<GlobalStyles /> */}
 							<ReactNotification />
 
 							<Route path='/'>
