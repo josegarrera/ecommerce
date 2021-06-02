@@ -1,5 +1,6 @@
 import React from 'react';
 import {ProfileStyled} from './styled';
+import {BsPersonCheckFill} from 'react-icons/bs';
 
 const Profile = () => {
 	let address = JSON.parse(window.localStorage.getItem('address'));
@@ -13,7 +14,11 @@ const Profile = () => {
 			<h1 className='title__prof'>Profile</h1>
 			<div className='data'>
 				<div className='imgDiv'>
-					<img className='img' src={profileImage && profileImage} />
+					{profileImage !== 'undefined' ? (
+						<img className='img' src={profileImage && profileImage} />
+					) : (
+						<BsPersonCheckFill className='iconProfile' />
+					)}
 				</div>
 				<div className='userData'>
 					<div className='renglon'>
@@ -32,24 +37,29 @@ const Profile = () => {
 							{email && email}
 						</div>
 					</div>
-					<div className='renglon'>
-						<div className='title'>Id:</div>
-						<div>
-							&nbsp;
-							{identification && identification}
+					{identification !== 'undefined' ? (
+						<div className='renglon'>
+							<div className='title'>Id:</div>
+							<div>
+								&nbsp;
+								{identification && identification}
+							</div>
 						</div>
-					</div>
-					<div className='renglon'>
-						<div className='title'>Address:</div>
-						{address &&
-							address.map((el) => (
-								<div>
-									&nbsp;{el.street_name}&nbsp;{el.street_number} {'( '}
-									{el.zip_code}
-									{' )'}
-								</div>
-							))}
-					</div>
+					) : null}
+
+					{address && address.length ? (
+						<div className='renglon'>
+							<div className='title'>Address:</div>
+							{address &&
+								address.map((el) => (
+									<div>
+										&nbsp;{el.street_name}&nbsp;{el.street_number} {'( '}
+										{el.zip_code}
+										{' )'}
+									</div>
+								))}
+						</div>
+					) : null}
 				</div>
 			</div>
 		</ProfileStyled>

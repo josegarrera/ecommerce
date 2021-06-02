@@ -41,6 +41,7 @@ const DivCrdProd = styled.div`
 	}
 
 	.cnt__image {
+		height: 270px;
 		display: flex;
 		justify-content: center;
 		background-color: #fff;
@@ -48,9 +49,11 @@ const DivCrdProd = styled.div`
 	}
 
 	.img__card {
+		width: 100%;
 		max-height: 260px;
 		padding: 3.5rem 1rem;
 		border-radius: 1rem 1rem 0rem 0rem;
+		object-fit: contain;
 	}
 
 	.cnt_info {
