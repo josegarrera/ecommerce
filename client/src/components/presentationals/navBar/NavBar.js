@@ -181,9 +181,9 @@ const NavBar = () => {
 					</Badge>
 					<Badge color='secondary' onClick={handleClick}>
 						<div className='iconDiv responsive-menu'>
-							<Link>
+							<div>
 								<GiHamburgerMenu className='icon' />
-							</Link>
+							</div>
 						</div>
 					</Badge>
 					{click && <Dropdown handleClick={handleClick} />}
@@ -201,11 +201,6 @@ const NavBar = () => {
 						Create
 					</Link>
 				) : null}
-
-				<select className='select bottomLink'>
-					<option>All categories</option>
-				</select>
-
 				<Link className='bottomLinks' to='/about'>
 					About us
 				</Link>
