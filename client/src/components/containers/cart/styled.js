@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
 const DIV_CART = styled.div`
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
 	margin: 80px auto;
 	max-width: 80vw;
 	min-width: 38rem;
@@ -9,9 +12,8 @@ const DIV_CART = styled.div`
 	padding: 3.5rem;
 	border-radius: 1rem;
 	background-color: #ffffff;
-	display: flex;
-	flex-direction: column;
 	position: relative;
+
 	.title_cnt {
 		color: #ee362c;
 		border-bottom: 3px solid rgba(0, 0, 0, 0.1);
@@ -21,14 +23,16 @@ const DIV_CART = styled.div`
 	}
 	.products__summ__cnt {
 		display: flex;
+		flex-wrap: wrap;
 		.prd__link {
 			position: relative;
-			margin: 50px 50px 0 0;
+			margin: 50px auto;
 			width: 60%;
 			min-width: 400px;
 			height: fit-content;
 			min-height: 400px;
 		}
+
 		.summary {
 			border: 1px solid #dbdbdb;
 			background-color: #fdfdfd;
@@ -40,6 +44,7 @@ const DIV_CART = styled.div`
 			height: fit-content;
 			border-radius: 15px;
 			padding: 30px;
+
 			.summary__title {
 				.total__prd {
 					display: flex;
@@ -113,86 +118,11 @@ const DIV_CART = styled.div`
 		right: 0;
 		font-size: 1.5rem;
 	}
-
-	.pay__in {
+	.div__absolute {
 		position: absolute;
-		top: 16%;
-		right: 21rem;
-	}
-	.USD {
-		position: absolute;
-		top: 16%;
-		right: 18rem;
-	}
-	.USD_IN {
-		position: absolute;
-		top: 16%;
-		right: 18rem;
-		font-weight: bold;
-	}
-	.ARS {
-		position: absolute;
-		top: 16%;
-		right: 13rem;
-	}
-	.ARS_IN {
-		position: absolute;
-		top: 16%;
-		right: 13rem;
-		font-weight: bold;
+		top: 25px;
+		right: 25px;
 	}
 `;
 
-export const CheckBoxWrapper = styled.div`
-	margin-top: 0.182rem;
-	position: relative;
-	span {
-	}
-	@media screen and (max-width: 719px) {
-		margin-top: 0;
-	}
-	@media (min-width: 720px) and (max-width: 1126px) {
-		margin-top: 0.6rem;
-	}
-`;
-export const CheckBoxLabel = styled.label`
-	position: absolute;
-	top: 0;
-	right: 12rem;
-	width: 1.909rem;
-	height: 1.182rem;
-	border-radius: 0.545rem;
-	background: #4fbe79;
-	cursor: pointer;
-	&::after {
-		content: '';
-		display: block;
-		border-radius: 50%;
-		width: 0.818rem;
-		height: 0.818rem;
-		margin: 0.136rem;
-		background: #ffffff;
-		box-shadow: 1px 3px 3px 1px rgba(0, 0, 0, 0.2);
-		transition: 0.2s;
-	}
-`;
-export const CheckBox = styled.input`
-	opacity: 0;
-	z-index: 1;
-	border-radius: 0.682rem;
-	width: 1.909rem;
-	height: 1.182rem;
-	&:checked + ${CheckBoxLabel} {
-		background: #4fbe79;
-		&::after {
-			content: '';
-			display: block;
-			border-radius: 50%;
-			width: 0.818rem;
-			height: 0.818rem;
-			margin-left: 0.955rem;
-			transition: 0.2s;
-		}
-	}
-`;
 export default DIV_CART;
