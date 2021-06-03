@@ -69,7 +69,6 @@ const DivNavBar = styled.div`
     .topRight {
       border-radius: 30px;
       height: 57px;
-      width: 20%;
       display: flex;
       align-items: center;
       justify-content: space-evenly;
@@ -120,10 +119,6 @@ const DivNavBar = styled.div`
 
         &:hover .loginHoverCart {
           display: block;
-        }
-
-        @media screen and (max-width: 992px) {
-          display: none;
         }
       }
 
