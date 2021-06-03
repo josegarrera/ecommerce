@@ -8,7 +8,7 @@ import { getAllProducts,
 import Footer from "../footer/Footer";
 import HomeStyle from "./styled";
 import Carousel from "../carousel";
-import ProductCarousel from "../ProductCarousel/index";
+import ProductCarousel from "../carouselPrueba/index";
 
 const Home = () => {
   const { products } = useSelector((state) => state.products);
