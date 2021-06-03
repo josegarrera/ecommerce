@@ -35,6 +35,22 @@ const ProductDetail = ({id, location}) => {
 	const fav = wishlist.find(({product: {_id}}) => _id === product._id);
 	const userId = window.localStorage.getItem('userId');
 	const [updateReview, setUpdateReview] = useState(false);
+	const [variants, setVariants] = useState({lot: 1, variant: 0});
+
+	const handleSelectVar = (e) => {
+		if (e.target.name === 'variant') {
+			setVariants({
+				...variants,
+				lot: 1,
+				variant: Number(e.target.value),
+			});
+		} else {
+			setVariants({
+				...variants,
+				[e.target.name]: Number(e.target.value),
+			});
+		}
+	};
 
 	useEffect(() => {
 		dispatch(getProductDetail(id));
@@ -58,9 +74,24 @@ const ProductDetail = ({id, location}) => {
 
 	const handleAddCart = () => {
 		//add to cart
-		dispatch(addCartProduct(product._id));
+		dispatch(
+			addCartProduct({
+				id: product._id,
+				lot: variants.lot,
+				variant: variants.variant,
+			})
+		);
 		if (userId) {
-			dispatch(postLocalStorage({products: product._id, userId}));
+			dispatch(
+				postLocalStorage({
+					products: {
+						id: product._id,
+						lot: variants.lot,
+						variant: variants.variant,
+					},
+					userId,
+				})
+			);
 			window.localStorage.setItem('cart', JSON.stringify([]));
 		}
 	};
@@ -226,17 +257,48 @@ const ProductDetail = ({id, location}) => {
 								</div>
 
 								<div className='stockDiv'>
-									{'Stock: '}
+									{'Colors: '}
 									<div className='variants'>
 										{product.variants
 											? product.variants.map((variant, i) => (
-													<div key={i} className='variant'>
-														{variant && variant.color},{' '}
-														{variant && variant.stock}u.
+													<div key={`${i}`} className='variant'>
+														<input
+															key={`${i}`}
+															type='radio'
+															name='variant'
+															value={i}
+															id={`${i}`}
+															onChange={handleSelectVar}
+														/>
+														<label
+															htmlFor={`${variant.color}`}
+														>{`${variant.color}`}</label>
 													</div>
 											  ))
 											: null}
 									</div>
+								</div>
+								<div>
+									<p>Quantity:</p>
+									<button
+										onClick={(e) => handleSelectVar(e)}
+										value={variants.lot > 1 ? variants.lot - 1 : variants.lot}
+										name='lot'
+									>
+										-
+									</button>
+									<span> {variants.lot} </span>
+									<button
+										onClick={(e) => handleSelectVar(e)}
+										value={
+											variants.lot < product.variants[variants.variant].stock
+												? variants.lot + 1
+												: variants.lot
+										}
+										name='lot'
+									>
+										+
+									</button>
 								</div>
 							</div>
 							<Link to='/cart' className='buttonLink' onClick={handleAddCart}>

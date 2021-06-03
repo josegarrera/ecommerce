@@ -1,4 +1,5 @@
 export const changeCartPrice = (cartProducts, payIn) => {
+	if (cartProducts.length === 0) return;
 	return cartProducts
 		.reduce(
 			(

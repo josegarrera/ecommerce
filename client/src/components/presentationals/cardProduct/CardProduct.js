@@ -15,6 +15,7 @@ import {
 import cardLoder from '../../../utils/cardLoader';
 import {store} from 'react-notifications-component';
 
+
 const CardProduct = ({
 	name,
 	imageUrl,
@@ -31,9 +32,11 @@ const CardProduct = ({
 
 	const handleAddCart = () => {
 		//add to cart
-		dispatch(addCartProduct(_id));
+		dispatch(addCartProduct({id: _id, lot: 1, variant: 0}));
 		if (userId) {
-			dispatch(postLocalStorage({products: _id, userId}));
+			dispatch(
+				postLocalStorage({products: {id: _id, lot: 1, variant: 0}, userId})
+			);
 			window.localStorage.setItem('cart', JSON.stringify([]));
 		}
 	};

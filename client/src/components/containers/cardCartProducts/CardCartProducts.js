@@ -12,13 +12,14 @@ import DivCard from './styled';
 
 const CardCartProducts = (props) => {
 	const dispatch = useDispatch();
-	let {imageUrl, name, price, _id} = props.product.product;
-	let {lot} = props.product;
+	let {imageUrl, name, price, _id, variants} = props.product.product;
+	let {lot, variant} = props.product;
 	let userId = window.localStorage.getItem('userId');
 
 	let data = {
 		userId: userId,
 		productId: _id,
+		variant,
 	};
 
 	const handleSubmitDelete = (e) => {
@@ -44,6 +45,7 @@ const CardCartProducts = (props) => {
 						{<img className='image' alt='IMG' src={imageUrl[0]}></img>}
 					</div>
 					<div className='nameDiv'>{name}</div>
+					<span>{variants[variant].color}</span>
 				</Link>
 
 				<div className='amountDiv'>
