@@ -249,6 +249,10 @@ const ProductDetailStyle = styled.div`
 						}
 					}
 				}
+
+				.quantity {
+					display: flex;
+				}
 			}
 
 			.buttonLink {

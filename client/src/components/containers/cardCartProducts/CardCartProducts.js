@@ -44,8 +44,14 @@ const CardCartProducts = (props) => {
 					<div className='imageDiv'>
 						{<img className='image' alt='IMG' src={imageUrl[0]}></img>}
 					</div>
-					<div className='nameDiv'>{name}</div>
-					<span>{variants[variant].color}</span>
+					<div className='nameDiv'>
+						<span>{name} </span>
+						<span className='variant'>
+							{variants[variant].color &&
+								variants[variant].color.charAt(0).toUpperCase() +
+									variants[variant].color.slice(1)}
+						</span>
+					</div>
 				</Link>
 
 				<div className='amountDiv'>

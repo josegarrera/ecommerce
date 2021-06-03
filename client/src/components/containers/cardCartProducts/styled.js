@@ -40,9 +40,21 @@ const DivCard = styled.div`
 
 			.nameDiv {
 				display: flex;
-				align-items: center;
+				flex-direction: column;
+				align-items: flex-start;
+				justify-content: center;
 				margin-left: 20px;
 				width: 70%;
+
+				.variant {
+					padding: 0px 4px;
+					border-radius: 10px;
+					color: white;
+					background-color: #0096c7;
+					font-size: 0.7rem;
+					color: #fff;
+					font-weight: 400;
+				}
 			}
 		}
 

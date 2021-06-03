@@ -270,22 +270,25 @@ const ProductDetail = ({id, location}) => {
 															id={`${i}`}
 															onChange={handleSelectVar}
 														/>
-														<label
-															htmlFor={`${variant.color}`}
-														>{`${variant.color}`}</label>
+														&nbsp;
+														<label htmlFor={`${variant.color}`}>{`${
+															variant.color &&
+															variant.color.charAt(0).toUpperCase() +
+																variant.color.slice(1)
+														}`}</label>
 													</div>
 											  ))
 											: null}
 									</div>
 								</div>
-								<div>
-									<p>Quantity:</p>
+								<div className='quantity'>
+									<p>Quantity: &nbsp;</p>
 									<button
 										onClick={(e) => handleSelectVar(e)}
 										value={variants.lot > 1 ? variants.lot - 1 : variants.lot}
 										name='lot'
 									>
-										-
+										- &nbsp;
 									</button>
 									<span> {variants.lot} </span>
 									<button
@@ -297,7 +300,7 @@ const ProductDetail = ({id, location}) => {
 										}
 										name='lot'
 									>
-										+
+										&nbsp; +
 									</button>
 								</div>
 							</div>
