@@ -321,11 +321,15 @@ export const getCategories = () => {
   };
 }; */
 
-export const addCartProduct = (id) => {
+export const addCartProduct = (body) => {
 	// trae el cart de un usuario del servidor.
 	return async (dispatch) => {
-		const {data} = await axios.get(`${URLS.URL_PRODUCTS}/${id}`);
-		let newArrData = {lot: 1, product: {...data.response}};
+		const {data} = await axios.get(`${URLS.URL_PRODUCTS}/${body.id}`);
+		let newArrData = {
+			lot: body.lot,
+			variant: body.variant,
+			product: {...data.response},
+		};
 		return dispatch({
 			type: ActionTypes.ADD_PRODUCT_CART,
 			payload: newArrData, // TIENE QUE SER UN {}

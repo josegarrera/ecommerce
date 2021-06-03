@@ -28,9 +28,14 @@ const r = (state = initialState, {type, payload}) => {
 	switch (type) {
 		///////////////  CART PRODUCTS  ///////////////
 		case ActionTypes.CHANGE_LOT_LOCAL:
+			const {productId, num, variant} = payload;
 			let newCart = [...state.cartProducts];
-			let modif = newCart.find((e) => e.product._id === payload.productId);
-			modif.lot += payload.num;
+			let modif = newCart.find((e) => e.product._id === productId);
+			modif.lot =
+				modif.lot + num > 0 &&
+				modif.lot + num <= modif.product.variants[variant].stock
+					? modif.lot + num
+					: modif.lot;
 			return {
 				...state,
 				cartProducts: newCart,
