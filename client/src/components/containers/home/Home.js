@@ -4,8 +4,7 @@ import { getAllProducts, getProducts } from "../../../redux/actions";
 import Footer from "../footer/Footer";
 import HomeStyle from "./styled";
 import Carousel from "../carousel";
-import MultiItemCarousel from "../multiItemCarousel/multiItemCarousel";
-import CarouselPrueba from "../../containers/carouselPrueba/index";
+import ProductCarousel from "../ProductCarousel/index";
 
 const Home = () => {
   const { products } = useSelector((state) => state.products);
@@ -26,7 +25,7 @@ const Home = () => {
         <span>see more</span>
       </div>
 
-      <CarouselPrueba items={products} />
+      <ProductCarousel items={products} />
 
       <div className="product__row">
         <br></br>
@@ -34,7 +33,7 @@ const Home = () => {
         <span>see more</span>
       </div>
 
-      <CarouselPrueba items={products} />
+      <ProductCarousel items={products} />
 
       {/* <div className="offers">
         <ProductList products={limit4} />
