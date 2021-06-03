@@ -2,8 +2,15 @@ import React from 'react';
 import CommentsBlock from 'simple-react-comments';
 import axios from 'axios';
 import {URLS} from '../../../utils/constants';
+import {store} from 'react-notifications-component';
 
-const Reviews = ({id, setUpdateReview, updateReview, allReviews}) => {
+const Reviews = ({
+	id,
+	setUpdateReview,
+	updateReview,
+	allReviews,
+	userOrder,
+}) => {
 	const userId = localStorage.getItem('userId');
 	//const [Review, setAllReview] = useState([]);
 
@@ -30,12 +37,46 @@ const Reviews = ({id, setUpdateReview, updateReview, allReviews}) => {
 	};
 	/* STYLES */
 
+	console.log(userOrder);
+
+	const checkUserBuy = () => {
+		let filtercompleted =
+			userOrder && userOrder.filter((el) => el.state === 'completed');
+		if (filtercompleted.length > 0) {
+			let canReview =
+				filtercompleted &&
+				filtercompleted.length &&
+				filtercompleted.find((el) =>
+					el.items.find((el) => el.product && el.product._id === id)
+				);
+
+			return canReview !== undefined ? true : false;
+		}
+		return false;
+	};
+
 	const handleOnSumbit = async (review) => {
-		try {
-			await axios.put(`${URLS.URL_PRODUCTS}/reviews/${id}`, review);
-			setUpdateReview(!updateReview);
-		} catch (error) {
-			console.log(error);
+		if (checkUserBuy()) {
+			try {
+				await axios.put(`${URLS.URL_PRODUCTS}/reviews/${id}`, review);
+				setUpdateReview(!updateReview);
+			} catch (error) {
+				console.log(error);
+			}
+		} else {
+			store.addNotification({
+				title: 'You can not do that',
+				message: 'You must buy the product to leave a review',
+				type: 'danger',
+				insert: 'top',
+				container: 'bottom-right',
+				animationIn: ['animate__animated', 'animate__fadeIn'],
+				animationOut: ['animate__animated', 'animate__fadeOut'],
+				dismiss: {
+					duration: 3000,
+					onScreen: true,
+				},
+			});
 		}
 	};
 

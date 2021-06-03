@@ -4,8 +4,7 @@ const Footer = styled.div`
   display: flex;
   position: relative;
   width: 100%;
-  height: 28rem;
-  padding: 6rem 12rem;
+  padding: 6rem 10%;
   background-color: #202020;
   margin-top: 5rem;
 
@@ -83,6 +82,10 @@ const Footer = styled.div`
       font-size: 1.5rem;
       color: #ffffff;
     }
+  }
+
+  @media (max-width: 1441px) {
+    flex-direction: column;
   }
 `;
 

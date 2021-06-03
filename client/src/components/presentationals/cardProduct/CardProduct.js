@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import DivCrdProd, {StyledLoder} from './styled';
-import {Link} from 'react-router-dom';
+import {Link, NavLink} from 'react-router-dom';
 import {FaShoppingCart} from 'react-icons/fa';
 import {AiOutlineHeart, AiFillHeart} from 'react-icons/ai';
 import {useDispatch, useSelector} from 'react-redux';
@@ -15,7 +15,16 @@ import {
 import cardLoder from '../../../utils/cardLoader';
 import {store} from 'react-notifications-component';
 
-const CardProduct = ({name, imageUrl, price, _id, loading, combo}) => {
+
+const CardProduct = ({
+	name,
+	imageUrl,
+	price,
+	_id,
+	loading,
+	combo,
+	location,
+}) => {
 	const wishlist = useSelector((state) => state.wishlist);
 	const dispatch = useDispatch();
 	const [Load, setLoad] = useState('loading');
@@ -31,7 +40,7 @@ const CardProduct = ({name, imageUrl, price, _id, loading, combo}) => {
 			window.localStorage.setItem('cart', JSON.stringify([]));
 		}
 	};
-
+	console.log('ESTOY EN EL CARD PRODUCT', location);
 	const fav = wishlist && wishlist.find(({product}) => product._id === _id);
 
 	const handleAddFav = () => {
@@ -57,21 +66,32 @@ const CardProduct = ({name, imageUrl, price, _id, loading, combo}) => {
 		return (
 			<DivCrdProd>
 				<div className='cnt__image'>
-					<Link to={`/products/id/${_id}`}>
-						<img
-							className='img__card'
-							src={imageUrl[0]}
-							alt='imagen de producto'
-							onLoad={handleImageLoaded}
-						/>
-					</Link>
+					{location ? (
+						<Link target='_blank' rel='noreferrer' to={`/products/id/${_id}`}>
+							<img
+								className='img__card'
+								src={imageUrl[0]}
+								alt='imagen de producto'
+								onLoad={handleImageLoaded}
+							/>
+						</Link>
+					) : (
+						<Link to={`/products/id/${_id}`}>
+							<img
+								className='img__card'
+								src={imageUrl[0]}
+								alt='imagen de producto'
+								onLoad={handleImageLoaded}
+							/>
+						</Link>
+					)}
 				</div>
 				{combo && combo.length > 0 ? (
 					<div className='comboDiv'>Combo</div>
 				) : null}
 				<div className='cnt_info'>
 					<div className='row'>
-						<Link to={`/products/id/${_id}`}>
+						<Link target='_blank' rel='noreferrer' to={`/products/id/${_id}`}>
 							<h5 className='product__name'>{name}</h5>
 						</Link>
 						<h6 className='product__price'>
@@ -121,6 +141,7 @@ const CardProduct = ({name, imageUrl, price, _id, loading, combo}) => {
 			</DivCrdProd>
 		);
 	}
+
 };
 
 export default CardProduct;

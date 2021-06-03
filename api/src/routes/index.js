@@ -13,15 +13,32 @@ const favourites = require('./favourites.js');
 const auth = require('./auth.js');
 const newsLetter = require('./newsLetter');
 const {getAllProducts} = require('../controllers/products.js');
+const {Users} = require('../models/index.js');
 
 // authentication
 router.post(
 	'/signup',
 	passport.authenticate('signup', {session: false}),
 	async (req, res, next) => {
+		const idUser = req.user._id;
+		try {
+			await Users.findByIdAndUpdate(idUser, {
+				firstName: req.body.firstName,
+				lastName: req.body.lastName,
+				imageUrl: req.body.profileImage,
+			});
+		} catch (error) {
+			return next(e);
+		}
+
 		res.json({
 			message: req.authInfo,
-			user: req.user,
+			user: {
+				...req.user,
+				firstName: req.body.firstName,
+				lastName: req.body.lastName,
+				imageUrl: req.body.profileImage,
+			},
 		});
 	}
 );
@@ -35,7 +52,6 @@ router.post('/login', async (req, res, next) => {
 					notLogin: info.message,
 				});
 			}
-
 			req.login(user, {session: false}, async (err) => {
 				if (err) return next(err);
 				const body = {_id: user._id, email: user.email};

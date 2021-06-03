@@ -31,15 +31,12 @@ const UsersSchema = new Schema({
 	},
 	address: [
 		{
-			zip_code: String,
+			zip_code: Number,
 			street_name: String,
 			street_number: Number,
 		},
 	],
-	identification: {
-		number: String,
-		type: String,
-	},
+	identification: String,
 	orders: [
 		{
 			type: mongoose.Schema.Types.ObjectId,

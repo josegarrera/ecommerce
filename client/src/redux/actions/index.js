@@ -103,7 +103,7 @@ export const getProductsQuery = (page) => {
 	};
 };
 
-export const getProductDetail = ({id}) => {
+export const getProductDetail = (id) => {
 	//trae los detalles de 1 solo producto
 	return async (dispatch) => {
 		const {data} = await axios.get(`${URLS.URL_PRODUCTS}/${id}`);
@@ -199,11 +199,11 @@ export const getAllProducts = (
 			const {data} = await axios.get(
 				`${URLS.URL_PRODUCTS}?name=${name}&category=${category}&brand=${brand}&variants=${variants}&price=${price}&order=${order}&direction=${direction}&limit=${limit}`
 			);
-
 			let newData = data.products.map((e) => {
 				return {lot: 0, product: {...e}};
 			});
 
+			console.log('ENTRE ACAAAAAAAAAAAAAAAAAAAAAAAA', newData);
 			dispatch({
 				type: ActionTypes.GET_ALL_PRODUCTS,
 				payload: newData,
