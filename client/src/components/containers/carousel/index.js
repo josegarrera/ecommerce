@@ -1,74 +1,26 @@
 import React from 'react';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import CarouselStyle from './styled';
-import {MdKeyboardArrowLeft} from 'react-icons/md';
-import {MdKeyboardArrowRight} from 'react-icons/md';
+import {Carousel as Carrousel} from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
-function Carousel() {
-	const data = [
-		/* {img: `/img/animations-e-commerce.png`},
-		{
-			img: `https://res.cloudinary.com/dlexbrcrv/image/upload/v1622119291/Proyects/E-commerce/Carrousel_1_rfcxsi.svg`,
-		},
-		{img: `/img/Ecommerce-Banner-1920.jpg`}, */
-		{
-			img: `https://res.cloudinary.com/dlexbrcrv/image/upload/v1622136785/Proyects/E-commerce/Carrousel_1_xnmp84.jpg`,
-		},
-		{
-			img: `https://res.cloudinary.com/dlexbrcrv/image/upload/v1622139850/Proyects/E-commerce/Carrousel_vczfne.jpg`,
-		},
-		{
-			img: `https://res.cloudinary.com/dlexbrcrv/image/upload/v1622136785/Proyects/E-commerce/Carrousel_1_xnmp84.jpg`,
-		},
-	];
-
-	const settings = {
-		dots: true,
-		infinite: true,
-		speed: 500,
-		slidesToShow: 1,
-		slidesToScroll: 1,
-		autoplay: true,
-		autoplaySpeed: 5000,
-	};
-
-	const PreviusBtn = (props) => {
-		const {className, onClick} = props;
-		return (
-			<div className={className} onClick={onClick}>
-				<MdKeyboardArrowLeft />
-			</div>
-		);
-	};
-
-	const NextBtn = (props) => {
-		const {className, onClick} = props;
-		return (
-			<div className={className} onClick={onClick}>
-				<MdKeyboardArrowRight d />
-			</div>
-		);
-	};
-
+const Carousel = () => {
 	return (
-		<CarouselStyle>
-			<Slider
-				className='slider'
-				{...settings}
-				prevArrow={<PreviusBtn />}
-				nextArrow={<NextBtn />}
+		<div>
+			<Carrousel
+				showThumbs={false}
+				autoPlay={true}
+				showStatus={false}
+				infiniteLoop={true}
+				interval={3000}
 			>
-				{data &&
-					data.map((el) => (
-						<div className='div__img'>
-							<img className='slide__img' src={el.img} alt='' />
-						</div>
-					))}
-			</Slider>
-		</CarouselStyle>
+				<div>
+					<img src='https://res.cloudinary.com/dlexbrcrv/image/upload/v1622139850/Proyects/E-commerce/Carrousel_vczfne.jpg' />
+				</div>
+				<div>
+					<img src='https://res.cloudinary.com/dlexbrcrv/image/upload/v1622136785/Proyects/E-commerce/Carrousel_1_xnmp84.jpg' />
+				</div>
+			</Carrousel>
+		</div>
 	);
-}
+};
 
 export default Carousel;

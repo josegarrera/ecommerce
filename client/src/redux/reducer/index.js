@@ -21,7 +21,7 @@ const initialState = {
 	cartProducts: getCartLocalStorage(),
 	user: {},
 	wishlist: getWishListLocalStorage(),
-	payIn: window.localStorage.getItem('dollar'),
+	payIn: window.localStorage.getItem('dollar') || 'USD',
 };
 
 const r = (state = initialState, {type, payload}) => {
