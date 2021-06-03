@@ -10,6 +10,7 @@ import {
 	addFavProductToDB,
 	removeFavProductToDB,
 	postLocalStorage,
+	getAllProducts,
 } from '../../../redux/actions/index';
 import {IoLogoWhatsapp, IoReturnDownBack} from 'react-icons/io5';
 import {BsLightning} from 'react-icons/bs';
@@ -21,7 +22,7 @@ import DetailLoader from '../../../utils/detailLoader';
 import Reviews from '../reviews';
 import CardProduct from '../../presentationals/cardProduct/CardProduct';
 
-const ProductDetail = (id) => {
+const ProductDetail = ({id, location}) => {
 	const dispatch = useDispatch();
 	const [imageBig, setImageBig] = useState();
 	let history = useHistory();
@@ -34,6 +35,9 @@ const ProductDetail = (id) => {
 	useEffect(() => {
 		dispatch(getProductDetail(id));
 	}, [updateReview]); // eslint-disable-line react-hooks/exhaustive-deps
+	useEffect(() => {
+		dispatch(getAllProducts());
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	useEffect(() => {
 		return dispatch(cleanProductDetail());
@@ -50,16 +54,16 @@ const ProductDetail = (id) => {
 
 	const handleAddFav = () => {
 		//add to fav
-		dispatch(addFavProduct(product._id));
-		dispatch(addFavProductToDB({userId, productId: product._id}));
+		dispatch(addFavProduct(id));
+		dispatch(addFavProductToDB({userId, productId: id}));
 
 		//addToFav action=>reducer=>localStorage
 	};
 
 	const handleRemoveFav = () => {
 		//add to fav
-		dispatch(removeFavProduct(product._id));
-		dispatch(removeFavProductToDB({userId, productId: product._id}));
+		dispatch(removeFavProduct(id));
+		dispatch(removeFavProductToDB({userId, productId: id}));
 	};
 
 	return (
@@ -247,6 +251,7 @@ const ProductDetail = (id) => {
 									_id={product._id}
 									combo={product.combo}
 									loading={false}
+									location={location}
 								/>
 							))}
 					</div>
