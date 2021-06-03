@@ -13,7 +13,7 @@ const Carousel = () => {
 				interval={3000}
 			>
 				<div>
-					<img src='https://res.cloudinary.com/dlexbrcrv/image/upload/v1622139850/Proyects/E-commerce/Carrousel_vczfne.jpg' />
+					<img src='https://res.cloudinary.com/dlexbrcrv/image/upload/v1622747396/Proyects/E-commerce/Carrousel4_ryoz5o.jpg' />
 				</div>
 				<div>
 					<img src='https://res.cloudinary.com/dlexbrcrv/image/upload/v1622136785/Proyects/E-commerce/Carrousel_1_xnmp84.jpg' />
