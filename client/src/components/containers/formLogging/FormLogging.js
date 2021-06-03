@@ -94,8 +94,8 @@ const FormLogging = () => {
 
 	const responseGoogle = async (response) => {
 		let inputGoogle = {
-			firstName: response.profileObj.familyName,
-			lastName: response.profileObj.givenName,
+			firstName: response.profileObj.givenName,
+			lastName: response.profileObj.familyName,
 			profileImage: response.profileObj.imageUrl,
 			email: response.profileObj.email,
 			password: response.profileObj.googleId,
@@ -104,64 +104,72 @@ const FormLogging = () => {
 		let users = await axios.get(URLS.URL_USERS);
 
 		if (users.data.response.find((el) => el.email === inputGoogle.email)) {
-			console.log('entre 1');
-			let userLogIn = await axios.post(URLS.URL_LOGIN, inputGoogle);
-			console.log('1111', userLogIn);
-			window.localStorage.setItem('token', userLogIn.data.token);
-			window.localStorage.setItem(
-				'address',
-				JSON.stringify(userLogIn.data.user.address)
-			);
-			window.localStorage.setItem('email', userLogIn.data.user.email);
-			window.localStorage.setItem('firstName', userLogIn.data.user.firstName);
-			window.localStorage.setItem(
-				'identification',
-				userLogIn.data.user.identification
-			);
-			window.localStorage.setItem('lastName', userLogIn.data.user.lastName);
-			window.localStorage.setItem(
-				'profileImage',
-				userLogIn.data.user.profileImage
-			);
-			window.localStorage.setItem('userId', userLogIn.data.user._id);
-			window.localStorage.setItem('role', userLogIn.data.user.role);
+			try {
+				let userLogIn = await axios.post(URLS.URL_LOGIN, inputGoogle);
 
-			dispatch(loginUser({role: userLogIn.data.user.role}));
-			if (userLogIn.data.user.role === 'admin') {
-				history.push('/admindashboard');
-			} else {
-				history.push('/catalogue');
+				window.localStorage.setItem('token', userLogIn.data.token);
+				window.localStorage.setItem(
+					'address',
+					JSON.stringify(userLogIn.data.user.address)
+				);
+				window.localStorage.setItem('email', userLogIn.data.user.email);
+				window.localStorage.setItem('firstName', userLogIn.data.user.firstName);
+				window.localStorage.setItem(
+					'identification',
+					userLogIn.data.user.identification
+				);
+				window.localStorage.setItem('lastName', userLogIn.data.user.lastName);
+				window.localStorage.setItem(
+					'profileImage',
+					userLogIn.data.user.imageUrl
+				);
+				window.localStorage.setItem('userId', userLogIn.data.user._id);
+				window.localStorage.setItem('role', userLogIn.data.user.role);
+
+				dispatch(loginUser({role: userLogIn.data.user.role}));
+				if (userLogIn.data.user.role === 'admin') {
+					history.push('/admindashboard');
+				} else {
+					history.push('/catalogue');
+				}
+			} catch (error) {
+				console.log(error.response);
+				return error.response;
 			}
 		} else {
-			console.log('entre 2');
-			await axios.post(URLS.URL_SIGNUP, inputGoogle);
-			let userLogIn = await axios.post(URLS.URL_LOGIN, inputGoogle);
-			console.log('2222', userLogIn);
+			try {
+				await axios.post(URLS.URL_SIGNUP, inputGoogle);
+				let userLogIn = await axios.post(URLS.URL_LOGIN, inputGoogle);
 
-			window.localStorage.setItem('token', userLogIn.data.token);
-			window.localStorage.setItem(
-				'address',
-				JSON.stringify(userLogIn.data.user.address)
-			);
-			window.localStorage.setItem('email', userLogIn.data.user.email);
-			window.localStorage.setItem('firstName', userLogIn.data.user.firstName);
-			window.localStorage.setItem(
-				'identification',
-				userLogIn.data.user.identification
-			);
-			window.localStorage.setItem('lastName', userLogIn.data.user.lastName);
-			window.localStorage.setItem(
-				'profileImage',
-				userLogIn.data.user.profileImage
-			);
-			window.localStorage.setItem('userId', userLogIn.data.user._id);
-			window.localStorage.setItem('role', userLogIn.data.user.role);
+				window.localStorage.setItem('token', userLogIn.data.token);
+				window.localStorage.setItem(
+					'address',
+					JSON.stringify(userLogIn.data.user.address)
+				);
+				window.localStorage.setItem('email', userLogIn.data.user.email);
+				window.localStorage.setItem('firstName', userLogIn.data.user.firstName);
+				window.localStorage.setItem(
+					'identification',
+					userLogIn.data.user.identification
+				);
+				window.localStorage.setItem('lastName', userLogIn.data.user.lastName);
+				window.localStorage.setItem(
+					'profileImage',
+					userLogIn.data.user.imageUrl
+				);
+				window.localStorage.setItem('userId', userLogIn.data.user._id);
+				window.localStorage.setItem('role', userLogIn.data.user.role);
 
-			dispatch(loginUser({role: userLogIn.data.user.role}));
-			if (userLogIn.data.user.role === 'admin') {
-				history.push('/admindashboard');
-			} else {
-				history.push('/catalogue');
+				dispatch(loginUser({role: userLogIn.data.user.role}));
+
+				if (userLogIn.data.user.role === 'admin') {
+					history.push('/admindashboard');
+				} else {
+					history.push('/catalogue');
+				}
+			} catch (error) {
+				console.log(error.response);
+				return error.response;
 			}
 		}
 	};
