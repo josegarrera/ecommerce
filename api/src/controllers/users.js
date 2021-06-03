@@ -1,4 +1,6 @@
 const {Users, Orders} = require('../models/index.js');
+const {STORAGE_BASEURL} = process.env;
+const bucket = require('../storage.js');
 
 function deleteUser(req, res) {
 	const userId = req.params.id;
@@ -34,10 +36,10 @@ function getAllUsers(req, res) {
 
 function updateUser(req, res) {
 	const {id} = req.params;
-	const user = req.body; // por body se puede enviar email, role
-	Users.findOne({_id: id})
-		.then((doc) => Users.updateOne({_id: doc._id}, user))
-		.then(() => Users.findOne({_id: id}))
+	Users.findByIdAndUpdate(id, user)
+		.then((doc) => {
+			return Users.findOne({_id: doc._id});
+		})
 		.then((doc) => res.send({response: doc, type: 'Ok', message: 'Success'}))
 		.catch((error) =>
 			res
@@ -46,8 +48,53 @@ function updateUser(req, res) {
 		);
 }
 
+async function updateUserData(req, res) {
+	const {id} = req.params;
+	const user = JSON.parse(req.body.info);
+	const file = req.files;
+
+	if (!id) {
+		return res.status(400).send({
+			response: '',
+			type: 'Bad Request',
+			message: 'No ID in params',
+		});
+	}
+	const userData = {
+		firstName: user.firstName,
+		lastName: user.lastName,
+		address: user.address,
+		identification: user.identification,
+	};
+	if (id && file.length) {
+		try {
+			const fileUpload = await bucket.upload(file[0].path, {
+				destination: file[0].filename,
+			});
+			const fileUrl = STORAGE_BASEURL + fileUpload[0].name;
+			userData.imageUrl = fileUrl;
+			await Users.findByIdAndUpdate(id, userData);
+			return res.send({response: userData, type: 'Ok', message: 'Success'});
+		} catch (error) {
+			res
+				.status(500)
+				.send({response: '', type: 'Internal server error.', message: error});
+		}
+	} else {
+		try {
+			await Users.findByIdAndUpdate(id, userData);
+			return res.send({response: userData, type: 'Ok', message: 'Success'});
+		} catch (error) {
+			res
+				.status(500)
+				.send({response: '', type: 'Internal server error.', message: error});
+		}
+	}
+}
+
 module.exports = {
 	deleteUser,
 	getAllUsers,
 	updateUser,
+	updateUserData,
 };

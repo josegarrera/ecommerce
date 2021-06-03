@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import axios from 'axios';
 import {useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -10,6 +11,7 @@ import {
 	addFavProductToDB,
 	removeFavProductToDB,
 	postLocalStorage,
+	getAllProducts,
 } from '../../../redux/actions/index';
 import {IoLogoWhatsapp, IoReturnDownBack} from 'react-icons/io5';
 import {BsLightning} from 'react-icons/bs';
@@ -20,10 +22,13 @@ import {store} from 'react-notifications-component';
 import DetailLoader from '../../../utils/detailLoader';
 import Reviews from '../reviews';
 import CardProduct from '../../presentationals/cardProduct/CardProduct';
+import {URLS} from '../../../utils/constants';
 
-const ProductDetail = (id) => {
+const ProductDetail = ({id, location}) => {
 	const dispatch = useDispatch();
 	const [imageBig, setImageBig] = useState();
+	const [userOrder, setUserOrder] = useState([]);
+
 	let history = useHistory();
 	let product = useSelector((store) => store.productDetail);
 	const wishlist = useSelector((store) => store.wishlist);
@@ -34,10 +39,22 @@ const ProductDetail = (id) => {
 	useEffect(() => {
 		dispatch(getProductDetail(id));
 	}, [updateReview]); // eslint-disable-line react-hooks/exhaustive-deps
+	useEffect(() => {
+		dispatch(getAllProducts());
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+	useEffect(() => {
+		checkUserBuy();
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	useEffect(() => {
 		return dispatch(cleanProductDetail());
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+	const checkUserBuy = async () => {
+		let res = await axios.get(`${URLS.URL_USER_ORDERS}/user?userId=${userId}`);
+		setUserOrder(res.data.response);
+	};
 
 	const handleAddCart = () => {
 		//add to cart
@@ -50,16 +67,16 @@ const ProductDetail = (id) => {
 
 	const handleAddFav = () => {
 		//add to fav
-		dispatch(addFavProduct(product._id));
-		dispatch(addFavProductToDB({userId, productId: product._id}));
+		dispatch(addFavProduct(id));
+		dispatch(addFavProductToDB({userId, productId: id}));
 
 		//addToFav action=>reducer=>localStorage
 	};
 
 	const handleRemoveFav = () => {
 		//add to fav
-		dispatch(removeFavProduct(product._id));
-		dispatch(removeFavProductToDB({userId, productId: product._id}));
+		dispatch(removeFavProduct(id));
+		dispatch(removeFavProductToDB({userId, productId: id}));
 	};
 
 	return (
@@ -214,16 +231,15 @@ const ProductDetail = (id) => {
 										{product.variants
 											? product.variants.map((variant, i) => (
 													<div key={i} className='variant'>
-														{variant.color.charAt(0).toUpperCase() +
-															variant.color.slice(1)}
-														, {variant.stock}u.
+														{variant && variant.color},{' '}
+														{variant && variant.stock}u.
 													</div>
 											  ))
 											: null}
 									</div>
 								</div>
 							</div>
-							<Link to='/cart' className='buttonLink'  onClick={handleAddCart}>
+							<Link to='/cart' className='buttonLink' onClick={handleAddCart}>
 								<div>Buy now</div>
 							</Link>
 						</div>
@@ -248,6 +264,7 @@ const ProductDetail = (id) => {
 									_id={product._id}
 									combo={product.combo}
 									loading={false}
+									location={location}
 								/>
 							))}
 					</div>
@@ -260,6 +277,7 @@ const ProductDetail = (id) => {
 						setUpdateReview={setUpdateReview}
 						updateReview={updateReview}
 						allReviews={product.reviews}
+						userOrder={userOrder}
 					/>
 				)}
 			</div>

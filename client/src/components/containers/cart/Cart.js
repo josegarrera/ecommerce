@@ -19,29 +19,18 @@ const Cart = () => {
 		} // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	const handleCheck = () => {
-		dispatch(setPayIn());
-	};
-	let count$ = cartProduct && changeCartPrice(cartProduct, payIn);
+	let count$ = cartProduct && changeCartPrice(cartProduct, 'ARS');
+	let count2 = cartProduct && changeCartPrice(cartProduct, 'USD');
 
 	return (
 		<DIV_CART>
 			<div className='title_cnt'>
 				<h1>Shopping Cart</h1>
 			</div>
-
-			<div className='pay__in'>Pay In :</div>
-			<div className={payIn === 'USD' ? 'USD' : 'USD_IN'}>USD</div>
-			<div className={payIn === 'ARS' ? 'ARS' : 'ARS_IN'}>ARS</div>
-			<CheckBoxWrapper>
-				<CheckBox
-					id='checkbox'
-					type='checkbox'
-					onClick={handleCheck}
-					defaultChecked={payIn === 'USD' ? true : false}
-				/>
-				<CheckBoxLabel htmlFor='checkbox' />
-			</CheckBoxWrapper>
+			<div className='div__absolute'>
+				<div>USD = 🇺🇸 USD {count$}</div>
+				<div>ARS = 🇦🇷 ARS {count2} </div>
+			</div>
 			<div className='products__summ__cnt'>
 				<div className='prd__link'>
 					<div className='product_cnt'>
@@ -56,7 +45,7 @@ const Cart = () => {
 							))
 						) : (
 							<h1 className='dont__prd'>
-								No tienes Producto agregados al carrito
+								You don't have products in your cart
 							</h1>
 						)}
 					</div>
@@ -64,15 +53,7 @@ const Cart = () => {
 						<Link to='/catalogue'>
 							<p className='p_back_home'>{'<<'} Continue Shopping</p>
 						</Link>
-						{payIn === 'ARS' ? (
-							<>
-								<p className='h2__sbt'>U$D {count$}</p>
-							</>
-						) : (
-							<>
-								<p className='h2__sbt'>AR$ {count$}</p>
-							</>
-						)}
+						<p className='h2__sbt'>U$D {count$}</p>
 					</div>
 				</div>
 				<SumarryCart count={count$} payIn={payIn} />

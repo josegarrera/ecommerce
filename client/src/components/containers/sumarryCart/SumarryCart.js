@@ -7,12 +7,11 @@ import {
 	emptyPaymentMethod,
 } from '../../../redux/actions';
 import {CardElement, useStripe, useElements} from '@stripe/react-stripe-js';
-
 import {store} from 'react-notifications-component';
 
 const FORM_ID = 'payment-form';
 
-const SumarryCart = ({payIn, count, placeOrder, paymentMethod}) => {
+const SumarryCart = ({count, placeOrder, paymentMethod}) => {
 	const preferenceId = useSelector((state) => state.paymentMethod);
 	const shippingInfo = useSelector((state) => state.shippingInfo);
 	const cartProduct = useSelector((state) => state.cartProducts);
@@ -106,7 +105,7 @@ const SumarryCart = ({payIn, count, placeOrder, paymentMethod}) => {
 						</div>
 						<div className='total__prd'>
 							<p>Shipping Cost </p>
-							<p>${payIn === 'USD' ? 500 : (500 / 93).toFixed(2)}</p>
+							<p>$ 5</p>
 						</div>
 					</div>
 				) : (

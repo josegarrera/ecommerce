@@ -40,14 +40,15 @@ function App() {
   const token = window.localStorage.getItem("token");
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-  return (
-    <div className="App">
-      {stripePromise && (
-        <Elements stripe={stripePromise}>
-          <React.Fragment>
-            <GridLayout>
-              {/* 	<GlobalStyles /> */}
-              <ReactNotification />
+
+	return (
+		<div className='App'>
+			{stripePromise && (
+				<Elements stripe={stripePromise}>
+					<React.Fragment>
+						<GridLayout>
+							{/* 	<GlobalStyles /> */}
+							<ReactNotification />
 
               <Route path="/">
                 {user.role ? (
@@ -63,61 +64,65 @@ function App() {
 
               <Route exact path="/admindashboard" component={HomeDashboard} />
 
-              <Route
-                render={({ location }) =>
-                  [
-                    "/",
-                    "/home",
-                    "/signup",
-                    "/login",
-                    "/forgot",
-                    "/catalogue",
-                    "/cart",
-                    "/favorites",
-                    "/shipping",
-                    "/confirmation",
-                    "/about",
-                    "/contact",
-                    "/resetPassword",
-                    "/userDashboard",
-                  ].includes(location.pathname) ? (
-                    <NavBar />
-                  ) : null
-                }
-              />
-              <Route path="/products" component={NavBar} />
-              <Route exact path="/" component={Home} />
-              <Route exact path="/home" component={Home} />
-              <Route exact path="/login" component={FormLogging} />
-              <Route exact path="/signup" component={FormSignup} />
-              <Route exact path="/create" component={FormProductDashboard} />
-              <Route exact path="/categorie" component={FormCategorie} />
-              <Route exact path="/catalogue" component={Catalogue} />
-              <Route exact path="/about" component={AboutUs} />
-              <Route exact path="/cart" component={Cart} />
-              <Route exact path="/favorites" component={Favourites} />
-              <Route
-                exact
-                path="/products/name/:name"
-                render={({ match }) => <Search name={match.params.name} />}
-              />
-              <Route
-                exact
-                path="/products/id/:id"
-                render={({ match }) => <ProductDetail id={match.params.id} />}
-              />
-              <Route path="/shipping" component={ShippingAddress}></Route>
-              <Route path="/confirmation" component={ConfirmOrder}></Route>
-              <Route path="/confirmation" component={ConfirmOrder}></Route>
-              <Route path="/resetPassword" component={Reset} />
-              <Route path="/contact" component={Contact} />
-              <Route path="/userDashboard" component={UserDashboard} />
-            </GridLayout>
-          </React.Fragment>
-        </Elements>
-      )}
-    </div>
-  );
+
+							<Route
+								render={({location}) =>
+									[
+										'/',
+										'/home',
+										'/signup',
+										'/login',
+										'/forgot',
+										'/catalogue',
+										'/cart',
+										'/favorites',
+										'/shipping',
+										'/confirmation',
+										'/about',
+										'/contact',
+										'/resetPassword',
+										'/userDashboard',
+									].includes(location.pathname) ? (
+										<NavBar />
+									) : null
+								}
+							/>
+							<Route path='/products' component={NavBar} />
+							<Route exact path='/' component={Home} />
+							<Route exact path='/home' component={Home} />
+							<Route exact path='/login' component={FormLogging} />
+							<Route exact path='/signup' component={FormSignup} />
+							<Route exact path='/create' component={FormProductDashboard} />
+							<Route exact path='/categorie' component={FormCategorie} />
+							<Route exact path='/catalogue' component={Catalogue} />
+							<Route exact path='/about' component={AboutUs} />
+							<Route exact path='/cart' component={Cart} />
+							<Route exact path='/favorites' component={Favourites} />
+							<Route
+								exact
+								path='/products/name/:name'
+								render={({match}) => <Search name={match.params.name} />}
+							/>
+							<Route
+								exact
+								path='/products/id/:id'
+								render={({match, location}) => (
+									<ProductDetail id={match.params.id} location={location} />
+								)}
+							/>
+							<Route path='/shipping' component={ShippingAddress}></Route>
+							<Route path='/confirmation' component={ConfirmOrder}></Route>
+							<Route path='/confirmation' component={ConfirmOrder}></Route>
+							<Route path='/resetPassword' component={Reset} />
+							<Route path='/contact' component={Contact} />
+							<Route path='/userDashboard' component={UserDashboard} />
+						</GridLayout>
+					</React.Fragment>
+				</Elements>
+			)}
+		</div>
+	);
+
 }
 
 export default App;
