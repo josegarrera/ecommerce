@@ -11,7 +11,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 
 import CartHoverView from "../../containers/cartHoverView/CartHoverView";
 import FavoritesHoverView from "../../containers/favoritesHoverView/FavoritesHoverView";
-import Dropdown from "./dropdownMenu/index.js";
+import Dropdown from "./responsiveSideBar/index.js";
 
 const NavBar = () => {
   const cartProduct = useSelector((state) => state.cartProducts);

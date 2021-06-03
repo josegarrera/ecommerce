@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 <RiCloseFill className="icon" />;
 
-function Dropdown({ handleClick }) {
+function ResponsiveSideBar({ handleClick }) {
   let userId = window.localStorage.getItem("userId");
   const user = useSelector((state) => state.user);
 
@@ -24,57 +24,43 @@ function Dropdown({ handleClick }) {
           </i>
 
           <div className="dropdown-menu">
-            <Link className="dropdown-link" to="/home">
+            <Link className="dropdown-link" to="/home" onClick={handleClick}>
               Home
             </Link>
-            <Link className="dropdown-link" to="/catalogue">
+            <Link
+              className="dropdown-link"
+              to="/catalogue"
+              onClick={handleClick}
+            >
               Catalogue
             </Link>
-            {/* {user.role === "admin" ? (
-              <Link className="bottomLinks" to="/create">
-                Create
-              </Link>
-            ) : null} */}
-
-            {/* <select className="select dropdown-link">
-              <option>All categories</option>
-            </select> */}
-
-            <Link className="dropdown-link" to="/about">
+            <Link className="dropdown-link" to="/about" onClick={handleClick}>
               About us
             </Link>
-            <Link className="dropdown-link" to="/contact">
+            <Link className="dropdown-link" to="/contact" onClick={handleClick}>
               Contact
             </Link>
 
             {userId ? (
-              //           {/* {profileImage !== "undefined" ? (
-              //   <img className="image" src={profileImage} alt="no" />
-              // ) : (
-              //   <BsPersonCheckFill className="icon iconLogin" />
-              // )} */}
-
-              //   {/* {user.role === "admin" ? (
-              //     <Link to="/adminDashboard">
-              //       <div className="buttonLoginHover">Dashboard</div>
-              //     </Link>
-              //   ) : null} */}
-
-              <Link>
+              <Link onClick={handleClick}>
                 <div className="dropdown-button" onClick={eraseToken}>
                   <div className="sign-in"> Sign Out </div>
                 </div>
               </Link>
             ) : (
               <div>
-                <Link to="/login">
+                <Link to="/login" onClick={handleClick}>
                   <div className="dropdown-button">
                     <div className="sign-in"> Sign in </div>
                   </div>
                 </Link>
                 <div className="sign-up">
                   Don't have an account?
-                  <Link className="signup-link" to="/signup">
+                  <Link
+                    className="signup-link"
+                    to="/signup"
+                    onClick={handleClick}
+                  >
                     Sign up
                   </Link>
                 </div>
@@ -87,4 +73,4 @@ function Dropdown({ handleClick }) {
   );
 }
 
-export default Dropdown;
+export default ResponsiveSideBar;
