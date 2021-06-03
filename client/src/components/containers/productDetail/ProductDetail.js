@@ -132,7 +132,7 @@ const ProductDetail = ({id, location}) => {
 						</div>
 
 						<a
-							href={`https://client-ecommerce-ebon.vercel.app/products/id/${product._id}`}
+							href={`whatsapp://send?text=https://client-ecommerce-ebon.vercel.app/products/id/${product._id}`}
 							data-action='share/whatsapp/share'
 						>
 							<IoLogoWhatsapp />
