@@ -44,7 +44,7 @@ function App() {
 				<Elements stripe={stripePromise}>
 					<React.Fragment>
 						<GridLayout>
-						{/* 	<GlobalStyles /> */}
+							{/* 	<GlobalStyles /> */}
 							<ReactNotification />
 
 							<Route path='/'>
@@ -102,7 +102,9 @@ function App() {
 							<Route
 								exact
 								path='/products/id/:id'
-								render={({match}) => <ProductDetail id={match.params.id} />}
+								render={({match, location}) => (
+									<ProductDetail id={match.params.id} location={location} />
+								)}
 							/>
 							<Route path='/shipping' component={ShippingAddress}></Route>
 							<Route path='/confirmation' component={ConfirmOrder}></Route>
