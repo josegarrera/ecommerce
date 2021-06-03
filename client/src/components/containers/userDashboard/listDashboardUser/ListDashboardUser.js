@@ -4,7 +4,6 @@ import ListStyles from './styled';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 const ListDashboard = ({Options, array}) => {
-	console.log(array);
 
 	return (
 		<ListStyles>

@@ -8,16 +8,11 @@ const UserOrder = () => {
 
 	const id = localStorage.getItem('userId');
 
-	console.log(id);
-
 	useEffect(async () => {
 		let res = await axios.get(`${URLS.URL_USER_ORDERS}/user?userId=${id}`);
-
-		console.log(res.data);
 		setUserOrder(res.data.response);
 	}, []);
 
-	console.log(userOrder);
 
 	return (
 		<>

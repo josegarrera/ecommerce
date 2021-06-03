@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import axios from 'axios';
 import {useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -21,10 +22,13 @@ import {store} from 'react-notifications-component';
 import DetailLoader from '../../../utils/detailLoader';
 import Reviews from '../reviews';
 import CardProduct from '../../presentationals/cardProduct/CardProduct';
+import {URLS} from '../../../utils/constants';
 
 const ProductDetail = ({id, location}) => {
 	const dispatch = useDispatch();
 	const [imageBig, setImageBig] = useState();
+	const [userOrder, setUserOrder] = useState([]);
+
 	let history = useHistory();
 	let product = useSelector((store) => store.productDetail);
 	const wishlist = useSelector((store) => store.wishlist);
@@ -40,8 +44,17 @@ const ProductDetail = ({id, location}) => {
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	useEffect(() => {
+		checkUserBuy();
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+	useEffect(() => {
 		return dispatch(cleanProductDetail());
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+	const checkUserBuy = async () => {
+		let res = await axios.get(`${URLS.URL_USER_ORDERS}/user?userId=${userId}`);
+		setUserOrder(res.data.response);
+	};
 
 	const handleAddCart = () => {
 		//add to cart
@@ -264,6 +277,7 @@ const ProductDetail = ({id, location}) => {
 						setUpdateReview={setUpdateReview}
 						updateReview={updateReview}
 						allReviews={product.reviews}
+						userOrder={userOrder}
 					/>
 				)}
 			</div>
