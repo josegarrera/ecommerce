@@ -10,35 +10,32 @@ import { BiRightArrowAlt } from "react-icons/bi";
 
 function MultiItemCarousel({ items }) {
   const settings = {
-    infinite: true,
+    infinite: false,
     speed: 500,
     slidesToShow: 4,
-    slidesToScroll: 1,
+    slidesToScroll: 4,
     autoplay: true,
     autoplaySpeed: 2000,
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 700,
         settings: {
+          arrows: false,
           slidesToShow: 3,
-          slidesToScroll: 3,
-          infinite: true,
-          dots: true,
         },
       },
       {
-        breakpoint: 600,
+        breakpoint: 500,
         settings: {
+          arrows: false,
           slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2,
         },
       },
       {
-        breakpoint: 480,
+        breakpoint: 400,
         settings: {
+          arrows: false,
           slidesToShow: 1,
-          slidesToScroll: 1,
         },
       },
     ],
@@ -68,16 +65,20 @@ function MultiItemCarousel({ items }) {
     <MultiItemCarouselStyle>
       <Slider {...settings} prevArrow={<PreviusBtn />} nextArrow={<NextBtn />}>
         {items
-          ? items.map((e) => (
-              <CardProduct
-                key={e.product._id}
-                name={e.product.name}
-                price={e.product.price}
-                imageUrl={e.product.imageUrl}
-                _id={e.product._id}
-                loading={false}
-              />
-            ))
+          ? items.map((e) => {
+              return (
+                <div>
+                  <CardProduct
+                    key={e.product._id}
+                    name={e.product.name}
+                    price={e.product.price}
+                    imageUrl={e.product.imageUrl}
+                    _id={e.product._id}
+                    loading={false}
+                  />
+                </div>
+              );
+            })
           : null}
       </Slider>
     </MultiItemCarouselStyle>

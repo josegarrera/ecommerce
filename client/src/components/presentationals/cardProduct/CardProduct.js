@@ -138,6 +138,7 @@ const CardProduct = ({
 			</DivCrdProd>
 		);
 	}
+
 };
 
 export default CardProduct;
