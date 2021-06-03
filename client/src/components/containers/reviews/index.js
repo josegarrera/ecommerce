@@ -37,22 +37,22 @@ const Reviews = ({
 	};
 	/* STYLES */
 
-	const checkUserBuy = () => {
-		if (userOrder && userOrder.length > 0) {
-			let filtercompleted =
-				userOrder && userOrder.filter((el) => el.state === 'completed');
+	console.log(userOrder);
 
+	const checkUserBuy = () => {
+		let filtercompleted =
+			userOrder && userOrder.filter((el) => el.state === 'completed');
+		if (filtercompleted.length > 0) {
 			let canReview =
 				filtercompleted &&
 				filtercompleted.length &&
 				filtercompleted.find((el) =>
-					el.items.find((el) => el.product._id === id)
+					el.items.find((el) => el.product && el.product._id === id)
 				);
 
 			return canReview !== undefined ? true : false;
-		} else {
-			return false;
 		}
+		return false;
 	};
 
 	const handleOnSumbit = async (review) => {
