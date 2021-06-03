@@ -1,7 +1,17 @@
 import styled from "styled-components";
 
-const MultiItemCarouselStyle = styled.div`
-  padding: 0 12%;
+const CarouselStyle = styled.div`
+  width: 100%;
+  padding: 0 10%;
+
+  .cb-centermode {
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .cb-centermode input {
+    margin-right: 7px;
+  }
 
   .slick-arrow.slick-prev,
   .slick-arrow.slick-next {
@@ -30,4 +40,4 @@ const MultiItemCarouselStyle = styled.div`
   }
 `;
 
-export default MultiItemCarouselStyle;
+export default CarouselStyle;

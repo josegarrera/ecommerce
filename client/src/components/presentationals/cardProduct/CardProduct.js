@@ -54,67 +54,69 @@ const CardProduct = ({ name, imageUrl, price, _id, loading, combo }) => {
   } else {
     return (
       <DivCrdProd>
-        <div className="cnt__image">
-          <Link to={`/products/id/${_id}`}>
-            <img
-              className="img__card"
-              src={imageUrl[0]}
-              alt="imagen de producto"
-              onLoad={handleImageLoaded}
-            />
-          </Link>
-        </div>
-        {combo && combo.length > 0 ? (
-          <div className="comboDiv">Combo</div>
-        ) : null}
-        <div className="cnt_info">
-          <div className="row">
+        <div>
+          <div className="cnt__image">
             <Link to={`/products/id/${_id}`}>
-              <h5 className="product__name">{name}</h5>
+              <img
+                className="img__card"
+                src={imageUrl[0]}
+                alt="imagen de producto"
+                onLoad={handleImageLoaded}
+              />
             </Link>
-            <h6 className="product__price">
-              {price.currency} {price.value}
-            </h6>
-            {!userId ? (
-              <Link
-                to="/login"
-                onClick={() =>
-                  store.addNotification({
-                    title: "You are not Login",
-                    message: "You have to be logged in to add Favs.",
-                    type: "danger",
-                    insert: "top",
-                    container: "top-center",
-                    animationIn: ["animate__animated", "animate__fadeIn"],
-                    animationOut: ["animate__animated", "animate__fadeOut"],
-                    dismiss: {
-                      duration: 3000,
-                      onScreen: true,
-                      pauseOnHover: true,
-                    },
-                  })
-                }
-              >
-                <button className="btn__fav">
+          </div>
+          {combo && combo.length > 0 ? (
+            <div className="comboDiv">Combo</div>
+          ) : null}
+          <div className="cnt_info">
+            <div className="row">
+              <Link to={`/products/id/${_id}`}>
+                <h5 className="product__name">{name}</h5>
+              </Link>
+              <h6 className="product__price">
+                {price.currency} {price.value}
+              </h6>
+              {!userId ? (
+                <Link
+                  to="/login"
+                  onClick={() =>
+                    store.addNotification({
+                      title: "You are not Login",
+                      message: "You have to be logged in to add Favs.",
+                      type: "danger",
+                      insert: "top",
+                      container: "top-center",
+                      animationIn: ["animate__animated", "animate__fadeIn"],
+                      animationOut: ["animate__animated", "animate__fadeOut"],
+                      dismiss: {
+                        duration: 3000,
+                        onScreen: true,
+                        pauseOnHover: true,
+                      },
+                    })
+                  }
+                >
+                  <button className="btn__fav">
+                    <AiOutlineHeart />
+                  </button>
+                </Link>
+              ) : !fav ? (
+                <button className="btn__fav" onClick={handleAddFav}>
                   <AiOutlineHeart />
                 </button>
-              </Link>
-            ) : !fav ? (
-              <button className="btn__fav" onClick={handleAddFav}>
-                <AiOutlineHeart />
-              </button>
-            ) : (
-              <button className="btn__fav" onClick={handleRemoveFav}>
-                <AiFillHeart />
-              </button>
-            )}
-          </div>
+              ) : (
+                <button className="btn__fav" onClick={handleRemoveFav}>
+                  <AiFillHeart />
+                </button>
+              )}
+            </div>
 
-          <button className="btn__cart" onClick={handleAddCart}>
-            <i>
-              <FaShoppingCart />
-            </i>
-          </button>
+            <button className="btn__cart" onClick={handleAddCart}>
+              <i>
+                <FaShoppingCart />
+              </i>
+            </button>
+          </div>
         </div>
       </DivCrdProd>
     );
