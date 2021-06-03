@@ -1,6 +1,7 @@
 import React from 'react';
 import {ProfileStyled} from './styled';
 import {BsPersonCheckFill} from 'react-icons/bs';
+import UserDataForm from '../userDataForm/userDataForm.js';
 
 const Profile = () => {
 	let address = JSON.parse(window.localStorage.getItem('address'));
@@ -15,7 +16,11 @@ const Profile = () => {
 			<div className='data'>
 				<div className='imgDiv'>
 					{profileImage !== 'undefined' ? (
-						<img className='img' src={profileImage && profileImage} alt='profile' />
+						<img
+							className='img'
+							src={profileImage && profileImage}
+							alt='profile'
+						/>
 					) : (
 						<BsPersonCheckFill className='iconProfile' />
 					)}
@@ -60,6 +65,9 @@ const Profile = () => {
 								))}
 						</div>
 					) : null}
+				</div>
+				<div className='data'>
+					<UserDataForm />
 				</div>
 			</div>
 		</ProfileStyled>
