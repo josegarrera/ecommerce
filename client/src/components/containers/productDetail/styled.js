@@ -20,7 +20,7 @@ const ProductDetailStyle = styled.div`
 		display: flex;
 		flex-flow: column;
 		align-items: center;
-		width: 70vw;
+		width: 60vw;
 		margin: 3vh;
 		border-radius: 15px;
 		color: #a1a3a6;
@@ -60,8 +60,9 @@ const ProductDetailStyle = styled.div`
 
 	.centerDiv {
 		display: flex;
-		justify-content: space-evenly;
+		justify-content: space-between;
 		width: 100%;
+		padding: 0 1vw;
 		.imagesBox {
 			display: flex;
 			flex-direction: column;
@@ -92,8 +93,8 @@ const ProductDetailStyle = styled.div`
 		.imageBigDiv {
 			display: flex;
 			justify-content: center;
-			height: 20rem;
-			width: 20rem;
+			height: 30rem;
+			width: 30rem;
 			padding: 10px;
 
 			.imageBig {
@@ -276,7 +277,7 @@ const ProductDetailStyle = styled.div`
 	.comboProducts {
 		display: flex;
 		flex-flow: column;
-		width: 70vw;
+		width: 60vw;
 		margin: 3vh;
 		border-radius: 15px;
 		color: #a1a3a6;
@@ -304,7 +305,7 @@ const ProductDetailStyle = styled.div`
 		display: flex;
 		flex-flow: column;
 		align-items: center;
-		width: 70vw;
+		width: 60vw;
 		margin: 3rem;
 		border-radius: 15px;
 		color: #a1a3a6;
