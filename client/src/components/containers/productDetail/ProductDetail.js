@@ -214,16 +214,15 @@ const ProductDetail = (id) => {
 										{product.variants
 											? product.variants.map((variant, i) => (
 													<div key={i} className='variant'>
-														{variant.color.charAt(0).toUpperCase() +
-															variant.color.slice(1)}
-														, {variant.stock}u.
+														{variant && variant.color},{' '}
+														{variant && variant.stock}u.
 													</div>
 											  ))
 											: null}
 									</div>
 								</div>
 							</div>
-							<Link to='/cart' className='buttonLink'  onClick={handleAddCart}>
+							<Link to='/cart' className='buttonLink' onClick={handleAddCart}>
 								<div>Buy now</div>
 							</Link>
 						</div>

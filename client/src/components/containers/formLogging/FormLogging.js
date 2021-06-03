@@ -50,6 +50,7 @@ const FormLogging = () => {
 						email: '',
 						password: '',
 					});
+
 					window.localStorage.setItem('token', data.token);
 					window.localStorage.setItem(
 						'address',
@@ -105,6 +106,7 @@ const FormLogging = () => {
 		if (users.data.response.find((el) => el.email === inputGoogle.email)) {
 			console.log('entre 1');
 			let userLogIn = await axios.post(URLS.URL_LOGIN, inputGoogle);
+			console.log('1111', userLogIn);
 			window.localStorage.setItem('token', userLogIn.data.token);
 			window.localStorage.setItem(
 				'address',
@@ -134,7 +136,7 @@ const FormLogging = () => {
 			console.log('entre 2');
 			await axios.post(URLS.URL_SIGNUP, inputGoogle);
 			let userLogIn = await axios.post(URLS.URL_LOGIN, inputGoogle);
-			console.log('signuopp', userLogIn);
+			console.log('2222', userLogIn);
 
 			window.localStorage.setItem('token', userLogIn.data.token);
 			window.localStorage.setItem(
