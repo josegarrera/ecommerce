@@ -10,7 +10,7 @@ async function getUserOrder(req, res) {
 			let orderExist = await Orders.exists({users: userId, state: 'created'});
 			if (!orderExist) {
 				let order = await new Orders({users: userId, items: []});
-				order.save();
+				await order.save();
 			}
 			let order = await Orders.findOne({users: userId, state: 'created'})
 				.populate('users', {email: 1, _id: 1})

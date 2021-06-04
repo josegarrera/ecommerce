@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {
 	confirmCheckout,
@@ -8,6 +8,9 @@ import {
 } from '../../../redux/actions';
 import {CardElement, useStripe, useElements} from '@stripe/react-stripe-js';
 import {store} from 'react-notifications-component';
+import Swal from 'sweetalert2';
+import {useState} from 'react';
+import SumaryDiv from './styled';
 
 const FORM_ID = 'payment-form';
 
@@ -19,6 +22,8 @@ const SumarryCart = ({count, placeOrder, paymentMethod}) => {
 	const userId = localStorage.userId;
 	const stripe = useStripe();
 	const elements = useElements();
+	const history = useHistory();
+	const [status, setStatus] = useState(false);
 
 	const handleOrderSubmit = async (e) => {
 		e.preventDefault();
@@ -35,6 +40,7 @@ const SumarryCart = ({count, placeOrder, paymentMethod}) => {
 			dispatch(
 				confirmCheckout({userId, shippingInfo, paymentMethod, idStripe})
 			);
+		setStatus(true);
 	};
 
 	useEffect(() => {
@@ -51,12 +57,47 @@ const SumarryCart = ({count, placeOrder, paymentMethod}) => {
 				//Elimina el script como nodo hijo del elemento form
 				if (form) {
 					form.removeChild(script);
-					dispatch(emptyPaymentMethod());
 				}
 			};
 		} else if (preferenceId === 'processing' && userId) {
 			dispatch(getOpenUserOrders(userId, true));
 		}
+	}, [preferenceId]);
+
+	useEffect(() => {
+		console.log(placeOrder);
+		console.log(preferenceId);
+		console.log(status);
+		console.log(userId);
+		if (placeOrder && preferenceId === 'processing' && userId) {
+			Swal.fire({
+				title: 'Success!',
+				text: 'The order was processed.',
+				icon: 'success',
+				confirmButtonText: 'Ok',
+			});
+			history.push('/userDashboard');
+		}
+		if (placeOrder && preferenceId !== 'processing' && userId) {
+			Swal.fire({
+				title: 'Success!',
+				text: 'The order was processed.',
+				icon: 'success',
+				confirmButtonText: 'Ok',
+			});
+			history.push('/userDashboard');
+			dispatch(emptyPaymentMethod());
+		}
+		if (placeOrder && status && !preferenceId && userId) {
+			Swal.fire({
+				title: 'Error',
+				text: 'Invalid card details',
+				icon: 'error',
+				confirmButtonText: 'Ok',
+			});
+		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [preferenceId]);
 
 	const handleError = () => {
@@ -94,7 +135,7 @@ const SumarryCart = ({count, placeOrder, paymentMethod}) => {
 	};
 
 	return (
-		<div>
+		<SumaryDiv>
 			<div className='summary'>
 				{cartProduct.length ? (
 					<div className='summary__title'>
@@ -122,7 +163,11 @@ const SumarryCart = ({count, placeOrder, paymentMethod}) => {
 			</div>
 
 			{placeOrder ? (
-				<form id={FORM_ID} onSubmit={handleOrderSubmit}>
+				<form
+					id={FORM_ID}
+					onSubmit={handleOrderSubmit}
+					className='form-summary'
+				>
 					{paymentMethod === 'stripe' && cartProduct.length ? (
 						<div>
 							<CardElement
@@ -163,7 +208,7 @@ const SumarryCart = ({count, placeOrder, paymentMethod}) => {
 					<button className='btn_buy'>Checkout</button>
 				</Link>
 			)}
-		</div>
+		</SumaryDiv>
 	);
 };
 

@@ -1,5 +1,8 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-const DivSumarry = styled.div``;
+const DivSumarry = styled.div`
+	.form-summary {
+	}
+`;
 
 export default DivSumarry;

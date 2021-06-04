@@ -64,7 +64,6 @@ function initiatePayment(req, res) {
 			if (!order[0].items.length)
 				throw new Error('The user has no products in the cart');
 
-			order[0].state = 'processing';
 			order[0].paymentMethod = paymentMethod || 'mercadopago';
 			order[0].shipping = shippingInfo;
 			const items = order[0].items.map((item) => {
@@ -104,6 +103,7 @@ function initiatePayment(req, res) {
 					mercadopago.preferences.create(preference),
 				]);
 			} else {
+				order[0].state = 'processing';
 				return Promise.all([
 					order[0],
 					stripe.paymentIntents.create({
@@ -120,30 +120,34 @@ function initiatePayment(req, res) {
 		})
 		.then((response) => {
 			if (!response.length) throw new Error();
-			if (response[1].body)
-				return res.send({
-					response: response[1].body.id,
+			if (response[1].body) {
+				return response[1].body.id;
+			} else {
+				const {USDEUR} = response[2][0].quotes;
+				let transactionDetail = {
+					paymentId: response[1].id,
+					datePayment: new Date(Date.now()).toDateString(),
+					paymentStatus: response[1].status,
+					total_amount: response[1].charges.data[0].amount_captured / 100,
+					net_income:
+						(response[1].charges.data[0].amount_captured / 100) * USDEUR -
+						((response[1].charges.data[0].amount_captured / 100) * USDEUR * 4) /
+							100,
+					currency: 'EUR',
+				};
+				response[0].transactionDetail = transactionDetail;
+
+				return Promise.all([response[0].save(), sendEmails(response)]);
+			}
+		})
+		.then((data) => {
+			if (typeof data === 'string') {
+				res.send({
+					response: data,
 					type: 'Ok',
 					message: 'Success',
 				});
-			const {USDEUR} = response[2][0].quotes;
-			let transactionDetail = {
-				paymentId: response[1].id,
-				datePayment: new Date(Date.now()).toDateString(),
-				paymentStatus: response[1].status,
-				total_amount: response[1].charges.data[0].amount_captured / 100,
-				net_income:
-					(response[1].charges.data[0].amount_captured / 100) * USDEUR -
-					((response[1].charges.data[0].amount_captured / 100) * USDEUR * 4) /
-						100,
-				currency: 'EUR',
-			};
-			response[0].transactionDetail = transactionDetail;
-
-			return Promise.all([response[0].save(), sendEmails(response)]);
-		})
-		.then((data) => {
-			if (data) {
+			} else {
 				res.send({
 					response: data[0].state,
 					type: 'Ok',
@@ -267,6 +271,7 @@ function getNotificationsMp(req, res) {
 			})
 			.then((order) => {
 				order[0].transactionDetail = transactionDetail;
+				order[0].state = 'processing';
 
 				return Promise.all([order[0].save(), sendEmails(order)]);
 			})
