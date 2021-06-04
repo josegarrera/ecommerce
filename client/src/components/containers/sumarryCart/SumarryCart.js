@@ -24,6 +24,7 @@ const SumarryCart = ({count, placeOrder, paymentMethod}) => {
 	const elements = useElements();
 	const history = useHistory();
 	const [status, setStatus] = useState(false);
+	console.log('cartProducts', cartProduct);
 
 	const handleOrderSubmit = async (e) => {
 		e.preventDefault();
@@ -42,9 +43,14 @@ const SumarryCart = ({count, placeOrder, paymentMethod}) => {
 			);
 		setStatus(true);
 	};
-
+	const pagare = document.querySelector('.mercadopago-button');
 	useEffect(() => {
-		if (preferenceId && preferenceId !== 'processing') {
+		if (
+			!pagare &&
+			placeOrder &&
+			preferenceId &&
+			preferenceId !== 'processing'
+		) {
 			// con el preferenceId en mano, inyectamos el script de mercadoPago
 			const script = document.createElement('script');
 			script.type = 'text/javascript';
@@ -57,18 +63,28 @@ const SumarryCart = ({count, placeOrder, paymentMethod}) => {
 				//Elimina el script como nodo hijo del elemento form
 				if (form) {
 					form.removeChild(script);
+					dispatch(emptyPaymentMethod());
 				}
 			};
-		} else if (preferenceId === 'processing' && userId) {
-			dispatch(getOpenUserOrders(userId, true));
+		} else if (
+			preferenceId === 'processing' &&
+			paymentMethod === 'stripe' &&
+			userId
+		) {
+			return () => {
+				dispatch(getOpenUserOrders(userId, true));
+				dispatch(emptyPaymentMethod());
+			};
 		}
 	}, [preferenceId]);
 
+	console.log('esto es stripe', stripe);
 	useEffect(() => {
-		console.log(placeOrder);
-		console.log(preferenceId);
-		console.log(status);
-		console.log(userId);
+		if (!cartProduct.length && placeOrder) {
+			history.push('/catalogue');
+		}
+	}, []);
+	useEffect(() => {
 		if (placeOrder && preferenceId === 'processing' && userId) {
 			Swal.fire({
 				title: 'Success!',
@@ -76,9 +92,18 @@ const SumarryCart = ({count, placeOrder, paymentMethod}) => {
 				icon: 'success',
 				confirmButtonText: 'Ok',
 			});
-			history.push('/userDashboard');
+
+			history.push('/catalogue');
 		}
-		if (placeOrder && preferenceId !== 'processing' && userId) {
+
+		/* if (
+			status &&
+			placeOrder &&
+			preferenceId &&
+			preferenceId.includes('-') &&
+			paymentMethod === 'mercadopago' &&
+			userId
+		) {
 			Swal.fire({
 				title: 'Success!',
 				text: 'The order was processed.',
@@ -87,15 +112,7 @@ const SumarryCart = ({count, placeOrder, paymentMethod}) => {
 			});
 			history.push('/userDashboard');
 			dispatch(emptyPaymentMethod());
-		}
-		if (placeOrder && status && !preferenceId && userId) {
-			Swal.fire({
-				title: 'Error',
-				text: 'Invalid card details',
-				icon: 'error',
-				confirmButtonText: 'Ok',
-			});
-		}
+		} */
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [preferenceId]);
@@ -135,7 +152,7 @@ const SumarryCart = ({count, placeOrder, paymentMethod}) => {
 	};
 
 	return (
-		<SumaryDiv>
+		<SumaryDiv paymentMethod={paymentMethod}>
 			<div className='summary'>
 				{cartProduct.length ? (
 					<div className='summary__title'>
@@ -191,7 +208,11 @@ const SumarryCart = ({count, placeOrder, paymentMethod}) => {
 					) : (
 						<></>
 					)}
-					<button type='submit' className='btn_buy'>
+					<button
+						type='submit'
+						className='btn_buy'
+						disabled={paymentMethod ? '' : 'disabled'}
+					>
 						Place Order
 					</button>
 				</form>

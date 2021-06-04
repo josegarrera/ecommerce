@@ -50,6 +50,11 @@ const r = (state = initialState, {type, payload}) => {
 				...state,
 				cartProducts: payload,
 			};
+		case ActionTypes.CLEAN_CART_PRODUCTS:
+			return {
+				...state,
+				cartProducts: payload,
+			};
 
 		case ActionTypes.ADD_PRODUCT_CART:
 			const findOne = state.cartProducts.find(
@@ -57,9 +62,9 @@ const r = (state = initialState, {type, payload}) => {
 			);
 			if (findOne) {
 				store.addNotification({
-					title: 'Already exist!',
-					message: 'The item is already in the cart.',
-					type: 'warning',
+					title: 'Added item!',
+					message: 'The item was added to the cart.',
+					type: 'success',
 					insert: 'top',
 					container: 'bottom-right',
 					animationIn: ['animate__animated', 'animate__fadeIn'],
