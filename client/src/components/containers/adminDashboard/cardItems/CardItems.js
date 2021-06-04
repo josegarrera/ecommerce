@@ -9,6 +9,7 @@ import {URLS} from '../../../../utils/constants';
 import {store} from 'react-notifications-component';
 import DataList from '../../dataList';
 import {MdDelete, MdCancel, MdEdit} from 'react-icons/md';
+import {FcAddImage} from 'react-icons/fc';
 import AccordionDashboard from '../accordionDashboard/AccordionDashboard';
 import {
 	handleInputFile,
@@ -27,7 +28,6 @@ const CardItems = ({
 }) => {
 	//const dispatch = useDispatch();
 	//let orderDetail = useSelector((store) => store.orderDetail);
-
 	const [isEditAItem, setisEditAItem] = useState(false);
 	const [SeeMore, setSeeMore] = useState(false);
 	const [EditAItem, setEditAItem] = useState({...prop});
@@ -46,6 +46,7 @@ const CardItems = ({
 		role,
 		email,
 		users,
+		specs,
 	} = prop;
 
 	const deleteById = async () => {
@@ -81,12 +82,28 @@ const CardItems = ({
 					...EditAItem,
 					price: {...EditAItem.price, value: e.target.value},
 			  })
+			: e.target.name === 'specs'
+			? setEditAItem({
+					...EditAItem,
+					specs: {...EditAItem.specs, [e.target.id]: e.target.value},
+			  })
 			: setEditAItem({...EditAItem, [e.target.name]: e.target.value});
 	};
 
-	const handleEditButton = () => {
+	const handleEditButton = (e) => {
+		if (e.target.id && options === 'Products') {
+			const originalProduct = allProductsDataList.filter(
+				(item) => item.product._id === e.target.id
+			);
+			if (isEditAItem && originalProduct.length) {
+				setEditAItem(originalProduct[0].product);
+				setSeeMore(!SeeMore);
+				setisEditAItem(!isEditAItem);
+				return;
+			}
+		}
 		isEditAItem && setEditAItem({...prop});
-		SeeMore === false ? setSeeMore(true) : setSeeMore(true);
+		!isEditAItem && setSeeMore(true);
 		setisEditAItem(!isEditAItem);
 	};
 
@@ -219,7 +236,6 @@ const CardItems = ({
 		} else if (options === 'Brands') {
 			let sendEditItem = {...EditAItem};
 			sendEditItem.products = EditAItem.products.map((el) => el._id);
-			console.log(sendEditItem);
 			try {
 				await axios.put(`${URLS.URL_BRANDS}/${EditAItem._id}`, sendEditItem);
 				allProducts();
@@ -229,9 +245,7 @@ const CardItems = ({
 			}
 		} else if (options === 'Orders') {
 			let orderDetail = await axios.get(`${URLS.URL_USER_ORDERS}/${_id}`);
-
 			let user = orderDetail.data.response.users.email;
-
 			let sendEditItem = {user, data: {...EditAItem}};
 			try {
 				await axios.put(`${URLS.URL_USER_ORDERS}/${_id}`, sendEditItem);
@@ -255,7 +269,7 @@ const CardItems = ({
 	return (
 		<ProductDashboardStyle>
 			<div className='productAllInfo'>
-				{EditAItem.imageUrl ? (
+				{EditAItem && EditAItem.imageUrl ? (
 					<div className='imageDiv'>
 						<Carousel className='imageSlider' showStatus>
 							{EditAItem.imageUrl &&
@@ -296,10 +310,13 @@ const CardItems = ({
 										onChange={(e) => handleInputFile(e, setEditAItem)}
 										value={EditAItem && EditAItem.fileValue}
 									/>{' '}
-									Add img
+									<FcAddImage />
 								</label>
 								<label>
-									{EditAItem.filesData ? EditAItem.filesData.length : 0} Files
+									{EditAItem && EditAItem.filesData
+										? EditAItem.filesData.length
+										: 0}{' '}
+									Files
 								</label>
 							</div>
 						) : (
@@ -316,7 +333,7 @@ const CardItems = ({
 					{options === 'Orders' && !SeeMore ? (
 						<div className='renglon'>
 							<label className={EditAItem.state}>
-								{EditAItem.state && EditAItem.state.toUpperCase()}
+								{EditAItem && EditAItem.state && EditAItem.state.toUpperCase()}
 							</label>
 						</div>
 					) : (
@@ -409,15 +426,18 @@ const CardItems = ({
 							<div className='users'>{users}</div>
 						</div>
 					)}
-					{products && isEditAItem && (
+					{products && isEditAItem ? (
 						<DataList
 							items={allProductsDataList}
 							type='products'
 							handleDataList={handleProductsDataList}
 							placeholder='Add a Product'
 						/>
+					) : (
+						<></>
 					)}
 					{products &&
+						EditAItem &&
 						(EditAItem.products && EditAItem.products.length === 0 ? (
 							<div className='renglon'>
 								<div className='title'>No Products.</div>
@@ -441,7 +461,7 @@ const CardItems = ({
 										placeholder='Add a Brand'
 									/>
 								)}
-								{combo && EditAItem.combo && EditAItem.combo.length && (
+								{EditAItem && EditAItem.combo && (
 									<AccordionDashboard
 										items={EditAItem.combo}
 										isEditAItem={false}
@@ -478,6 +498,7 @@ const CardItems = ({
 											handleInput={handleInputVariants}
 											EditAItem={EditAItem.variants}
 											setEditAItem={setEditAItem}
+											prop={prop}
 										/>
 									))}
 								{isEditAItem && (
@@ -519,6 +540,22 @@ const CardItems = ({
 										)}
 									</div>
 								)}
+								{!specs ? (
+									<div className='renglon'>
+										<div className='title'>No specs.</div>
+									</div>
+								) : (
+									<AccordionDashboard
+										items={Object.entries(specs)}
+										EditAItem={EditAItem.specs}
+										setEditAItem={setEditAItem}
+										isEditAItem={isEditAItem}
+										handler={handleDeleteOnEdit}
+										handleInput={handleInput}
+										Option={'specs'}
+									/>
+								)}
+
 								<div className='renglon'>
 									<div onClick={() => setSeeMore(!SeeMore)} className='seeMore'>
 										Close!
@@ -595,13 +632,26 @@ const CardItems = ({
 						<IoMdCheckmarkCircleOutline className='button button_check' />
 					</button>
 				)}
-				<button onClick={handleEditButton} className='buttonDiv'>
+
+				<label
+					for={_id}
+					key={_id + 'labelBtnInput'}
+					className='labelVariantsFile buttonDiv'
+				>
+					<input
+						type='button'
+						key={_id + 'inputBtnInput'}
+						className='inputFileVariants'
+						id={_id}
+						onClick={(e) => handleEditButton(e)}
+					/>
 					{isEditAItem ? (
 						<MdCancel className='button' />
 					) : (
 						<MdEdit className='button' />
 					)}
-				</button>
+				</label>
+
 				<button className='buttonDiv' onClick={deleteById}>
 					<MdDelete className='button' />
 				</button>
