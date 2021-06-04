@@ -19,7 +19,6 @@ const Reviews = ({
 
 	const defaultImage =
 		'https://res.cloudinary.com/dlexbrcrv/image/upload/v1622767841/Proyects/E-commerce/03f7331cc322295d71005b51072ce40d_i4scje.png';
-	console.log('esto me devuelve', defaultImage);
 
 	const STYLE_BTN = {
 		color: 'white',
