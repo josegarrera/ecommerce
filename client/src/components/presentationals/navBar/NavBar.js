@@ -11,7 +11,7 @@ import {GiHamburgerMenu} from 'react-icons/gi';
 
 import CartHoverView from '../../containers/cartHoverView/CartHoverView';
 import FavoritesHoverView from '../../containers/favoritesHoverView/FavoritesHoverView';
-import Dropdown from './dropdownMenu/index.js';
+import Dropdown from './responsiveSideBar/index.js';
 
 const NavBar = () => {
 	const cartProduct = useSelector((state) => state.cartProducts);
@@ -32,7 +32,7 @@ const NavBar = () => {
 	};
 
 	return (
-		<DivNavBar>
+		<DivNavBar id='GO_TOP'>
 			<div className='topNav'>
 				<div className='topLeft'>
 					<Link to='/'>
@@ -129,9 +129,19 @@ const NavBar = () => {
 									<BsPersonCheckFill className='icon iconLogin' />
 								)}
 								<div className='loginHoverCart'>
-									{user.role === 'admin' ? (
-										<Link to='/adminDashboard'>
-											<div className='buttonLoginHover'>Dashboard</div>
+									{role === 'admin' ? (
+										<>
+											<Link to='/adminDashboard'>
+												<div className='buttonLoginHover'>Admin dashboard</div>
+											</Link>
+											<Link to='/userDashboard'>
+												<div className='buttonLoginHover'>My profile</div>
+											</Link>
+										</>
+									) : null}
+									{role === 'client' ? (
+										<Link to='/userDashboard'>
+											<div className='buttonLoginHover'>My profile</div>
 										</Link>
 									) : null}
 
@@ -160,16 +170,17 @@ const NavBar = () => {
 							</div>
 						)}
 					</div>
-					{/* {userId ? (
-            <Badge badgeContent={favsProduct.length} color="secondary">
-              <div className="iconDiv cart">
-                <Link to="/favorites">
-                  <IoHeart className="icon" />
-                </Link>
-                <FavoritesHoverView className="cartHoverView" />
-              </div>
-            </Badge>
-          ) : null} */}
+
+					{userId ? (
+						<Badge badgeContent={favsProduct.length} color='secondary'>
+							<div className='iconDiv cart'>
+								<Link to='/favorites'>
+									<IoHeart className='icon' />
+								</Link>
+								<FavoritesHoverView className='cartHoverView' />
+							</div>
+						</Badge>
+					) : null}
 					<Badge badgeContent={cartProduct.length} color='secondary'>
 						<div className='iconDiv cart'>
 							<Link to='/cart'>
@@ -199,11 +210,6 @@ const NavBar = () => {
 					<Link className='bottomLink' to='/catalogue'>
 						Catalogue
 					</Link>
-					{user.role === 'admin' ? (
-						<Link className='bottomLink' to='/create'>
-							Create
-						</Link>
-					) : null}
 					<Link className='bottomLink' to='/about'>
 						About us
 					</Link>

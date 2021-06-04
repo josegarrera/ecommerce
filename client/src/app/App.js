@@ -3,6 +3,7 @@ import {Route, Redirect} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import GridLayout from '../utils/GridLayout';
 import NavBar from '../components/presentationals/navBar/NavBar.js';
+import Footer from '../components/containers/footer/Footer';
 import Home from '../components/containers/home/Home.js';
 import Catalogue from '../components/containers/catalogue/Catalogue';
 import Search from '../components/containers/search/Search';
@@ -24,6 +25,8 @@ import Reset from '../components/containers/reset/Reset';
 import Contact from '../components/containers/contact/index';
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 //import GlobalStyles from '../utils/GlobalStyles';
 
 /* Seteando el header del axios para todas las rutas*/
@@ -44,7 +47,7 @@ function App() {
 				<Elements stripe={stripePromise}>
 					<React.Fragment>
 						<GridLayout>
-						{/* 	<GlobalStyles /> */}
+							{/* 	<GlobalStyles /> */}
 							<ReactNotification />
 
 							<Route path='/'>
@@ -102,7 +105,9 @@ function App() {
 							<Route
 								exact
 								path='/products/id/:id'
-								render={({match}) => <ProductDetail id={match.params.id} />}
+								render={({match, location}) => (
+									<ProductDetail id={match.params.id} location={location} />
+								)}
 							/>
 							<Route path='/shipping' component={ShippingAddress}></Route>
 							<Route path='/confirmation' component={ConfirmOrder}></Route>
@@ -110,6 +115,23 @@ function App() {
 							<Route path='/resetPassword' component={Reset} />
 							<Route path='/contact' component={Contact} />
 							<Route path='/userDashboard' component={UserDashboard} />
+							<Route
+								render={({location}) =>
+									[
+										'/',
+										'/home',
+										'/catalogue',
+										'/cart',
+										'/favorites',
+										'/shipping',
+										'/confirmation',
+										'/about',
+										'/contact',
+									].includes(location.pathname) ? (
+										<Footer />
+									) : null
+								}
+							/>
 						</GridLayout>
 					</React.Fragment>
 				</Elements>

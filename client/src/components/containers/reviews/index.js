@@ -2,12 +2,23 @@ import React from 'react';
 import CommentsBlock from 'simple-react-comments';
 import axios from 'axios';
 import {URLS} from '../../../utils/constants';
+import {store} from 'react-notifications-component';
 
-const Reviews = ({id, setUpdateReview, updateReview, allReviews}) => {
+const Reviews = ({
+	id,
+	setUpdateReview,
+	updateReview,
+	allReviews,
+	userOrder,
+}) => {
 	const userId = localStorage.getItem('userId');
 	//const [Review, setAllReview] = useState([]);
-
+	const firstName = localStorage.getItem('firstName');
+	const profileImage = localStorage.getItem('profileImage');
 	/* STYLES */
+
+	const defaultImage =
+		'https://res.cloudinary.com/dlexbrcrv/image/upload/v1622767841/Proyects/E-commerce/03f7331cc322295d71005b51072ce40d_i4scje.png';
 
 	const STYLE_BTN = {
 		color: 'white',
@@ -30,12 +41,44 @@ const Reviews = ({id, setUpdateReview, updateReview, allReviews}) => {
 	};
 	/* STYLES */
 
+	const checkUserBuy = () => {
+		let filtercompleted =
+			userOrder && userOrder.filter((el) => el.state === 'completed');
+		if (filtercompleted.length > 0) {
+			let canReview =
+				filtercompleted &&
+				filtercompleted.length &&
+				filtercompleted.find((el) =>
+					el.items.find((el) => el.product && el.product._id === id)
+				);
+
+			return canReview !== undefined ? true : false;
+		}
+		return false;
+	};
+
 	const handleOnSumbit = async (review) => {
-		try {
-			await axios.put(`${URLS.URL_PRODUCTS}/reviews/${id}`, review);
-			setUpdateReview(!updateReview);
-		} catch (error) {
-			console.log(error);
+		if (checkUserBuy()) {
+			try {
+				await axios.put(`${URLS.URL_PRODUCTS}/reviews/${id}`, review);
+				setUpdateReview(!updateReview);
+			} catch (error) {
+				console.log(error);
+			}
+		} else {
+			store.addNotification({
+				title: 'You can not do that',
+				message: 'You must buy the product to leave a review',
+				type: 'danger',
+				insert: 'top',
+				container: 'bottom-right',
+				animationIn: ['animate__animated', 'animate__fadeIn'],
+				animationOut: ['animate__animated', 'animate__fadeOut'],
+				dismiss: {
+					duration: 3000,
+					onScreen: true,
+				},
+			});
 		}
 	};
 
@@ -71,7 +114,6 @@ const Reviews = ({id, setUpdateReview, updateReview, allReviews}) => {
 						...base,
 						...STYLE_COMMENT,
 						a: {
-							marginLeft: '-1.3rem',
 							padding: '0',
 						},
 					}),
@@ -91,10 +133,11 @@ const Reviews = ({id, setUpdateReview, updateReview, allReviews}) => {
 					if (text.length > 0) {
 						handleOnSumbit({
 							authorUrl: '#comments',
-							avatarUrl: '#comments',
+							avatarUrl:
+								profileImage !== 'undefined' ? profileImage : defaultImage,
 							authorId: userId,
 							createdAt: `${new Date()}`,
-							fullName: 'Usuario n° ' + userId,
+							fullName: firstName ? firstName : 'Anonymous',
 							text,
 						});
 					}

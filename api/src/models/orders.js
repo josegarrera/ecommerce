@@ -16,11 +16,9 @@ const OrdersSchema = new Schema({
 			},
 			lot: {
 				type: Number,
-				default: 1,
 			},
 			variant: {
 				type: Number,
-				default: 0,
 			},
 		},
 	],

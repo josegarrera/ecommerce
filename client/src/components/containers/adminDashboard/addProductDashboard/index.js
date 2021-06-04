@@ -144,8 +144,8 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 									</i>
 								</div>
 
-								<div className='productInfo'>
-									<div className='left'>
+								<div className='mid-row'>
+									<div className='col col-1'>
 										<div className='renglon2'>
 											<span className='title'>Name &nbsp;</span>
 											<input
@@ -368,7 +368,7 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 										</div>
 									</div>
 
-									<div className='right'>
+									<div className='col col-2'>
 										<div className='renglon2'>
 											<div className='title'>Variants &nbsp;</div>
 
@@ -460,6 +460,7 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 												</AccordionItem>
 											</Accordion>
 										</div>
+
 										<div className='renglon2'>
 											{product.allVariants.length ? (
 												product.allVariants.map((item, i) => (
@@ -495,61 +496,8 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 												<div> </div>
 											)}
 										</div>
-
-										<div className='renglon2'>
-											<div className='title'>Specs &nbsp;</div>
-											<Accordion allowZeroExpanded>
-												{
-													<AccordionItem
-														onClick={() => setAccStatusSpecs(!AccStatusSpecs)}
-													>
-														<AccordionItemButton className='title2'>
-															Display options
-															{AccStatusSpecs === false ? (
-																<MdKeyboardArrowDown
-																	className='open'
-																	onClick={() =>
-																		setAccStatusSpecs(!AccStatusSpecs)
-																	}
-																/>
-															) : (
-																<MdKeyboardArrowUp
-																	className='open'
-																	onClick={() =>
-																		setAccStatusSpecs(!AccStatusSpecs)
-																	}
-																/>
-															)}
-														</AccordionItemButton>
-														<div className='accordionItems'>
-															<AccordionItemPanel>
-																<div>
-																	{product.specsItems.length ? (
-																		product.specsItems.map((item, i) => (
-																			<div>
-																				<label>{item}</label>
-																				<input
-																					key={item + i}
-																					className='form_input'
-																					type='text'
-																					name={item}
-																					value={product.specs[item]}
-																					onChange={(e) =>
-																						changeInputSpecs(e, setProduct)
-																					}
-																				></input>
-																			</div>
-																		))
-																	) : (
-																		<div> </div>
-																	)}
-																</div>
-															</AccordionItemPanel>
-														</div>
-													</AccordionItem>
-												}
-											</Accordion>
-										</div>
+									</div>
+									<div className='col col-4'>
 										<div className='renglon2'>
 											<div className='title'>Combo &nbsp;</div>
 											<div className='input-container'>
@@ -591,6 +539,7 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 												</button>
 											</div>
 										</div>
+
 										<div>
 											{errors.combo ? (
 												<p className='danger'>{errors.combo}</p>

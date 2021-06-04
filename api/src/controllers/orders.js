@@ -76,32 +76,36 @@ async function addProduct(req, res) {
 			let orderActive = await Orders.findOne({users: userId, state: 'created'});
 			if (orderActive) {
 				if (Array.isArray(products)) {
-					let toAdd = products.filter((e) =>
-						orderActive.items.find(
-							(prod) => prod.product.toString() === e.product._id
-						)
-							? false
-							: true
-					);
-					toAdd = toAdd.map((e) => {
-						return {
-							lot: e.lot,
-							product: e.product._id,
-							variant: e.variant,
-						};
-					});
-					orderActive.items = orderActive.items.concat(toAdd);
-					await orderActive.save();
+					if (products.length) {
+						let toAdd = products.filter((e) =>
+							orderActive.items.find(
+								(prod) => prod.product.toString() === e.product._id
+							)
+								? false
+								: true
+						);
+						toAdd = toAdd.map((e) => {
+							return {
+								lot: e.lot,
+								product: e.product._id,
+								variant: e.variant,
+							};
+						});
+						orderActive.items = orderActive.items.concat(toAdd);
+						await orderActive.save();
+					}
 				} else {
 					let toAdd = orderActive.items.find((p) => {
-						return p.product.toString() === products;
+						return p.product.toString() === products.id;
 					})
 						? false
 						: true;
 					if (toAdd) {
 						orderActive.items = orderActive.items.concat([
 							{
-								product: products,
+								product: products.id,
+								variant: products.variant,
+								lot: products.lot,
 							},
 						]);
 						await orderActive.save();
@@ -123,7 +127,9 @@ async function addProduct(req, res) {
 						users: userId,
 						items: [
 							{
-								product: products,
+								product: products.id,
+								lot: products.lot,
+								variant: products.variant,
 							},
 						],
 					});

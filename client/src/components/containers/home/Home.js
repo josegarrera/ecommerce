@@ -1,13 +1,29 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {getAllProducts, getProducts} from '../../../redux/actions';
-import Footer from '../footer/Footer';
+import {
+	getAllProducts,
+	getProducts,
+	postLocalStorage,
+	getWishListOfDB,
+} from '../../../redux/actions';
 import HomeStyle from './styled';
 import Carousel from '../carousel';
-import MultiItemCarousel from '../multiItemCarousel/multiItemCarousel';
+import ProductCarousel from '../carouselPrueba/index';
+import {Link} from 'react-router-dom';
 
 const Home = () => {
-	const {products} = useSelector((state) => state.products);
+	const allProducts = useSelector((state) => state.allProducts);
+	const cartProduct = useSelector((state) => state.cartProducts);
+
+	const deReversaMami = allProducts && allProducts.slice(-10);
+	useEffect(() => {
+		const user = window.localStorage.getItem('userId');
+		if (user) {
+			dispatch(postLocalStorage({products: cartProduct, userId: user}));
+			window.localStorage.setItem('cart', JSON.stringify([]));
+			dispatch(getWishListOfDB(user));
+		} // eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const dispatch = useDispatch();
 	useEffect(() => {
@@ -22,30 +38,20 @@ const Home = () => {
 			<div className='product__row'>
 				<br></br>
 				<h3 className='top__text'>NEW RELEASES</h3>
-				<span>see more</span>
+				<Link to='/catalogue'>
+					<span>see more</span>
+				</Link>
 			</div>
 
-			<MultiItemCarousel items={products} />
-
+			<ProductCarousel items={deReversaMami} />
 			<div className='product__row'>
 				<br></br>
 				<h3 className='top__text'>ON SALE</h3>
-				<span>see more</span>
+				<Link to='/catalogue'>
+					<span>see more</span>
+				</Link>
 			</div>
-
-			<MultiItemCarousel items={products} />
-
-			{/* <div className="offers">
-        <ProductList products={limit4} />
-      </div>
-
-      <div className="offers">
-        <ProductList products={limit4} />
-      </div>
-      <div className="offers">
-        <ProductList products={limit4} />
-      </div> */}
-			<Footer></Footer>
+			<ProductCarousel items={allProducts} />
 		</HomeStyle>
 	);
 };

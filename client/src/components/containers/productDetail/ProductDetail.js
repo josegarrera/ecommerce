@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import axios from 'axios';
 import {useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -10,6 +11,7 @@ import {
 	addFavProductToDB,
 	removeFavProductToDB,
 	postLocalStorage,
+	getAllProducts,
 } from '../../../redux/actions/index';
 import {IoLogoWhatsapp, IoReturnDownBack} from 'react-icons/io5';
 import {BsLightning} from 'react-icons/bs';
@@ -20,46 +22,92 @@ import {store} from 'react-notifications-component';
 import DetailLoader from '../../../utils/detailLoader';
 import Reviews from '../reviews';
 import CardProduct from '../../presentationals/cardProduct/CardProduct';
+import {URLS} from '../../../utils/constants';
 
-const ProductDetail = (id) => {
+const ProductDetail = ({id, location}) => {
 	const dispatch = useDispatch();
 	const [imageBig, setImageBig] = useState();
+	const [userOrder, setUserOrder] = useState([]);
+
 	let history = useHistory();
 	let product = useSelector((store) => store.productDetail);
 	const wishlist = useSelector((store) => store.wishlist);
 	const fav = wishlist.find(({product: {_id}}) => _id === product._id);
 	const userId = window.localStorage.getItem('userId');
 	const [updateReview, setUpdateReview] = useState(false);
+	const [variants, setVariants] = useState({lot: 1, variant: 0});
+
+	const handleSelectVar = (e) => {
+		if (e.target.name === 'variant') {
+			setVariants({
+				...variants,
+				lot: 1,
+				variant: Number(e.target.value),
+			});
+		} else {
+			setVariants({
+				...variants,
+				[e.target.name]: Number(e.target.value),
+			});
+		}
+	};
 
 	useEffect(() => {
 		dispatch(getProductDetail(id));
 	}, [updateReview]); // eslint-disable-line react-hooks/exhaustive-deps
+	useEffect(() => {
+		dispatch(getAllProducts());
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+	useEffect(() => {
+		checkUserBuy();
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	useEffect(() => {
 		return dispatch(cleanProductDetail());
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+	const checkUserBuy = async () => {
+		let res = await axios.get(`${URLS.URL_USER_ORDERS}/user?userId=${userId}`);
+		setUserOrder(res.data.response);
+	};
+
 	const handleAddCart = () => {
 		//add to cart
-		dispatch(addCartProduct(product._id));
+		dispatch(
+			addCartProduct({
+				id: product._id,
+				lot: variants.lot,
+				variant: variants.variant,
+			})
+		);
 		if (userId) {
-			dispatch(postLocalStorage({products: product._id, userId}));
+			dispatch(
+				postLocalStorage({
+					products: {
+						id: product._id,
+						lot: variants.lot,
+						variant: variants.variant,
+					},
+					userId,
+				})
+			);
 			window.localStorage.setItem('cart', JSON.stringify([]));
 		}
 	};
 
 	const handleAddFav = () => {
 		//add to fav
-		dispatch(addFavProduct(product._id));
-		dispatch(addFavProductToDB({userId, productId: product._id}));
+		dispatch(addFavProduct(id));
+		dispatch(addFavProductToDB({userId, productId: id}));
 
 		//addToFav action=>reducer=>localStorage
 	};
 
 	const handleRemoveFav = () => {
 		//add to fav
-		dispatch(removeFavProduct(product._id));
-		dispatch(removeFavProductToDB({userId, productId: product._id}));
+		dispatch(removeFavProduct(id));
+		dispatch(removeFavProductToDB({userId, productId: id}));
 	};
 
 	return (
@@ -84,7 +132,7 @@ const ProductDetail = (id) => {
 						</div>
 
 						<a
-							href={`whatsapp://send?text=https://storeft11g01.herokuapp.com/products/id/${product._id}`}
+							href={`whatsapp://send?text=https://client-ecommerce-ebon.vercel.app/products/id/${product._id}`}
 							data-action='share/whatsapp/share'
 						>
 							<IoLogoWhatsapp />
@@ -209,17 +257,51 @@ const ProductDetail = (id) => {
 								</div>
 
 								<div className='stockDiv'>
-									{'Stock: '}
+									{'Colors: '}
 									<div className='variants'>
 										{product.variants
 											? product.variants.map((variant, i) => (
-													<div key={i} className='variant'>
-														{variant && variant.color},{' '}
-														{variant && variant.stock}u.
+													<div key={`${i}`} className='variant'>
+														<input
+															key={`${i}`}
+															type='radio'
+															name='variant'
+															value={i}
+															id={`${i}`}
+															onChange={handleSelectVar}
+														/>
+														&nbsp;
+														<label htmlFor={`${variant.color}`}>{`${
+															variant.color &&
+															variant.color.charAt(0).toUpperCase() +
+																variant.color.slice(1)
+														}`}</label>
 													</div>
 											  ))
 											: null}
 									</div>
+								</div>
+								<div className='quantity'>
+									<p>Quantity: &nbsp;</p>
+									<button
+										onClick={(e) => handleSelectVar(e)}
+										value={variants.lot > 1 ? variants.lot - 1 : variants.lot}
+										name='lot'
+									>
+										- &nbsp;
+									</button>
+									<span> {variants.lot} </span>
+									<button
+										onClick={(e) => handleSelectVar(e)}
+										value={
+											variants.lot < product.variants[variants.variant].stock
+												? variants.lot + 1
+												: variants.lot
+										}
+										name='lot'
+									>
+										&nbsp; +
+									</button>
 								</div>
 							</div>
 							<Link to='/cart' className='buttonLink' onClick={handleAddCart}>
@@ -247,6 +329,7 @@ const ProductDetail = (id) => {
 									_id={product._id}
 									combo={product.combo}
 									loading={false}
+									location={location}
 								/>
 							))}
 					</div>
@@ -259,6 +342,7 @@ const ProductDetail = (id) => {
 						setUpdateReview={setUpdateReview}
 						updateReview={updateReview}
 						allReviews={product.reviews}
+						userOrder={userOrder}
 					/>
 				)}
 			</div>

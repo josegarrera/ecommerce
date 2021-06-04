@@ -84,9 +84,11 @@ export const handleInputVariants = (e, state, setState) => {
 				};
 			});
 		}
+
 	} else if (e.target.name.includes('/')) {
 		console.log('es esye /');
 		const index = Number(e.target.name[0]);
+
 
 		let newArr = [...state];
 		newArr[index].imageUrl = newArr[index].imageUrl.filter(

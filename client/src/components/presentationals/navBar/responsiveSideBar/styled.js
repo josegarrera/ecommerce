@@ -39,7 +39,7 @@ const DropdownStyle = styled.div`
 
     .dropdown-link {
       font-size: 1.3rem;
-      margin: 4rem 0;
+      margin: 2.5rem 0;
       color: #ffffff;
       cursor: pointer;
     }

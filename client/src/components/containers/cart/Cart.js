@@ -27,10 +27,10 @@ const Cart = () => {
 			<div className='title_cnt'>
 				<h1>Shopping Cart</h1>
 			</div>
-			<div className='div__absolute'>
+			{/* 			<div className='div__absolute'>
 				<div>USD = 🇺🇸 USD {count$}</div>
 				<div>ARS = 🇦🇷 ARS {count2} </div>
-			</div>
+			</div> */}
 			<div className='products__summ__cnt'>
 				<div className='prd__link'>
 					<div className='product_cnt'>
@@ -53,7 +53,7 @@ const Cart = () => {
 						<Link to='/catalogue'>
 							<p className='p_back_home'>{'<<'} Continue Shopping</p>
 						</Link>
-						<p className='h2__sbt'>U$D {count$}</p>
+						{count$ && <p className='h2__sbt'>U$D {count$}</p>}
 					</div>
 				</div>
 				<SumarryCart count={count$} payIn={payIn} />

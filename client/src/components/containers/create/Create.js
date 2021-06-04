@@ -74,7 +74,6 @@ const Create = ({options, setCreate, create, Items, allProducts}) => {
 			variants: [...inputCategory.variants, variant],
 		});
 		setVariant('');
-		console.log(inputCategory);
 	};
 
 	const handleOnClickDeleteVariant = (e) => {

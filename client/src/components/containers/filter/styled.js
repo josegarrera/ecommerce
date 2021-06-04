@@ -95,8 +95,8 @@ const Filter_Style = styled.div`
 	}
 
 	.color__btn__selected {
-		width: 1.8rem;
-		height: 1.8rem;
+		width: 17px;
+		height: 17px;
 		border-radius: 50%;
 		border: 2px solid black;
 		transform: scale(1.3);

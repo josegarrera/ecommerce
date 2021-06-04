@@ -15,7 +15,16 @@ import {
 import cardLoder from '../../../utils/cardLoader';
 import {store} from 'react-notifications-component';
 
-const CardProduct = ({name, imageUrl, price, _id, loading, combo}) => {
+
+const CardProduct = ({
+	name,
+	imageUrl,
+	price,
+	_id,
+	loading,
+	combo,
+	location,
+}) => {
 	const wishlist = useSelector((state) => state.wishlist);
 	const dispatch = useDispatch();
 	const [Load, setLoad] = useState('loading');
@@ -23,13 +32,14 @@ const CardProduct = ({name, imageUrl, price, _id, loading, combo}) => {
 
 	const handleAddCart = () => {
 		//add to cart
-		dispatch(addCartProduct(_id));
+		dispatch(addCartProduct({id: _id, lot: 1, variant: 0}));
 		if (userId) {
-			dispatch(postLocalStorage({products: _id, userId}));
+			dispatch(
+				postLocalStorage({products: {id: _id, lot: 1, variant: 0}, userId})
+			);
 			window.localStorage.setItem('cart', JSON.stringify([]));
 		}
 	};
-
 	const fav = wishlist && wishlist.find(({product}) => product._id === _id);
 
 	const handleAddFav = () => {
@@ -55,14 +65,25 @@ const CardProduct = ({name, imageUrl, price, _id, loading, combo}) => {
 		return (
 			<DivCrdProd>
 				<div className='cnt__image'>
-					<Link target='_blank' rel='noreferrer' to={`/products/id/${_id}`}>
-						<img
-							className='img__card'
-							src={imageUrl[0]}
-							alt='imagen de producto'
-							onLoad={handleImageLoaded}
-						/>
-					</Link>
+					{location ? (
+						<Link target='_blank' rel='noreferrer' to={`/products/id/${_id}`}>
+							<img
+								className='img__card'
+								src={imageUrl[0]}
+								alt='imagen de producto'
+								onLoad={handleImageLoaded}
+							/>
+						</Link>
+					) : (
+						<Link to={`/products/id/${_id}`}>
+							<img
+								className='img__card'
+								src={imageUrl[0]}
+								alt='imagen de producto'
+								onLoad={handleImageLoaded}
+							/>
+						</Link>
+					)}
 				</div>
 				{combo && combo.length > 0 ? (
 					<div className='comboDiv'>Combo</div>

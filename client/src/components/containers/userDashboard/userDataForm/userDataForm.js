@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {ProfileStyled} from '../userProfile/styled.js';
+import {UserFormStyled} from './styled';
 import {
 	handleInput,
 	handleAddress,
@@ -8,16 +8,23 @@ import {
 } from './utils.js';
 
 const UserDataForm = () => {
+	let userId = window.localStorage.getItem('userId');
+	let address = JSON.parse(window.localStorage.getItem('address'));
+	let firstName = window.localStorage.getItem('firstName');
+	let identification = window.localStorage.getItem('identification');
+	let lastName = window.localStorage.getItem('lastName');
+	let profileImage = window.localStorage.getItem('profileImage');
+
 	const [input, setInput] = useState({
-		firstName: '',
-		lastName: '',
+		firstName: firstName,
+		lastName: lastName,
 		shipping: {
 			zip_code: '',
 			street_name: '',
 			street_number: '',
 		},
 		address: [],
-		identification: '',
+		identification: identification,
 		fileValue: '',
 		fileData: {},
 		file: [],
@@ -28,12 +35,12 @@ const UserDataForm = () => {
 	});
 	const [errors, setErrors] = useState({});
 	const [addressIdGenerator, setAddressIdGenerator] = useState(0);
-	const userId = window.localStorage.getItem('userId');
 
 	return (
-		<ProfileStyled>
+		<UserFormStyled>
 			<div>
 				<form
+					className='userForm'
 					onSubmit={(e) =>
 						handleSubmitUserForm(
 							e,
@@ -45,9 +52,13 @@ const UserDataForm = () => {
 						)
 					}
 				>
-					<div>
-						<label for='fName'>First name:</label>
+					<div className='renglon'>
+						<label for='fName' className='title'>
+							First name:
+						</label>
+						&nbsp;
 						<input
+							className='input'
 							type='text'
 							id='fName'
 							name='firstName'
@@ -56,8 +67,14 @@ const UserDataForm = () => {
 								handleInput(e, input, setInput, setStatus, setErrors)
 							}
 						/>
-						<label for='lName'>Last name:</label>
+					</div>
+					<div className='renglon'>
+						<label for='lName' className='title'>
+							Last name:
+						</label>
+						&nbsp;
 						<input
+							className='input'
 							type='text'
 							id='lName'
 							name='lastName'
@@ -66,8 +83,14 @@ const UserDataForm = () => {
 								handleInput(e, input, setInput, setStatus, setErrors)
 							}
 						/>
-						<label for='id'>ID:</label>
+					</div>
+					<div className='renglon'>
+						<label for='id' className='title'>
+							ID:
+						</label>
+						&nbsp;
 						<input
+							className='input'
 							type='number'
 							id='id'
 							name='identification'
@@ -76,7 +99,10 @@ const UserDataForm = () => {
 								handleInput(e, input, setInput, setStatus, setErrors)
 							}
 						/>
-						<label for='file'>
+					</div>
+					<div className='renglon'>
+						<label for='file' className='title'>
+							Edit image: &nbsp;
 							<input
 								id='file'
 								name='file'
@@ -87,13 +113,15 @@ const UserDataForm = () => {
 									handleInput(e, input, setInput, setStatus, setErrors)
 								}
 							/>{' '}
-							Edit image
 						</label>
 					</div>
-					<div>
-						<h5>Shipping address</h5>
-						<label for='zip_code'>Zip Code:</label>
+					<div className='renglon'>
+						<label for='zip_code' className='title'>
+							Zip Code:
+						</label>
+						&nbsp;
 						<input
+							className='input'
 							type='number'
 							id='zip_code'
 							name='shipping'
@@ -102,8 +130,14 @@ const UserDataForm = () => {
 								handleInput(e, input, setInput, setStatus, setErrors)
 							}
 						/>
-						<label for='street_name'>Street Name:</label>
+					</div>
+					<div className='renglon'>
+						<label for='street_name' className='title'>
+							Street Name:
+						</label>
+						&nbsp;
 						<input
+							className='input'
 							type='text'
 							id='street_name'
 							name='shipping'
@@ -112,8 +146,14 @@ const UserDataForm = () => {
 								handleInput(e, input, setInput, setStatus, setErrors)
 							}
 						/>
-						<label for='street_number'>Street Number:</label>
+					</div>
+					<div className='renglon'>
+						<label for='street_number' className='title'>
+							Street Number:
+						</label>
+						&nbsp;
 						<input
+							className='input'
 							type='number'
 							id='street_number'
 							name='shipping'
@@ -122,6 +162,8 @@ const UserDataForm = () => {
 								handleInput(e, input, setInput, setStatus, setErrors)
 							}
 						/>
+					</div>
+					<div>
 						<button
 							type='button'
 							name='address'
@@ -162,18 +204,21 @@ const UserDataForm = () => {
 							))
 						)}
 					</div>
-					<button
-						key='userDataForm-btn'
-						type='submit'
-						disabled={
-							Object.keys(errors).length || !status.init ? 'disabled' : ''
-						}
-					>
-						Submit
-					</button>
+					<div className='update'>
+						<button
+							className='updateBtm'
+							key='userDataForm-btn'
+							type='submit'
+							disabled={
+								Object.keys(errors).length || !status.init ? 'disabled' : ''
+							}
+						>
+							Submit
+						</button>
+					</div>
 				</form>
 			</div>
-		</ProfileStyled>
+		</UserFormStyled>
 	);
 };
 

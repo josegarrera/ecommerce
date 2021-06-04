@@ -103,7 +103,7 @@ export const getProductsQuery = (page) => {
 	};
 };
 
-export const getProductDetail = ({id}) => {
+export const getProductDetail = (id) => {
 	//trae los detalles de 1 solo producto
 	return async (dispatch) => {
 		const {data} = await axios.get(`${URLS.URL_PRODUCTS}/${id}`);
@@ -199,7 +199,6 @@ export const getAllProducts = (
 			const {data} = await axios.get(
 				`${URLS.URL_PRODUCTS}?name=${name}&category=${category}&brand=${brand}&variants=${variants}&price=${price}&order=${order}&direction=${direction}&limit=${limit}`
 			);
-
 			let newData = data.products.map((e) => {
 				return {lot: 0, product: {...e}};
 			});
@@ -321,11 +320,15 @@ export const getCategories = () => {
   };
 }; */
 
-export const addCartProduct = (id) => {
+export const addCartProduct = (body) => {
 	// trae el cart de un usuario del servidor.
 	return async (dispatch) => {
-		const {data} = await axios.get(`${URLS.URL_PRODUCTS}/${id}`);
-		let newArrData = {lot: 1, product: {...data.response}};
+		const {data} = await axios.get(`${URLS.URL_PRODUCTS}/${body.id}`);
+		let newArrData = {
+			lot: body.lot,
+			variant: body.variant,
+			product: {...data.response},
+		};
 		return dispatch({
 			type: ActionTypes.ADD_PRODUCT_CART,
 			payload: newArrData, // TIENE QUE SER UN {}
@@ -404,7 +407,7 @@ export const addBrand = (body) => {
 				data: body,
 			});
 		} catch (err) {
-			console.log('No se creo la marca', err);
+			console.log(err);
 		}
 	};
 };
@@ -420,7 +423,7 @@ export const updateBrand = (update) => {
 				payload: data.response, // TIENE QUE SER UN {}
 			});
 		} catch (err) {
-			console.log('No se actualizo la brand');
+			console.log(err);
 		}
 	};
 };
@@ -509,7 +512,7 @@ export const confirmCheckout = (body) => {
 				payload: data.response, //
 			});
 		} catch (err) {
-			console.log(err.response.data);
+			console.log(err);
 		}
 	};
 };

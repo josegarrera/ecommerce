@@ -38,13 +38,23 @@ export const ProfileStyled = styled.div`
 			}
 		}
 
-		.userData {
-			margin: 20px 30px;
-			.renglon {
-				display: flex;
+		.right {
+			.userData {
+				margin: 20px 30px;
+				.renglon {
+					display: flex;
 
-				.title {
-					font-weight: 600;
+					.title {
+						font-weight: 600;
+					}
+				}
+			}
+			.editProfile {
+				margin: 0px 30px;
+				color: #e7e7e7;
+
+				&:hover {
+					cursor: pointer;
 				}
 			}
 		}
