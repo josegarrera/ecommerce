@@ -261,6 +261,7 @@ export const getOpenUserOrders = (userId, cart) => {
 		const {data} = await axios.get(
 			`${URLS.URL_USER_ORDERS}?userId=${userId}&cart=${cart}`
 		);
+		console.log(data.response);
 		return dispatch({
 			type: ActionTypes.ADD_DB_PRODUCT_CART,
 			payload: data.response.items, // TIENE QUE SER UN []
