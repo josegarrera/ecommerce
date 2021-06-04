@@ -31,10 +31,12 @@ const CardItems = ({el}) => {
 							Products:
 							<ul>
 								<span>
-									{el.items.length &&
+									{console.log(el.items)}
+									{el.items &&
+										el.items.length &&
 										el.items.map((el) => (
-											<Link to={`/products/id/${el.product._id}`}>
-												<li>• {el.product.name}</li>
+											<Link to={`/products/id/${el.product?._id}`}>
+												<li>• {el.product?.name}</li>
 											</Link>
 										))}
 								</span>
