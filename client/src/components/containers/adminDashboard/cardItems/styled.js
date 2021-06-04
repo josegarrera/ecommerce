@@ -66,7 +66,7 @@ const ProductDashboardStyle = styled.div`
 					align-items: center;
 					justify-content: center;
 					width: 5rem;
-					height: 5rem;
+					height: 8rem;
 
 					.sliderImg {
 						max-width: 90%;
@@ -96,8 +96,6 @@ const ProductDashboardStyle = styled.div`
 
 		.labelFile {
 			margin-top: 50px;
-			border: 2px solid gray;
-			border-radius: 10%;
 		}
 
 		.productInfo {
@@ -182,12 +180,13 @@ const ProductDashboardStyle = styled.div`
 	}
 
 	.variantImg {
-		width: 100%;
-		height: auto;
+		max-width: 90%;
+		max-height: 90%;
+		object-fit: contain;
 	}
 	.variantSliderDiv {
-		width: 50px;
-		height: auto;
+		width: 80px;
+		height: 60px;
 	}
 	.variantInput {
 		width: 100px;
@@ -200,7 +199,13 @@ const ProductDashboardStyle = styled.div`
 	}
 
 	.carousel-root.imageSlider {
-		height: 85px;
+		width: 80px;
+		height: 60px;
+		.carousel {
+			.slide {
+				min-width: 100%;
+			}
+		}
 	}
 	.inputFileVariants {
 		width: 100%;
@@ -209,18 +214,55 @@ const ProductDashboardStyle = styled.div`
 	.labelVariantsFile {
 		display: flex;
 		margin-right: 10px;
-		border: 2px solid gray;
-		border-radius: 10%;
-		width: 100px;
+		width: 50px;
 		text-align: center;
-		height: 26px;
+		height: 38px;
 		justify-content: center;
 		padding: 2px;
+		align-items: center;
+	}
+
+	.labelImgVariants {
+		display: flex;
+		margin-right: 10px;
+		width: 20px;
+		text-align: center;
+		height: 20px;
+		justify-content: center;
+		padding: 2px;
+		align-items: center;
+		position: absolute;
+		top: 40px;
+		right: 40px;
+		bottom: 50px;
+		svg {
+			width: 100%;
+			height: 100%;
+		}
+	}
+
+	svg {
+		width: 45px;
+		height: 45px;
 	}
 
 	#variantsAccordionContainer {
 		display: flex;
 		align-items: center;
+	}
+	.inputEditDiv {
+		display: flex;
+		justify-content: center;
+		.inputBtnEdit {
+			width: 100%;
+		}
+	}
+
+	.buttonVariantImg {
+		margin-bottom: 40px;
+		margin-right: 10px;
+		width: 20px;
+		height: 20px;
 	}
 
 	.div_delete_categorie {

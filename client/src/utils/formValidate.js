@@ -3,7 +3,7 @@ export default function validate(product, allProducts) {
 	if (!product.name) {
 		errors.name = 'Required field.';
 		return errors;
-	} else if (product.name && !/^[A-Za-z0-9\s]+$/g.test(product.name)) {
+	} else if (product.name && !/^[A-Za-z0-9+\s]+$/g.test(product.name)) {
 		errors.name = 'Only words without accent.';
 		return errors;
 	} else if (

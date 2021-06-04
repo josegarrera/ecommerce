@@ -127,7 +127,12 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 									dispatch,
 									addNewProduct,
 									setErrors,
-									setStatus
+									setStatus,
+									setDatalistBrands,
+									setDatalistCategories,
+									setDatalistProducts,
+									setBrandSelected,
+									setCategorySelected
 								)
 							}
 						>

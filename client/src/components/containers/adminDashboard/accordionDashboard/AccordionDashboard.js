@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
 	Accordion,
 	AccordionItem,
@@ -7,6 +7,7 @@ import {
 } from 'react-accessible-accordion';
 import {TiDeleteOutline} from 'react-icons/ti';
 import {MdKeyboardArrowDown, MdKeyboardArrowUp} from 'react-icons/md';
+import {FcAddImage, FcRemoveImage} from 'react-icons/fc';
 import {Carousel} from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
@@ -23,10 +24,15 @@ const AccordionDashboard = ({
 	setEditAItem,
 }) => {
 	const [AccStatus, setAccStatus] = useState(false);
+	console.log(EditAItem, 'llega al acc como specs');
 
 	if (isEditAItem && Option === 'variants') {
 		items = items.map((el, index) => (
-			<div key={index + '-variants'} id='variantsAccordionContainer'>
+			<div
+				key={index + '-variants'}
+				id='variantsAccordionContainer'
+				className='productAllInfo'
+			>
 				{Object.entries(el).map(
 					(e, i) =>
 						e[0] !== 'id' && (
@@ -45,6 +51,7 @@ const AccordionDashboard = ({
 													className='inputFileVariants'
 													name='imageFile'
 													type='file'
+													multiple
 													accept='image/*'
 													onChange={(e) =>
 														handleInput(e, EditAItem, setEditAItem)
@@ -54,13 +61,12 @@ const AccordionDashboard = ({
 														EditAItem[index].imageFile.fileValue
 													}
 												/>{' '}
-												Add img
+												<FcAddImage />
 											</label>
 											{EditAItem[index].imageFile && (
 												<label key={i + '-label-imageFile'}>
-													{EditAItem[index].imageFile.fileValue
-														? '1 file selected'
-														: ''}
+													{EditAItem[index].imageFile.filesData.length +
+														' files'}
 												</label>
 											)}
 										</div>
@@ -73,19 +79,26 @@ const AccordionDashboard = ({
 														src={url}
 														alt='imagen de producto'
 													/>
-													<button
+													<label
 														key={i + '-btn-variants'}
-														className='buttonDiv'
+														name={String(index + url)}
+														className='labelImgVariants'
 													>
-														<TiDeleteOutline
-															key={url + 'btnDelete'}
-															id={String(index + url)}
+														<input
+															type='button'
+															key={i + '-btn-variants'}
+															name={String(index + url)}
+															className='inputFileVariants labelImgVariants'
 															onClick={(e) =>
 																handleInput(e, EditAItem, setEditAItem)
 															}
+														/>
+														<FcRemoveImage
+															key={url + 'btnDelete'}
+															name={String(index + url)}
 															className='button'
 														/>
-													</button>
+													</label>
 												</div>
 											))}
 										</Carousel>
@@ -122,7 +135,7 @@ const AccordionDashboard = ({
 						e[0] !== 'id' &&
 						e[0] !== 'imageFile' && (
 							<div key={i + '-variantss'}>
-								{e[0]}:&nbsp;
+								<b>{e[0]}:&nbsp;</b>
 								{EditAItem[index][e[0]]}
 							</div>
 						)
@@ -135,7 +148,7 @@ const AccordionDashboard = ({
 	return (
 		<div>
 			<Accordion allowZeroExpanded>
-				{Option ? (
+				{Option && Option !== 'specs' ? (
 					<AccordionItem onClick={() => setAccStatus(!AccStatus)}>
 						<AccordionItemButton className='title2'>
 							{items && items.length} {Option} {''}
@@ -161,17 +174,24 @@ const AccordionDashboard = ({
 												className='div_delete_categorie'
 											>
 												{Option === 'variants' ? el : el.name}
-												<button
-													key={index + '-accordion-btn'}
-													className='buttonDiv'
+												<label
+													for={el.name || String(EditAItem[index].id)}
+													key={index + '-accordion-label-delete'}
+													className='labelVariantsFile buttonDiv'
 												>
+													<input
+														type='button'
+														className='inputFileVariants'
+														key={index + '-accordion-input-delete'}
+														id={el.name || String(EditAItem[index].id)}
+														onClick={handler}
+													/>
 													<TiDeleteOutline
 														key={index + '-accordion-ti'}
 														id={el.name || String(EditAItem[index].id)}
-														onClick={handler}
 														className='button'
 													/>
-												</button>
+												</label>
 											</div>
 										</AccordionItemPanel>
 									) : (
@@ -180,6 +200,52 @@ const AccordionDashboard = ({
 										</AccordionItemPanel>
 									)
 								)}
+						</div>
+					</AccordionItem>
+				) : null}
+				{Option === 'specs' && items.length ? (
+					<AccordionItem onClick={() => setAccStatus(!AccStatus)}>
+						<AccordionItemButton className='title2'>
+							{'Specs'}
+							{AccStatus === false ? (
+								<MdKeyboardArrowDown
+									className='open'
+									onClick={() => setAccStatus(!AccStatus)}
+								/>
+							) : (
+								<MdKeyboardArrowUp
+									className='open'
+									onClick={() => setAccStatus(!AccStatus)}
+								/>
+							)}
+						</AccordionItemButton>
+						<div className='accordionItems'>
+							<AccordionItemPanel>
+								{isEditAItem
+									? items.map((entrie, i) => (
+											<div key={i + 'specs-div'}>
+												<label key={i + 'specs-lbl'}>{entrie[0]}</label>
+												<input
+													key={i + 'specs-input'}
+													type='text'
+													name='specs'
+													id={entrie[0]}
+													value={EditAItem && EditAItem[entrie[0]]}
+													onChange={handleInput}
+												/>
+											</div>
+									  ))
+									: items.map((entrie, i) => (
+											<div key={i + 'specs-div'}>
+												<label key={i + 'specs-lbl'}>
+													<b>{entrie[0]}:</b>{' '}
+												</label>
+												<label key={i + 'specs-input'}>
+													{EditAItem && EditAItem[entrie[0]]}
+												</label>
+											</div>
+									  ))}
+							</AccordionItemPanel>
 						</div>
 					</AccordionItem>
 				) : null}

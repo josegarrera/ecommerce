@@ -79,7 +79,7 @@ const Create = ({options, setCreate, create, Items, allProducts}) => {
 
 	const handleOnClickDeleteVariant = (e) => {
 		const value = e.target.value;
-		if (value === 'stock' || value === 'imageUrl')
+		if (value === 'stock' || value === 'imageUrl' || value === 'imageFile')
 			return window.alert("Can't remove this variant");
 		const index = inputCategory.variants.indexOf(value);
 		setInputCategory({

@@ -305,6 +305,9 @@ export const handleVariantDelete = (e, setProduct) => {
 	setProduct((prevState) => {
 		return {
 			...prevState,
+			allVariantsFiles: prevState.allVariantsFiles.filter(
+				(item) => item.id !== Number(e.target.id)
+			),
 			allVariants: prevState.allVariants.filter(
 				(item) => item.id !== Number(e.target.id)
 			),
@@ -361,7 +364,12 @@ export const handleSubmit = (
 	dispatch,
 	addNewProduct,
 	setErrors,
-	setStatus
+	setStatus,
+	setDatalistBrands,
+	setDatalistCategories,
+	setDatalistProducts,
+	setBrandSelected,
+	setCategorySelected
 ) => {
 	e.preventDefault();
 	const obj = {
@@ -392,10 +400,16 @@ export const handleSubmit = (
 	setProduct({
 		...setterInputs({
 			...product,
+			variant: {},
 			allVariantsFiles: [],
 		}),
 		currency: 'USD',
 	});
+	setDatalistBrands([{}]);
+	setDatalistCategories([{}]);
+	setDatalistProducts([{}]);
+	setBrandSelected({});
+	setCategorySelected({});
 	setErrors({});
 	setStatus({
 		init: false,

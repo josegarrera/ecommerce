@@ -9,7 +9,6 @@ import ListStyles from './styled';
 import {getCategories, getBrands, getProducts} from '../../../../redux/actions';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-
 const ListDashboard = ({Options, setOptions}) => {
 	const [Items, setItems] = useState([]);
 	const [showModal, setShowModal] = useState(false);
@@ -115,6 +114,7 @@ const ListDashboard = ({Options, setOptions}) => {
 									allProducts={allProducts}
 									allBrands={allBrands}
 									allCategories={allCategories}
+									allProductsDataList={allProductsDataList}
 								/>
 							))}
 					</InfiniteScroll>

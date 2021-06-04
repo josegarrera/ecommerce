@@ -40,19 +40,26 @@ export const handleDeleteImage = (e, setState) => {
 };
 
 export const handleInputVariants = (e, state, setState) => {
+	console.log(e, 'entroo aaca');
 	if (e.target.name === 'imageFile') {
-		if (e.target.files[0]) {
-			const file = {
-				name: e.target.files[0].name,
-				size: e.target.files[0].size,
-				type: e.target.files[0].type,
-			};
+		if (e.target.files.length) {
+			const files = e.target.files;
+			let filesData = [];
+			for (let i = 0; i < files.length; i++) {
+				const fileItems = {
+					name: files[i].name,
+					size: files[i].size,
+					type: files[i].type,
+				};
+				filesData.push(fileItems);
+			}
+
 			const index = Number(e.target.id[0]);
 
 			let newArr = [...state];
 			newArr[index][e.target.name] = {
-				fileData: file,
-				file: e.target.files[0],
+				filesData,
+				files,
 				fileValue: e.target.value,
 			};
 			setState((prevState) => {
@@ -65,8 +72,8 @@ export const handleInputVariants = (e, state, setState) => {
 			const index = Number(e.target.id[0]);
 			let newArr = [...state];
 			newArr[index][e.target.name] = {
-				fileData: {},
-				file: {},
+				filesData: [],
+				files: [],
 				fileValue: '',
 			};
 
@@ -77,20 +84,23 @@ export const handleInputVariants = (e, state, setState) => {
 				};
 			});
 		}
-	} else if (e.target.id.includes('/')) {
-		console.log(e.target.id);
-		const index = Number(e.target.id[0]);
-		console.log(e.target.id.slice(1), 'sacando el index');
+	} else if (e.target.name.includes('/')) {
+		console.log('es esye /');
+		const index = Number(e.target.name[0]);
+
 		let newArr = [...state];
 		newArr[index].imageUrl = newArr[index].imageUrl.filter(
-			(item) => item !== e.target.id.slice(1)
+			(item) => item !== e.target.name.slice(1)
 		);
+		console.log(newArr);
 		setState((prevState) => {
 			return {
 				...prevState,
 				variants: newArr,
 			};
 		});
+	} else if (!e.target.name) {
+		return;
 	} else {
 		const index = Number(e.target.id[e.target.id.length - 1]);
 		let newArr = [...state];
