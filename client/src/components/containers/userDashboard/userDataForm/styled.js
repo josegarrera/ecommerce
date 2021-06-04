@@ -22,6 +22,7 @@ export const UserFormStyled = styled.div`
 
 	.input {
 		border: 1px solid #e7e7e7;
+		color: #bdbdbd;
 	}
 	.update {
 		display: flex;
@@ -38,6 +39,19 @@ export const UserFormStyled = styled.div`
 			padding: 2px 5px;
 			color: white;
 			background-color: #ee362c;
+		}
+	}
+
+	.btnAdd {
+		margin-left: 10px;
+		display: flex;
+
+		.buttonAdd {
+			background-color: #0096c7;
+			padding: 2px 5px;
+			color: #ffffff;
+			border-radius: 10px;
+			font-size: 14px;
 		}
 	}
 `;

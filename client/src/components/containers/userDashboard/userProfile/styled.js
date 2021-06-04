@@ -51,7 +51,7 @@ export const ProfileStyled = styled.div`
 			}
 			.editProfile {
 				margin: 0px 30px;
-				color: #e7e7e7;
+				color: gray;
 
 				&:hover {
 					cursor: pointer;

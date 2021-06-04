@@ -89,29 +89,44 @@ export const handleSubmitUserForm = async (
 	input,
 	setInput,
 	setErrors,
-	setStatus
+	setStatus,
+	history
 ) => {
 	e.preventDefault();
 	const obj = {...input};
 	let formData = new FormData();
-	formData.append('images', input.file);
+
+	input.file && formData.append('images', input.file);
 	formData.append('info', JSON.stringify(obj));
 	try {
 		const data = await axios.put(
 			`${URLS.URL_USERS}/profile/${userId}`,
 			formData
 		);
+		window.localStorage.setItem('firstName', data.data.response.firstName);
+		window.localStorage.setItem(
+			'identification',
+			data.data.response.identification
+		);
+		window.localStorage.setItem('lastName', data.data.response.lastName);
+		window.localStorage.setItem('profileImage', data.data.response.imageUrl);
+		window.localStorage.setItem(
+			'address',
+			JSON.stringify(data.data.response.address)
+		);
+
+		history.push('/userDashboard');
 	} catch (error) {
 		console.log(error.response.data.message);
 	}
-	setInput(
+	/* setInput(
 		setterInputs({
 			...input,
 			fileValue: '',
 			fileData: {},
 			file: [],
 		})
-	);
+	); */
 	setErrors({});
 	setStatus({
 		init: false,

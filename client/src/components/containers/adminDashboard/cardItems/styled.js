@@ -66,11 +66,11 @@ const ProductDashboardStyle = styled.div`
 					align-items: center;
 					justify-content: center;
 					width: 5rem;
-					height: 8rem;
+					height: 5rem;
 
 					.sliderImg {
-						max-width: 90%;
-						max-height: 90%;
+						max-width: 100%;
+						max-height: 100%;
 						object-fit: contain;
 					}
 				}
@@ -150,7 +150,8 @@ const ProductDashboardStyle = styled.div`
 
 				.open {
 					margin-left: 5px;
-					font-size: 0.7rem;
+					width: 20px;
+					height: 20px;
 
 					&:active {
 						transform: scale(0.9);
