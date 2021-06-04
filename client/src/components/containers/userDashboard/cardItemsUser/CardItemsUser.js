@@ -6,9 +6,6 @@ import {Link} from 'react-router-dom';
 //import AccordionDashboard from '../accordionDashboard/AccordionDashboard';
 
 const CardItems = ({el}) => {
-
-
-	console.log(el);
 	return (
 		<ProductDashboardStyle>
 			{el && (

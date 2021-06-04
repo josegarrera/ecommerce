@@ -13,8 +13,13 @@ const Reviews = ({
 }) => {
 	const userId = localStorage.getItem('userId');
 	//const [Review, setAllReview] = useState([]);
-
+	const firstName = localStorage.getItem('firstName');
+	const profileImage = localStorage.getItem('profileImage');
 	/* STYLES */
+
+	const defaultImage =
+		'https://res.cloudinary.com/dlexbrcrv/image/upload/v1622767841/Proyects/E-commerce/03f7331cc322295d71005b51072ce40d_i4scje.png';
+	console.log('esto me devuelve', defaultImage);
 
 	const STYLE_BTN = {
 		color: 'white',
@@ -36,8 +41,6 @@ const Reviews = ({
 		boxShadow: '0px 0px 10px',
 	};
 	/* STYLES */
-
-	console.log(userOrder);
 
 	const checkUserBuy = () => {
 		let filtercompleted =
@@ -112,7 +115,6 @@ const Reviews = ({
 						...base,
 						...STYLE_COMMENT,
 						a: {
-							marginLeft: '-1.3rem',
 							padding: '0',
 						},
 					}),
@@ -132,10 +134,11 @@ const Reviews = ({
 					if (text.length > 0) {
 						handleOnSumbit({
 							authorUrl: '#comments',
-							avatarUrl: '#comments',
+							avatarUrl:
+								profileImage !== 'undefined' ? profileImage : defaultImage,
 							authorId: userId,
 							createdAt: `${new Date()}`,
-							fullName: 'Usuario n° ' + userId,
+							fullName: firstName ? firstName : 'Anonymous',
 							text,
 						});
 					}

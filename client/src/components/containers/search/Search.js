@@ -1,6 +1,8 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {getProducts, cleanCatalogue} from '../../../redux/actions/index';
+import Footer from '../footer/Footer';
+import '../footer/styled';
 import ProductList from '../productsList/ProductList';
 import Search_Style from './styled';
 

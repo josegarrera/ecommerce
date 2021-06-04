@@ -18,7 +18,6 @@ function Footer() {
 		setsuscribe(!suscribe);
 	};
 	const onSubmitHandler = async (e) => {
-		console.log(e.target.value);
 		try {
 			e.preventDefault();
 			let res;
@@ -136,11 +135,12 @@ function Footer() {
 					</li>
 				</ul>
 			</div>
-
 			<button>
-				<i>
-					<IoIosArrowUp></IoIosArrowUp>
-				</i>
+				<a href='#GO_TOP'>
+					<i>
+						<IoIosArrowUp></IoIosArrowUp>
+					</i>
+				</a>
 			</button>
 		</FooterStyle>
 	);

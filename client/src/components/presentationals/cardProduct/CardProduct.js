@@ -37,7 +37,6 @@ const CardProduct = ({
 			window.localStorage.setItem('cart', JSON.stringify([]));
 		}
 	};
-	console.log('ESTOY EN EL CARD PRODUCT', location);
 	const fav = wishlist && wishlist.find(({product}) => product._id === _id);
 
 	const handleAddFav = () => {
@@ -138,7 +137,6 @@ const CardProduct = ({
 			</DivCrdProd>
 		);
 	}
-
 };
 
 export default CardProduct;

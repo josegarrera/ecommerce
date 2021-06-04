@@ -99,7 +99,6 @@ const FormCategorie = () => {
 	};
 
 	const handleVariantsInput = (e) => {
-		console.log(Inputs);
 		setErrors(
 			validate({
 				...Inputs,

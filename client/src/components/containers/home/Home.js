@@ -1,42 +1,42 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllProducts, getProducts } from "../../../redux/actions";
-import Footer from "../footer/Footer";
-import HomeStyle from "./styled";
-import Carousel from "../carousel";
-import MultiItemCarousel from "../multiItemCarousel/multiItemCarousel";
-import CarouselPrueba from "../../containers/carouselPrueba/index";
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {getAllProducts, getProducts} from '../../../redux/actions';
+import Footer from '../footer/Footer';
+import HomeStyle from './styled';
+import Carousel from '../carousel';
+import MultiItemCarousel from '../multiItemCarousel/multiItemCarousel';
+import CarouselPrueba from '../../containers/carouselPrueba/index';
 
 const Home = () => {
-  const { products } = useSelector((state) => state.products);
+	const {products} = useSelector((state) => state.products);
 
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getProducts());
-    dispatch(getAllProducts());
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(getProducts());
+		dispatch(getAllProducts());
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  return (
-    <HomeStyle>
-      <Carousel />
+	return (
+		<HomeStyle>
+			<Carousel />
 
-      <div className="product__row">
-        <br></br>
-        <h3 className="top__text">NEW RELEASES</h3>
-        <span>see more</span>
-      </div>
+			<div className='product__row'>
+				<br></br>
+				<h3 className='top__text'>NEW RELEASES</h3>
+				<span>see more</span>
+			</div>
 
-      <CarouselPrueba items={products} />
+			<CarouselPrueba items={products} />
 
-      <div className="product__row">
-        <br></br>
-        <h3 className="top__text">ON SALE</h3>
-        <span>see more</span>
-      </div>
+			<div className='product__row'>
+				<br></br>
+				<h3 className='top__text'>ON SALE</h3>
+				<span>see more</span>
+			</div>
 
-      <CarouselPrueba items={products} />
+			<CarouselPrueba items={products} />
 
-      {/* <div className="offers">
+			{/* <div className="offers">
         <ProductList products={limit4} />
       </div>
 
@@ -46,9 +46,8 @@ const Home = () => {
       <div className="offers">
         <ProductList products={limit4} />
       </div> */}
-      <Footer></Footer>
-    </HomeStyle>
-  );
+		</HomeStyle>
+	);
 };
 
 export default Home;
