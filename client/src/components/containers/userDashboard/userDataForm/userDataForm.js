@@ -6,8 +6,10 @@ import {
 	handleAddressDelete,
 	handleSubmitUserForm,
 } from './utils.js';
+import {useHistory} from 'react-router-dom';
 
 const UserDataForm = () => {
+	const history = useHistory();
 	let userId = window.localStorage.getItem('userId');
 	let address = JSON.parse(window.localStorage.getItem('address'));
 	let firstName = window.localStorage.getItem('firstName');
@@ -16,15 +18,15 @@ const UserDataForm = () => {
 	let profileImage = window.localStorage.getItem('profileImage');
 
 	const [input, setInput] = useState({
-		firstName: firstName,
-		lastName: lastName,
+		firstName: firstName || '',
+		lastName: lastName || '',
 		shipping: {
-			zip_code: '',
-			street_name: '',
-			street_number: '',
+			zip_code: address[0].zip_code || '',
+			street_name: address[0].street_name || '',
+			street_number: address[0].street_number || '',
 		},
 		address: [],
-		identification: identification,
+		identification: identification || '',
 		fileValue: '',
 		fileData: {},
 		file: [],
@@ -48,7 +50,8 @@ const UserDataForm = () => {
 							input,
 							setInput,
 							setErrors,
-							setStatus
+							setStatus,
+							history
 						)
 					}
 				>
@@ -163,8 +166,9 @@ const UserDataForm = () => {
 							}
 						/>
 					</div>
-					<div>
+					<div className='btnAdd'>
 						<button
+							className='buttonAdd'
 							type='button'
 							name='address'
 							onClick={() =>
@@ -177,7 +181,7 @@ const UserDataForm = () => {
 								)
 							}
 						>
-							Add
+							Add address
 						</button>
 						{errors.shipping ? (
 							<p className='danger'>{errors.shipping}</p>

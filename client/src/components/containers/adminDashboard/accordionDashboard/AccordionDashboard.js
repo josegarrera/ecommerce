@@ -24,7 +24,6 @@ const AccordionDashboard = ({
 	setEditAItem,
 }) => {
 	const [AccStatus, setAccStatus] = useState(false);
-	console.log(EditAItem, 'llega al acc como specs');
 
 	if (isEditAItem && Option === 'variants') {
 		items = items.map((el, index) => (
