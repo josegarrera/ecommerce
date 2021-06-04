@@ -8,8 +8,6 @@ const newMatch = (currentInput, item) =>
 const DataList = ({items, handleDataList, placeholder, type}) => {
 	const [Items, setItems] = useState([{key: 0, label: ''}]);
 
-	console.log(items);
-
 	const handleSearch = (e) => {
 		let productsFilter =
 			items && type === 'products'

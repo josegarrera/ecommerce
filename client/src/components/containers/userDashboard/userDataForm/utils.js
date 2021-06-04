@@ -101,7 +101,6 @@ export const handleSubmitUserForm = async (
 			`${URLS.URL_USERS}/profile/${userId}`,
 			formData
 		);
-		console.log(data);
 	} catch (error) {
 		console.log(error.response.data.message);
 	}

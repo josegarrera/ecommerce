@@ -78,9 +78,7 @@ export const handleInputVariants = (e, state, setState) => {
 			});
 		}
 	} else if (e.target.id.includes('/')) {
-		console.log(e.target.id);
 		const index = Number(e.target.id[0]);
-		console.log(e.target.id.slice(1), 'sacando el index');
 		let newArr = [...state];
 		newArr[index].imageUrl = newArr[index].imageUrl.filter(
 			(item) => item !== e.target.id.slice(1)

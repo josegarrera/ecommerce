@@ -62,36 +62,15 @@ const CartHoverView = () => {
 							<span>Subtotal ({cartProduct.length} items)</span>
 						</div>
 						<div>
-							{rendering ? (
-								<div className='divCurrency'>
-									<p className='h2__sbt'>AR$ {count$}</p>
-									<button
-										onClick={() => setRendering(!rendering)}
-										className='btn__sbt'
-									>
-										Pay in U$D
-									</button>
-								</div>
-							) : (
-								<div className='divCurrency'>
-									<p className='h2__sbt'>U$D {count$}</p>
-									<button
-										onClick={() => setRendering(!rendering)}
-										className='btn__sbt'
-									>
-										Pay in AR$
-									</button>
-								</div>
-							)}
+							<b>${count$}</b>
 						</div>
 					</div>
-
 					<div className='delivery'>
 						<div>
 							<span>Delivery charge</span>
 						</div>
 						<div>
-							<span>${delivery}</span>
+							<b>${delivery}</b>
 						</div>
 					</div>
 
@@ -105,7 +84,7 @@ const CartHoverView = () => {
 							<span>{rendering ? <>AR$ {total}</> : <>U$D {total}</>}</span>
 						</div>
 					</div>
-					<Link to='/shipping'>
+					<Link to='/cart'>
 						<div className='cartItemBtn'>Continue to checkout</div>
 					</Link>
 				</div>

@@ -1,20 +1,22 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllProducts,
-        getProducts,
-        postLocalStorage,
-        getWishListOfDB,
-       } from "../../../redux/actions";
-import Footer from "../footer/Footer";
-import HomeStyle from "./styled";
-import Carousel from "../carousel";
-import ProductCarousel from "../carouselPrueba/index";
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+	getAllProducts,
+	getProducts,
+	postLocalStorage,
+	getWishListOfDB,
+} from '../../../redux/actions';
+import HomeStyle from './styled';
+import Carousel from '../carousel';
+import ProductCarousel from '../carouselPrueba/index';
+import {Link} from 'react-router-dom';
 
 const Home = () => {
-  const { products } = useSelector((state) => state.products);
-  const cartProduct = useSelector((state) => state.cartProducts);
-  
-  	useEffect(() => {
+	const allProducts = useSelector((state) => state.allProducts);
+	const cartProduct = useSelector((state) => state.cartProducts);
+
+	const deReversaMami = allProducts && allProducts.slice(-10);
+	useEffect(() => {
 		const user = window.localStorage.getItem('userId');
 		if (user) {
 			dispatch(postLocalStorage({products: cartProduct, userId: user}));
@@ -23,45 +25,35 @@ const Home = () => {
 		} // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getProducts());
-    dispatch(getAllProducts());
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(getProducts());
+		dispatch(getAllProducts());
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  return (
-    <HomeStyle>
-      <Carousel />
+	return (
+		<HomeStyle>
+			<Carousel />
 
-      <div className="product__row">
-        <br></br>
-        <h3 className="top__text">NEW RELEASES</h3>
-        <span>see more</span>
-      </div>
+			<div className='product__row'>
+				<br></br>
+				<h3 className='top__text'>NEW RELEASES</h3>
+				<Link to='/catalogue'>
+					<span>see more</span>
+				</Link>
+			</div>
 
-      <ProductCarousel items={products} />
-
-      <div className="product__row">
-        <br></br>
-        <h3 className="top__text">ON SALE</h3>
-        <span>see more</span>
-      </div>
-
-      <ProductCarousel items={products} />
-
-      {/* <div className="offers">
-        <ProductList products={limit4} />
-      </div>
-
-      <div className="offers">
-        <ProductList products={limit4} />
-      </div>
-      <div className="offers">
-        <ProductList products={limit4} />
-      </div> */}
-      <Footer></Footer>
-    </HomeStyle>
-  );
+			<ProductCarousel items={deReversaMami} />
+			<div className='product__row'>
+				<br></br>
+				<h3 className='top__text'>ON SALE</h3>
+				<Link to='/catalogue'>
+					<span>see more</span>
+				</Link>
+			</div>
+			<ProductCarousel items={allProducts} />
+		</HomeStyle>
+	);
 };
 
 export default Home;

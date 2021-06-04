@@ -203,7 +203,6 @@ export const getAllProducts = (
 				return {lot: 0, product: {...e}};
 			});
 
-			console.log('ENTRE ACAAAAAAAAAAAAAAAAAAAAAAAA', newData);
 			dispatch({
 				type: ActionTypes.GET_ALL_PRODUCTS,
 				payload: newData,
@@ -408,7 +407,7 @@ export const addBrand = (body) => {
 				data: body,
 			});
 		} catch (err) {
-			console.log('No se creo la marca', err);
+			console.log(err);
 		}
 	};
 };
@@ -424,7 +423,7 @@ export const updateBrand = (update) => {
 				payload: data.response, // TIENE QUE SER UN {}
 			});
 		} catch (err) {
-			console.log('No se actualizo la brand');
+			console.log(err);
 		}
 	};
 };
@@ -513,7 +512,7 @@ export const confirmCheckout = (body) => {
 				payload: data.response, //
 			});
 		} catch (err) {
-			console.log(err.response.data);
+			console.log(err);
 		}
 	};
 };
