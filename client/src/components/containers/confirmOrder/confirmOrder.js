@@ -32,7 +32,6 @@ function Index() {
 						<div className='section'>
 							<div className='row__top'>
 								<h1 className='form__title'>Shipping Address</h1>
-								<button>Edit</button>
 							</div>
 
 							<div className='shipping__content'>
@@ -59,7 +58,6 @@ function Index() {
 						<div className='section'>
 							<div className='row__top'>
 								<h1 className='form__title'>Payment</h1>
-								<button>Edit</button>
 							</div>
 
 							<div className='payment__content'>
@@ -126,7 +124,7 @@ function Index() {
 						<div className='section'>
 							<div className='row__top'>
 								<h1 className='form__title'>Order Items</h1>
-								<button>Edit</button>
+
 							</div>
 
 							<div className='payment__content'>
