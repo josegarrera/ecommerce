@@ -18,7 +18,7 @@ const DivPag = styled.div`
 		font-size: 18px;
 		border-radius: 25px;
 		margin: 15px;
-		background: #ee362e;
+		background: #bdbdbd;
 		color: #fff;
 		font-weight: bold;
 		border: none;
