@@ -111,7 +111,6 @@ function App() {
 							/>
 							<Route path='/shipping' component={ShippingAddress}></Route>
 							<Route path='/confirmation' component={ConfirmOrder}></Route>
-							<Route path='/confirmation' component={ConfirmOrder}></Route>
 							<Route path='/resetPassword' component={Reset} />
 							<Route path='/contact' component={Contact} />
 							<Route path='/userDashboard' component={UserDashboard} />
