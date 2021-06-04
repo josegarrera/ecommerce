@@ -21,9 +21,9 @@ const UserDataForm = () => {
 		firstName: firstName || '',
 		lastName: lastName || '',
 		shipping: {
-			zip_code: address[0].zip_code || '',
-			street_name: address[0].street_name || '',
-			street_number: address[0].street_number || '',
+			zip_code: address[0] && address[0].zip_code,
+			street_name: address[0] && address[0].street_name,
+			street_number: address[0] && address[0].street_number,
 		},
 		address: [],
 		identification: identification || '',
