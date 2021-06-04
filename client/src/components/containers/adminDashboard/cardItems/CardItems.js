@@ -540,7 +540,7 @@ const CardItems = ({
 										)}
 									</div>
 								)}
-								{!specs ? (
+								{/* !specs ? (
 									<div className='renglon'>
 										<div className='title'>No specs.</div>
 									</div>
@@ -554,7 +554,7 @@ const CardItems = ({
 										handleInput={handleInput}
 										Option={'specs'}
 									/>
-								)}
+								) */}
 
 								<div className='renglon'>
 									<div onClick={() => setSeeMore(!SeeMore)} className='seeMore'>
