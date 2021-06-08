@@ -255,32 +255,34 @@ const ProductDetail = ({id, location}) => {
 								<div className='description'>
 									{product.description && product.description}
 								</div>
-
-								<div className='stockDiv'>
-									{'Colors: '}
-									<div className='variants'>
-										{product.variants
-											? product.variants.map((variant, i) => (
-													<div key={`${i}`} className='variant'>
-														<input
-															key={`${i}`}
-															type='radio'
-															name='variant'
-															value={i}
-															id={`${i}`}
-															onChange={handleSelectVar}
-														/>
-														&nbsp;
-														<label htmlFor={`${variant.color}`}>{`${
-															variant.color &&
-															variant.color.charAt(0).toUpperCase() +
-																variant.color.slice(1)
-														}`}</label>
-													</div>
-											  ))
-											: null}
+								{product.variants && product.variants.length > 1 ? (
+									<div className='stockDiv'>
+										{'Colors: '}
+										<div className='variants'>
+											{product.variants
+												? product.variants.map((variant, i) => (
+														<div key={`${i}`} className='variant'>
+															<input
+																key={`${i}`}
+																type='radio'
+																name='variant'
+																value={i}
+																id={`${i}`}
+																onChange={handleSelectVar}
+															/>
+															&nbsp;
+															<label htmlFor={`${variant.color}`}>{`${
+																variant.color &&
+																variant.color.charAt(0).toUpperCase() +
+																	variant.color.slice(1)
+															}`}</label>
+														</div>
+												  ))
+												: null}
+										</div>
 									</div>
-								</div>
+								) : null}
+
 								<div className='quantity'>
 									<p>Quantity: &nbsp;</p>
 									<button

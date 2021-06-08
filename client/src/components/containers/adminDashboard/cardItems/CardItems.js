@@ -454,21 +454,6 @@ const CardItems = ({
 					{options === 'Products' ? (
 						SeeMore ? (
 							<div>
-								{isEditAItem && (
-									<DataList
-										items={allBrands}
-										handleDataList={handleBrandsDataList}
-										placeholder='Add a Brand'
-									/>
-								)}
-								{EditAItem && EditAItem.combo && (
-									<AccordionDashboard
-										items={EditAItem.combo}
-										isEditAItem={false}
-										handler={handleDeleteBrandsOnEdit}
-										Option={'combo'}
-									/>
-								)}
 								{brands &&
 									EditAItem.brands &&
 									(EditAItem.brands.length === 0 ? (
@@ -483,6 +468,13 @@ const CardItems = ({
 											Option={'brands'}
 										/>
 									))}
+								{isEditAItem && (
+									<DataList
+										items={allBrands}
+										handleDataList={handleBrandsDataList}
+										placeholder='Add a Brand'
+									/>
+								)}
 								{variants &&
 									EditAItem.variants &&
 									(EditAItem.variants.length === 0 ? (
@@ -501,13 +493,7 @@ const CardItems = ({
 											prop={prop}
 										/>
 									))}
-								{isEditAItem && (
-									<DataList
-										items={allCategories}
-										handleDataList={handleCategoriesDataList}
-										placeholder='Add a Categorie'
-									/>
-								)}
+
 								{categories &&
 								EditAItem.categories &&
 								EditAItem.categories.length === 0 ? (
@@ -520,6 +506,13 @@ const CardItems = ({
 										isEditAItem={isEditAItem}
 										handler={handleDeleteOnEdit}
 										Option={'categories'}
+									/>
+								)}
+								{isEditAItem && (
+									<DataList
+										items={allCategories}
+										handleDataList={handleCategoriesDataList}
+										placeholder='Add a Categorie'
 									/>
 								)}
 								{description && (
@@ -555,6 +548,14 @@ const CardItems = ({
 										Option={'specs'}
 									/>
 								) */}
+								{EditAItem && EditAItem.combo && EditAItem.combo.length ? (
+									<AccordionDashboard
+										items={EditAItem.combo}
+										isEditAItem={false}
+										handler={handleDeleteBrandsOnEdit}
+										Option={'combo'}
+									/>
+								) : null}
 
 								<div className='renglon'>
 									<div onClick={() => setSeeMore(!SeeMore)} className='seeMore'>
