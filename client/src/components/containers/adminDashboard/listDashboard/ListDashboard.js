@@ -14,7 +14,6 @@ const ListDashboard = ({Options, setOptions}) => {
 	const [showModal, setShowModal] = useState(false);
 	const [Filter, setFilter] = useState([]);
 	const [create, setCreate] = useState(false);
-	/* const [control, setControl] = useState(0); */
 	const dispatch = useDispatch();
 	const allCategories = useSelector((state) => state.categories);
 	const allBrands = useSelector((state) => state.brands);
@@ -94,6 +93,7 @@ const ListDashboard = ({Options, setOptions}) => {
 					setOptions={setOptions}
 					showModal={showModal}
 					setShowModal={setShowModal}
+					allProducts={allProducts}
 				/>
 			)}
 			{Options === 'Products' ? (

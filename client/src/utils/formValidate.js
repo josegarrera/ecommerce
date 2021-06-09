@@ -3,7 +3,7 @@ export default function validate(product, allProducts) {
 	if (!product.name) {
 		errors.name = 'Required field.';
 		return errors;
-	} else if (product.name && !/^[A-Za-z0-9+\s]+$/g.test(product.name)) {
+	} else if (product.name && !/^[A-Za-z0-9\s]+$/g.test(product.name)) {
 		errors.name = 'Only words without accent.';
 		return errors;
 	} else if (
@@ -33,11 +33,7 @@ export default function validate(product, allProducts) {
 		return errors;
 	}
 	if (!product.categories.length) {
-		errors.categories = 'You must add at least one brand.';
-		return errors;
-	}
-	if (!product.variant.stock && !product.allVariants.length) {
-		errors.variants = 'Add basic product features.';
+		errors.categories = 'You must add at least one category.';
 		return errors;
 	}
 
@@ -67,6 +63,10 @@ export default function validate(product, allProducts) {
 				return errors;
 			}
 		}
+	}
+	if (!product.allVariants.length) {
+		errors.variants = 'Add basic product features.';
+		return errors;
 	}
 
 	return errors;

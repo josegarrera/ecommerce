@@ -24,7 +24,6 @@ import {
 	changeInputVariant,
 	handleClickVariants,
 	handleVariantDelete,
-	changeInputSpecs,
 	handleSubmit,
 	handleDeleteLabels,
 } from './utils.js';
@@ -32,7 +31,7 @@ import Swal from 'sweetalert2';
 
 import {RiCloseFill} from 'react-icons/ri';
 
-const FormProductDashboard = ({showModal, setShowModal}) => {
+const FormProductDashboard = ({showModal, setShowModal, refreshProducts}) => {
 	const allCategories = useSelector((state) => state.categories);
 	const allProducts = useSelector((state) => state.products.products);
 	const allBrands = useSelector((state) => state.brands);
@@ -73,10 +72,13 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 	const newMatch = (currentInput, item) =>
 		item.label && item.label.toLowerCase().includes(currentInput.toLowerCase());
 	const [brandSelected, setBrandSelected] = useState({});
+	const [inputDatalistBrand, setInputDatalistBrand] = useState('');
 	const [categorySelected, setCategorySelected] = useState({});
+	const [inputDatalistCategory, setInputDatalistCategory] = useState('');
+	const [productSelected, setProductSelected] = useState({});
+	const [inputDatalistProduct, setInputDatalistProduct] = useState('');
 	const [variantIdGenerator, setVariantIdGenerator] = useState(1);
 	const [AccStatus, setAccStatus] = useState(false);
-	const [AccStatusSpecs, setAccStatusSpecs] = useState(false);
 
 	useEffect(() => {
 		dispatch(getProducts('', '', '', '', '', '', '', Infinity));
@@ -132,7 +134,13 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 									setDatalistCategories,
 									setDatalistProducts,
 									setBrandSelected,
-									setCategorySelected
+									setCategorySelected,
+									setProductSelected,
+									setInputDatalistBrand,
+									setInputDatalistCategory,
+									setInputDatalistProduct,
+									setVariantIdGenerator,
+									refreshProducts
 								)
 							}
 						>
@@ -251,10 +259,19 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 															e,
 															allBrands,
 															'Brands',
-															setDatalistBrands
+															setDatalistBrands,
+															setInputDatalistBrand,
+															setBrandSelected
 														)
 													}
-													onSelect={(e) => handleDataList(e, setBrandSelected)}
+													value={inputDatalistBrand}
+													onSelect={(e) =>
+														handleDataList(
+															e,
+															setBrandSelected,
+															setInputDatalistBrand
+														)
+													}
 												/>
 
 												<button
@@ -269,7 +286,9 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 															brandSelected,
 															undefined,
 															setErrors,
-															allProducts
+															allProducts,
+															setInputDatalistBrand,
+															setBrandSelected
 														)
 													}
 												>
@@ -290,7 +309,14 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 															name='brands'
 															type='button'
 															className='btnFormProduct '
-															onClick={(e) => handleDeleteLabels(e, setProduct)}
+															onClick={(e) =>
+																handleDeleteLabels(
+																	e,
+																	setProduct,
+																	product.brands,
+																	setErrors
+																)
+															}
 														>
 															{' '}
 															X{' '}
@@ -316,11 +342,18 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 															e,
 															allCategories,
 															'Categories',
-															setDatalistCategories
+															setDatalistCategories,
+															setInputDatalistCategory,
+															setCategorySelected
 														)
 													}
+													value={inputDatalistCategory}
 													onSelect={(e) =>
-														handleDataList(e, setCategorySelected)
+														handleDataList(
+															e,
+															setCategorySelected,
+															setInputDatalistCategory
+														)
 													}
 												/>
 												<button
@@ -335,7 +368,9 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 															categorySelected,
 															allCategories,
 															setErrors,
-															allProducts
+															allProducts,
+															setInputDatalistCategory,
+															setCategorySelected
 														)
 													}
 												>
@@ -357,7 +392,14 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 															name='categories'
 															type='button'
 															className='btnFormProduct'
-															onClick={(e) => handleDeleteLabels(e, setProduct)}
+															onClick={(e) =>
+																handleDeleteLabels(
+																	e,
+																	setProduct,
+																	product.categories,
+																	setErrors
+																)
+															}
 														>
 															{' '}
 															X{' '}
@@ -437,12 +479,14 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 																		variantIdGenerator,
 																		setVariantIdGenerator,
 																		product,
-																		setProduct
+																		setProduct,
+																		setErrors
 																	)
 																}
 																disabled={
-																	Object.keys(errors).length ||
-																	!product.variant.stock
+																	Object.keys(errors).length &&
+																	errors.variants !==
+																		'Add basic product features.'
 																		? 'disabled'
 																		: ''
 																}
@@ -471,7 +515,12 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 															className='btnFormProduct'
 															type='button'
 															onClick={(e) =>
-																handleVariantDelete(e, setProduct)
+																handleVariantDelete(
+																	e,
+																	setProduct,
+																	setErrors,
+																	product.allVariants
+																)
 															}
 														>
 															{' '}
@@ -512,11 +561,18 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 															e,
 															allProducts,
 															'Products',
-															setDatalistProducts
+															setDatalistProducts,
+															setInputDatalistProduct,
+															setProductSelected
 														)
 													}
+													value={inputDatalistProduct}
 													onSelect={(e) =>
-														handleDataList(e, setCategorySelected)
+														handleDataList(
+															e,
+															setProductSelected,
+															setInputDatalistProduct
+														)
 													}
 												/>
 												<button
@@ -528,10 +584,12 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 															e,
 															product,
 															setProduct,
-															categorySelected,
+															productSelected,
 															allCategories,
 															setErrors,
-															allProducts
+															allProducts,
+															setInputDatalistProduct,
+															setProductSelected
 														)
 													}
 												>
@@ -541,10 +599,7 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 										</div>
 
 										<div>
-											{errors.combo ? (
-												<p className='danger'>{errors.combo}</p>
-											) : (
-												product.combo &&
+											{product.combo &&
 												product.combo.map((combo) => (
 													<span>
 														{' '}
@@ -560,8 +615,7 @@ const FormProductDashboard = ({showModal, setShowModal}) => {
 															X{' '}
 														</button>{' '}
 													</span>
-												))
-											)}
+												))}
 										</div>
 									</div>
 								</div>
