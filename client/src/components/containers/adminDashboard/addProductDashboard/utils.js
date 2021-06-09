@@ -52,7 +52,14 @@ export const itemsToOptions = (array, title, setDatalist) => {
 	}
 };
 
-export const handleSearch = (e, items, title, setDatalist) => {
+export const handleSearch = (
+	e,
+	items,
+	title,
+	setDatalist,
+	setInput,
+	setItemSelected
+) => {
 	let itemsFilter;
 	if (title === 'Products') {
 		itemsFilter = items.filter((el) =>
@@ -64,11 +71,16 @@ export const handleSearch = (e, items, title, setDatalist) => {
 			el.name.toLowerCase().includes(e.toLowerCase())
 		);
 	}
+	setInput(e);
+	if (!e) {
+		setItemSelected({});
+	}
 
 	return itemsToOptions(itemsFilter, title, setDatalist);
 };
 
-export const handleDataList = (e, setItemSelected) => {
+export const handleDataList = (e, setItemSelected, setInput) => {
+	setInput(e.label);
 	setItemSelected(e);
 };
 
@@ -79,7 +91,9 @@ export const addItemListSelected = (
 	itemSelected,
 	allCategories,
 	setErrors,
-	allProducts
+	allProducts,
+	setInput,
+	setItemSelected
 ) => {
 	if (e.target.name === 'imagesUrl' && itemSelected) {
 		setProduct({
@@ -125,6 +139,7 @@ export const addItemListSelected = (
 			};
 		});
 	}
+	setInput('');
 	setErrors(
 		validate(
 			{
@@ -136,6 +151,7 @@ export const addItemListSelected = (
 			allProducts
 		)
 	);
+	setItemSelected({});
 };
 
 export const handleInputFile = (
@@ -269,7 +285,8 @@ export const handleClickVariants = (
 	variantIdGenerator,
 	setVariantIdGenerator,
 	product,
-	setProduct
+	setProduct,
+	setErrors
 ) => {
 	setVariantIdGenerator(variantIdGenerator + 1);
 	let variantFinal = {};
@@ -299,9 +316,10 @@ export const handleClickVariants = (
 			imageFile: [],
 		}),
 	});
+	setErrors({});
 };
 
-export const handleVariantDelete = (e, setProduct) => {
+export const handleVariantDelete = (e, setProduct, setErrors, allVariants) => {
 	setProduct((prevState) => {
 		return {
 			...prevState,
@@ -313,6 +331,8 @@ export const handleVariantDelete = (e, setProduct) => {
 			),
 		};
 	});
+	allVariants.length === 1 &&
+		setErrors({variants: 'Add basic product features.'});
 };
 
 export const changeInputSpecs = (e, setProduct) => {
@@ -324,7 +344,7 @@ export const changeInputSpecs = (e, setProduct) => {
 	});
 };
 
-export const handleDeleteLabels = (e, setProduct) => {
+export const handleDeleteLabels = (e, setProduct, itemProduct, setErrors) => {
 	if (e.target.name === 'imagesUrl') {
 		setProduct((prevState) => {
 			return {
@@ -345,6 +365,9 @@ export const handleDeleteLabels = (e, setProduct) => {
 				variant: {},
 			};
 		});
+		if (itemProduct.length === 1) {
+			setErrors({categories: 'You must add at least one category.'});
+		}
 	} else {
 		setProduct((prevState) => {
 			return {
@@ -354,6 +377,9 @@ export const handleDeleteLabels = (e, setProduct) => {
 				),
 			};
 		});
+		if (e.target.name === 'brands' && itemProduct.length === 1) {
+			setErrors({brands: 'You must add at least one brand.'});
+		}
 	}
 };
 
@@ -369,7 +395,13 @@ export const handleSubmit = (
 	setDatalistCategories,
 	setDatalistProducts,
 	setBrandSelected,
-	setCategorySelected
+	setCategorySelected,
+	setProductSelected,
+	setInputDatalistBrand,
+	setInputDatalistCategory,
+	setInputDatalistProduct,
+	setVariantIdGenerator,
+	refreshProducts
 ) => {
 	e.preventDefault();
 	const obj = {
@@ -410,9 +442,15 @@ export const handleSubmit = (
 	setDatalistProducts([{}]);
 	setBrandSelected({});
 	setCategorySelected({});
+	setProductSelected({});
+	setInputDatalistBrand('');
+	setInputDatalistCategory('');
+	setInputDatalistProduct('');
+	setVariantIdGenerator(1);
 	setErrors({});
 	setStatus({
 		init: false,
 		completed: true,
 	});
+	refreshProducts();
 };

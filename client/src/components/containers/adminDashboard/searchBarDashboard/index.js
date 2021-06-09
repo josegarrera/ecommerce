@@ -11,11 +11,11 @@ const SearchBar = ({
 	Items,
 	setFilter,
 	setCreate,
-	create,
 	options,
 	setOptions,
 	showModal,
 	setShowModal,
+	allProducts,
 }) => {
 	//let history = useHistory();
 	const [dataListSearch, setDataListSearch] = useState([{}]);
@@ -83,7 +83,11 @@ const SearchBar = ({
 				</button>
 			)}
 
-			<FormProductDashboard showModal={showModal} setShowModal={setShowModal} />
+			<FormProductDashboard
+				showModal={showModal}
+				setShowModal={setShowModal}
+				refreshProducts={allProducts}
+			/>
 		</SearchStyles>
 	);
 };
