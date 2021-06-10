@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import DivCrdProd, {StyledLoder} from './styled';
-import {Link, NavLink} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {FaShoppingCart} from 'react-icons/fa';
 import {AiOutlineHeart, AiFillHeart} from 'react-icons/ai';
 import {useDispatch, useSelector} from 'react-redux';
@@ -14,7 +14,6 @@ import {
 } from '../../../redux/actions';
 import cardLoder from '../../../utils/cardLoader';
 import {store} from 'react-notifications-component';
-
 
 const CardProduct = ({
 	name,
@@ -70,7 +69,7 @@ const CardProduct = ({
 							<img
 								className='img__card'
 								src={imageUrl[0]}
-								alt='imagen de producto'
+								alt='producto'
 								onLoad={handleImageLoaded}
 							/>
 						</Link>
@@ -79,7 +78,7 @@ const CardProduct = ({
 							<img
 								className='img__card'
 								src={imageUrl[0]}
-								alt='imagen de producto'
+								alt='producto'
 								onLoad={handleImageLoaded}
 							/>
 						</Link>

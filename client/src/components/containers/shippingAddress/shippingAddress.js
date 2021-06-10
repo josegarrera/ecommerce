@@ -25,7 +25,7 @@ function Index() {
 		firstName: /^[a-zA-ZÀ-ÿ\s]{3,50}$/, // Letras y espacios, pueden llevar acentos.
 		lastName: /^[a-zA-ZÀ-ÿ\s]{3,50}$/, // Letras y espacios, pueden llevar acentos.
 		zip_code: /^.{1,10}$/, // 4 a 12 digitos.
-		street_name: /^.{1,10}$/, // 4 a 12 digitos.
+		street_name: /^[a-zA-ZÀ-ÿ\s]{3,20}$/, // 4 a 12 digitos.
 		street_number: /^.{1,10}$/, // 4 a 12 digitos.
 		id: /^.{1,10}$/, // 4 a 12 digitos.
 	};

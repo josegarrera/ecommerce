@@ -15,7 +15,6 @@ const UserDataForm = () => {
 	let firstName = window.localStorage.getItem('firstName');
 	let identification = window.localStorage.getItem('identification');
 	let lastName = window.localStorage.getItem('lastName');
-	let profileImage = window.localStorage.getItem('profileImage');
 
 	const [input, setInput] = useState({
 		firstName: firstName || '',

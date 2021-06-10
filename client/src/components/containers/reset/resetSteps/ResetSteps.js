@@ -2,13 +2,13 @@ import React from 'react';
 import {useState} from 'react';
 import {Link} from 'react-router-dom';
 import strings from './strings';
-import Reset_Style from '../styled';
+import ResetStyle from '../styled';
 import {IoCloseSharp} from 'react-icons/io5';
 import {AiFillLock} from 'react-icons/ai';
 
 const ResetSteps = ({handleSubmit, step, languaje, loading, buttonRef}) => {
 	const [input, setInput] = useState('');
-	const [error, setError] = useState([]);
+	const error = [];
 	const s = strings['en'];
 
 	const handleInputChange = (ev) => {
@@ -36,7 +36,7 @@ const ResetSteps = ({handleSubmit, step, languaje, loading, buttonRef}) => {
 	};
 
 	return (
-		<Reset_Style>
+		<ResetStyle>
 			<div className='resetContainer'>
 				<div className='loginWrapper'>
 					<div className='loginForm'>
@@ -45,18 +45,6 @@ const ResetSteps = ({handleSubmit, step, languaje, loading, buttonRef}) => {
 								<IoCloseSharp />
 							</div>
 						</Link>
-						{/* <div className='rowTop'>
-							<Link to='/login'>
-								<button className='signInBtnTop'>
-									<div>Sign in</div>
-								</button>
-							</Link>
-							<Link to='/signup'>
-								<button className='signUpBtn'>
-									<div>Sign up</div>
-								</button>
-							</Link>
-						</div> */}
 						<form onSubmit={formSubmit} className='loginForm'>
 							<div className='inputElement'>
 								<span className='emailSpan'>{s.label[step]}</span>
@@ -79,7 +67,7 @@ const ResetSteps = ({handleSubmit, step, languaje, loading, buttonRef}) => {
 					</div>
 				</div>
 			</div>
-		</Reset_Style>
+		</ResetStyle>
 	);
 };
 

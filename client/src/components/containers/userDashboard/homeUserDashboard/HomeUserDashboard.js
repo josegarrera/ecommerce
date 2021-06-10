@@ -15,7 +15,6 @@ const HomeUserDashboard = () => {
 	let lastName = window.localStorage.getItem('lastName');
 	let profileImage = window.localStorage.getItem('profileImage');
 
-
 	const handleOnClick = (e) => {
 		setOptions(e.target.name);
 	};
@@ -62,10 +61,15 @@ const HomeUserDashboard = () => {
 				</div>
 				<div>
 					<div className='options'>
-						{arrayButtons.map((el) => (
-							<button className='option' name={el.name} onClick={handleOnClick}>
+						{arrayButtons.map((el, i) => (
+							<button
+								key={i + el + 'btn'}
+								className='option'
+								name={el.name}
+								onClick={handleOnClick}
+							>
 								{Options === el.name ? (
-									<IoIosArrowForward className='arrow' />
+									<IoIosArrowForward key={i + el + 'icon'} className='arrow' />
 								) : null}
 								&nbsp;
 								{el.name}
@@ -82,7 +86,7 @@ const HomeUserDashboard = () => {
 				) : Options === 'My profile' ? (
 					<Profile />
 				) : Options === 'My orders' ? (
-					<UserOrder/>
+					<UserOrder />
 				) : null}
 			</div>
 		</StyledContainer>

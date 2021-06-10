@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
-import DIV_CART, {CheckBoxWrapper, CheckBox, CheckBoxLabel} from './styled';
-import {postLocalStorage, setPayIn} from '../../../redux/actions/index';
+import DIV_CART from './styled';
+import {postLocalStorage} from '../../../redux/actions/index';
 import {useDispatch, useSelector} from 'react-redux';
 import CardCartProducts from '../cardCartProducts/CardCartProducts';
 import {Link} from 'react-router-dom';
@@ -20,17 +20,12 @@ const Cart = () => {
 	}, []);
 
 	let count$ = cartProduct && changeCartPrice(cartProduct, 'ARS');
-	let count2 = cartProduct && changeCartPrice(cartProduct, 'USD');
 
 	return (
 		<DIV_CART>
 			<div className='title_cnt'>
 				<h1>Shopping Cart</h1>
 			</div>
-			{/* 			<div className='div__absolute'>
-				<div>USD = 🇺🇸 USD {count$}</div>
-				<div>ARS = 🇦🇷 ARS {count2} </div>
-			</div> */}
 			<div className='products__summ__cnt'>
 				<div className='prd__link'>
 					<div className='product_cnt'>

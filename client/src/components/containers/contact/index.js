@@ -1,6 +1,5 @@
 import React from 'react';
 import ContactStyle from './styled';
-import Footer from '../footer/Footer';
 
 import {FaPhone} from 'react-icons/fa';
 import {MdEmail} from 'react-icons/md';
@@ -9,7 +8,7 @@ import {MdExplore} from 'react-icons/md';
 function Contact() {
 	return (
 		<ContactStyle>
-			<body>
+			<div>
 				<div className='container row center-xs'>
 					<div className='box_1'>
 						<h1 className='main__title'>Contact</h1>
@@ -76,8 +75,8 @@ function Contact() {
 						<h1 className='main__title'>Leave us your information</h1>
 					</div>
 
-					<div class='post__comment__box'>
-						<div class='input__group row reverse'>
+					<div className='post__comment__box'>
+						<div className='input__group row reverse'>
 							<input className='comment__input' placeholder='Name*' />
 							<input className='comment__input' placeholder='Lastname*' />
 							<input className='comment__input' placeholder='Concept**' />
@@ -88,12 +87,12 @@ function Contact() {
 							placeholder='Message*'
 						></textarea>
 
-						<div class='comment__button'>
+						<div className='comment__button'>
 							<button className='submit__button'>Submit</button>
 						</div>
 					</div>
 				</div>
-			</body>
+			</div>
 		</ContactStyle>
 	);
 }
