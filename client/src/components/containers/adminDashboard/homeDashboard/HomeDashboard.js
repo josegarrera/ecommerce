@@ -66,7 +66,7 @@ const HomeDashboard = () => {
 						<button key='home-btn-2' className='iconDiv'>
 							{userId ? (
 								profileImage !== 'undefined' ? (
-									<img className='image' src={profileImage} alt='no' />
+									<img className='image' src={profileImage} alt='profile' />
 								) : (
 									<BsPersonCheckFill className='icon' />
 								)

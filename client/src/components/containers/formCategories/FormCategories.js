@@ -21,7 +21,7 @@ const FormCategorie = () => {
 		products: [],
 		periferic: false,
 	});
-	const [Datalist, setDatalist] = useState([{}]);
+	const [Datalist, setDatalist] = useState([{key: '', label: ''}]);
 	const [Variants, setVariants] = useState([]);
 	const [ProductsAdd, setProductsAdd] = useState();
 	const [Errors, setErrors] = useState({});

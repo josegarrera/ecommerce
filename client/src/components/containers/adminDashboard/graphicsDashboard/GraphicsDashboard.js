@@ -21,6 +21,13 @@ const GraphicsDashboard = ({setOptions}) => {
 
 	useEffect(() => {
 		allProducts();
+		return () => {
+			setProducts([]);
+			setCategories([]);
+			setUsers([]);
+			setOrders([]);
+			setBrands([]);
+		};
 	}, []);
 
 	const allProducts = async () => {
