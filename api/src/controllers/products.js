@@ -288,6 +288,15 @@ async function updateProduct(req, res) {
 	for (const key in info) {
 		if (info[key]) product[key] = info[key];
 	}
+	product.variants.forEach((variant) => {
+		variant.filesNames = [];
+		variant.imageFile &&
+			variant.imageFile.filesData.forEach((data, index) => {
+				let i = files.findIndex((file) => file.originalname === data.name);
+				if (i > -1) variant.filesNames[index] = files[i].filename;
+			});
+	});
+	product.variants.map((variant) => delete variant.imageFile);
 	try {
 		if (files.length) {
 			const filesUpdates = await Promise.all(
@@ -301,21 +310,17 @@ async function updateProduct(req, res) {
 			const filesUrl = filesUpdates.map(
 				(file) => STORAGE_BASEURL + file[0].name
 			);
-
 			filesUrl.forEach((url) => {
 				let i = product.variants.findIndex((variant) =>
-					url.includes(variant.imageFile)
+					variant.filesNames.some((fileName) => url.includes(fileName))
 				);
-				if (i > -1) {
-					product.variants[i].imageUrl = [...product.variants[i].imageUrl, url];
-				} else {
-					product.imageUrl.push(url);
-				}
+				if (i > -1) product.variants[i].imageUrl.push(url);
+				if (i === 0) product.imageUrl.push(url);
 			});
+		} else {
+			product.imageUrl.concat(product.variants[0].imageUrl);
 		}
-
-		product.variants.map((variant) => delete variant.imageFile);
-
+		product.variants.map((variant) => delete variant.filesNames);
 		await Products.findByIdAndUpdate({_id: req.params.id}, product);
 		if (product.categories) {
 			product.categories.length &&

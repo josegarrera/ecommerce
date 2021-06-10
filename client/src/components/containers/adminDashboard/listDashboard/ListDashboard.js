@@ -107,7 +107,7 @@ const ListDashboard = ({Options, setOptions}) => {
 						{Filter &&
 							Filter.map((el, index) => (
 								<CardItems
-									prop={{...el}}
+									prop={el}
 									key={el._id}
 									index={index}
 									options={Options}

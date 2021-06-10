@@ -40,7 +40,6 @@ export const handleDeleteImage = (e, setState) => {
 };
 
 export const handleInputVariants = (e, state, setState) => {
-	console.log(e, 'entroo aaca');
 	if (e.target.name === 'imageFile') {
 		if (e.target.files.length) {
 			const files = e.target.files;
@@ -84,11 +83,8 @@ export const handleInputVariants = (e, state, setState) => {
 				};
 			});
 		}
-
 	} else if (e.target.name.includes('/')) {
-		console.log('es esye /');
 		const index = Number(e.target.name[0]);
-
 
 		let newArr = [...state];
 		newArr[index].imageUrl = newArr[index].imageUrl.filter(
