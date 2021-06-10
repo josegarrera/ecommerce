@@ -66,9 +66,13 @@ const FormProductDashboard = ({showModal, setShowModal, refreshProducts}) => {
 		init: false,
 		completed: false,
 	});
-	const [datalistBrands, setDatalistBrands] = useState([{}]);
-	const [datalistCategories, setDatalistCategories] = useState([{}]);
-	const [datalistProducts, setDatalistProducts] = useState([{}]);
+	const [datalistBrands, setDatalistBrands] = useState([{key: '', label: ''}]);
+	const [datalistCategories, setDatalistCategories] = useState([
+		{key: '', label: ''},
+	]);
+	const [datalistProducts, setDatalistProducts] = useState([
+		{key: '', label: ''},
+	]);
 	const newMatch = (currentInput, item) =>
 		item.label && item.label.toLowerCase().includes(currentInput.toLowerCase());
 	const [brandSelected, setBrandSelected] = useState({});

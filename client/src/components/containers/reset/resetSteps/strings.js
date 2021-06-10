@@ -1,4 +1,4 @@
-export default {
+const strings = {
 	en: {
 		description: {
 			1: "Enter an email and we'll send you a code to reset your password",
@@ -42,3 +42,5 @@ export default {
 		missing: 'A tu contraseña le falta:',
 	},
 };
+
+export default strings;

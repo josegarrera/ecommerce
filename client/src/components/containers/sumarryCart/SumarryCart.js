@@ -9,7 +9,6 @@ import {
 import {CardElement, useStripe, useElements} from '@stripe/react-stripe-js';
 import {store} from 'react-notifications-component';
 import Swal from 'sweetalert2';
-import {useState} from 'react';
 import SumaryDiv from './styled';
 
 const FORM_ID = 'payment-form';
@@ -23,15 +22,13 @@ const SumarryCart = ({count, placeOrder, paymentMethod}) => {
 	const stripe = useStripe();
 	const elements = useElements();
 	const history = useHistory();
-	const [status, setStatus] = useState(false);
-	console.log('cartProducts', cartProduct);
 
 	const handleOrderSubmit = async (e) => {
 		e.preventDefault();
 		let idStripe;
 		if (paymentMethod === 'stripe') {
 			const cardElement = elements.getElement(CardElement);
-			const {error, paymentMethod} = await stripe.createPaymentMethod({
+			const {paymentMethod} = await stripe.createPaymentMethod({
 				type: 'card',
 				card: cardElement,
 			});
@@ -41,7 +38,6 @@ const SumarryCart = ({count, placeOrder, paymentMethod}) => {
 			dispatch(
 				confirmCheckout({userId, shippingInfo, paymentMethod, idStripe})
 			);
-		setStatus(true);
 	};
 	const pagare = document.querySelector('.mercadopago-button');
 	useEffect(() => {
@@ -76,13 +72,14 @@ const SumarryCart = ({count, placeOrder, paymentMethod}) => {
 				dispatch(emptyPaymentMethod());
 			};
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [preferenceId]);
 
-	console.log('esto es stripe', stripe);
 	useEffect(() => {
 		if (!cartProduct.length && placeOrder) {
 			history.push('/catalogue');
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 	useEffect(() => {
 		if (placeOrder && preferenceId === 'processing' && userId) {
@@ -95,24 +92,6 @@ const SumarryCart = ({count, placeOrder, paymentMethod}) => {
 
 			history.push('/catalogue');
 		}
-
-		/* if (
-			status &&
-			placeOrder &&
-			preferenceId &&
-			preferenceId.includes('-') &&
-			paymentMethod === 'mercadopago' &&
-			userId
-		) {
-			Swal.fire({
-				title: 'Success!',
-				text: 'The order was processed.',
-				icon: 'success',
-				confirmButtonText: 'Ok',
-			});
-			history.push('/userDashboard');
-			dispatch(emptyPaymentMethod());
-		} */
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [preferenceId]);

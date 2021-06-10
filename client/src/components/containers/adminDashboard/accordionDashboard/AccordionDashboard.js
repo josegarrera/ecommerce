@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {
 	Accordion,
 	AccordionItem,
@@ -40,7 +40,7 @@ const AccordionDashboard = ({
 									<div key={i + '-variants-2'} id='imagesVariantsContainer'>
 										<div key={i + '-variants-3'}>
 											<label
-												for={index + 'file-upload-variants'}
+												htmlFor={index + 'file-upload-variants'}
 												key={index + 'label-variants'}
 												className='labelVariantsFile'
 											>
@@ -69,7 +69,11 @@ const AccordionDashboard = ({
 												</label>
 											)}
 										</div>
-										<Carousel className='imageSlider' showStatus>
+										<Carousel
+											className='imageSlider'
+											showStatus
+											showThumbs={false}
+										>
 											{e[1].map((url, i) => (
 												<div key={url + 'div'} className='variantSliderDiv'>
 													<img
@@ -174,7 +178,7 @@ const AccordionDashboard = ({
 											>
 												{Option === 'variants' ? el : el.name}
 												<label
-													for={el.name || String(EditAItem[index].id)}
+													htmlFor={el.name || String(EditAItem[index].id)}
 													key={index + '-accordion-label-delete'}
 													className='labelVariantsFile buttonDiv'
 												>
@@ -194,7 +198,7 @@ const AccordionDashboard = ({
 											</div>
 										</AccordionItemPanel>
 									) : (
-										<AccordionItemPanel>
+										<AccordionItemPanel key={index + '-accordion-panel2'}>
 											{Option === 'variants' ? el : el.name}
 										</AccordionItemPanel>
 									)

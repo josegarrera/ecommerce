@@ -1,5 +1,4 @@
 import React from 'react';
-import {Redirect} from 'react-router-dom';
 import {AiFillLinkedin, AiFillGithub} from 'react-icons/ai';
 import {RiPagesLine} from 'react-icons/ri';
 import AboutUsStyled from './styled';
@@ -52,7 +51,7 @@ const AboutUs = () => {
 				'https://media-exp1.licdn.com/dms/image/C4D03AQGBNJGBwrOA1w/profile-displayphoto-shrink_800_800/0/1621425093159?e=1628121600&v=beta&t=DomDycyMRlwqSadzN7WVQ4KtlJYGCeiALhjzq00bVyM',
 			linkedin: 'https://www.linkedin.com/in/camila-alexandra-alvarez/',
 			github: 'https://github.com/C0A0A',
-			cv: '',
+			cv: 'https://drive.google.com/file/d/1ngvDeE9eFkx9RL_Xkr1Pyp7e9kXvPNvH/view?usp=sharing',
 		},
 		{
 			fullName: 'Gregorio Martocci',
@@ -66,28 +65,50 @@ const AboutUs = () => {
 
 	return (
 		<AboutUsStyled>
-			{aboutUs.map((el) => (
-				<div className='card'>
-					<div className='imageDiv'>
-						<img className='image' src={el.image} />
+			{aboutUs.map((el, i) => (
+				<div className='card' key={i + el + 'div'}>
+					<div className='imageDiv' key={i + el + 'div2'}>
+						<img
+							className='image'
+							src={el.image}
+							alt='profile pic'
+							key={i + el + 'img'}
+						/>
 					</div>
-					<div className='nameDiv'>{el.fullName}</div>
-					<div className='iconsDiv'>
+					<div className='nameDiv' key={i + el + 'div3'}>
+						{el.fullName}
+					</div>
+					<div className='iconsDiv' key={i + el + 'div4'}>
 						{el.linkedin ? (
-							<a target='_blank' href={el.linkedin}>
-								<AiFillLinkedin className='icon' />
+							<a
+								target='_blank'
+								href={el.linkedin}
+								rel='noopener noreferrer'
+								key={i + el + 'a'}
+							>
+								<AiFillLinkedin className='icon' key={i + el + 'icon'} />
 							</a>
 						) : null}
 
 						{el.github ? (
-							<a target='_blank' href={el.github}>
-								<AiFillGithub className='icon' />
+							<a
+								target='_blank'
+								href={el.github}
+								rel='noopener noreferrer'
+								key={i + el + 'a2'}
+							>
+								<AiFillGithub className='icon' key={i + el + 'icon2'} />
 							</a>
 						) : null}
 
 						{el.cv ? (
-							<a target='_blank' href={el.cv}>
-								<RiPagesLine className='icon' />
+							<a
+								target='_blank'
+								href={el.cv}
+								rel='noopener noreferrer'
+								key={i + el + 'a3'}
+							>
+								<RiPagesLine className='icon' key={i + el + 'icon3'} />
 							</a>
 						) : null}
 					</div>

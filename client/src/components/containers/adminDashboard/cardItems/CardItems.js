@@ -264,7 +264,7 @@ const CardItems = ({
 			<div className='productAllInfo'>
 				{EditAItem && EditAItem.imageUrl ? (
 					<div className={isEditAItem ? 'imageDiv' : 'imageDiv'}>
-						<Carousel className='imageSlider' showStatus>
+						<Carousel className='imageSlider' showStatus showThumbs={false}>
 							{EditAItem.imageUrl &&
 								EditAItem.imageUrl.map((el) => (
 									<div
@@ -281,7 +281,7 @@ const CardItems = ({
 										</div>
 										{isEditAItem && EditAItem ? (
 											<label
-												for={el}
+												htmlFor={el}
 												key={el + 'labelBtnInput'}
 												className='buttonDiv'
 											>
@@ -305,7 +305,7 @@ const CardItems = ({
 						</Carousel>
 						{isEditAItem && EditAItem ? (
 							<div id={'file-upload-container'} className='imageDiv'>
-								<label for='file-upload' className='labelFile'>
+								<label htmlFor='file-upload' className='labelFile'>
 									<input
 										id='file-upload'
 										className='inputFile'
@@ -634,7 +634,7 @@ const CardItems = ({
 				)}
 
 				<label
-					for={_id}
+					htmlFor={_id}
 					key={_id + 'labelBtnInput'}
 					className='labelVariantsFile buttonDiv'
 				>

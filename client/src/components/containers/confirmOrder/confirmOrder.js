@@ -17,6 +17,11 @@ function Index() {
 	const cartProduct = useSelector((state) => state.cartProducts);
 	const shippingInfo = useSelector((state) => state.shippingInfo);
 	const [payment, setPayment] = useState({paymentMethod: ''});
+	const amount =
+		cartProduct &&
+		cartProduct.reduce((a, b) => {
+			return (a += b.product.price.value * b.lot);
+		}, 0);
 
 	const onClickHandler = (e) => {
 		setPayment({paymentMethod: e});
@@ -124,7 +129,6 @@ function Index() {
 						<div className='section'>
 							<div className='row__top'>
 								<h1 className='form__title'>Order Items</h1>
-
 							</div>
 
 							<div className='payment__content'>
@@ -134,48 +138,46 @@ function Index() {
 
 								<div className='order__items'>
 									{cartProduct &&
-										cartProduct.map((el) => (
-											<div className='product'>
-												<div className='product__left'>
-													<div className='product__img'>
+										cartProduct.map((el, i) => (
+											<div className='product' key={i + el + 'div1'}>
+												<div className='product__left' key={i + el + 'div2'}>
+													<div className='product__img' key={i + el + 'div3'}>
 														<img
 															className='img'
 															src={el.product.imageUrl[0]}
+															alt='product'
+															key={i + el + 'img'}
 														></img>
 													</div>
 												</div>
-												<div className='product__info'>
-													<span className='product__name'>
+												<div className='product__info' key={i + el + 'div4'}>
+													<span
+														className='product__name'
+														key={i + el + 'span1'}
+													>
 														<h2>{el.product.name}</h2>
 													</span>
-													<span className='product__model'>
+													<span
+														className='product__model'
+														key={i + el + 'span2'}
+													>
 														{el.product.brands}
 													</span>
-													<span className='product__price'>
+													<span
+														className='product__price'
+														key={i + el + 'span3'}
+													>
 														{el.product.price.currency}
 														&nbsp;
 														{el.product.price.value}
 													</span>
 												</div>
 
-												<div className='product__right'>x {el.lot}</div>
+												<div className='product__right' key={i + el + 'div5'}>
+													x {el.lot}
+												</div>
 											</div>
 										))}
-									{/* <div className='product'>
-										<div className='product__left'>
-											<div className='product__img'>
-												<img></img>
-											</div>
-											<div className='product__info'>
-												<span className='product__name'>
-													<h2>Galaxy S21</h2>
-												</span>
-												<span className='product__model'>Samsung</span>
-												<span className='product__price'>$500</span>
-											</div>
-										</div>
-										<div className='product__right'>x 1</div>
-									</div> */}
 								</div>
 							</div>
 						</div>
@@ -185,6 +187,7 @@ function Index() {
 						<SumaryCart
 							placeOrder={true}
 							paymentMethod={payment.paymentMethod}
+							count={amount}
 						></SumaryCart>
 					</div>
 				</div>

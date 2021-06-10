@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -13,14 +13,13 @@ const CartHoverView = () => {
 	const user = useSelector((state) => state.userId);
 	let delivery = 100;
 
-	const [rendering, setRendering] = useState(true);
-
 	useEffect(() => {
 		if (user) {
 			dispatch(postLocalStorage({cartProduct, user}));
 			window.localStorage.setItem('cart', JSON.stringify([]));
 		} // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+	const rendering = true;
 
 	let count$ = cartProduct && changeCartPrice(cartProduct, rendering);
 

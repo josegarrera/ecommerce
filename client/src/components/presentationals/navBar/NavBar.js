@@ -20,7 +20,6 @@ const NavBar = () => {
 	let userId = window.localStorage.getItem('userId');
 	let profileImage = window.localStorage.getItem('profileImage');
 	let role = window.localStorage.getItem('role');
-	const user = useSelector((state) => state.user);
 
 	const handleClick = () => {
 		setClick(!click);

@@ -18,9 +18,10 @@ const SearchBar = ({
 	allProducts,
 }) => {
 	//let history = useHistory();
-	const [dataListSearch, setDataListSearch] = useState([{}]);
+	const [dataListSearch, setDataListSearch] = useState([{key: '', label: ''}]);
 	const newMatch = (currentInput, item) =>
 		item.label && item.label.toLowerCase().includes(currentInput.toLowerCase());
+
 	const [itemSelected, setItemSelected] = useState('');
 
 	useEffect(() => {

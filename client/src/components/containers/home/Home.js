@@ -33,7 +33,7 @@ const Home = () => {
 
 	return (
 		<HomeStyle>
-			<Carousel />
+			<Carousel showThumbs={false} />
 
 			<div className='product__row'>
 				<br></br>

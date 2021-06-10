@@ -5,11 +5,9 @@ import {useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import Swal from 'sweetalert2';
 import {URLS} from '../../../utils/constants';
-import strings from './resetSteps/strings';
 
 const Reset = () => {
 	const history = useHistory();
-	const s = strings['en'];
 	const [data, setData] = useState({
 		email: '',
 		resetCode: '',

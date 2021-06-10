@@ -12,7 +12,7 @@ import {
 import Filter from '../filter/Filter';
 import ProductList from '../productsList/ProductList';
 import Pagination from '../pagination/Pagination';
-import Catalogue_Style from './styled';
+import CatalogueStyle from './styled';
 import Dropdown from '../dropdown/index.js';
 
 const Catalogue = () => {
@@ -45,7 +45,7 @@ const Catalogue = () => {
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
-		<Catalogue_Style>
+		<CatalogueStyle>
 			<Filter order={orderItems} />
 			<div className='productsPagination'>
 				<div className='sort__elements'>
@@ -61,7 +61,7 @@ const Catalogue = () => {
 				<ProductList products={products} />
 				<Pagination pages={pages} />
 			</div>
-		</Catalogue_Style>
+		</CatalogueStyle>
 	);
 };
 
