@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 import ProductDashboardStyle from './styled';
 import {TiDeleteOutline} from 'react-icons/ti';
 import {IoMdCheckmarkCircleOutline} from 'react-icons/io';
@@ -16,6 +17,7 @@ import {
 	handleDeleteImage,
 	handleInputVariants,
 } from './utils.js';
+import {getProducts} from '../../../../redux/actions/index';
 
 const CardItems = ({
 	prop,
@@ -26,13 +28,12 @@ const CardItems = ({
 	allCategories,
 	allProductsDataList,
 }) => {
-	//const dispatch = useDispatch();
-	//let orderDetail = useSelector((store) => store.orderDetail);
+	const allProductsRedux = useSelector((state) => state.products.products);
+	const dispatch = useDispatch();
 	const [isEditAItem, setisEditAItem] = useState(false);
 	const [SeeMore, setSeeMore] = useState(false);
-	const [EditAItem, setEditAItem] = useState({...prop});
+	const [EditAItem, setEditAItem] = useState({});
 	const [OrderDetail, setOrderDetail] = useState({});
-
 	const {
 		name,
 		price,
@@ -42,13 +43,10 @@ const CardItems = ({
 		variants,
 		_id,
 		products,
-		combo,
 		role,
 		email,
 		users,
-		specs,
 	} = prop;
-
 	const deleteById = async () => {
 		let result = window.confirm('Are you sure you want to delete?');
 		if (result) {
@@ -72,20 +70,30 @@ const CardItems = ({
 		}
 	};
 	useEffect(() => {
+		if (options !== 'Products') {
+			setEditAItem({...prop});
+		}
 		return () => setEditAItem({});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+	useEffect(() => {
+		if (options === 'Products') {
+			const updatedProduct = allProductsRedux
+				? allProductsRedux.filter((item) => item.product._id === _id)
+				: [];
+			if (updatedProduct.length) {
+				setEditAItem(updatedProduct[0].product);
+			}
+		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [allProductsRedux]);
 
 	const handleInput = (e) => {
 		e.target.name === 'price'
 			? setEditAItem({
 					...EditAItem,
 					price: {...EditAItem.price, value: e.target.value},
-			  })
-			: e.target.name === 'specs'
-			? setEditAItem({
-					...EditAItem,
-					specs: {...EditAItem.specs, [e.target.id]: e.target.value},
 			  })
 			: setEditAItem({...EditAItem, [e.target.name]: e.target.value});
 	};
@@ -176,38 +184,24 @@ const CardItems = ({
 			let sendEditItem = {...EditAItem};
 			sendEditItem.categories = EditAItem.categories.map((el) => el._id);
 			sendEditItem.brands = EditAItem.brands.map((el) => el._id);
-			const variantsFiles = EditAItem.variants
-				.map((variant) => variant.imageFile && variant.imageFile.file)
-				.filter((item) => item);
 			const files = EditAItem.files ? EditAItem.files : [];
 			let formData = new FormData();
 			for (let i = 0; i < files.length; i++) {
 				formData.append('images', EditAItem.files[i]);
 			}
-			for (let i = 0; i < variantsFiles.length; i++) {
-				formData.append('images', variantsFiles[i]);
-			}
+			EditAItem.variants.forEach((variant) => {
+				if (variant.imageFile) {
+					for (let i = 0; i < variant.imageFile.files.length; i++) {
+						formData.append('images', variant.imageFile.files[i]);
+					}
+				}
+			});
 			formData.append('info', JSON.stringify(sendEditItem));
 			try {
 				await axios.put(`${URLS.URL_PRODUCTS}/${EditAItem._id}`, formData);
-				let arrVariants = [...EditAItem.variants];
-				arrVariants.map((item) => {
-					return {
-						...item,
-						fileData: {},
-						file: {},
-						fileValue: '',
-					};
-				});
-				setEditAItem({
-					...EditAItem,
-					variants: arrVariants,
-					filesData: [],
-					files: [],
-					fileValue: '',
-				});
-				allProducts();
+				dispatch(getProducts('', '', '', '', '', '', '', Infinity));
 				modifiedNotification();
+				allProducts();
 			} catch (error) {
 				console.log(error);
 			}
@@ -251,12 +245,11 @@ const CardItems = ({
 				await axios.put(`${URLS.URL_USER_ORDERS}/${_id}`, sendEditItem);
 				allProducts();
 				modifiedNotification();
-				setSeeMore(!SeeMore);
 			} catch (error) {
 				console.log(error.response.data.message);
 			}
 		}
-
+		setSeeMore(!SeeMore);
 		setisEditAItem(!isEditAItem);
 	};
 
@@ -270,27 +263,40 @@ const CardItems = ({
 		<ProductDashboardStyle>
 			<div className='productAllInfo'>
 				{EditAItem && EditAItem.imageUrl ? (
-					<div className='imageDiv'>
+					<div className={isEditAItem ? 'imageDiv' : 'imageDiv'}>
 						<Carousel className='imageSlider' showStatus>
 							{EditAItem.imageUrl &&
 								EditAItem.imageUrl.map((el) => (
-									<div key={el + 'div'} className='sliderDiv'>
-										<img
-											key={el + 'img'}
-											className='sliderImg'
-											src={el}
-											alt='imagen de producto'
-										/>
-
+									<div
+										key={el + 'div'}
+										className={isEditAItem ? 'sliderDiv' : 'sliderDiv'}
+									>
+										<div className='img-carousel-container'>
+											<img
+												key={el + 'img'}
+												className='sliderImg'
+												src={el}
+												alt='product'
+											/>
+										</div>
 										{isEditAItem && EditAItem ? (
-											<button className='buttonDiv'>
-												<TiDeleteOutline
-													key={el + 'btn'}
+											<label
+												for={el}
+												key={el + 'labelBtnInput'}
+												className='buttonDiv'
+											>
+												<input
+													type='button'
+													key={el + 'inputBtnInput'}
+													className='inputFileVariants'
 													id={el}
 													onClick={(e) => handleDeleteImage(e, setEditAItem)}
+												/>
+												<TiDeleteOutline
+													key={el + 'btn'}
 													className='buttonDeleteImg'
 												/>
-											</button>
+											</label>
 										) : (
 											<></>
 										)}
@@ -298,7 +304,7 @@ const CardItems = ({
 								))}
 						</Carousel>
 						{isEditAItem && EditAItem ? (
-							<div className='imageDiv'>
+							<div id={'file-upload-container'} className='imageDiv'>
 								<label for='file-upload' className='labelFile'>
 									<input
 										id='file-upload'
@@ -352,8 +358,9 @@ const CardItems = ({
 								{options.slice(0, options.length - 1)} name: &nbsp;
 							</div>
 							{isEditAItem && EditAItem ? (
-								<div>
+								<div className='renglon-input'>
 									<input
+										className='input-edit'
 										name='name'
 										onChange={handleInput}
 										value={EditAItem && EditAItem.name}
@@ -368,7 +375,7 @@ const CardItems = ({
 						<div className='renglon'>
 							<div className='title'>Role: &nbsp;</div>
 							{isEditAItem ? (
-								<div>
+								<div className='renglon-input'>
 									<select name='role' onClick={handleInput}>
 										<option name='Admin'>admin</option>
 										<option name='Client'>client</option>
@@ -385,9 +392,10 @@ const CardItems = ({
 								{role.charAt(0).toUpperCase() + role.slice(1)} email: &nbsp;
 							</div>
 							{isEditAItem ? (
-								<div>
+								<div className='renglon-input'>
 									<input
 										name='email'
+										className='input-edit'
 										onChange={handleInput}
 										value={EditAItem && EditAItem.email}
 									/>
@@ -401,12 +409,17 @@ const CardItems = ({
 						<div className='renglon'>
 							<div className='title'>Price: &nbsp;</div>
 							{isEditAItem && EditAItem ? (
-								<div>
-									<select name='price.currency' onClick={handleInput}>
+								<div className='renglon-price'>
+									<select
+										id='select-price'
+										name='price.currency'
+										onClick={handleInput}
+									>
 										<option>USD</option>
 										<option>ARS</option>
 									</select>
 									<input
+										className='input-edit-price'
 										type='number'
 										name='price'
 										onChange={handleInput}
@@ -521,6 +534,7 @@ const CardItems = ({
 										{isEditAItem && EditAItem ? (
 											<div>
 												<textarea
+													className='input-edit'
 													rows='4'
 													cols='80'
 													name='description'
@@ -533,21 +547,6 @@ const CardItems = ({
 										)}
 									</div>
 								)}
-								{/* !specs ? (
-									<div className='renglon'>
-										<div className='title'>No specs.</div>
-									</div>
-								) : (
-									<AccordionDashboard
-										items={Object.entries(specs)}
-										EditAItem={EditAItem.specs}
-										setEditAItem={setEditAItem}
-										isEditAItem={isEditAItem}
-										handler={handleDeleteOnEdit}
-										handleInput={handleInput}
-										Option={'specs'}
-									/>
-								) */}
 								{EditAItem && EditAItem.combo && EditAItem.combo.length ? (
 									<AccordionDashboard
 										items={EditAItem.combo}

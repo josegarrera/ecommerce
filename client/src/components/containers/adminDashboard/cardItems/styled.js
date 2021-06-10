@@ -46,8 +46,8 @@ const ProductDashboardStyle = styled.div`
 			flex-direction: column;
 			justify-content: center;
 			align-items: center;
-			width: 5rem;
-			height: 5rem;
+			width: max-content;
+			height: max-content;
 			border-radius: 5px;
 
 			.imageSlider {
@@ -61,17 +61,20 @@ const ProductDashboardStyle = styled.div`
 				transition: transform 0.2s;
 
 				.sliderDiv {
-					display: flex;
-					flex-direction: column;
-					align-items: center;
-					justify-content: center;
-					width: 5rem;
+					width: auto;
 					height: 5rem;
 
-					.sliderImg {
-						max-width: 100%;
-						max-height: 100%;
-						object-fit: contain;
+					.img-carousel-container {
+						width: auto;
+						height: 80%;
+						@supports (object-fit: contain) {
+							.sliderImg {
+								object-fit: contain;
+								object-position: center center;
+								width: 100%;
+								height: 100%;
+							}
+						}
 					}
 				}
 			}
@@ -94,8 +97,14 @@ const ProductDashboardStyle = styled.div`
 			display: none;
 		}
 
-		.labelFile {
-			margin-top: 50px;
+		#file-upload-container {
+			margin-top: 1rem;
+		}
+
+		.input-edit {
+			width: 100%;
+			border: 1px solid #d5d5d5;
+			border-radius: 5px;
 		}
 
 		.productInfo {
@@ -105,9 +114,22 @@ const ProductDashboardStyle = styled.div`
 			margin-left: 35px;
 			max-width: 80%;
 
+			.datalist-input .autocomplete-input {
+					border: 1px solid #d5d5d5;
+					border-radius: 5px;
+				}
+			}
+
 			.renglon {
 				display: flex;
 				font-size: 0.7rem;
+				margin-bottom: 1px;
+
+				.renglon-input {
+					width: 80%;
+					justify-content: space-between;
+				}
+
 				.created {
 					color: orange;
 				}
@@ -125,11 +147,28 @@ const ProductDashboardStyle = styled.div`
 				.dispatched {
 					color: #45b39d;
 				}
+
+				.renglon-price {
+					display: flex;
+					font-size: 0.7rem;
+
+					#select-price {
+						width: 30%;
+						border: 1px solid #d5d5d5;
+						border-radius: 5px;
+					}
+					.input-edit-price {
+						width: 70%;
+						border: 1px solid #d5d5d5;
+						border-radius: 5px;
+					}
+				}
 			}
 			.renglon2 {
 				display: flex;
 				align-items: flex-start;
 				font-size: 0.7rem;
+				margin-top: 5px;
 			}
 
 			.title {
@@ -243,8 +282,8 @@ const ProductDashboardStyle = styled.div`
 	}
 
 	svg {
-		width: 45px;
-		height: 45px;
+		width: 2rem;
+		height: 2rem;
 	}
 
 	#variantsAccordionContainer {
@@ -295,11 +334,20 @@ const ProductDashboardStyle = styled.div`
 			}
 		}
 	}
+
+	.sliderEdit {
+		height: max-content;
+	}
+	.imgEditDiv {
+		display: flex;
+		flex-direction: column;
+	}
+
 	.buttonDeleteImg {
 		object-fit: contain;
 		color: #58585a;
-		width: 2em;
-		height: 2em;
+		width: 1em;
+		height: 1em;
 
 		&:hover {
 			cursor: pointer;
