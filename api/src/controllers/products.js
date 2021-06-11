@@ -315,7 +315,7 @@ async function updateProduct(req, res) {
 					variant.filesNames.some((fileName) => url.includes(fileName))
 				);
 				if (i > -1) product.variants[i].imageUrl.push(url);
-				if (i === 0) product.imageUrl.push(url);
+				if (i < 1) product.imageUrl.push(url);
 			});
 		} else {
 			product.imageUrl.concat(product.variants[0].imageUrl);
