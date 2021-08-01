@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-// import {useHistory} from 'react-router-dom';
 import FormProductDashboard from '../addProductDashboard';
 import SearchStyles from './styled';
 import {FaSearch} from 'react-icons/fa';
@@ -17,7 +16,6 @@ const SearchBar = ({
 	setShowModal,
 	allProducts,
 }) => {
-	//let history = useHistory();
 	const [dataListSearch, setDataListSearch] = useState([{key: '', label: ''}]);
 	const newMatch = (currentInput, item) =>
 		item.label && item.label.toLowerCase().includes(currentInput.toLowerCase());

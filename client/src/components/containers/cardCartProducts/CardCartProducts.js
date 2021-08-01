@@ -27,7 +27,6 @@ const CardCartProducts = (props) => {
 		if (userId) {
 			dispatch(removeCartProduct(data));
 		}
-		//deberia filtrar desde el localStorage
 		dispatch(updateCardProduct(props.product.product._id));
 	};
 	const handleChangeLot = (num) => {
