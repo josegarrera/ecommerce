@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Schema = require('Schema');
+const Schema = mongoose.Schema;
 
 const FavouritesSchema = new Schema({
 	user: {
@@ -8,8 +8,11 @@ const FavouritesSchema = new Schema({
 	},
 	products: [
 		{
-			type: mongoose.Schema.Types.ObjectId,
-			ref: 'products',
+			_id: false,
+			product: {
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'products',
+			},
 		},
 	],
 });
