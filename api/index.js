@@ -1,8 +1,8 @@
-const {server} = require('./src/server.js');
+const server = require('./src/server.js');
 const mongoose = require('mongoose');
 const {DB_USER, DB_PASSWORD, DB_HOST, DB_NAME} = process.env;
-const bucket = require('./src/storage.js');
 const axios = require('axios');
+const PORT = process.env.PORT || '3001';
 
 mongoose
 	.connect(
@@ -15,9 +15,8 @@ mongoose
 		}
 	)
 	.then((data) => {
-		server.listen('3001', () => console.log('Listen in port 3001.'));
 		console.log('Conexión exitosa a DB ' + data.connections[0].name);
-		console.log('Conexión exitosa a Storage ' + bucket.name);
+		server.listen(PORT, () => console.log('Listen in port 3001.'));
 		return axios.get(`${process.env.BACKEND_URL}/currencies/today`);
 	})
 	.catch((err) => console.log(err.message));

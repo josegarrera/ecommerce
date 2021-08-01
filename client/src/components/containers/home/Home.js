@@ -8,7 +8,7 @@ import {
 } from '../../../redux/actions';
 import HomeStyle from './styled';
 import Carousel from '../carousel';
-import ProductCarousel from '../carouselPrueba/index';
+import ProductCarousel from '../carouselProduct/index';
 import {Link} from 'react-router-dom';
 
 const Home = () => {

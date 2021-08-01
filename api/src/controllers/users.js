@@ -1,6 +1,5 @@
 const {Users, Orders} = require('../models/index.js');
-const {STORAGE_BASEURL} = process.env;
-const bucket = require('../storage.js');
+const cloudinary = require('../cloudinary.js');
 
 function deleteUser(req, res) {
 	const userId = req.params.id;
@@ -68,11 +67,10 @@ async function updateUserData(req, res) {
 	};
 	if (id && file.length) {
 		try {
-			const fileUpload = await bucket.upload(file[0].path, {
-				destination: file[0].filename,
+			const fileUpload = await cloudinary.v2.uploader.upload(file[0].path, {
+				folder: 'Store',
 			});
-			const fileUrl = STORAGE_BASEURL + fileUpload[0].name;
-			userData.imageUrl = fileUrl;
+			userData.imageUrl = fileUpload.secure_url;
 			await Users.findByIdAndUpdate(id, userData);
 			return res.send({response: userData, type: 'Ok', message: 'Success'});
 		} catch (error) {
